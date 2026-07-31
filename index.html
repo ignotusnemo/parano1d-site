@@ -1,0 +1,2111 @@
+<!doctype html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#020807">
+  <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="ParanO(1)d">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ParanO(1)d">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-TileColor" content="#020807">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  <meta name="author" content="Ignotus Nemo">
+  <meta name="creator" content="Ignotus Nemo">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="description" content="ParanO(1)d (Parano1d) is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.">
+
+  <link rel="canonical" href="https://parano1d.org/">
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/icons/icon-48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ParanO(1)d">
+  <meta property="og:url" content="https://parano1d.org/">
+  <meta property="og:title" content="ParanO(1)d. Proof-native L1 statechain" data-meta-title>
+  <meta property="og:description" content="ParanO(1)d (Parano1d) is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay." data-meta-description>
+  <meta property="og:locale" content="en_US" data-meta-locale>
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta property="og:image" content="https://parano1d.org/social-card.png">
+  <meta property="og:image:secure_url" content="https://parano1d.org/social-card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ParanO(1)d. A proof-native L1 statechain secured by proof of work.">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://parano1d.org/">
+  <meta name="twitter:title" content="ParanO(1)d. Proof-native L1 statechain" data-meta-title>
+  <meta name="twitter:description" content="ParanO(1)d (Parano1d) is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay." data-meta-description>
+  <meta name="twitter:image" content="https://parano1d.org/social-card.png">
+  <meta name="twitter:image:alt" content="ParanO(1)d. A proof-native L1 statechain secured by proof of work.">
+
+  <title>ParanO(1)d. Proof-native L1 statechain</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://parano1d.org/#website",
+        "url": "https://parano1d.org/",
+        "name": "ParanO(1)d",
+        "alternateName": ["Parano1d", "parano1d.org"],
+        "description": "ParanO(1)d (Parano1d) is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.",
+        "image": "https://parano1d.org/assets/icons/icon-512.png",
+        "inLanguage": ["en", "ru", "zh-CN"],
+        "creator": { "@id": "https://parano1d.org/#creator" },
+        "mainEntity": { "@id": "https://parano1d.org/#software" }
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://parano1d.org/#software",
+        "name": "ParanO(1)d",
+        "alternateName": "Parano1d",
+        "url": "https://parano1d.org/",
+        "codeRepository": "https://github.com/ignotusnemo/parano1d",
+        "programmingLanguage": "Rust",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "description": "A proof-native L1 statechain secured by proof of work, implemented in Rust.",
+        "image": "https://parano1d.org/assets/icons/icon-512.png",
+        "keywords": ["ParanO(1)d", "Parano1d", "NOID", "blockchain", "proof-native", "statechain", "L1", "signatureless ownership", "recursive proofs", "O(1) synchronization", "proof of work", "zero-knowledge proofs", "UTXO"],
+        "author": { "@id": "https://parano1d.org/#creator" },
+        "citation": "https://frost.parano1d.org/"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://parano1d.org/#creator",
+        "name": "Ignotus Nemo",
+        "url": "https://github.com/ignotusnemo"
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --void: #020807;
+      --deep: #06110f;
+      --panel: rgba(7, 22, 19, .72);
+      --panel-solid: #081713;
+      --text: #effff8;
+      --muted: #9ab1a7;
+      --dim: #526d62;
+      --mint: #73ffc5;
+      --mint-2: #22d994;
+      --violet: #c2aaff;
+      --ice: #bff7ff;
+      --coral: #ff957d;
+      --line: rgba(115, 255, 197, .14);
+      --line-strong: rgba(115, 255, 197, .32);
+      --max: 1440px;
+      --launch-content-offset: 0px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--void);
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "ss01" 1, "tnum" 1;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 76% 42%, rgba(38, 215, 150, .075), transparent 31rem),
+        radial-gradient(circle at 88% 23%, rgba(167, 133, 255, .065), transparent 26rem),
+        linear-gradient(rgba(115,255,197,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(115,255,197,.018) 1px, transparent 1px);
+      background-size: auto, auto, 72px 72px, 72px 72px;
+      mask-image: linear-gradient(90deg, transparent, #000 32%, #000);
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--mint);
+      outline-offset: 4px;
+    }
+
+    .shell {
+      width: min(var(--max), calc(100% - 64px));
+      margin-inline: auto;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      height: var(--app-height, 100dvh);
+      min-height: 660px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .app.launch-notice-visible { --launch-content-offset: 38px; }
+
+    .topbar {
+      position: absolute;
+      z-index: 30;
+      top: max(18px, env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      min-height: 68px;
+      padding: 0 12px 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border: 1px solid rgba(115,255,197,.11);
+      border-radius: 18px;
+      background: rgba(2, 10, 8, .62);
+      box-shadow: 0 18px 70px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.025);
+      backdrop-filter: blur(20px) saturate(125%);
+    }
+
+    .launch-notice {
+      position: absolute;
+      z-index: 29;
+      top: calc(max(18px, env(safe-area-inset-top)) + 76px);
+      left: 50%;
+      width: min(620px, calc(100% - 64px));
+      min-height: 34px;
+      padding: 6px 38px 6px 14px;
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(115,255,197,.16);
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(7,28,22,.9), rgba(3,15,12,.82));
+      box-shadow: 0 14px 42px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.025);
+      backdrop-filter: blur(18px) saturate(125%);
+      transform: translateX(-50%);
+      transition: opacity .24s ease, transform .28s cubic-bezier(.16,.88,.24,1);
+    }
+
+    .launch-notice::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      margin-right: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 12px rgba(115,255,197,.72);
+    }
+
+    .launch-notice[hidden] { display: none; }
+    .launch-notice.is-closing {
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -6px);
+    }
+
+    .launch-notice-copy {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--dim);
+      font: 680 8.5px/1.25 ui-monospace, monospace;
+      letter-spacing: .075em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .launch-notice-copy strong {
+      color: var(--text);
+      font-weight: 720;
+      letter-spacing: .095em;
+    }
+
+    .launch-notice-separator {
+      width: 1px;
+      height: 12px;
+      background: var(--line-strong);
+    }
+
+    .launch-notice a {
+      overflow: hidden;
+      color: var(--muted);
+      text-decoration: none;
+      text-overflow: ellipsis;
+      transition: color .2s ease;
+    }
+
+    .launch-notice a:hover { color: var(--mint); }
+    .launch-notice-email { color: var(--mint); text-transform: none; }
+
+    .launch-notice-close {
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--dim);
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: color .2s ease, background .2s ease;
+    }
+
+    .launch-notice-close:hover { color: var(--text); background: rgba(255,255,255,.045); }
+    .launch-notice-close svg { width: 12px; height: 12px; }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand-name {
+      font-size: 26px;
+      font-weight: 760;
+      letter-spacing: -.03em;
+    }
+
+    .brand-name em { color: var(--mint); font-style: normal; }
+
+    .top-actions {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-action {
+      min-height: 38px;
+      padding: 0 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 680;
+      cursor: pointer;
+      transition: color .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .nav-action:hover { color: var(--text); background: rgba(255,255,255,.035); }
+    .nav-action.primary { color: var(--mint); border-color: var(--line-strong); }
+
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > summary { list-style: none; }
+    .nav-dropdown > summary::-webkit-details-marker { display: none; }
+    .nav-dropdown-chevron {
+      color: var(--dim);
+      font-size: 10px;
+      transition: transform .2s ease, color .2s ease;
+    }
+    .nav-dropdown[open] .nav-dropdown-chevron { transform: rotate(180deg); color: var(--mint); }
+    .nav-dropdown-panel {
+      position: absolute;
+      top: calc(100% + 9px);
+      right: 0;
+      min-width: 196px;
+      padding: 7px;
+      border: 1px solid rgba(115,255,197,.16);
+      border-radius: 13px;
+      background: rgba(3,15,12,.96);
+      box-shadow: 0 20px 55px rgba(0,0,0,.42);
+      backdrop-filter: blur(18px) saturate(125%);
+    }
+    .nav-dropdown-panel a,
+    .nav-dropdown-panel button {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-radius: 9px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 680;
+      cursor: pointer;
+    }
+    .nav-dropdown-panel a:hover,
+    .nav-dropdown-panel button:hover { background: rgba(115,255,197,.07); color: var(--mint); }
+    .external-mark { color: var(--dim); font: 700 11px/1 ui-monospace, monospace; }
+
+    .language-dropdown > summary {
+      min-width: 58px;
+      color: var(--mint);
+    }
+    .language-dropdown[open] > summary { color: var(--mint); background: rgba(115,255,197,.06); }
+    .language-current { min-width: 22px; font: 740 11px/1 ui-monospace, monospace; text-align: left; }
+    .language-dropdown-panel { min-width: 184px; }
+    .language-option + .language-option { margin-top: 2px; }
+    .language-option span { font-size: 12px; }
+    .language-option small {
+      color: var(--dim);
+      font: 700 8px/1 ui-monospace, monospace;
+      letter-spacing: .08em;
+    }
+    .language-option.active { color: var(--mint); background: rgba(115,255,197,.075); }
+    .language-option.active small { color: var(--mint); }
+
+    .mobile-menu-toggle,
+    .mobile-menu { display: none; }
+
+    .mobile-menu-toggle {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid rgba(115,255,197,.18);
+      border-radius: 10px;
+      background: rgba(3,14,11,.52);
+      cursor: pointer;
+    }
+    .menu-icon { position: relative; width: 16px; height: 13px; display: block; }
+    .menu-icon i {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      display: block;
+      background: var(--mint);
+      transform-origin: center;
+      transition: top .2s ease, transform .2s ease, opacity .15s ease;
+    }
+    .menu-icon i:nth-child(1) { top: 1px; }
+    .menu-icon i:nth-child(2) { top: 6px; }
+    .menu-icon i:nth-child(3) { top: 11px; }
+    .mobile-menu-toggle[aria-expanded="true"] .menu-icon i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+    .mobile-menu-toggle[aria-expanded="true"] .menu-icon i:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle[aria-expanded="true"] .menu-icon i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+    .mobile-menu {
+      position: absolute;
+      top: calc(100% + 9px);
+      right: 0;
+      width: min(310px, calc(100vw - 34px));
+      padding: 8px;
+      border: 1px solid rgba(115,255,197,.18);
+      border-radius: 15px;
+      background: rgba(3,15,12,.98);
+      box-shadow: 0 24px 70px rgba(0,0,0,.52);
+      backdrop-filter: blur(20px) saturate(125%);
+    }
+    .mobile-menu-item {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .mobile-menu-item:hover { background: rgba(115,255,197,.065); color: var(--mint); }
+    .mobile-links {
+      margin-top: 3px;
+      padding: 11px 12px 8px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-links-title {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--dim);
+      font: 700 8px/1 ui-monospace, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .mobile-links .mobile-menu-item { min-height: 40px; padding-inline: 0; }
+    .mobile-menu-github { margin-top: 7px; color: var(--mint); }
+
+    .scene {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent 27%, rgba(0,0,0,.34) 36%, #000 48%);
+      mask-image: linear-gradient(90deg, transparent 0, transparent 27%, rgba(0,0,0,.34) 36%, #000 48%);
+    }
+
+    #state-scene {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .scene-label {
+      position: absolute;
+      z-index: 3;
+      padding-left: 12px;
+      border-left: 1px solid currentColor;
+      color: var(--mint);
+      font: 650 8px/1.35 ui-monospace, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: opacity .45s ease, transform .65s cubic-bezier(.2,.75,.2,1);
+    }
+
+    .scene-label b { display: block; margin-bottom: 5px; color: var(--text); font-size: 9px; }
+    .scene-label span { color: currentColor; opacity: .64; }
+    .scene-label.state span { color: var(--text); opacity: 1; }
+    .scene-label.state { left: 52%; top: 18.5%; }
+    .scene-label.proof { right: 7%; top: 28%; color: var(--violet); }
+    .scene-label.tail { left: 53%; bottom: 18%; color: var(--ice); }
+
+    .app[data-current-step="0"] .scene-label,
+    .app[data-current-step="0"] .readout,
+    .app[data-current-step="2"] .scene-label,
+    .app[data-current-step="2"] .readout,
+    .app[data-current-step="3"] .scene-label,
+    .app[data-current-step="3"] .readout,
+    .app[data-current-step="9"] .scene-label,
+    .app[data-current-step="9"] .readout,
+    .app[data-current-step="10"] .scene-label,
+    .app[data-current-step="10"] .readout,
+    .app[data-current-step="11"] .scene-label,
+    .app[data-current-step="11"] .readout {
+      opacity: 0;
+      transform: translateY(8px);
+      visibility: hidden;
+      transition: none;
+    }
+
+    .app[data-current-step="0"] .suffix,
+    .app[data-current-step="0"] .deck-button.prev {
+      visibility: hidden;
+    }
+
+    .readout {
+      position: absolute;
+      z-index: 4;
+      right: max(32px, calc((100vw - var(--max)) / 2));
+      bottom: 112px;
+      width: 230px;
+      padding: 15px 16px;
+      border: 1px solid rgba(115,255,197,.15);
+      border-radius: 13px;
+      background: rgba(3, 13, 11, .58);
+      backdrop-filter: blur(16px);
+      color: var(--dim);
+      font: 620 8px/1.6 ui-monospace, monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .readout div { display: flex; justify-content: space-between; gap: 15px; }
+    .readout b { color: var(--mint); font-weight: 700; }
+    .readout .violet { color: var(--violet); }
+
+    .chapters {
+      position: absolute;
+      z-index: 10;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .chapter {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(28px);
+      transition:
+        opacity .5s ease,
+        visibility .5s step-end,
+        transform .72s cubic-bezier(.18,.78,.2,1);
+    }
+
+    .chapter.active {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: opacity .55s ease .15s, visibility 0s, transform .78s cubic-bezier(.18,.78,.2,1) .08s;
+      pointer-events: auto;
+    }
+
+    .chapter.leaving-up { transform: translateY(-24px); }
+
+    .chapter-inner {
+      width: min(var(--max), calc(100% - 64px));
+      margin-inline: auto;
+      padding-top: 0;
+      transition: padding-top .28s cubic-bezier(.16,.88,.24,1);
+    }
+
+    .chapter-index {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--mint);
+      font: 680 9px/1 ui-monospace, monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .chapter-index::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--coral), var(--mint));
+      box-shadow: 0 0 12px rgba(115,255,197,.35);
+    }
+
+    h1, h2, h3, p { text-wrap: balance; }
+
+    h1,
+    .chapter h2 {
+      margin: 0;
+      max-width: 650px;
+      font-size: clamp(68px, 6.4vw, 104px);
+      line-height: .91;
+      letter-spacing: -.072em;
+      font-weight: 660;
+    }
+
+    .chapter h2 { font-size: clamp(54px, 5.5vw, 82px); }
+    h1 em, .chapter h2 em { color: var(--mint); font-style: normal; text-shadow: 0 0 30px rgba(74,244,174,.12); }
+    #dependency h2 em { color: var(--coral); }
+    #ownership h2 em,
+    #history-step h2 em,
+    #receipts h2 em { color: var(--violet); }
+    #privacy h2 em { color: var(--ice); text-shadow: 0 0 30px rgba(191,247,255,.12); }
+    #proof-stack h2 em { color: var(--ice); text-shadow: 0 0 30px rgba(191,247,255,.12); }
+
+    .chapter.cover h1 { max-width: 720px; }
+    .chapter.cover .lead { max-width: 650px; }
+
+    html[lang="ru"] h1 { font-size: clamp(58px, 5.55vw, 90px); letter-spacing: -.062em; }
+    html[lang="ru"] .chapter h2 { font-size: clamp(45px, 4.55vw, 70px); letter-spacing: -.058em; }
+    html[lang="zh-CN"] h1 { font-size: clamp(64px, 5.8vw, 94px); letter-spacing: -.045em; }
+    html[lang="zh-CN"] .chapter h2 { font-size: clamp(50px, 4.9vw, 76px); letter-spacing: -.04em; }
+
+    .lead {
+      max-width: 610px;
+      margin: 27px 0 0;
+      color: #a9beb5;
+      font-size: 17px;
+      line-height: 1.68;
+      letter-spacing: -.012em;
+    }
+
+    .lead strong { color: var(--text); font-weight: 680; }
+
+    .chapter-actions {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+    }
+
+    .action {
+      min-height: 48px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: rgba(7,25,20,.48);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 720;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .action:hover { transform: translateY(-2px); border-color: rgba(115,255,197,.62); }
+    .action.primary { color: #03100c; border-color: var(--mint); background: var(--mint); }
+    .action.violet { color: var(--violet); border-color: rgba(194,170,255,.35); }
+
+    .hero-why {
+      position: relative;
+      isolation: isolate;
+      min-width: 118px;
+      letter-spacing: .08em;
+      box-shadow: 0 12px 34px rgba(34,217,148,.12), inset 0 1px rgba(255,255,255,.26);
+      animation: heroWhyGlow 3.2s ease-in-out 1.35s infinite;
+    }
+
+    .hero-why::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      z-index: -1;
+      border: 1px solid rgba(115,255,197,.7);
+      border-radius: inherit;
+      opacity: 0;
+      pointer-events: none;
+      animation: heroWhyRing 3.2s cubic-bezier(.16,.88,.24,1) 1.35s infinite;
+    }
+
+    .hero-why:hover,
+    .hero-why:focus-visible {
+      border-color: #d7ffed;
+      box-shadow: 0 14px 38px rgba(34,217,148,.2), 0 0 0 1px rgba(115,255,197,.16), inset 0 1px rgba(255,255,255,.3);
+      animation-play-state: paused;
+    }
+
+    .hero-why:hover::after,
+    .hero-why:focus-visible::after { animation-play-state: paused; opacity: 0; }
+
+    .hero-why:focus-visible { outline: 2px solid rgba(191,247,255,.72); outline-offset: 4px; }
+
+    @keyframes heroWhyGlow {
+      0%, 64%, 100% { box-shadow: 0 12px 34px rgba(34,217,148,.12), inset 0 1px rgba(255,255,255,.26); }
+      76% { box-shadow: 0 14px 42px rgba(34,217,148,.28), 0 0 22px rgba(115,255,197,.13), inset 0 1px rgba(255,255,255,.3); }
+    }
+
+    @keyframes heroWhyRing {
+      0%, 63% { opacity: 0; transform: scale(.98); }
+      69% { opacity: .48; }
+      88%, 100% { opacity: 0; transform: scale(1.26, 1.5); }
+    }
+
+    .hero-facts {
+      max-width: 610px;
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-fact {
+      min-height: 72px;
+      padding: 15px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .hero-fact:first-child { padding-left: 0; }
+    .hero-fact:last-child { border-right: 0; }
+    .hero-fact b { display: block; color: var(--mint); font-size: 19px; line-height: 1; letter-spacing: -.04em; }
+    .hero-fact span { display: block; margin-top: 8px; color: rgba(154, 177, 167, .72); font-size: 11px; line-height: 1.35; }
+
+    .ledger {
+      max-width: 600px;
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .ledger-row {
+      min-height: 51px;
+      padding: 11px 0;
+      display: grid;
+      grid-template-columns: 116px 1fr;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .ledger-row dt {
+      color: var(--dim);
+      font: 650 8px/1.3 ui-monospace, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .ledger-row dd { margin: 0; color: #c1d3cb; font-size: 13px; line-height: 1.45; }
+    .ledger-row strong { color: var(--text); }
+    .role-list {
+      max-width: 610px;
+      margin-top: 27px;
+      display: grid;
+      gap: 1px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      overflow: hidden;
+      background: var(--line);
+    }
+
+    .role {
+      min-height: 64px;
+      padding: 13px 15px;
+      display: grid;
+      grid-template-columns: 36px 94px 1fr;
+      align-items: center;
+      gap: 12px;
+      background: rgba(5,18,15,.9);
+    }
+
+    .role i {
+      width: 29px;
+      height: 29px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(115,255,197,.28);
+      border-radius: 50%;
+      color: var(--mint);
+      font: 700 9px/1 ui-monospace, monospace;
+    }
+
+    .role b { color: var(--text); font-size: 12px; }
+    .role span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .role.wallet i { color: var(--coral); border-color: rgba(255,149,125,.3); }
+    .role.miner i { color: var(--ice); border-color: rgba(191,247,255,.3); }
+
+    .formula {
+      max-width: 610px;
+      margin-top: 27px;
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid rgba(194,170,255,.2);
+      border-radius: 14px;
+      background: rgba(19,13,37,.23);
+      color: var(--violet);
+      font: 650 10px/1.3 ui-monospace, monospace;
+      text-align: center;
+    }
+
+    .formula span { color: var(--dim); }
+    .formula b { padding: 10px 8px; border: 1px solid rgba(194,170,255,.16); border-radius: 9px; }
+
+    .page-geometry {
+      max-width: 610px;
+      margin-top: 27px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-stack {
+      display: flex;
+      gap: 4px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(6,20,16,.62);
+    }
+
+    .page-stack i {
+      width: 11px;
+      height: 34px;
+      border: 1px solid rgba(115,255,197,.3);
+      background: rgba(115,255,197,.08);
+    }
+
+    .page-geometry > span { color: var(--dim); font: 700 13px/1 ui-monospace, monospace; }
+    .atomic-tx { flex: 1; padding: 16px; border: 1px solid rgba(194,170,255,.27); border-radius: 12px; color: var(--violet); font: 650 10px/1.4 ui-monospace, monospace; text-align: center; }
+
+    .capacity-rule {
+      max-width: 610px;
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr 36px 1fr;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(3,15,12,.65);
+      overflow: hidden;
+      font-family: ui-monospace, monospace;
+    }
+
+    .capacity-side { padding: 12px 15px; }
+    .capacity-side span,
+    .capacity-live span { display: block; color: var(--dim); font-size: 7px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .capacity-side b { display: block; margin-top: 5px; color: var(--text); font-size: 11px; }
+    .capacity-rule > i { display: grid; place-items: center; border-inline: 1px solid var(--line); color: var(--violet); font-size: 13px; font-style: normal; }
+    .capacity-live { grid-column: 1 / -1; padding: 9px 15px; display: flex; align-items: center; justify-content: space-between; gap: 14px; border-top: 1px solid var(--line); }
+    .capacity-live b { color: var(--mint); font-size: 10px; text-align: right; }
+
+    .state-rail {
+      position: absolute;
+      z-index: 25;
+      right: max(14px, env(safe-area-inset-right));
+      top: 50%;
+      bottom: auto;
+      width: 126px;
+      height: min(560px, calc(100% - 210px));
+      overflow: hidden;
+      perspective: 680px;
+      perspective-origin: 60% 50%;
+      transform-style: preserve-3d;
+      transform: translateY(-50%);
+      background: transparent;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    .state-rail::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      left: 7px;
+      right: 7px;
+      top: 50%;
+      height: 58px;
+      transform: translateY(-50%);
+      border: 1px solid rgba(115,255,197,.14);
+      border-radius: 16px;
+      background:
+        linear-gradient(105deg, rgba(191,247,255,.018), transparent 42%),
+        rgba(14,37,30,.56);
+      box-shadow:
+        0 10px 28px rgba(0,0,0,.22),
+        inset 0 1px rgba(255,255,255,.025);
+      backdrop-filter: blur(22px) saturate(106%);
+      -webkit-backdrop-filter: blur(22px) saturate(106%);
+      pointer-events: none;
+    }
+
+    .state-dot {
+      position: absolute;
+      z-index: var(--wheel-order, 1);
+      left: 10px;
+      top: 50%;
+      width: 106px;
+      height: 52px;
+      margin-top: -26px;
+      padding: 0 10px 0 42px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border: 1px solid transparent;
+      border-radius: 15px;
+      background: transparent;
+      color: #719385;
+      font: 680 12px/1 ui-monospace, monospace;
+      letter-spacing: .075em;
+      cursor: pointer;
+      opacity: var(--wheel-opacity, 0);
+      filter: blur(var(--wheel-blur, 0));
+      transform: translate3d(0, var(--wheel-y, 0), var(--wheel-z, 0)) rotateX(var(--wheel-angle, 0deg)) scale(var(--wheel-scale, 1));
+      transform-origin: 50% 50%;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      will-change: transform, opacity, filter;
+      transition:
+        transform .38s cubic-bezier(.16,.88,.24,1),
+        opacity .26s ease,
+        filter .26s ease,
+        color .22s ease,
+        border-color .22s ease,
+        background .22s ease,
+        text-shadow .22s ease;
+    }
+
+    .state-dot::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      width: 18px;
+      height: 1px;
+      background: currentColor;
+      transition: width .3s cubic-bezier(.16,.88,.24,1), box-shadow .24s ease;
+    }
+
+    .state-dot:hover {
+      color: #a8c9bb;
+      border-color: rgba(191,247,255,.08);
+      background: rgba(191,247,255,.025);
+    }
+
+    .state-dot:focus-visible {
+      outline: 1px solid rgba(191,247,255,.65);
+      outline-offset: -3px;
+    }
+
+    .state-dot:first-child { font-size: 16px; letter-spacing: 0; }
+    .rail-brand-symbol {
+      width: 23px;
+      height: 23px;
+      display: block;
+      overflow: visible;
+      filter: drop-shadow(0 0 8px rgba(115,255,197,.25));
+    }
+
+    .state-dot.active {
+      color: var(--mint);
+      border-color: rgba(115,255,197,.07);
+      background: rgba(115,255,197,.025);
+      font-weight: 780;
+      text-shadow: 0 0 12px rgba(115,255,197,.3);
+    }
+
+    .state-dot.active::before { width: 27px; box-shadow: 0 0 16px var(--mint); }
+    .state-dot.visited { color: #86a798; }
+    .state-dot.wheel-hidden { pointer-events: none; }
+    .state-rail.instant .state-dot { transition: none; }
+
+    .control-deck {
+      position: absolute;
+      z-index: 35;
+      left: 50%;
+      bottom: 17px;
+      transform: translateX(-50%);
+      min-height: 62px;
+      padding: 8px 9px 8px 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid rgba(115,255,197,.13);
+      border-radius: 17px;
+      background: rgba(2,11,9,.72);
+      box-shadow: 0 18px 70px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.025);
+      backdrop-filter: blur(20px) saturate(125%);
+    }
+
+    .deck-state {
+      min-width: 165px;
+      color: var(--dim);
+      font: 630 8px/1.5 ui-monospace, monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .deck-state b { display: block; color: var(--text); font-size: 9px; }
+
+    .suffix {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .suffix i {
+      width: 17px;
+      height: 7px;
+      border: 1px solid rgba(115,255,197,.15);
+      background: rgba(115,255,197,.025);
+      transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+
+    .suffix i.on { border-color: rgba(115,255,197,.45); background: rgba(115,255,197,.16); }
+    .suffix i.tip { border-color: var(--violet); background: rgba(194,170,255,.3); box-shadow: 0 0 9px rgba(194,170,255,.3); }
+
+    .deck-buttons { display: flex; gap: 6px; }
+
+    .deck-button {
+      min-height: 44px;
+      padding: 0 15px;
+      border: 1px solid var(--line-strong);
+      border-radius: 11px;
+      background: rgba(8,28,22,.55);
+      color: var(--mint);
+      font-size: 10px;
+      font-weight: 720;
+      cursor: pointer;
+      transition: transform .2s ease, opacity .2s ease, background .2s ease;
+    }
+
+    .deck-button:hover { transform: translateY(-2px); background: rgba(15,46,36,.65); }
+    .deck-button:disabled { opacity: .24; cursor: default; transform: none; }
+    .deck-button.prev { width: 44px; padding: 0; color: var(--muted); }
+
+    .transition-flash {
+      position: absolute;
+      z-index: 20;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: linear-gradient(90deg, transparent 23%, rgba(115,255,197,.1) 70%, transparent);
+      transform: translateX(-100%);
+    }
+
+    .transition-flash.run { animation: foldFlash .72s cubic-bezier(.18,.75,.2,1); }
+    @keyframes foldFlash { 0% { opacity: 0; transform: translateX(-80%); } 35% { opacity: 1; } 100% { opacity: 0; transform: translateX(90%); } }
+
+    .read-mode {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: block;
+      visibility: hidden;
+      opacity: 0;
+      background: #020907;
+      transition: opacity .35s ease, visibility .35s step-end;
+    }
+
+    .read-mode.open { visibility: visible; opacity: 1; transition: opacity .35s ease, visibility 0s; }
+    .read-dismiss { display: none; }
+
+    .read-panel {
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      height: var(--app-height, 100dvh);
+      overflow-y: auto;
+      background:
+        radial-gradient(circle at 78% 4%, rgba(28,106,78,.13), transparent 36%),
+        linear-gradient(rgba(115,255,197,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(115,255,197,.018) 1px, transparent 1px),
+        #020907;
+      background-size: auto, 72px 72px, 72px 72px, auto;
+      transform: translateY(24px);
+      transition: transform .45s cubic-bezier(.18,.78,.2,1);
+      scrollbar-color: rgba(115,255,197,.35) transparent;
+    }
+
+    .read-mode.open .read-panel { transform: none; }
+
+    .read-head {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      min-height: 76px;
+      padding: 0 max(32px, calc((100vw - 1120px) / 2));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(2,9,7,.88);
+      backdrop-filter: blur(22px) saturate(130%);
+    }
+
+    .read-head b { min-width: 0; overflow: hidden; font-size: 16px; letter-spacing: -.02em; text-overflow: ellipsis; white-space: nowrap; }
+    .read-tools { display: flex; align-items: center; gap: 10px; }
+    .read-close { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 11px; background: rgba(6,24,18,.45); color: var(--muted); font-size: 20px; cursor: pointer; }
+    .read-close:hover { color: var(--mint); border-color: var(--line-strong); }
+    .read-body { width: min(1040px, calc(100% - 64px)); margin-inline: auto; padding: 72px 0 130px; }
+    .read-body h1 { margin: 0; color: var(--text); font-size: clamp(58px,8vw,104px); line-height: .88; letter-spacing: -.065em; }
+    .read-subtitle { margin: 22px 0 52px !important; color: var(--mint) !important; font: 700 11px/1.5 ui-monospace, monospace !important; letter-spacing: .12em; text-transform: uppercase; }
+    .read-body h2 { margin: 86px 0 20px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--text); font-size: clamp(32px,4vw,48px); line-height: 1; letter-spacing: -.05em; }
+    .read-body h3 { margin: 48px 0 14px; color: var(--mint); font-size: 22px; letter-spacing: -.025em; }
+    .read-body p, .read-body ul { max-width: 790px; color: #a9beb5; font-size: 16px; line-height: 1.78; }
+    .read-body p + p { margin-top: 18px; }
+    .read-body strong { color: var(--text); }
+    .read-body code { color: var(--mint); font: 650 .9em/1.4 ui-monospace, monospace; }
+    .read-body a { color: var(--mint); text-underline-offset: 4px; }
+    .read-body pre { max-width: 900px; margin: 22px 0; padding: 20px 22px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: rgba(1,7,5,.86); color: var(--mint); font: 600 13px/1.65 ui-monospace, monospace; }
+    .read-body table { width: 100%; margin: 26px 0 34px; border-collapse: collapse; color: #b7c9c1; font-size: 14px; line-height: 1.5; }
+    .read-body th, .read-body td { padding: 13px 15px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .read-body th { color: var(--text); background: rgba(115,255,197,.045); font-weight: 720; }
+    .read-body tr:hover td { background: rgba(115,255,197,.02); }
+    .read-table { width: 100%; overflow-x: auto; }
+    .read-note { margin-top: 36px !important; padding: 18px 20px; border-left: 2px solid var(--coral); background: rgba(255,149,125,.035); }
+    .read-signature { margin-top: 44px !important; color: var(--text) !important; }
+
+    @media (min-width: 821px) and (max-width: 1180px) {
+      .chapter-inner > * { max-width: 52%; }
+      .chapter.cover h1,
+      .chapter.cover .lead { max-width: 52%; }
+      .scene-label.state { left: 54%; }
+      .readout { display: none; }
+      .brand-name { font-size: 24px; }
+    }
+
+    @media (min-width: 821px) {
+      .scene { right: 102px; }
+    }
+
+    @media (min-width: 821px) and (max-width: 1180px) {
+      .state-rail {
+        right: max(8px, env(safe-area-inset-right));
+        width: 108px;
+        height: min(520px, calc(100% - 196px));
+        perspective: 600px;
+      }
+      .state-rail::before { left: 6px; right: 6px; height: 54px; border-radius: 14px; }
+      .state-dot {
+        left: 8px;
+        width: 92px;
+        height: 46px;
+        margin-top: -23px;
+        padding: 0 8px 0 36px;
+        font-size: 11px;
+      }
+      .state-dot::before { left: 8px; width: 16px; }
+      .state-dot.active::before { width: 23px; }
+    }
+
+    @media (max-width: 820px) {
+      html, body { overflow: hidden; }
+      .shell { width: calc(100% - 34px); }
+      .app {
+        height: 100svh;
+        height: var(--app-height, 100dvh);
+        min-height: 0;
+      }
+      .topbar { top: max(8px, env(safe-area-inset-top)); min-height: 59px; padding: 0 9px 0 11px; }
+      .app.launch-notice-visible { --launch-content-offset: 46px; }
+      .launch-notice {
+        top: calc(max(8px, env(safe-area-inset-top)) + 66px);
+        width: calc(100% - 34px);
+        min-height: 38px;
+      }
+      .desktop-nav-action,
+      .desktop-links-dropdown { display: none; }
+      .mobile-menu-toggle { display: grid; }
+      .mobile-menu:not([hidden]) { display: block; }
+
+      .scene {
+        top: var(--mobile-scene-top, 50%);
+        bottom: calc(76px + env(safe-area-inset-bottom));
+        height: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .chapters { bottom: calc(78px + env(safe-area-inset-bottom)); }
+      .chapter { align-items: start; padding-top: calc(88px + env(safe-area-inset-top) + var(--launch-content-offset)); }
+      .chapter-inner { width: calc(100% - 34px); max-width: none; margin-inline: auto; padding-top: 0; }
+      .chapter-index { margin-bottom: 14px; font-size: 8px; }
+      h1, .chapter h2 { max-width: 650px; font-size: clamp(48px, 12vw, 68px); }
+      .lead { max-width: 660px; margin-top: 18px; font-size: 15px; line-height: 1.58; }
+      .chapter-actions { margin-top: 21px; }
+      .action { min-height: 43px; }
+      .hero-facts { margin-top: 23px; }
+      .hero-fact { min-height: 60px; padding: 12px; }
+      .hero-fact:first-child { padding-left: 0; }
+      .hero-fact b { font-size: 16px; }
+      .ledger, .role-list, .formula, .page-geometry, .capacity-rule { margin-top: 18px; }
+      .ledger-row { min-height: 42px; padding: 8px 0; }
+      .role { min-height: 53px; padding: 9px 12px; }
+      #present .ledger { margin-top: 14px; }
+      #present .ledger-row { min-height: 36px; padding: 5px 0; }
+      #present .ledger-row dd { line-height: 1.3; }
+      .scene-label { display: none; }
+      .readout { display: none; }
+      .state-rail { display: none; }
+
+      .control-deck {
+        bottom: max(8px, env(safe-area-inset-bottom));
+        min-height: 58px;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding-left: 13px;
+      }
+
+      .deck-state { min-width: 0; }
+      .suffix { display: none; }
+      .deck-button { min-height: 40px; }
+      .read-head { min-height: 64px; padding-inline: 17px; }
+      .read-head b { font-size: 14px; }
+      .read-tools { gap: 7px; }
+      .read-body { width: calc(100% - 34px); padding: 48px 0 90px; }
+      .read-body h1 { font-size: clamp(52px,17vw,76px); }
+      .read-subtitle { margin-bottom: 38px !important; }
+      .read-body h2 { margin-top: 64px; font-size: 34px; }
+      .read-body h3 { margin-top: 38px; font-size: 20px; }
+      .read-body p, .read-body ul { font-size: 15px; line-height: 1.72; }
+      .read-body table { min-width: 0; font-size: 12px; }
+      .read-table.compare table { min-width: 620px; }
+      .read-table:not(.compare) th:first-child,
+      .read-table:not(.compare) td:first-child { width: 58%; }
+      .read-body pre { font-size: 11px; }
+    }
+
+    @media (max-width: 520px) {
+      .brand-name { font-size: 21px; }
+      .language-dropdown > summary { min-width: 54px; padding-inline: 11px; }
+      .scene {
+        bottom: calc(68px + env(safe-area-inset-bottom));
+        height: auto;
+      }
+      .chapters { bottom: calc(70px + env(safe-area-inset-bottom)); }
+      .launch-notice {
+        min-height: 42px;
+        padding-block: 6px;
+      }
+      .launch-notice-copy {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        font-size: 7.5px;
+      }
+      .launch-notice-separator { display: none; }
+      .chapter { padding-top: calc(84px + env(safe-area-inset-top) + var(--launch-content-offset)); }
+      .chapter-index { margin-bottom: 12px; }
+      h1, .chapter h2 { font-size: clamp(43px, 12.4vw, 58px); line-height: .92; }
+      html[lang="ru"] h1, html[lang="ru"] .chapter h2 { font-size: clamp(37px, 10.5vw, 49px); line-height: .96; }
+      html[lang="zh-CN"] h1, html[lang="zh-CN"] .chapter h2 { font-size: clamp(42px, 11.5vw, 54px); line-height: 1.02; }
+      .lead { font-size: 14px; line-height: 1.52; }
+      .hero-facts { grid-template-columns: repeat(3,1fr); }
+      .hero-fact { padding: 10px 8px; }
+      .hero-fact b { font-size: 14px; }
+      .hero-fact span { font-size: 8.5px; }
+      .chapter-actions { gap: 8px; }
+      .action { min-height: 41px; padding: 0 13px; font-size: 10px; }
+      .ledger-row { grid-template-columns: 84px 1fr; gap: 11px; }
+      .ledger-row dd { font-size: 11px; }
+      .role { grid-template-columns: 29px 64px 1fr; gap: 8px; }
+      .role i { width: 25px; height: 25px; }
+      .role b, .role span { font-size: 10px; }
+      .formula { padding: 11px; gap: 5px; font-size: 7px; }
+      .page-geometry { gap: 6px; }
+      .page-stack { padding: 8px; }
+      .page-stack i { width: 7px; height: 28px; }
+      .atomic-tx { padding: 12px 7px; font-size: 8px; }
+      .capacity-side { padding: 10px 11px; }
+      .capacity-side span, .capacity-live span { font-size: 6px; }
+      .capacity-side b, .capacity-live b { font-size: 8px; }
+      .control-deck { width: calc(100% - 18px); }
+      .deck-state { font-size: 7px; }
+      .deck-state b { font-size: 8px; }
+      .deck-button { padding: 0 11px; font-size: 9px; }
+      .deck-button.prev { width: 38px; }
+    }
+
+    @media (max-width: 360px) {
+      .topbar { gap: 10px; }
+      .launch-notice { width: calc(100% - 18px); padding-left: 11px; }
+      .launch-notice-copy { font-size: 7px; letter-spacing: .055em; }
+      .language-dropdown > summary { min-width: 50px; padding-inline: 9px; }
+      .read-head { gap: 8px; padding-inline: 12px; }
+      .read-head b { font-size: 12px; }
+      .read-close { width: 36px; height: 36px; }
+    }
+
+    @media (max-width: 520px) and (max-height: 700px) {
+      .topbar {
+        top: max(6px, env(safe-area-inset-top));
+        min-height: 52px;
+      }
+
+      .brand-name { font-size: 20px; }
+      .language-dropdown > summary { min-height: 34px; }
+      .mobile-menu-toggle { width: 34px; height: 34px; }
+
+      .app.launch-notice-visible { --launch-content-offset: 42px; }
+      .launch-notice {
+        top: calc(max(6px, env(safe-area-inset-top)) + 58px);
+        min-height: 38px;
+        padding-block: 5px;
+      }
+
+      .scene {
+        bottom: calc(60px + env(safe-area-inset-bottom));
+        height: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+
+      .chapters { bottom: calc(62px + env(safe-area-inset-bottom)); }
+      .chapter { padding-top: calc(68px + env(safe-area-inset-top) + var(--launch-content-offset)); }
+      .chapter-index { margin-bottom: 8px; font-size: 7px; }
+      .chapter-index::before { width: 26px; }
+
+      h1,
+      .chapter h2 {
+        font-size: clamp(35px, 10.7vw, 44px);
+        line-height: .93;
+      }
+
+      html[lang="ru"] h1,
+      html[lang="ru"] .chapter h2 {
+        font-size: clamp(31px, 9.4vw, 38px);
+        line-height: .95;
+      }
+
+      html[lang="zh-CN"] h1,
+      html[lang="zh-CN"] .chapter h2 {
+        font-size: clamp(34px, 10.2vw, 42px);
+        line-height: 1;
+      }
+
+      .lead { margin-top: 10px; font-size: 12px; line-height: 1.4; }
+      .chapter-actions,
+      .hero-facts,
+      .ledger,
+      .role-list,
+      .formula,
+      .page-geometry,
+      .capacity-rule { margin-top: 10px; }
+
+      .chapter-actions { gap: 6px; }
+      .action { min-height: 34px; padding-inline: 10px; font-size: 8px; }
+      .hero-fact { min-height: 43px; padding: 8px 6px; }
+      .hero-fact b { font-size: 13px; }
+      .hero-fact span { margin-top: 5px; font-size: 7.5px; }
+
+      .ledger-row { min-height: 34px; padding: 5px 0; }
+      .ledger-row dt { font-size: 7px; }
+      .ledger-row dd { font-size: 10px; line-height: 1.32; }
+      .role-list { border-radius: 11px; }
+      .role { min-height: 40px; padding: 5px 8px; }
+      .role b,
+      .role span { font-size: 9px; line-height: 1.3; }
+
+      .formula { padding: 7px; gap: 4px; font-size: 7px; }
+      .formula b { padding: 6px 4px; }
+      .page-stack { padding: 6px; }
+      .page-stack i { height: 23px; }
+      .atomic-tx { padding-block: 9px; }
+      .capacity-side { padding: 7px 9px; }
+      .capacity-side b { margin-top: 3px; }
+      .capacity-live { padding: 6px 9px; }
+
+      .control-deck {
+        min-height: 50px;
+        padding-block: 6px;
+      }
+
+      .deck-state span { display: none; }
+      .deck-button { min-height: 34px; }
+    }
+
+    @media (max-height: 760px) and (min-width: 821px) {
+      .chapter-inner { padding-top: var(--launch-content-offset); }
+      h1 { font-size: clamp(62px, 6vw, 86px); }
+      .chapter h2 { font-size: clamp(48px, 5vw, 68px); }
+      .lead { margin-top: 20px; font-size: 15px; }
+      .chapter-actions, .ledger, .role-list, .formula, .page-geometry, .capacity-rule { margin-top: 20px; }
+      .hero-facts { margin-top: 24px; }
+      .readout { bottom: 96px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .hero-why, .hero-why::after { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app launch-notice-visible" id="app">
+    <header class="topbar shell">
+      <a class="brand" href="#overview" data-go="0" aria-label="ParanO(1)d home" data-i18n-aria="brand.home">
+        <span class="brand-name">Paran<em>O(1)</em>d</span>
+      </a>
+      <div class="top-actions">
+        <details class="nav-dropdown language-dropdown">
+          <summary class="nav-action" aria-label="Language" data-i18n-aria="nav.language"><span class="language-current">EN</span><span class="nav-dropdown-chevron" aria-hidden="true">⌄</span></summary>
+          <div class="nav-dropdown-panel language-dropdown-panel">
+            <button class="language-option active" type="button" data-lang="en" aria-pressed="true"><span>English</span><small>EN</small></button>
+            <button class="language-option" type="button" data-lang="ru" aria-pressed="false"><span>Русский</span><small>RU</small></button>
+            <button class="language-option" type="button" data-lang="zh" aria-pressed="false"><span>简体中文</span><small>中文</small></button>
+          </div>
+        </details>
+        <button class="nav-action desktop-nav-action read-trigger" type="button" data-i18n="nav.read">About</button>
+        <details class="nav-dropdown desktop-links-dropdown">
+          <summary class="nav-action"><span data-i18n="nav.links">Links</span><span class="nav-dropdown-chevron" aria-hidden="true">⌄</span></summary>
+          <div class="nav-dropdown-panel">
+            <a href="https://frost.parano1d.org/" target="_blank" rel="noopener noreferrer">FROST-GKR <span class="external-mark" aria-hidden="true">↗</span></a>
+          </div>
+        </details>
+        <a class="nav-action primary desktop-nav-action" href="https://github.com/ignotusnemo/parano1d" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <button class="mobile-menu-toggle" type="button" aria-label="Menu" data-i18n-aria="nav.menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+        <nav class="mobile-menu" id="mobile-menu" aria-label="Menu" data-i18n-aria="nav.menu" hidden>
+          <button class="mobile-menu-item read-trigger" type="button" data-i18n="nav.read">About</button>
+          <div class="mobile-links">
+            <span class="mobile-links-title" data-i18n="nav.links">Links</span>
+            <a class="mobile-menu-item" href="https://frost.parano1d.org/" target="_blank" rel="noopener noreferrer">FROST-GKR <span class="external-mark" aria-hidden="true">↗</span></a>
+          </div>
+          <a class="mobile-menu-item mobile-menu-github" href="https://github.com/ignotusnemo/parano1d" target="_blank" rel="noopener noreferrer">GitHub <span class="external-mark" aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <aside class="launch-notice" id="launch-notice" aria-label="Network launch announcement" data-i18n-aria="announcement.label">
+      <div class="launch-notice-copy">
+        <strong data-i18n="announcement.launch">Public network launch · August 2026</strong>
+        <span class="launch-notice-separator" aria-hidden="true"></span>
+        <a href="mailto:ignotus.nemo@proton.me"><span data-i18n="announcement.contact">Contact developer</span> · <span class="launch-notice-email">ignotus.nemo@proton.me</span></a>
+      </div>
+      <button class="launch-notice-close" id="launch-notice-close" type="button" aria-label="Dismiss announcement" data-i18n-aria="announcement.dismiss">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2L2 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+    </aside>
+
+    <div class="scene" aria-hidden="true">
+      <canvas id="state-scene"></canvas>
+      <div class="scene-label state"><b id="scene-state-title">LIVE STATE</b><span id="scene-state-copy">clear · reuse · expand</span></div>
+      <div class="scene-label proof"><b id="scene-proof-title">π_tip</b><span id="scene-proof-copy">fixed verification</span></div>
+      <div class="scene-label tail"><b id="scene-tail-title">RECENT SUFFIX</b><span id="scene-tail-copy">18 competing blocks</span></div>
+      <div class="readout">
+        <div><span data-i18n="readout.state">state</span><b id="read-state">live utxo</b></div>
+        <div><span data-i18n="readout.history">history</span><b class="violet" id="read-history">π_tip</b></div>
+        <div><span data-i18n="readout.verify">verify</span><b id="read-verify">present</b></div>
+      </div>
+    </div>
+
+    <div class="chapters">
+      <section class="chapter cover active" id="overview" data-step="0" aria-labelledby="title-overview">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="overview.index">The network does not re-execute. It verifies.</div>
+          <h1 id="title-overview" data-i18n="overview.title">Proof-Native<br><em>L1 statechain</em></h1>
+          <p class="lead" data-i18n="overview.lead"><strong>Wallets prove ownership. Miners prove exact state transitions. Every node verifies the result.</strong> No signatures. No trusted setup. No replay from genesis.</p>
+          <div class="chapter-actions">
+            <button class="action primary hero-why" type="button" data-next data-i18n="overview.enter">WHY? <span>→</span></button>
+          </div>
+          <div class="hero-facts">
+            <div class="hero-fact"><b data-i18n="overview.fact.sync.value">O(1) SYNC</b><span data-i18n="overview.fact.sync.copy">no history. no archive nodes</span></div>
+            <div class="hero-fact"><b data-i18n="overview.fact.signatureless.value">SIGNATURELESS</b><span data-i18n="overview.fact.signatureless.copy">hash-only ownership · PQ-ready</span></div>
+            <div class="hero-fact"><b data-i18n="overview.fact.pow.value">POW ORDERS</b><span data-i18n="overview.fact.pow.copy">proofs authorize every transition</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="dependency" data-step="1" aria-labelledby="title-dependency">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="dependency.index">01 / The dependency</div>
+          <h2 id="title-dependency" data-i18n="dependency.title">Conventional blockchains<br><em>store history
+forever.</em></h2>
+          <p class="lead" data-i18n="dependency.lead">Bitcoin, Ethereum and nearly every modern blockchain derive the present by executing history from genesis. More use creates more permanent bootstrap work for every future verifier.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="dependency.row1.label">Source of truth</dt><dd data-i18n="dependency.row1.value"><strong>The complete execution log</strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="dependency.row2.label">New full node</dt><dd data-i18n="dependency.row2.value">Downloads and re-executes the chain</dd></div>
+            <div class="ledger-row"><dt data-i18n="dependency.row3.label">Network age</dt><dd data-i18n="dependency.row3.value">Becomes an ever-growing hardware requirement</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="present" data-step="2" aria-labelledby="title-present">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="present.index">02 / The break with history</div>
+          <h2 id="title-present" data-i18n="present.title">The present<br><em>proves itself.</em></h2>
+          <p class="lead" data-i18n="present.lead"><strong>ParanO(1)d separates validity from historical replay.</strong> Consensus carries a provable live UTXO state: spent outputs release their slots, and old activity does not remain a permanent burden for future nodes.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="present.row1.label">State growth</dt><dd data-i18n="present.row1.value"><strong>Live UTXOs—not lifetime transactions</strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="present.row2.label">Spent outputs</dt><dd data-i18n="present.row2.value">Slots clear and return to the allocator</dd></div>
+            <div class="ledger-row"><dt data-i18n="present.row3.label">Chain age</dt><dd data-i18n="present.row3.value">Adds no lifetime history or genesis replay</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="join" data-step="3" aria-labelledby="title-join">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="join.index">03 / Independent bootstrap</div>
+          <h2 id="title-join" data-i18n="join.title">Bootstrap from proof.<br><em>Not from trust.</em></h2>
+          <p class="lead" data-i18n="join.lead"><strong>Peers provide data—not trust.</strong> A node receives the live UTXO state, its matching terminal and the latest 18 complete blocks. It authenticates the state, verifies the reorg window and becomes an independent full node. The procedure is the same in year one and year ten.</p>
+          <div class="formula"><b data-i18n="join.formula.state">live state</b><span>+</span><b data-i18n="join.formula.proof">π<sub>tip</sub> + 18 blocks</b><span>→</span><b data-i18n="join.formula.node">independent node ✓</b></div>
+        </div>
+      </section>
+
+      <section class="chapter" id="proof-native" data-step="4" aria-labelledby="title-proof-native">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="proof.index">04 / The paradigm shift</div>
+          <h2 id="title-proof-native" data-i18n="proof.title">Prove where the<br><em>information lives.</em></h2>
+          <p class="lead" data-i18n="proof.lead">In ParanO(1)d, proofs are built by whoever has the required data. The network receives the finished result, not another job to repeat the same work.</p>
+          <div class="role-list">
+            <div class="role wallet"><i>W</i><b data-i18n="proof.wallet.label">Wallet</b><span data-i18n="proof.wallet.copy">Proves private authorization without revealing the spending secret.</span></div>
+            <div class="role miner"><i>M</i><b data-i18n="proof.miner.label">Miner</b><span data-i18n="proof.miner.copy">Proves public transaction logic and the exact state transition.</span></div>
+            <div class="role"><i>N</i><b data-i18n="proof.network.label">Network</b><span data-i18n="proof.network.copy">Verifies proofs, applies proven slot writes and checks PoW.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="living-state" data-step="5" aria-labelledby="title-living-state">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="living.index">05 / A living UTXO state</div>
+          <h2 id="title-living-state" data-i18n="living.title">State grows with use.<br><em>Not with time.</em></h2>
+          <p class="lead" data-i18n="living.lead">Spending clears a slot. The allocator reuses empty positions before opening new state. Empty segments are virtual and disappear again when their last UTXO is spent.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="living.spend.label">Spend</dt><dd data-i18n="living.spend.value">Clear the indexed slot</dd></div>
+            <div class="ledger-row"><dt data-i18n="living.reuse.label">Reuse</dt><dd data-i18n="living.reuse.value">Issue a fresh <code>creation_id</code> in an empty position</dd></div>
+            <div class="ledger-row"><dt data-i18n="living.expand.label">Expand</dt><dd data-i18n="living.expand.value">Attach a canonical empty half at 75% occupancy — no pause</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="ownership" data-step="6" aria-labelledby="title-ownership">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="ownership.index">06 / Signatureless ownership</div>
+          <h2 id="title-ownership" data-i18n="ownership.title">A secret is enough.<br><em>No keypair. No signature.</em></h2>
+          <p class="lead" data-i18n="ownership.lead">ParanO(1)d needs 256 bits of secret entropy—not a public-key pair or a mnemonic format. The wallet proves knowledge of that secret without revealing it; every spend produces a fresh ZK proof bound to the complete transaction.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="ownership.protocol.label">Protocol</dt><dd data-i18n="ownership.protocol.value">256-bit secret · no mnemonic format</dd></div>
+            <div class="ledger-row"><dt data-i18n="ownership.wire.label">On the wire</dt><dd data-i18n="ownership.wire.value">No public key · no transaction signature</dd></div>
+            <div class="ledger-row"><dt data-i18n="ownership.consensus.label">Consensus</dt><dd data-i18n="ownership.consensus.value"><strong>Hash-only ownership · PQ-ready from genesis</strong></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="paged-spend" data-step="7" aria-labelledby="title-paged-spend">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="paged.index">07 / PagedSpend</div>
+          <h2 id="title-paged-spend" data-i18n="paged.title">Many UTXOs.<br><em>One transaction.</em></h2>
+          <p class="lead" data-i18n="paged.lead">Fixed proof pages are internal geometry. Up to 128 pages remain one indivisible user transaction with one txid, one fee, one capsule and one receipt.</p>
+          <div class="page-geometry">
+            <div class="page-stack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span>→</span>
+            <div class="atomic-tx" data-i18n="paged.atomic">1,020 inputs · 256 outputs<br>ATOMIC PAGEDSPEND</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="history-step" data-step="8" aria-labelledby="title-history-step">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="history.index">08 / Recursive history</div>
+          <h2 id="title-history-step" data-i18n="history.title">History becomes<br><em>a fixed proof.</em></h2>
+          <p class="lead" data-i18n="history.lead">Every <code>HistoryStep</code> proves the current block and verifies the preceding terminal inside the same relation. Proof size and verification work do not increase with block height.</p>
+          <div class="formula"><b>π<sub>h−1</sub></b><span>+</span><b>block<sub>h</sub> · state<sub>h</sub></b><span>→</span><b>π<sub>h</sub></b></div>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="history.active.label">Active node</dt><dd data-i18n="history.active.value">Live state + compact headers + latest 18 complete blocks</dd></div>
+            <div class="ledger-row"><dt data-i18n="history.age.label">Chain age</dt><dd data-i18n="history.age.value"><strong>Does not increase history verification</strong></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="privacy" data-step="9" aria-labelledby="title-privacy">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="privacy.index">09 / Privacy by non-retention</div>
+          <h2 id="title-privacy" data-i18n="privacy.title">Privacy<br><em>without privacy.</em></h2>
+          <p class="lead" data-i18n="privacy.lead">The live state is public, and transactions are visible while consensus carries them. ParanO(1)d does not make every node preserve the permanent transaction graph. Following an address across years requires an external tracker that records the stream continuously—and pays to store all of it.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="privacy.live.label">Live state</dt><dd data-i18n="privacy.live.value">Public values · public owners</dd></div>
+            <div class="ledger-row"><dt data-i18n="privacy.graph.label">Past graph</dt><dd data-i18n="privacy.graph.value"><strong>Not retained by consensus</strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="privacy.tracker.label">External tracking</dt><dd data-i18n="privacy.tracker.value">Record every transaction in real time</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="receipts" data-step="10" aria-labelledby="title-receipts">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="receipts.index">10 / Portable proof of payment</div>
+          <h2 id="title-receipts" data-i18n="receipts.title">History expires.<br><em>The receipt does not.</em></h2>
+          <p class="lead" data-i18n="receipts.lead">When a payment confirms, the sender's wallet saves an exportable Merkle receipt. It carries the complete public payment data and a fixed-depth inclusion path. Any node verifies it against the canonical header—without the historical block body.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="receipts.auth.label">Authenticates</dt><dd data-i18n="receipts.auth.value">txid · recipients · amounts · fee · block time</dd></div>
+            <div class="ledger-row"><dt data-i18n="receipts.path.label">Merkle path</dt><dd data-i18n="receipts.path.value">Eight Poseidon2b levels</dd></div>
+            <div class="ledger-row"><dt data-i18n="receipts.body.label">Old block body</dt><dd data-i18n="receipts.body.value"><strong>Not required</strong></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="proof-stack" data-step="11" aria-labelledby="title-proof-stack">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="stack.index">11 / One binary proof stack</div>
+          <h2 id="title-proof-stack" data-i18n="stack.title">One arithmetic.<br><em>End to end.</em></h2>
+          <p class="lead" data-i18n="stack.lead">Addresses, wallet authorization, transactions, state, recursive history and PoW share one binary proof stack. FROST-GKR folds repeated Poseidon2b structure into shared Boolean hypercubes; FRI-Binius closes the relation without a trusted setup.</p>
+          <div class="formula"><b data-i18n="stack.formula.left">ownership + tx</b><span>→</span><b>FROST-GKR</b><span>→</span><b data-i18n="stack.formula.right">state + history + PoW</b></div>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="stack.field.label">Field</dt><dd data-i18n="stack.field.value"><code>GF(2^128)</code> · one binary arithmetic</dd></div>
+            <div class="ledger-row"><dt data-i18n="stack.prover.label">Prover</dt><dd data-i18n="stack.prover.value"><strong>10.50× faster</strong> in the 59-permutation comparison</dd></div>
+            <div class="ledger-row"><dt data-i18n="stack.proof.label">Algebraic proof</dt><dd data-i18n="stack.proof.value"><strong>51.67× smaller</strong></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="pow" data-step="12" aria-labelledby="title-pow">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="pow.index">12 / Proof-native PoW</div>
+          <h2 id="title-pow" data-i18n="pow.title">Prove first.<br><em>Mine second.</em></h2>
+          <p class="lead" data-i18n="pow.lead">PoW chooses the order of already-proven transitions. The miner completes the nonce-independent block proof, freezes an immutable template, then searches only the 128-bit nonce.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="pow.target.label">Block target</dt><dd data-i18n="pow.target.value"><strong>15-second mean</strong> · ASERT difficulty</dd></div>
+            <div class="ledger-row"><dt data-i18n="pow.majority.label">Majority hashpower</dt><dd data-i18n="pow.majority.value">May censor · reorder · reorg</dd></div>
+            <div class="ledger-row"><dt data-i18n="pow.boundary.label">Proof boundary</dt><dd data-i18n="pow.boundary.value"><strong>Cannot forge ownership or validate an invalid state</strong></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="chapter" id="run" data-step="13" aria-labelledby="title-run">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="run.index">13 / Hardware-adaptive decentralization</div>
+          <h2 id="title-run" data-i18n="run.title">The entire L1.<br><em>On your laptop.</em></h2>
+          <p class="lead" data-i18n="run.lead">Your laptop can hold the complete live state and independently verify the entire L1. ParanO(1)d adapts block capacity to available proving power: stronger hardware raises TPS; weaker hardware lowers it. Throughput changes. The network does not stop.</p>
+          <div class="capacity-rule">
+            <div class="capacity-side"><span data-i18n="run.capacity.modest">Your laptop</span><b data-i18n="run.capacity.modest.value">lower TPS</b></div>
+            <i aria-hidden="true">↔</i>
+            <div class="capacity-side"><span data-i18n="run.capacity.fast">Faster hardware</span><b data-i18n="run.capacity.fast.value">higher TPS</b></div>
+            <strong class="capacity-live"><span data-i18n="run.capacity.network">Network</span><b data-i18n="run.capacity.network.value">keeps advancing</b></strong>
+          </div>
+          <div class="chapter-actions">
+            <a class="action primary" href="mailto:ignotus.nemo@proton.me" data-i18n="run.implementation">Contact developer</a>
+            <a class="action violet" href="https://frost.parano1d.org/" target="_blank" rel="noopener noreferrer" data-i18n="run.research">FROST-GKR research</a>
+            <button class="action read-trigger" type="button" data-i18n="run.read">About</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <nav class="state-rail" aria-label="Statechain chapters" data-i18n-aria="rail.label">
+      <button class="state-dot active" data-go="0" aria-label="ParanO(1)d overview" data-i18n-aria="rail.0">
+        <svg class="rail-brand-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+          <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="4"/>
+          <path d="M27 27.5 32 22.5V42" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="state-dot" data-go="1" aria-label="The dependency" data-i18n-aria="rail.1">01</button>
+      <button class="state-dot" data-go="2" aria-label="The present" data-i18n-aria="rail.2">02</button>
+      <button class="state-dot" data-go="3" aria-label="Independent bootstrap" data-i18n-aria="rail.3">03</button>
+      <button class="state-dot" data-go="4" aria-label="Proof-native" data-i18n-aria="rail.4">04</button>
+      <button class="state-dot" data-go="5" aria-label="Living state" data-i18n-aria="rail.5">05</button>
+      <button class="state-dot" data-go="6" aria-label="Signatureless ownership" data-i18n-aria="rail.6">06</button>
+      <button class="state-dot" data-go="7" aria-label="PagedSpend" data-i18n-aria="rail.7">07</button>
+      <button class="state-dot" data-go="8" aria-label="Recursive history" data-i18n-aria="rail.8">08</button>
+      <button class="state-dot" data-go="9" aria-label="Privacy by non-retention" data-i18n-aria="rail.9">09</button>
+      <button class="state-dot" data-go="10" aria-label="Portable receipts" data-i18n-aria="rail.10">10</button>
+      <button class="state-dot" data-go="11" aria-label="One binary proof stack" data-i18n-aria="rail.11">11</button>
+      <button class="state-dot" data-go="12" aria-label="Proof-native PoW" data-i18n-aria="rail.12">12</button>
+      <button class="state-dot" data-go="13" aria-label="Join ParanO(1)d" data-i18n-aria="rail.13">13</button>
+    </nav>
+
+    <div class="control-deck shell">
+      <div class="deck-state"><b id="deck-title">PARANO(1)D · PROOF-NATIVE STATECHAIN</b><span id="deck-proof">transparent L1 · proof of work</span></div>
+      <div class="suffix" id="suffix" aria-hidden="true"></div>
+      <div class="deck-buttons">
+        <button class="deck-button prev" id="prev" type="button" aria-label="Previous state" data-i18n-aria="deck.previous" disabled>←</button>
+        <button class="deck-button" id="next" type="button">ADVANCE STATE →</button>
+      </div>
+    </div>
+
+    <div class="transition-flash" id="transition-flash" aria-hidden="true"></div>
+  </main>
+
+  <aside class="read-mode" id="read-mode" role="dialog" aria-modal="true" aria-hidden="true" aria-label="ParanO(1)d documentation" data-i18n-aria="reader.dialog">
+    <article class="read-panel">
+      <header class="read-head">
+        <b data-i18n="reader.header">ParanO(1)d · README</b>
+        <div class="read-tools">
+          <details class="nav-dropdown language-dropdown">
+            <summary class="nav-action" aria-label="Language" data-i18n-aria="nav.language"><span class="language-current">EN</span><span class="nav-dropdown-chevron" aria-hidden="true">⌄</span></summary>
+            <div class="nav-dropdown-panel language-dropdown-panel">
+              <button class="language-option active" type="button" data-lang="en" aria-pressed="true"><span>English</span><small>EN</small></button>
+              <button class="language-option" type="button" data-lang="ru" aria-pressed="false"><span>Русский</span><small>RU</small></button>
+              <button class="language-option" type="button" data-lang="zh" aria-pressed="false"><span>简体中文</span><small>中文</small></button>
+            </div>
+          </details>
+          <button class="read-close" type="button" aria-label="Close" data-i18n-aria="reader.close.short">×</button>
+        </div>
+      </header>
+      <div class="read-body" id="reader-body"></div>
+    </article>
+  </aside>
+
+  <template id="reader-en">
+    <h1>Paran<em>O(1)</em>d</h1>
+    <p class="read-subtitle">A proof-native L1 statechain secured by proof of work.</p>
+
+    <p>Blockchains have a fundamental architectural flaw: to validate the present, you must replay the past. Bitcoin, Ethereum, and nearly every major network inherit this property. A new full node downloads the chain from genesis and re-executes every transaction because the current state does not prove itself. This is not a temporary limitation. It is baked into the model.</p>
+    <p><strong>ParanO(1)d is designed to remove this requirement.</strong></p>
+    <p>In ParanO(1)d, validity is established once, where the complete information already exists. Authorization is proved locally by the party with the private witness — the wallet owner. The miner proves the public transaction logic and the exact state transition. The network verifies those proofs instead of repeating the same execution.</p>
+    <p>Every accepted block carries a recursive <code>HistoryStep</code> that binds the block, its new UTXO root, and the validity of the preceding statechain. A new node can therefore authenticate the current state and verify the recent reorg suffix without executing the chain from genesis.</p>
+    <p>Once the present state carries its own proof, a different architecture becomes possible. Spent state can be deleted and reused. Ownership no longer needs a public key or digital signature. State growth can be priced directly. Proof of work can order transitions whose validity is already established. The result is an L1 whose age does not become a hardware requirement. Years later, an ordinary laptop can still hold the complete live state and independently verify the network without replaying the chain's lifetime.</p>
+
+    <h2>The Fundamental Shift</h2>
+    <div class="read-table compare"><table>
+      <thead><tr><th></th><th>Conventional blockchain</th><th>ParanO(1)d</th></tr></thead>
+      <tbody>
+        <tr><th>Validation</th><td>Every full node re-executes</td><td>The witness holder proves; the network verifies</td></tr>
+        <tr><th>Bootstrap</th><td>Rebuild state from genesis</td><td>Authenticate current state and verify the recent suffix</td></tr>
+        <tr><th>Ownership</th><td>Public-key signature</td><td>Fresh ZK proof of a Poseidon2b preimage</td></tr>
+        <tr><th>State</th><td>Derived from accumulated history</td><td>Exact live UTXO state is a consensus object</td></tr>
+        <tr><th>Spent outputs</th><td>Remain part of required history</td><td>Slots are cleared and safely reused</td></tr>
+        <tr><th>Proof of work</th><td>Orders an execution log</td><td>Orders proof-valid state transitions</td></tr>
+        <tr><th>Post-quantum migration</th><td>Replace the ownership scheme</td><td>No elliptic-curve transaction scheme to replace</td></tr>
+      </tbody>
+    </table></div>
+    <p>ParanO(1)d is transparent, not a privacy chain. Current values and owners are public, and transactions are visible when relayed. The protocol turns history into proof: every node carries an authenticated present instead of an ever-growing transaction graph. Anyone may build an external tracer, but it must record the entire transaction stream for itself; the network does not make every node carry that burden.</p>
+    <p>Privacy here comes from non-retention, not concealment. Zero knowledge protects the spending witness; proof-native validation removes redundant execution.</p>
+
+    <h2>How It Works</h2>
+    <h3>Execution Is Local</h3>
+    <p>When sending NOID, the wallet selects its UTXOs and creates one atomic <code>PagedSpend</code>. It then produces a freshly randomized, witness-hiding authorization for <code>{logical_txid, input_owner}</code>. The spending secret never leaves the wallet.</p>
+    <p>The authorization is stateless: it contains no UTXO Merkle path and is not tied to one state root. The miner has the public state witness and proves separately that every input exists, every output slot is empty, values balance, fees are correct, and the resulting state root is exact.</p>
+    <p>Private authorization is proved by the wallet. Public execution is proved by the miner. Neither task is repeated across the network.</p>
+
+    <h3>The Network Verifies, Not Executes</h3>
+    <p>The mempool verifies the complete transaction intent before relaying it. A miner selects available intents immediately.</p>
+    <p>The miner combines the selected transactions, exact state transition and preceding terminal into the next <code>HistoryStep</code>. It completes this proof before searching for a PoW nonce. Peers receive one atomic <code>{block, HistoryStep terminal}</code> bundle and accept it only after verifying both the proof and the nonce.</p>
+    <p>Peers then apply the proven slot writes to advance their local UTXO set, materializing the proof's result without re-executing transaction logic.</p>
+
+    <h3>History Collapses Recursively</h3>
+    <p>Each <code>HistoryStep</code> proves the current block relation and verifies the previous terminal inside the same relation. Proof size and verification work do not increase with block height.</p>
+    <p>An active node keeps the exact live state, compact headers for cumulative work, and the latest 18 complete blocks for competing miners and reorgs. A joining node authenticates a finalized current state with its matching terminal, then verifies that recent suffix normally.</p>
+    <p>ParanO(1)d is history-stateless, not state-free. State transfer scales with the live UTXO set. What no longer scales with chain age is the execution required to prove why that state is valid.</p>
+
+    <h2>Architecture</h2>
+    <h3>A Living UTXO State</h3>
+    <p>The state is an exact sparse vector of indexed UTXOs. Spending clears a slot; the allocator reuses empty positions before opening new state. Every new output has a fresh <code>creation_id</code>, so reusing the same index can never revive an old reference.</p>
+    <p>State is divided into <code>2^16</code>-slot segments. Empty segments are virtual and a segment disappears again when its last UTXO is spent. The slot domain begins at <code>2^24</code> and expands automatically at 75% occupancy by attaching a canonical empty half to the existing root. No state copy, migration or network pause is required.</p>
+    <p>Fees distinguish ordinary I/O from net-new state. The state-growth component rises with occupancy and is burned; consolidation pays no growth burn. Block reward halves when the state domain actually expands, with a permanent 1 NOID floor.</p>
+
+    <h3>Signatureless Ownership</h3>
+    <p>An address is the Poseidon2b image of a 256-bit spending secret. The protocol needs secret entropy, not a keypair or a prescribed mnemonic format. Ownership is a zero-knowledge proof of knowledge of that preimage, bound to the complete logical transaction. There is no public key or transaction signature on the wire.</p>
+    <p>The capsule is independently randomized on every spend, including repeated use of the same address. Transaction consensus contains no elliptic curves. The Ed25519 key used by libp2p identifies a peer only and has no spending or consensus authority.</p>
+
+    <h3>PagedSpend</h3>
+    <p>The proof system uses fixed physical pages with eight input and two output positions. <code>PagedSpend</code> joins up to 128 pages into one user transaction with one txid, one fee, one ZK capsule and one receipt.</p>
+    <p>A single transaction may consume up to 1,020 UTXOs and create up to 256 outputs. Continuation pages are internal proof geometry: they remain one indivisible transaction in the wallet, mempool, relay, block, receipt and reorg paths.</p>
+
+    <h3>Portable Payment Receipts</h3>
+    <p>Consensus does not preserve old block bodies forever, so the sender's wallet preserves the evidence that matters. After confirmation it stores an exportable receipt containing the public payment data and an eight-level Poseidon2b Merkle path. Anyone can later verify that the canonical block contained the stated txid, input owners, recipients, amounts, fee and block time by checking the receipt against the retained block header. The old block body is not required.</p>
+
+    <h3>One Binary Proof Stack</h3>
+    <p>The protocol is built over the binary tower field <code>GF(2^128)</code>. Poseidon2b is the common permutation for addresses, transactions, Merkle trees, state roots, transcripts, block identifiers and PoW.</p>
+    <p>For ParanO(1)d, we developed FROST-GKR — Frobenius Reduction Over Shifted Tables. It places complete Poseidon2b batches and Merkle paths in shared Boolean hypercubes, checks the active degree-seven S-box relation with one degree-nine sumcheck, and binds adjacent rounds with one degree-two shift sumcheck. In a like-for-like 59-permutation benchmark, this reduces median prover time by 10.50× and raw algebraic proof bytes by 51.67×. Batched sumchecks, zerocheck, lincheck and FRI-Binius close the GF(2) R1CS relation without a trusted setup. The two authenticated launch matrices — B64 at <code>m=23</code> and B255 at <code>m=24</code> — are embedded in the official binary and can be regenerated from source. The <a href="https://github.com/ignotusnemo/parano1d/tree/main/research/frost_gkr">benchmark artifact</a> pins the exact comparison revision and environment.</p>
+    <p>This common arithmetic is what lets wallet authorization, exact state and recursive chain verification compose as one protocol instead of independent proof systems glued together afterward.</p>
+
+    <h3>Proof-native PoW</h3>
+    <p>PoW has one job: choose the order of valid transitions. Majority hash power may censor, reorder or reorg valid payments, but it cannot forge ownership or make an invalid <code>HistoryStep</code> acceptable.</p>
+    <p>The miner proves the nonce-independent block first, then searches a fixed Poseidon2b header with a 128-bit nonce. ASERT targets a 15-second mean interval, and cumulative work selects the chain. An external miner receives an immutable, single-use template and returns only a nonce; it cannot alter the transactions or state root.</p>
+
+    <h2>Launch Profile</h2>
+    <div class="read-table"><table>
+      <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Mean block target</td><td>15 seconds</td></tr>
+        <tr><td>Default miner class</td><td>B64, <code>m=23</code>, up to 64 user pages</td></tr>
+        <tr><td>Large miner class</td><td>B255, <code>m=24</code>, up to 255 user pages</td></tr>
+        <tr><td>Maximum logical transactions per block</td><td>255</td></tr>
+        <tr><td>Maximum one-page throughput</td><td>17 TPS</td></tr>
+        <tr><td>Maximum inputs in one transaction</td><td>1,020</td></tr>
+        <tr><td>Maximum outputs in one transaction</td><td>256</td></tr>
+        <tr><td>Recent block / reorg suffix</td><td>18 blocks</td></tr>
+        <tr><td>State domain</td><td><code>2^24</code> to <code>2^32</code> slots</td></tr>
+      </tbody>
+    </table></div>
+    <p>B64 is the laptop-class mining floor, not the protocol ceiling. On the reference 12-thread Intel Core i7-1365U, saturated B64 preparation measures 14.387 seconds at p95 and verification measures 0.720 seconds at p95. Faster hardware may qualify B255; every node verifies both classes. Full measurements are in the <a href="https://github.com/ignotusnemo/parano1d/blob/main/research/two_class/results/2026-07-17-history-step-lto-20-sample.md">two-class benchmark</a>.</p>
+
+    <h2>Network</h2>
+    <p>ParanO(1)d uses libp2p GossipSub for blocks and transaction intents, typed request-response protocols for synchronization, Kademlia and DNS seeds for discovery, and mDNS for local networks. Persistent peers, connection limits, and IPv4/IPv6 network-group diversity reduce simple eclipse and connection flood attacks without adding a consensus round.</p>
+    <p>Finalized state transfer is authenticated by <code>HistoryStep</code>; short gaps use ordinary recent-block sync. Finalized transaction bodies are not required by active consensus. Exportable Merkle receipts preserve proof of inclusion after a body leaves the recent suffix.</p>
+
+    <h2>Running ParanO(1)d</h2>
+    <p>The first node of a new network creates genesis and starts mining:</p>
+    <pre>parano1d --miner</pre>
+    <p>Join the public network as a node or miner:</p>
+    <pre>parano1d --seed &lt;host&gt;:9400
+parano1d --miner --seed &lt;host&gt;:9400</pre>
+    <p>External nonce search keeps transaction selection and proving inside the node:</p>
+    <pre>parano1d --extminer --mining-key &lt;token&gt;
+parano1d-miner --key &lt;token&gt;</pre>
+    <p>Default ports are <code>9400</code> for P2P and <code>127.0.0.1:9401</code> for JSON-RPC. First start creates <code>~/.parano1d/parano1d.toml</code>, the MDBX state and the built-in wallet under <code>~/.parano1d/data/</code>.</p>
+    <p class="read-note">The current <code>wallet.key</code> is not password-encrypted. It is created with owner-only permissions; back it up and protect it.</p>
+
+    <h3>CLI</h3>
+    <p>Addresses use bech32m and begin with <code>o1</code>. <code>1 NOID = 1,000,000 μNOID</code>.</p>
+    <pre>parano1d-cli status
+parano1d-cli peers
+parano1d-cli state
+parano1d-cli mining
+parano1d-cli address
+parano1d-cli address --new
+parano1d-cli balance
+parano1d-cli utxos
+parano1d-cli send &lt;o1-address&gt; 10.5 --dry-run
+parano1d-cli send &lt;o1-address&gt; 10.5
+parano1d-cli mempool
+parano1d-cli history
+parano1d-cli receipt &lt;txid&gt; &gt; receipt.hex
+parano1d-cli verify "$(tr -d '\n' &lt; receipt.hex)"
+parano1d-cli stop</pre>
+    <p>Run <code>parano1d --help</code>, <code>parano1d-cli help</code> or <code>parano1d-miner --help</code> for the full interface.</p>
+
+    <h2>Building from Source</h2>
+    <p>The canonical release build supports Linux on x86-64 and AArch64. It requires Rust with <code>rustfmt</code>, a native C/C++ toolchain, <code>pkg-config</code>, libclang and OpenSSL development headers. Release proving requires AVX2, PCLMULQDQ and VPCLMULQDQ on x86-64, or AES/PMULL on AArch64.</p>
+    <pre>git clone https://github.com/ignotusnemo/parano1d.git
+cd parano1d
+./scripts/build_release.sh</pre>
+    <p>The build regenerates and authenticates both HistoryStep matrices, runs the release tests and produces <code>parano1d</code>, <code>parano1d-cli</code> and <code>parano1d-miner</code>.</p>
+
+    <p class="read-signature">Designed and developed by <strong>Ignotus Nemo</strong>. Licensed under Apache-2.0.</p>
+  </template>
+
+  <template id="reader-ru">
+    <h1>Paran<em>O(1)</em>d</h1>
+    <p class="read-subtitle">A proof-native L1 statechain secured by proof of work.</p>
+
+    <p>В архитектуре блокчейнов есть фундаментальный изъян: чтобы проверить настоящее, приходится заново проиграть прошлое. Bitcoin, Ethereum и почти все крупные сети наследуют эту зависимость. Новая полная нода скачивает цепочку от генезиса и повторно исполняет каждую транзакцию, потому что текущее состояние не способно доказать собственную корректность. Это не временное ограничение, а свойство самой модели.</p>
+    <p><strong>ParanO(1)d создан, чтобы убрать это требование.</strong></p>
+    <p>В ParanO(1)d корректность доказывается один раз — там, где уже есть вся необходимая информация. Право расходования локально доказывает владелец закрытых данных, то есть кошелёк. Майнер доказывает публичную логику транзакций и точный переход состояния. Сеть проверяет эти доказательства вместо того, чтобы повторять то же исполнение.</p>
+    <p>Каждый принятый блок несёт рекурсивный <code>HistoryStep</code>, который связывает сам блок, новый корень UTXO и корректность предшествующей statechain. Поэтому новая нода может подтвердить текущее состояние и обычным способом проверить недавнее окно реорганизаций, не исполняя всю цепочку от генезиса.</p>
+    <p>Когда настоящее состояние несёт собственное доказательство, становится возможна другая архитектура. Потраченное состояние можно удалять и использовать повторно. Владение больше не требует публичного ключа или цифровой подписи. Рост состояния можно тарифицировать напрямую. Proof of work может упорядочивать переходы, корректность которых уже установлена. Возраст такого L1 не превращается в требование к железу: спустя годы обычный ноутбук по-прежнему сможет хранить всё текущее состояние и независимо проверять сеть, не повторяя всю её жизнь.</p>
+
+    <h2>Главное изменение</h2>
+    <div class="read-table compare"><table>
+      <thead><tr><th></th><th>Обычный блокчейн</th><th>ParanO(1)d</th></tr></thead>
+      <tbody>
+        <tr><th>Проверка</th><td>Каждая полная нода исполняет всё заново</td><td>Владелец закрытых данных доказывает; сеть проверяет</td></tr>
+        <tr><th>Первичный запуск</th><td>Собрать состояние от генезиса</td><td>Подтвердить текущее состояние и проверить недавний суффикс</td></tr>
+        <tr><th>Владение</th><td>Подпись публичным ключом</td><td>Новое ZK-доказательство прообраза Poseidon2b</td></tr>
+        <tr><th>Состояние</th><td>Производная накопленной истории</td><td>Точное текущее состояние UTXO — объект консенсуса</td></tr>
+        <tr><th>Потраченные выходы</th><td>Остаются частью обязательной истории</td><td>Слоты очищаются и безопасно используются снова</td></tr>
+        <tr><th>Proof of work</th><td>Упорядочивает журнал исполнения</td><td>Упорядочивает уже доказанные переходы состояния</td></tr>
+        <tr><th>Постквантовая миграция</th><td>Заменить схему владения</td><td>Нет транзакционной схемы на эллиптических кривых, которую придётся менять</td></tr>
+      </tbody>
+    </table></div>
+    <p>ParanO(1)d прозрачен и не является privacy-chain. Текущие суммы и владельцы публичны, а транзакции видны во время распространения. Протокол превращает историю в доказательство: каждая нода несёт подтверждённое настоящее, а не постоянно растущий граф транзакций. Любой может построить внешний трекер, но тогда ему придётся самостоятельно записывать весь поток транзакций; сеть не заставляет каждую ноду нести этот груз.</p>
+    <p>Приватность здесь возникает из отсутствия постоянного хранения, а не из сокрытия данных. Zero knowledge защищает секрет расходования; Proof-native проверка устраняет повторное исполнение.</p>
+
+    <h2>Как это работает</h2>
+    <h3>Исполнение остаётся локальным</h3>
+    <p>Отправляя NOID, кошелёк выбирает свои UTXO и создаёт один атомарный <code>PagedSpend</code>. Затем он строит новое рандомизированное доказательство права расходования для <code>{logical_txid, input_owner}</code>, скрывающее закрытые данные. Секрет расходования никогда не покидает кошелёк.</p>
+    <p>Это доказательство stateless: в нём нет Merkle-пути UTXO, и оно не привязано к одному корню состояния. У майнера есть публичные данные состояния; отдельно он доказывает, что каждый вход существует, каждый выходной слот пуст, суммы сходятся, комиссии верны, а итоговый корень состояния точен.</p>
+    <p>Приватное право расходования доказывает кошелёк. Публичное исполнение доказывает майнер. Сеть не повторяет ни одну из этих задач.</p>
+
+    <h3>Сеть проверяет, а не исполняет</h3>
+    <p>Перед распространением mempool проверяет полный замысел транзакции. Майнер сразу выбирает доступные транзакции.</p>
+    <p>Выбранные транзакции, точный переход состояния и предыдущий terminal майнер объединяет в следующий <code>HistoryStep</code>. Это доказательство завершается до начала поиска PoW nonce. Пиры получают один атомарный пакет <code>{block, HistoryStep terminal}</code> и принимают его только после проверки и доказательства, и nonce.</p>
+    <p>Затем пиры применяют доказанные записи слотов и продвигают локальный набор UTXO. Так результат доказательства материализуется без повторного исполнения логики транзакций.</p>
+
+    <h3>История сворачивается рекурсивно</h3>
+    <p>Каждый <code>HistoryStep</code> доказывает relation текущего блока и внутри той же relation проверяет предыдущий terminal. Размер доказательства и работа верификатора не растут с высотой блока.</p>
+    <p>Активная нода хранит точное текущее состояние, компактные заголовки для накопленной работы и последние 18 полных блоков, необходимые для конкурирующих майнеров и реорганизаций. Подключающаяся нода подтверждает финализированное текущее состояние соответствующим terminal, а затем обычно проверяет недавний суффикс.</p>
+    <p>ParanO(1)d не зависит от истории, но не является системой без состояния. Объём передачи состояния растёт вместе с числом живых UTXO. От возраста цепочки больше не зависит объём исполнения, необходимый для доказательства корректности этого состояния.</p>
+
+    <h2>Архитектура</h2>
+    <h3>Живое состояние UTXO</h3>
+    <p>Состояние — точный разреженный вектор индексированных UTXO. Расходование очищает слот; аллокатор повторно использует свободные позиции прежде, чем открывать новое состояние. Каждый новый выход получает свежий <code>creation_id</code>, поэтому повторное использование того же индекса никогда не оживит старую ссылку.</p>
+    <p>Состояние разделено на сегменты по <code>2^16</code> слотов. Пустые сегменты существуют виртуально, а сегмент снова исчезает, когда потрачен его последний UTXO. Домен слотов начинается с <code>2^24</code> и автоматически расширяется при заполнении 75%: к существующему корню подключается каноническая пустая половина. Копирование состояния, миграция и остановка сети не нужны.</p>
+    <p>Комиссии различают обычный ввод-вывод и чистое увеличение состояния. Компонент роста дорожает по мере заполнения и сжигается; консолидация не платит за рост. Награда за блок уменьшается вдвое, когда домен состояния действительно расширяется, но никогда не опускается ниже 1 NOID.</p>
+
+    <h3>Владение без подписей</h3>
+    <p>Адрес — Poseidon2b-образ 256-битного секрета расходования. Протоколу нужна секретная энтропия, а не пара ключей или обязательный формат мнемоники. Владение выражено zero-knowledge доказательством знания этого прообраза, связанным со всей логической транзакцией. В сети нет ни публичного ключа, ни подписи транзакции.</p>
+    <p>Capsule независимо рандомизируется при каждом расходовании, в том числе при повторном использовании одного адреса. В транзакционном консенсусе нет эллиптических кривых. Ключ Ed25519, который использует libp2p, лишь идентифицирует пир и не даёт полномочий расходовать монеты или влиять на консенсус.</p>
+
+    <h3>PagedSpend</h3>
+    <p>Система доказательств использует физические страницы фиксированного размера: восемь позиций для входов и две для выходов. <code>PagedSpend</code> объединяет до 128 страниц в одну пользовательскую транзакцию с одним txid, одной комиссией, одной ZK capsule и одним чеком.</p>
+    <p>Одна транзакция может потратить до 1 020 UTXO и создать до 256 выходов. Страницы продолжения — лишь внутренняя геометрия доказательства: в кошельке, mempool, relay, блоке, чеке и при реорганизации они остаются одной неделимой транзакцией.</p>
+
+    <h3>Переносимые чеки платежей</h3>
+    <p>Консенсус не хранит старые тела блоков вечно, поэтому кошелёк отправителя сохраняет нужное доказательство. После подтверждения он записывает экспортируемый чек с публичными данными платежа и восьмиуровневым Merkle-путём Poseidon2b. Позже любой может сверить чек с сохранённым заголовком блока и подтвердить, что канонический блок содержал указанные txid, владельцев входов, получателей, суммы, комиссию и время. Старое тело блока для этого не требуется.</p>
+
+    <h3>Единый бинарный стек доказательств</h3>
+    <p>Протокол построен над бинарным башенным полем <code>GF(2^128)</code>. Poseidon2b служит общей перестановкой для адресов, транзакций, деревьев Merkle, корней состояния, транскриптов, идентификаторов блоков и PoW.</p>
+    <p>Для ParanO(1)d мы разработали FROST-GKR — Frobenius Reduction Over Shifted Tables. Он размещает полные пакеты Poseidon2b и Merkle-пути в общих булевых гиперкубах, проверяет активное отношение S-box степени семь одним sumcheck степени девять и связывает соседние раунды одним shift-sumcheck степени два. В прямом сравнении на 59 перестановках медианное время prover уменьшается в 10,50 раза, а объём сырого алгебраического доказательства — в 51,67 раза. Пакетные sumcheck, zerocheck, lincheck и FRI-Binius замыкают GF(2) R1CS relation без trusted setup. Две аутентифицированные стартовые матрицы — B64 при <code>m=23</code> и B255 при <code>m=24</code> — встроены в официальный бинарник и могут быть воспроизведены из исходников. <a href="https://github.com/ignotusnemo/parano1d/tree/main/research/frost_gkr">Артефакт бенчмарка</a> фиксирует точную ревизию и окружение сравнения.</p>
+    <p>Общая арифметика позволяет авторизации кошелька, точному состоянию и рекурсивной проверке цепочки составлять один протокол, а не набор независимых proof-систем, склеенных после разработки.</p>
+
+    <h3>Proof-native PoW</h3>
+    <p>У PoW одна задача: выбрать порядок корректных переходов. Большинство хешрейта может цензурировать, менять порядок и проводить реорганизации корректных платежей, но не может подделать владение или сделать недействительный <code>HistoryStep</code> приемлемым.</p>
+    <p>Сначала майнер доказывает не зависящую от nonce часть блока, затем ищет 128-битный nonce в фиксированном Poseidon2b-заголовке. ASERT нацелен на средний интервал 15 секунд, а цепочку выбирает накопленная работа. Внешний майнер получает неизменяемый одноразовый шаблон и возвращает только nonce; изменить транзакции или корень состояния он не может.</p>
+
+    <h2>Стартовый профиль</h2>
+    <div class="read-table"><table>
+      <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+      <tbody>
+        <tr><td>Средняя цель блока</td><td>15 секунд</td></tr>
+        <tr><td>Класс майнера по умолчанию</td><td>B64, <code>m=23</code>, до 64 пользовательских страниц</td></tr>
+        <tr><td>Класс мощного майнера</td><td>B255, <code>m=24</code>, до 255 пользовательских страниц</td></tr>
+        <tr><td>Максимум логических транзакций в блоке</td><td>255</td></tr>
+        <tr><td>Максимальная пропускная способность одностраничных транзакций</td><td>17 TPS</td></tr>
+        <tr><td>Максимум входов в одной транзакции</td><td>1 020</td></tr>
+        <tr><td>Максимум выходов в одной транзакции</td><td>256</td></tr>
+        <tr><td>Недавний суффикс блоков / окно реорганизаций</td><td>18 блоков</td></tr>
+        <tr><td>Домен состояния</td><td>от <code>2^24</code> до <code>2^32</code> слотов</td></tr>
+      </tbody>
+    </table></div>
+    <p>B64 — нижняя граница майнинга на ноутбуке, а не предел протокола. На эталонном 12-поточном Intel Core i7-1365U подготовка полностью заполненного B64 занимает 14,387 секунды на p95, а проверка — 0,720 секунды на p95. Более быстрое железо может соответствовать B255; каждая нода проверяет оба класса. Полные измерения находятся в <a href="https://github.com/ignotusnemo/parano1d/blob/main/research/two_class/results/2026-07-17-history-step-lto-20-sample.md">двухклассовом бенчмарке</a>.</p>
+
+    <h2>Сеть</h2>
+    <p>ParanO(1)d использует libp2p GossipSub для блоков и замыслов транзакций, типизированные request-response протоколы для синхронизации, Kademlia и DNS seeds для обнаружения, а mDNS — для локальных сетей. Постоянные пиры, лимиты соединений и разнообразие сетевых групп IPv4/IPv6 снижают риск простых eclipse-атак и connection flood без дополнительного раунда консенсуса.</p>
+    <p>Передача финализированного состояния аутентифицируется через <code>HistoryStep</code>; короткие разрывы закрывает обычная синхронизация недавних блоков. Тела финализированных транзакций активному консенсусу не нужны. Экспортируемые Merkle-чеки сохраняют доказательство включения после того, как тело транзакции покинуло недавний суффикс.</p>
+
+    <h2>Запуск ParanO(1)d</h2>
+    <p>Первая нода новой сети создаёт genesis и начинает майнинг:</p>
+    <pre>parano1d --miner</pre>
+    <p>Подключение к публичной сети в роли ноды или майнера:</p>
+    <pre>parano1d --seed &lt;host&gt;:9400
+parano1d --miner --seed &lt;host&gt;:9400</pre>
+    <p>Внешний поиск nonce оставляет выбор транзакций и построение доказательства внутри ноды:</p>
+    <pre>parano1d --extminer --mining-key &lt;token&gt;
+parano1d-miner --key &lt;token&gt;</pre>
+    <p>Порты по умолчанию: <code>9400</code> для P2P и <code>127.0.0.1:9401</code> для JSON-RPC. При первом запуске создаются <code>~/.parano1d/parano1d.toml</code>, состояние MDBX и встроенный кошелёк в <code>~/.parano1d/data/</code>.</p>
+    <p class="read-note">Текущий <code>wallet.key</code> не зашифрован паролем. Файл создаётся с правами только для владельца; сделайте резервную копию и защитите её.</p>
+
+    <h3>CLI</h3>
+    <p>Адреса используют bech32m и начинаются с <code>o1</code>. <code>1 NOID = 1 000 000 μNOID</code>.</p>
+    <pre>parano1d-cli status
+parano1d-cli peers
+parano1d-cli state
+parano1d-cli mining
+parano1d-cli address
+parano1d-cli address --new
+parano1d-cli balance
+parano1d-cli utxos
+parano1d-cli send &lt;o1-address&gt; 10.5 --dry-run
+parano1d-cli send &lt;o1-address&gt; 10.5
+parano1d-cli mempool
+parano1d-cli history
+parano1d-cli receipt &lt;txid&gt; &gt; receipt.hex
+parano1d-cli verify "$(tr -d '\n' &lt; receipt.hex)"
+parano1d-cli stop</pre>
+    <p>Полный интерфейс доступен через <code>parano1d --help</code>, <code>parano1d-cli help</code> и <code>parano1d-miner --help</code>.</p>
+
+    <h2>Сборка из исходников</h2>
+    <p>Каноническая release-сборка поддерживает Linux на x86-64 и AArch64. Нужны Rust с <code>rustfmt</code>, нативный C/C++ toolchain, <code>pkg-config</code>, libclang и заголовки OpenSSL для разработки. Построение release-доказательств требует AVX2, PCLMULQDQ и VPCLMULQDQ на x86-64 либо AES/PMULL на AArch64.</p>
+    <pre>git clone https://github.com/ignotusnemo/parano1d.git
+cd parano1d
+./scripts/build_release.sh</pre>
+    <p>Сборка заново создаёт и аутентифицирует обе матрицы HistoryStep, запускает release-тесты и выпускает <code>parano1d</code>, <code>parano1d-cli</code> и <code>parano1d-miner</code>.</p>
+
+    <p class="read-signature">Автор и разработчик — <strong>Ignotus Nemo</strong>. Лицензия Apache-2.0.</p>
+  </template>
+
+  <template id="reader-zh">
+    <h1>Paran<em>O(1)</em>d</h1>
+    <p class="read-subtitle">A proof-native L1 statechain secured by proof of work.</p>
+
+    <p>区块链有一个根本性的架构缺陷：要验证现在，就必须重演过去。Bitcoin、Ethereum 和几乎所有大型网络都继承了这一点。新全节点必须从创世块下载整条链，再执行每一笔交易，因为当前状态自身无法证明有效性。这不是暂时的性能问题，而是写进模型本身的依赖。</p>
+    <p><strong>ParanO(1)d 的目标，就是移除这项要求。</strong></p>
+    <p>在 ParanO(1)d 中，有效性只需证明一次，而且由已经掌握完整信息的一方来证明。花费授权由持有私有见证的钱包在本地证明；矿工证明公开交易逻辑与精确状态转移；网络只验证这些证明，不再重复同一套执行。</p>
+    <p>每个被接受的区块都携带一个递归 <code>HistoryStep</code>，将区块、新 UTXO 根以及此前整条状态链的有效性绑定在一起。因此，新节点可以认证当前状态并正常验证近期重组后缀，而无需从创世块开始执行整条链。</p>
+    <p>当当前状态能够携带自己的证明，一套不同的架构便成为可能：已花费状态可以删除并复用；所有权不再依赖公钥或数字签名；状态增长可以直接计价；工作量证明只需排列已经证明有效的转移。最终得到的是一条不会把链龄变成硬件门槛的 L1。多年之后，一台普通笔记本仍能保存完整实时状态，并独立验证网络，而无需重放网络的一生。</p>
+
+    <h2>根本转变</h2>
+    <div class="read-table compare"><table>
+      <thead><tr><th></th><th>传统区块链</th><th>ParanO(1)d</th></tr></thead>
+      <tbody>
+        <tr><th>验证</th><td>每个全节点重新执行</td><td>见证持有者证明；网络验证</td></tr>
+        <tr><th>初始同步</th><td>从创世块重建状态</td><td>认证当前状态，再验证近期后缀</td></tr>
+        <tr><th>所有权</th><td>公钥签名</td><td>全新的 Poseidon2b 原像 ZK 证明</td></tr>
+        <tr><th>状态</th><td>从累积历史中推导</td><td>精确实时 UTXO 状态本身就是共识对象</td></tr>
+        <tr><th>已花费输出</th><td>继续留在必需历史中</td><td>槽位清空并安全复用</td></tr>
+        <tr><th>工作量证明</th><td>排列执行日志</td><td>排列已被证明有效的状态转移</td></tr>
+        <tr><th>后量子迁移</th><td>替换所有权方案</td><td>没有需要替换的椭圆曲线交易方案</td></tr>
+      </tbody>
+    </table></div>
+    <p>ParanO(1)d 是透明链，不是隐私链。当前金额与所有者公开，交易在传播时也可见。协议把历史变成证明：每个节点携带经过认证的现在，而不是不断增长的交易图。任何人都可以另建外部追踪器，但它必须自行记录全部交易流；网络不会强迫每个节点共同承担这份存储。</p>
+    <p>这里的隐私来自“不永久保留”，而不是隐藏数据。零知识保护花费见证；Proof-native 验证消除重复执行。</p>
+
+    <h2>工作方式</h2>
+    <h3>执行留在本地</h3>
+    <p>发送 NOID 时，钱包选择自己的 UTXO，并创建一笔原子 <code>PagedSpend</code>。随后，它为 <code>{logical_txid, input_owner}</code> 生成一份全新随机化、隐藏见证的授权证明。花费秘密从不离开钱包。</p>
+    <p>这份授权证明本身是无状态的：不包含 UTXO Merkle 路径，也不绑定某一个状态根。矿工持有公开状态见证，并另行证明每个输入确实存在、每个输出槽位为空、金额平衡、手续费正确，以及最终状态根精确无误。</p>
+    <p>私有授权由钱包证明，公开执行由矿工证明。网络无需重复其中任何一项工作。</p>
+
+    <h3>网络验证，而不执行</h3>
+    <p>Mempool 会在转发前验证完整的交易意图。矿工立即从可用意图中选择交易。</p>
+    <p>矿工把选中的交易、精确状态转移和前一个 terminal 合并进下一个 <code>HistoryStep</code>，并在搜索 PoW nonce 之前完成证明。对等节点收到一个原子 <code>{block, HistoryStep terminal}</code> 包；只有证明与 nonce 都通过验证，整个包才会被接受。</p>
+    <p>随后，对等节点应用已经证明的槽位写入，推进本地 UTXO 集。它们只是落实证明给出的结果，不会重新执行交易逻辑。</p>
+
+    <h3>历史递归收敛</h3>
+    <p>每个 <code>HistoryStep</code> 都证明当前区块关系，并在同一关系内验证前一个 terminal。证明大小与验证工作不会随区块高度增长。</p>
+    <p>运行中的节点保存精确实时状态、用于累计工作量的紧凑区块头，以及供竞争矿工和重组使用的最近 18 个完整区块。新加入节点用匹配的 terminal 认证已最终确定的当前状态，再按常规方式验证近期后缀。</p>
+    <p>ParanO(1)d 对历史无状态，但并非没有当前状态。状态传输量随实时 UTXO 集增长；不再随链龄增长的，是为证明该状态为何有效而必须执行的工作。</p>
+
+    <h2>架构</h2>
+    <h3>可复用的 UTXO 状态</h3>
+    <p>状态是一个精确、稀疏且带索引的 UTXO 向量。花费会清空槽位；分配器优先复用空位，只有必要时才扩展状态。每个新输出都获得全新的 <code>creation_id</code>，因此复用同一索引绝不会让旧引用重新生效。</p>
+    <p>状态按每段 <code>2^16</code> 个槽位划分。空段只以虚拟形式存在；其中最后一个 UTXO 被花费后，整段会再次消失。槽位域从 <code>2^24</code> 开始，在占用率达到 75% 时，把一个规范空白半区接到现有状态根上并自动扩展。无需复制状态、迁移数据或暂停网络。</p>
+    <p>手续费区分普通输入输出与净新增状态。状态增长费随占用率上升并被销毁；合并 UTXO 不承担增长销毁费。只有状态域真正扩展时，区块奖励才会减半，并永久保留 1 NOID 的下限。</p>
+
+    <h3>无签名所有权</h3>
+    <p>地址是 256 位花费秘密的 Poseidon2b 映像。协议需要的是秘密熵，而不是密钥对或规定格式的助记词。所有权由“知道该原像”的零知识证明表达，并绑定完整逻辑交易。线上数据中没有公钥，也没有交易签名。</p>
+    <p>每次花费都会独立随机化 capsule，即使重复使用同一地址也不例外。交易共识不包含椭圆曲线。libp2p 使用的 Ed25519 密钥只负责标识对等节点，没有花费权限，也没有共识权力。</p>
+
+    <h3>PagedSpend</h3>
+    <p>证明系统采用固定物理页，每页有八个输入位置和两个输出位置。<code>PagedSpend</code> 最多把 128 页合成一笔用户交易：一个 txid、一份手续费、一份 ZK capsule 和一张回执。</p>
+    <p>单笔交易最多可花费 1,020 个 UTXO，并创建 256 个输出。延续页只是证明内部的几何结构；在钱包、mempool、转发、区块、回执和重组路径中，它们始终是一笔不可分割的交易。</p>
+
+    <h3>可携带的付款回执</h3>
+    <p>共识不会永久保存旧区块正文，因此发送方钱包会保留真正需要的证据。付款确认后，钱包保存一份可导出的回执，其中包含公开付款数据和八层 Poseidon2b Merkle 路径。此后，任何人只需把回执与保留的区块头核对，即可确认规范区块确实包含所述 txid、输入所有者、收款地址、金额、手续费与区块时间，无需旧区块正文。</p>
+
+    <h3>统一二进制证明栈</h3>
+    <p>协议构建在二进制塔域 <code>GF(2^128)</code> 上。Poseidon2b 是地址、交易、Merkle 树、状态根、证明转录、区块标识与 PoW 共用的置换。</p>
+    <p>我们为 ParanO(1)d 开发了 FROST-GKR，即 Frobenius Reduction Over Shifted Tables。它把完整的 Poseidon2b 批次与 Merkle 路径放入共享布尔超立方体，用一次九次 sumcheck 检查活跃的七次 S-box 关系，再用一次二次 shift sumcheck 绑定相邻轮次。在同一项 59 次置换基准中，prover 中位时间降低 10.50 倍，原始代数证明字节数缩小 51.67 倍。批量 sumcheck、zerocheck、lincheck 与 FRI-Binius 在无需可信设置的前提下闭合 GF(2) R1CS 关系。两套经过认证的启动矩阵——<code>m=23</code> 的 B64 与 <code>m=24</code> 的 B255——嵌入官方二进制文件，也可从源码重新生成。<a href="https://github.com/ignotusnemo/parano1d/tree/main/research/frost_gkr">基准工件</a>固定了准确的对比版本与运行环境。</p>
+    <p>正是这套共同算术，让钱包授权、精确状态与递归链验证能够组成同一个协议，而不是事后拼接三套彼此独立的证明系统。</p>
+
+    <h3>Proof-native PoW</h3>
+    <p>PoW 只有一项职责：选择有效状态转移的顺序。多数算力可以审查、重排或重组有效付款，但无法伪造所有权，也无法让无效的 <code>HistoryStep</code> 获得接受。</p>
+    <p>矿工先证明与 nonce 无关的区块部分，再在固定 Poseidon2b 区块头中搜索 128 位 nonce。ASERT 把平均区块间隔设为 15 秒，累计工作量决定主链。外部矿工只收到不可修改、仅使用一次的模板，并只返回 nonce；它无法更改交易或状态根。</p>
+
+    <h2>启动参数</h2>
+    <div class="read-table"><table>
+      <thead><tr><th>参数</th><th>数值</th></tr></thead>
+      <tbody>
+        <tr><td>平均出块目标</td><td>15 秒</td></tr>
+        <tr><td>默认矿工等级</td><td>B64，<code>m=23</code>，最多 64 个用户页</td></tr>
+        <tr><td>高性能矿工等级</td><td>B255，<code>m=24</code>，最多 255 个用户页</td></tr>
+        <tr><td>每区块最大逻辑交易数</td><td>255</td></tr>
+        <tr><td>单页交易最大吞吐量</td><td>17 TPS</td></tr>
+        <tr><td>单笔交易最大输入数</td><td>1,020</td></tr>
+        <tr><td>单笔交易最大输出数</td><td>256</td></tr>
+        <tr><td>近期区块 / 重组后缀</td><td>18 个区块</td></tr>
+        <tr><td>状态域</td><td><code>2^24</code> 至 <code>2^32</code> 个槽位</td></tr>
+      </tbody>
+    </table></div>
+    <p>B64 是笔记本级挖矿的起点，而不是协议上限。在作为参照的 12 线程 Intel Core i7-1365U 上，满载 B64 准备时间 p95 为 14.387 秒，验证时间 p95 为 0.720 秒。更快的硬件可以达到 B255；每个节点都能验证这两个等级。完整数据见<a href="https://github.com/ignotusnemo/parano1d/blob/main/research/two_class/results/2026-07-17-history-step-lto-20-sample.md">双等级基准</a>。</p>
+
+    <h2>网络</h2>
+    <p>ParanO(1)d 使用 libp2p GossipSub 传播区块和交易意图，使用类型化 request-response 协议完成同步，以 Kademlia 和 DNS seeds 发现公网节点，并以 mDNS 发现局域网节点。持久对等连接、连接数限制以及 IPv4/IPv6 网络组多样性，可以缓解简单的 eclipse 攻击与连接洪泛，而无需增加共识轮次。</p>
+    <p>最终状态传输由 <code>HistoryStep</code> 认证；较短差距使用普通近期区块同步。活跃共识不需要已最终确定的交易正文。可导出的 Merkle 回执会在交易正文离开近期后缀后继续保留其包含证明。</p>
+
+    <h2>运行 ParanO(1)d</h2>
+    <p>新网络的第一个节点创建创世块并开始挖矿：</p>
+    <pre>parano1d --miner</pre>
+    <p>以普通节点或矿工身份加入公共网络：</p>
+    <pre>parano1d --seed &lt;host&gt;:9400
+parano1d --miner --seed &lt;host&gt;:9400</pre>
+    <p>使用外部 nonce 搜索时，交易选择与证明仍留在节点内部：</p>
+    <pre>parano1d --extminer --mining-key &lt;token&gt;
+parano1d-miner --key &lt;token&gt;</pre>
+    <p>默认端口为 P2P 的 <code>9400</code> 与 JSON-RPC 的 <code>127.0.0.1:9401</code>。首次启动会创建 <code>~/.parano1d/parano1d.toml</code>、MDBX 状态，以及位于 <code>~/.parano1d/data/</code> 下的内置钱包。</p>
+    <p class="read-note">当前的 <code>wallet.key</code> 未使用密码加密。文件只授予所有者权限；请妥善备份并保护它。</p>
+
+    <h3>CLI</h3>
+    <p>地址采用 bech32m，并以 <code>o1</code> 开头。<code>1 NOID = 1,000,000 μNOID</code>。</p>
+    <pre>parano1d-cli status
+parano1d-cli peers
+parano1d-cli state
+parano1d-cli mining
+parano1d-cli address
+parano1d-cli address --new
+parano1d-cli balance
+parano1d-cli utxos
+parano1d-cli send &lt;o1-address&gt; 10.5 --dry-run
+parano1d-cli send &lt;o1-address&gt; 10.5
+parano1d-cli mempool
+parano1d-cli history
+parano1d-cli receipt &lt;txid&gt; &gt; receipt.hex
+parano1d-cli verify "$(tr -d '\n' &lt; receipt.hex)"
+parano1d-cli stop</pre>
+    <p>运行 <code>parano1d --help</code>、<code>parano1d-cli help</code> 或 <code>parano1d-miner --help</code> 可查看完整接口。</p>
+
+    <h2>从源码构建</h2>
+    <p>规范 release 构建支持 x86-64 与 AArch64 Linux。构建环境需要带 <code>rustfmt</code> 的 Rust、原生 C/C++ 工具链、<code>pkg-config</code>、libclang 与 OpenSSL 开发头文件。release 证明在 x86-64 上要求 AVX2、PCLMULQDQ 和 VPCLMULQDQ，在 AArch64 上要求 AES/PMULL。</p>
+    <pre>git clone https://github.com/ignotusnemo/parano1d.git
+cd parano1d
+./scripts/build_release.sh</pre>
+    <p>构建过程会重新生成并认证两套 HistoryStep 矩阵，运行 release 测试，并生成 <code>parano1d</code>、<code>parano1d-cli</code> 与 <code>parano1d-miner</code>。</p>
+
+    <p class="read-signature">由 <strong>Ignotus Nemo</strong> 设计并开发。采用 Apache-2.0 许可证。</p>
+  </template>
+
+  <script defer src="app.js"></script>
+</body>
+</html>
