@@ -1,0 +1,69 @@
+name: Deploy Parano1d website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Validate static site
+        run: |
+          test -f index.html
+          test -f app.js
+          test -f social-card.png
+          test "$(tr -d '\r\n' < CNAME)" = "parano1d.org"
+          grep -q 'https://parano1d.org/' index.html
+          grep -q 'https://parano1d.org/sitemap.xml' robots.txt
+
+      - name: Prepare static site
+        run: |
+          mkdir _site
+          cp -a \
+            CNAME \
+            app.js \
+            apple-touch-icon.png \
+            assets \
+            browserconfig.xml \
+            favicon.ico \
+            index.html \
+            robots.txt \
+            site.webmanifest \
+            sitemap.xml \
+            social-card.png \
+            _site/
+          touch _site/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
