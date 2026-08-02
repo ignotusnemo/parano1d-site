@@ -26,7 +26,7 @@ jobs:
         run: |
           test -f index.html
           test -f app.js
-          test -f social-card.png
+          test -f social-card-v3.png
           test "$(tr -d '\r\n' < CNAME)" = "parano1d.org"
           grep -q 'https://parano1d.org/' index.html
           grep -q 'https://parano1d.org/sitemap.xml' robots.txt
@@ -45,7 +45,7 @@ jobs:
             robots.txt \
             site.webmanifest \
             sitemap.xml \
-            social-card.png \
+            social-card-v3.png \
             _site/
           touch _site/.nojekyll
 

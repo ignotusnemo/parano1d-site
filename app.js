@@ -258,7 +258,7 @@
       "readout.history": "история",
       "readout.verify": "проверка",
       "overview.index": "Сеть не повторяет исполнение. Она проверяет.",
-      "overview.title": "Proof-native<br><em>L1 statechain</em>",
+      "overview.title": "Proof-native<br><em>Layer 1</em>",
       "overview.lead": "<strong>Кошелёк доказывает владение. Майнер — точный переход состояния. Каждая нода проверяет результат.</strong> Без подписей. Без доверенной настройки. Без повтора с генезиса.",
       "overview.enter": "ПОЧЕМУ? <span>→</span>",
       "overview.fact.sync.value": "O(1) SYNC",
@@ -382,7 +382,7 @@
       "run.capacity.network": "Сеть",
       "run.capacity.network.value": "продолжает выпускать блоки",
       "run.download": "Загрузить кошелёк",
-      "rail.label": "Главы statechain",
+      "rail.label": "Разделы Parano1d",
       "rail.0": "Обзор Parano1d",
       "rail.1": "Зависимость от истории",
       "rail.2": "Настоящее",
@@ -446,7 +446,7 @@
       "readout.history": "历史",
       "readout.verify": "验证",
       "overview.index": "网络不重复执行，只验证证明。",
-      "overview.title": "Proof-native<br><em>L1 statechain</em>",
+      "overview.title": "Proof-native<br><em>Layer 1</em>",
       "overview.lead": "<strong>钱包证明所有权，矿工证明精确状态转移，每个节点验证最终结果。</strong> 无需签名。无需可信设置。无需从创世块重放。",
       "overview.enter": "为什么？ <span>→</span>",
       "overview.fact.sync.value": "O(1) 同步",
@@ -570,7 +570,7 @@
       "run.capacity.network": "网络",
       "run.capacity.network.value": "持续产生区块",
       "run.download": "下载钱包",
-      "rail.label": "状态链章节",
+      "rail.label": "Parano1d 章节",
       "rail.0": "Parano1d 概览",
       "rail.1": "历史依赖",
       "rail.2": "当前状态",
@@ -591,7 +591,7 @@
 
   const states = [
     {
-      title: "PARANO(1)D · PROOF-NATIVE STATECHAIN",
+      title: "PARANO(1)D · PROOF-NATIVE LAYER 1",
       proof: "prove once · verify everywhere",
       state: ["ONE PROVER", "wallet + miner establish validity"],
       proofLabel: ["FIXED PROOF", "crosses the consensus boundary"],
@@ -707,7 +707,7 @@
   const stateTranslations = {
     ru: [
       {
-        title: "PARANO(1)D · PROOF-NATIVE STATECHAIN",
+        title: "PARANO(1)D · PROOF-NATIVE LAYER 1",
         proof: "доказать один раз · проверить везде",
         state: ["ОДИН PROVER", "кошелёк и майнер доказывают корректность"],
         proofLabel: ["КОМПАКТНОЕ ДОКАЗАТЕЛЬСТВО", "пересекает границу консенсуса"],
@@ -945,18 +945,18 @@
 
   const metaCopy = {
     en: {
-      title: "Parano1d. Proof-native L1 statechain",
-      description: "Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.",
+      title: "Parano1d. Proof-native Layer 1",
+      description: "Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history.",
       locale: "en_US"
     },
     ru: {
-      title: "Parano1d. Proof-native L1 statechain",
-      description: "Parano1d представляет собой proof-native L1 statechain, защищённый proof of work, с владением без подписей и проверкой без повтора истории.",
+      title: "Parano1d. Proof-native Layer 1",
+      description: "Parano1d — proof-native-сеть первого уровня, защищённая proof of work. Рекурсивные доказательства аутентифицируют текущий State без повтора истории транзакций.",
       locale: "ru_RU"
     },
     zh: {
-      title: "Parano1d. Proof-native L1 statechain",
-      description: "Parano1d 是一条由工作量证明保护的证明原生 L1 状态链，采用无签名所有权，无需重放历史。",
+      title: "Parano1d. Proof-native Layer 1",
+      description: "Parano1d 是一个由工作量证明保护的证明原生第一层网络。递归证明可认证当前 State，无需重放交易历史。",
       locale: "zh_CN"
     }
   };

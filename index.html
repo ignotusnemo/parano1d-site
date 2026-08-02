@@ -17,7 +17,7 @@
   <meta name="author" content="Ignotus Nemo">
   <meta name="creator" content="Ignotus Nemo">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="description" content="Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.">
+  <meta name="description" content="Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history.">
 
   <link rel="canonical" href="https://parano1d.org/">
   <link rel="icon" type="image/png" sizes="48x48" href="assets/icons/icon-48.png">
@@ -31,26 +31,26 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Parano1d">
   <meta property="og:url" content="https://parano1d.org/">
-  <meta property="og:title" content="Parano1d. Proof-native L1 statechain" data-meta-title>
-  <meta property="og:description" content="Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay." data-meta-description>
+  <meta property="og:title" content="Parano1d. Proof-native Layer 1" data-meta-title>
+  <meta property="og:description" content="Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history." data-meta-description>
   <meta property="og:locale" content="en_US" data-meta-locale>
   <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:locale:alternate" content="zh_CN">
-  <meta property="og:image" content="https://parano1d.org/social-card.png">
-  <meta property="og:image:secure_url" content="https://parano1d.org/social-card.png">
+  <meta property="og:image" content="https://parano1d.org/social-card-v3.png">
+  <meta property="og:image:secure_url" content="https://parano1d.org/social-card-v3.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Parano1d. A proof-native L1 statechain secured by proof of work.">
+  <meta property="og:image:alt" content="Parano1d. A proof-native Layer 1 network secured by proof of work.">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://parano1d.org/">
-  <meta name="twitter:title" content="Parano1d. Proof-native L1 statechain" data-meta-title>
-  <meta name="twitter:description" content="Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay." data-meta-description>
-  <meta name="twitter:image" content="https://parano1d.org/social-card.png">
-  <meta name="twitter:image:alt" content="Parano1d. A proof-native L1 statechain secured by proof of work.">
+  <meta name="twitter:title" content="Parano1d. Proof-native Layer 1" data-meta-title>
+  <meta name="twitter:description" content="Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history." data-meta-description>
+  <meta name="twitter:image" content="https://parano1d.org/social-card-v3.png">
+  <meta name="twitter:image:alt" content="Parano1d. A proof-native Layer 1 network secured by proof of work.">
 
-  <title>Parano1d. Proof-native L1 statechain</title>
+  <title>Parano1d. Proof-native Layer 1</title>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -61,7 +61,7 @@
         "url": "https://parano1d.org/",
         "name": "Parano1d",
         "alternateName": "parano1d.org",
-        "description": "Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.",
+        "description": "Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history.",
         "image": "https://parano1d.org/assets/icons/icon-512.png",
         "inLanguage": ["en", "ru", "zh-CN"],
         "creator": { "@id": "https://parano1d.org/#creator" },
@@ -76,10 +76,10 @@
         "codeRepository": "https://github.com/ignotusnemo/parano1d",
         "programmingLanguage": "Rust",
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "description": "A proof-native L1 statechain secured by proof of work, implemented in Rust.",
+        "description": "A proof-native Layer 1 network secured by proof of work, implemented in Rust.",
         "image": "https://parano1d.org/assets/icons/icon-512.png",
         "mainEntityOfPage": { "@id": "https://parano1d.org/#website" },
-        "keywords": ["Parano1d", "NOID", "blockchain", "proof-native", "statechain", "L1", "signatureless ownership", "recursive proofs", "O(1) synchronization", "proof of work", "zero-knowledge proofs", "UTXO"],
+        "keywords": ["Parano1d", "NOID", "blockchain", "proof-native Layer 1", "proof-authenticated State transitions", "L1", "signatureless ownership", "recursive proofs", "O(1) synchronization", "proof of work", "zero-knowledge proofs", "UTXO"],
         "author": { "@id": "https://parano1d.org/#creator" },
         "citation": "https://lab.parano1d.org/research/frost-gkr-global-trace-protocol/",
         "hasPart": { "@id": "https://parano1d.org/#wallet" },
@@ -2084,7 +2084,7 @@
       <section class="chapter cover active" id="overview" data-step="0" aria-labelledby="title-overview">
         <div class="chapter-inner shell">
           <div class="chapter-index" data-i18n="overview.index">The network does not re-execute. It verifies.</div>
-          <h1 id="title-overview" data-i18n="overview.title">Proof-Native<br><em>L1 statechain</em></h1>
+          <h1 id="title-overview" data-i18n="overview.title">Proof-native<br><em>Layer 1</em></h1>
           <p class="lead" data-i18n="overview.lead"><strong>Wallets prove ownership. Miners prove exact state transitions. Every node verifies the result.</strong> No signatures. No trusted setup. No replay from genesis.</p>
           <div class="chapter-actions">
             <button class="action primary hero-why" type="button" data-next data-i18n="overview.enter">WHY? <span>→</span></button>
@@ -2269,7 +2269,7 @@ forever.</em></h2>
       </section>
     </div>
 
-    <nav class="state-rail" aria-label="Statechain chapters" data-i18n-aria="rail.label">
+    <nav class="state-rail" aria-label="Parano1d chapters" data-i18n-aria="rail.label">
       <button class="state-dot active" data-go="0" aria-label="Parano1d overview" data-i18n-aria="rail.0">
         <svg class="rail-brand-symbol" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
           <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="4"/>
@@ -2292,7 +2292,7 @@ forever.</em></h2>
     </nav>
 
     <div class="control-deck shell">
-      <div class="deck-state"><b id="deck-title">PARANO(1)D · PROOF-NATIVE STATECHAIN</b><span id="deck-proof">transparent L1 · proof of work</span></div>
+      <div class="deck-state"><b id="deck-title">PARANO(1)D · PROOF-NATIVE LAYER 1</b><span id="deck-proof">transparent L1 · proof of work</span></div>
       <div class="suffix" id="suffix" aria-hidden="true"></div>
       <div class="deck-buttons">
         <button class="deck-button prev" id="prev" type="button" aria-label="Previous state" data-i18n-aria="deck.previous" disabled>←</button>

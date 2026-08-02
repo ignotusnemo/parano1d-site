@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Parano1d",
   "short_name": "Parano1d",
-  "description": "A proof-native L1 statechain secured by proof of work.",
+  "description": "A proof-native Layer 1.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/",
@@ -31,11 +31,11 @@
   ],
   "screenshots": [
     {
-      "src": "/social-card.png",
+      "src": "/social-card-v3.png",
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Parano1d proof-native statechain"
+      "label": "Parano1d proof-native Layer 1"
     }
   ],
   "prefer_related_applications": false
