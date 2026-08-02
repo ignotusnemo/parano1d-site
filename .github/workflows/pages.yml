@@ -40,6 +40,7 @@ jobs:
             apple-touch-icon.png \
             assets \
             browserconfig.xml \
+            favicon-96.png \
             favicon.ico \
             index.html \
             robots.txt \
