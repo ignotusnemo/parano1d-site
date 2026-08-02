@@ -1130,6 +1130,13 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const hashIndex = chapters.findIndex((chapter) => `#${chapter.id}` === window.location.hash);
   let current = hashIndex >= 0 ? hashIndex : 0;
+  if (window.location.hash) {
+    window.history.replaceState(
+      { step: current },
+      "",
+      `${window.location.pathname}${window.location.search}`
+    );
+  }
   let wheelAccumulator = 0;
   let wheelDirection = 0;
   let wheelLastEventAt = 0;
@@ -1485,7 +1492,7 @@
     });
   });
 
-  function goTo(next, { instant = false, history = "replace" } = {}) {
+  function goTo(next, { instant = false } = {}) {
     next = Math.max(0, Math.min(chapters.length - 1, Number(next)));
     if (!Number.isFinite(next) || (next === current && !instant)) return;
 
@@ -1533,20 +1540,16 @@
         chapters.forEach((chapter) => { chapter.style.removeProperty("transition"); });
       }));
     }
-    const hash = `#${chapters[next].id}`;
-    const targetUrl = `${window.location.pathname}${window.location.search}${hash}`;
-    if (history === "push") window.history.pushState({ step: next }, "", targetUrl);
-    else window.history.replaceState({ step: next }, "", targetUrl);
   }
 
   function advance(delta) {
-    goTo(current + delta, { history: "push" });
+    goTo(current + delta);
   }
 
   document.querySelectorAll("[data-go]").forEach((control) => {
     control.addEventListener("click", (event) => {
       event.preventDefault();
-      goTo(Number(control.dataset.go), { history: "push" });
+      goTo(Number(control.dataset.go));
     });
   });
 
@@ -1580,9 +1583,9 @@
       event.preventDefault();
       advance(-1);
     } else if (event.key === "Home") {
-      goTo(0, { history: "push" });
+      goTo(0);
     } else if (event.key === "End") {
-      goTo(chapters.length - 1, { history: "push" });
+      goTo(chapters.length - 1);
     }
   });
 
@@ -1634,11 +1637,6 @@
     if (elapsed > 800 || Math.abs(dy) < 52 || Math.abs(dy) < Math.abs(dx) * .8) return;
     advance(dy < 0 ? 1 : -1);
   }, { passive: true });
-
-  window.addEventListener("popstate", () => {
-    const index = chapters.findIndex((chapter) => `#${chapter.id}` === window.location.hash);
-    if (index >= 0) goTo(index, { history: "replace" });
-  });
 
   class StateScene {
     constructor(canvas) {
@@ -3767,5 +3765,5 @@
 
   scene = new StateScene(document.querySelector("#state-scene"));
   applyLanguage(language, false);
-  goTo(current, { instant: true, history: "replace" });
+  goTo(current, { instant: true });
 })();
