@@ -37,14 +37,13 @@ jobs:
           cp -a \
             CNAME \
             app.js \
-            apple-touch-icon.png \
             assets \
-            browserconfig.xml \
-            favicon-96.png \
+            favicon-16.png \
+            favicon-32.png \
+            favicon-48.png \
             favicon.ico \
             index.html \
             robots.txt \
-            site.webmanifest \
             sitemap.xml \
             social-card-v3.png \
             _site/
