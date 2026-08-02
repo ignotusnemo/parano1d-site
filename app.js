@@ -9,9 +9,6 @@
   const deckProof = document.querySelector("#deck-proof");
   const flash = document.querySelector("#transition-flash");
   const suffix = document.querySelector("#suffix");
-  const readMode = document.querySelector("#read-mode");
-  const readPanel = document.querySelector(".read-panel");
-  const readerBody = document.querySelector("#reader-body");
   const app = document.querySelector("#app");
   const sceneElement = document.querySelector(".scene");
   const stateRail = document.querySelector(".state-rail");
@@ -24,7 +21,19 @@
   const launchNotice = document.querySelector("#launch-notice");
   const launchNoticeClose = document.querySelector("#launch-notice-close");
   const navDropdowns = [...document.querySelectorAll(".nav-dropdown")];
+  const downloadsModal = document.querySelector("#downloads-modal");
+  const downloadsClose = document.querySelector("#downloads-close");
+  const downloadsOpeners = [...document.querySelectorAll("[data-download-open]")];
+  const downloadsPreview = document.querySelector("[data-download-preview]");
+  const repositoryGate = document.querySelector("#repository-gate");
+  const repositoryGateClose = document.querySelector("#repository-gate-close");
+  const repositoryGateDismiss = document.querySelector("#repository-gate-dismiss");
   let mobileSceneLayoutFrame = 0;
+
+  // Disable this single flag when the core repository becomes public.
+  const PRIVATE_REPOSITORY_GATE = true;
+  let repositoryGateLastFocus = null;
+  let repositoryGateCloseTimer = 0;
 
   const launchNoticeStorageKey = "parano1d-public-network-2026-08-dismissed";
   try {
@@ -42,6 +51,73 @@
   }
 
   secureExternalLinks();
+
+  function isPrivateRepositoryLink(link) {
+    if (!PRIVATE_REPOSITORY_GATE || !(link instanceof HTMLAnchorElement)) return false;
+    try {
+      const url = new URL(link.href, window.location.href);
+      return url.hostname.toLowerCase() === "github.com"
+        && /^\/ignotusnemo\/parano1d(?:\/|$)/i.test(url.pathname);
+    } catch {
+      return false;
+    }
+  }
+
+  function openRepositoryGate() {
+    if (!repositoryGate || !repositoryGate.hidden) return;
+    clearTimeout(repositoryGateCloseTimer);
+    repositoryGateLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    repositoryGate.hidden = false;
+    document.body.classList.add("repository-gate-open");
+    requestAnimationFrame(() => {
+      repositoryGate.classList.add("is-open");
+      repositoryGateClose?.focus({ preventScroll: true });
+    });
+  }
+
+  function closeRepositoryGate() {
+    if (!repositoryGate || repositoryGate.hidden) return;
+    repositoryGate.classList.remove("is-open");
+    document.body.classList.remove("repository-gate-open");
+    repositoryGateCloseTimer = window.setTimeout(() => { repositoryGate.hidden = true; }, 220);
+    repositoryGateLastFocus?.focus?.({ preventScroll: true });
+  }
+
+  function gatePrivateRepositoryNavigation(event) {
+    const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+    if (!isPrivateRepositoryLink(link)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    openRepositoryGate();
+  }
+
+  document.addEventListener("click", gatePrivateRepositoryNavigation, true);
+  document.addEventListener("auxclick", gatePrivateRepositoryNavigation, true);
+  repositoryGateClose?.addEventListener("click", closeRepositoryGate);
+  repositoryGateDismiss?.addEventListener("click", closeRepositoryGate);
+  repositoryGate?.addEventListener("click", (event) => {
+    if (event.target === repositoryGate) closeRepositoryGate();
+  });
+  repositoryGate?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const controls = [...repositoryGate.querySelectorAll("a[href], button:not([disabled])")];
+    if (!controls.length) return;
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !repositoryGate || repositoryGate.hidden) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    closeRepositoryGate();
+  }, true);
 
   function activeChapterTranslateY(chapter) {
     if (!chapter) return 0;
@@ -142,9 +218,42 @@
       "announcement.contact": "Связаться с разработчиком",
       "announcement.dismiss": "Закрыть объявление",
       "nav.language": "Язык",
-      "nav.read": "О проекте",
-      "nav.links": "Ссылки",
       "nav.menu": "Меню",
+      "nav.downloads": "Загрузки",
+      "nav.docs": "Документация",
+      "repositoryGate.dialog": "Доступ к исходному коду Parano1d",
+      "repositoryGate.close": "Закрыть сообщение",
+      "repositoryGate.eyebrow": "Исходный код",
+      "repositoryGate.title": "Код откроется перед запуском.",
+      "repositoryGate.copy": "Основной репозиторий остаётся закрытым на финальном этапе подготовки. Код будущего релиза будет опубликован перед запуском публичной сети.",
+      "repositoryGate.launch": "Запуск публичной сети · август 2026",
+      "repositoryGate.contact": "Связаться с разработчиком",
+      "repositoryGate.dismiss": "Закрыть",
+      "downloads.dialog": "Загрузки Parano1d",
+      "downloads.close": "Закрыть загрузки",
+      "downloads.header": "Загрузки",
+      "downloads.latest": "Последний релиз",
+      "downloads.open": "Релиз",
+      "downloads.all": "Все",
+      "downloads.release": "Релиз",
+      "downloads.gui.label": "01 / Нативное приложение",
+      "downloads.gui.title": "GUI-кошелёк",
+      "downloads.gui.copy": "Устанавливается как обычное приложение. Создайте или восстановите один 256-битный секрет, затем пользуйтесь кошельком, собственной полной нодой, Scope и майнером без терминала.",
+      "downloads.preview": "Главный экран GUI-кошелька Parano1d",
+      "downloads.preview.app": "Нативное приложение",
+      "downloads.preview.stack": "Кошелёк + собственная полная нода",
+      "downloads.preview.copy": "Одно приложение хранит секрет, проверяет сеть и отправляет доказанные транзакции.",
+      "downloads.wallet.docs": "Документация кошелька",
+      "downloads.gui.builds": "Сборки GUI-кошелька",
+      "downloads.download": "Скачать",
+      "downloads.core.label": "02 / Ноды и майнеры",
+      "downloads.core.title": "Core-инструменты",
+      "downloads.core.copy": "Для операторов нод, автоматизации и отдельного процесса майнинга. Каждый Core-архив содержит все три консольных бинарника для выбранной платформы.",
+      "downloads.core.includes": "Один архив. Три специализированных инструмента.",
+      "downloads.core.binaries": "Бинарники Core",
+      "downloads.core.builds": "Архивы Core-инструментов",
+      "downloads.integrity.title": "Проверяйте каждый файл.",
+      "downloads.integrity.copy": "Вместе с установщиками и архивами каждого релиза публикуются контрольные суммы SHA-256.",
       "readout.state": "состояние",
       "readout.history": "история",
       "readout.verify": "проверка",
@@ -152,13 +261,12 @@
       "overview.title": "Proof-native<br><em>L1 statechain</em>",
       "overview.lead": "<strong>Кошелёк доказывает владение. Майнер — точный переход состояния. Каждая нода проверяет результат.</strong> Без подписей. Без доверенной настройки. Без повтора с генезиса.",
       "overview.enter": "ПОЧЕМУ? <span>→</span>",
-      "overview.read": "О проекте",
       "overview.fact.sync.value": "O(1) SYNC",
       "overview.fact.sync.copy": "без истории. без архивных нод",
       "overview.fact.signatureless.value": "БЕЗ ПОДПИСЕЙ",
-      "overview.fact.signatureless.copy": "владение через хеш · PQ-ready",
-      "overview.fact.pow.value": "POW ПОРЯДОК",
-      "overview.fact.pow.copy": "право задают доказательства",
+      "overview.fact.signatureless.copy": "владение через хеш. <span class=\"nowrap\">PQ-safe</span>",
+      "overview.fact.pow.value": "POW - ПОРЯДОК",
+      "overview.fact.pow.copy": "переход разрешён доказательством",
       "dependency.index": "01 / Наследуемая зависимость",
       "dependency.title": "Классический блокчейн<br><em>Проверяет историю с генезиса.</em>",
       "dependency.lead": "Bitcoin, Ethereum и почти все современные блокчейны доказывают текущее состояние только одним способом: исполняют цепочку от генезиса. Чем активнее и старше сеть, тем больше работы ждёт каждую новую ноду.",
@@ -169,8 +277,8 @@
       "dependency.row3.label": "Возраст сети",
       "dependency.row3.value": "С каждым годом повышает требования к железу",
       "present.index": "02 / Разрыв с историей",
-      "present.title": "Настоящее<br><em>проверяется без прошлого.</em>",
-      "present.lead": "<strong>ParanO(1)d отделяет проверку корректности от повтора истории.</strong> Сеть поддерживает доказуемое живое UTXO-состояние: потраченные выходы освобождают место, а годы прошлой активности не превращаются в нагрузку для будущих нод.",
+      "present.title": "В Parano1d<br><em>настоящее проверяется без прошлого.</em>",
+      "present.lead": "<strong>Parano1d отделяет проверку корректности от повтора истории.</strong> Сеть поддерживает доказуемое живое UTXO-состояние: потраченные выходы освобождают место, а годы прошлой активности не превращаются в нагрузку для будущих нод.",
       "present.row1.label": "Рост состояния",
       "present.row1.value": "<strong>Живые UTXO, а не история транзакций</strong>",
       "present.row2.label": "Потраченные выходы",
@@ -179,7 +287,7 @@
       "present.row3.value": "Не требует хранить всю историю и повторять цепочку с генезиса",
       "proof.index": "04 / Изменение парадигмы",
       "proof.title": "Где хранятся данные,<br><em>там и доказывай.</em>",
-      "proof.lead": "Доказательство в ParanO(1)d строит тот, у кого есть нужные данные. Сеть получает готовый результат, а не задачу повторить ту же работу.",
+      "proof.lead": "Доказательство в Parano1d строит тот, у кого есть нужные данные. Сеть получает готовый результат, а не задачу повторить ту же работу.",
       "proof.wallet.label": "Кошелёк",
       "proof.wallet.copy": "Доказывает право расходования, не раскрывая секрет.",
       "proof.miner.label": "Майнер",
@@ -197,7 +305,7 @@
       "living.expand.value": "При заполнении 75% подключить каноническую пустую половину без остановки сети",
       "ownership.index": "06 / Владение без подписей",
       "ownership.title": "Достаточно секрета.<br><em>Без пары ключей. Без подписи.</em>",
-      "ownership.lead": "ParanO(1)d нужны 256 бит секретной энтропии, а не пара ключей или мнемонический формат. Кошелёк доказывает знание секрета, не раскрывая его; каждая трата создаёт новое ZK-доказательство, связанное со всей транзакцией.",
+      "ownership.lead": "Parano1d нужны 256 бит секретной энтропии, а не пара ключей или мнемонический формат. Кошелёк доказывает знание секрета, не раскрывая его; каждая трата создаёт новое ZK-доказательство, связанное со всей транзакцией.",
       "ownership.secret": "секрет расходования",
       "ownership.address": "адрес o1…",
       "ownership.protocol.label": "Протокол",
@@ -205,13 +313,13 @@
       "ownership.wire.label": "В сети",
       "ownership.wire.value": "Нет публичного ключа · нет подписи транзакции",
       "ownership.consensus.label": "В консенсусе",
-      "ownership.consensus.value": "<strong>Владение только через хеш · PQ-ready с генезиса</strong>",
+      "ownership.consensus.value": "<strong>Владение только через хеш. <span class=\"nowrap\">PQ-safe</span> с генезиса</strong>",
       "paged.index": "07 / PagedSpend",
       "paged.title": "Много UTXO.<br><em>Одна транзакция.</em>",
       "paged.lead": "Страницы доказательства — только внутренняя геометрия протокола. До 128 страниц всё ещё образуют одну неделимую транзакцию пользователя: один txid, одна комиссия, одна capsule и один чек.",
       "paged.atomic": "1 020 входов · 256 выходов<br>ЕДИНЫЙ PAGEDSPEND",
       "history.index": "08 / Рекурсивная история",
-      "history.title": "История сворачивается<br><em>в доказательство постоянного размера.</em>",
+      "history.title": "История сворачивается<br><em>в одно доказательство.</em>",
       "history.lead": "Каждый <code>HistoryStep</code> доказывает текущий блок и в той же схеме проверяет предыдущий terminal. Размер доказательства и работа верификатора не зависят от высоты цепочки.",
       "history.active.label": "Активная нода",
       "history.active.value": "Текущее состояние + компактные заголовки + последние 18 полных блоков",
@@ -219,7 +327,7 @@
       "history.age.value": "<strong>Не увеличивает стоимость проверки истории</strong>",
       "privacy.index": "09 / Приватность через нехранение",
       "privacy.title": "Приватность<br><em>без приватности.</em>",
-      "privacy.lead": "Текущее состояние публично, а транзакции видны, пока проходят через консенсус. ParanO(1)d не заставляет каждую ноду сохранять постоянный граф транзакций. Чтобы годами следить за адресом, внешний трекер должен непрерывно записывать весь поток и сам оплачивать его хранение.",
+      "privacy.lead": "Текущее состояние публично, а транзакции видны, пока проходят через консенсус. Parano1d не заставляет каждую ноду сохранять постоянный граф транзакций. Чтобы годами следить за адресом, внешний трекер должен непрерывно записывать весь поток и сам оплачивать его хранение.",
       "privacy.live.label": "Текущий state",
       "privacy.live.value": "Публичные суммы · публичные владельцы",
       "privacy.graph.label": "Прошлый граф",
@@ -266,18 +374,16 @@
       "join.formula.node": "независимая нода ✓",
       "run.index": "13 / Децентрализация на любом железе",
       "run.title": "Вся L1.<br><em>На твоём ноутбуке.</em>",
-      "run.lead": "Твой ноутбук может хранить всё текущее состояние и поддерживать всю L1. ParanO(1)d подстраивает ёмкость блока под доступную вычислительную мощность: сильное железо повышает TPS, слабое — снижает. Пропускная способность меняется. Сеть не останавливается.",
+      "run.lead": "Твой ноутбук может хранить всё текущее состояние и поддерживать всю L1. Parano1d подстраивает ёмкость блока под доступную вычислительную мощность: сильное железо повышает TPS, слабое — снижает. Пропускная способность меняется. Сеть не останавливается.",
       "run.capacity.modest": "Твой ноутбук",
       "run.capacity.modest.value": "ниже TPS",
       "run.capacity.fast": "Мощное железо",
       "run.capacity.fast.value": "выше TPS",
       "run.capacity.network": "Сеть",
       "run.capacity.network.value": "продолжает выпускать блоки",
-      "run.implementation": "Связаться с разработчиком",
-      "run.research": "Исследование FROST-GKR",
-      "run.read": "О проекте",
+      "run.download": "Загрузить кошелёк",
       "rail.label": "Главы statechain",
-      "rail.0": "Обзор ParanO(1)d",
+      "rail.0": "Обзор Parano1d",
       "rail.1": "Зависимость от истории",
       "rail.2": "Настоящее",
       "rail.3": "Независимый bootstrap",
@@ -290,12 +396,8 @@
       "rail.10": "Переносимые чеки",
       "rail.11": "Единый бинарный proof stack",
       "rail.12": "Proof-native PoW",
-      "rail.13": "Подключиться к ParanO(1)d",
-      "deck.previous": "Предыдущее состояние",
-      "reader.close": "Закрыть режим чтения",
-      "reader.close.short": "Закрыть",
-      "reader.dialog": "Документация ParanO(1)d",
-      "reader.header": "ParanO(1)d · README"
+      "rail.13": "Подключиться к Parano1d",
+      "deck.previous": "Предыдущее состояние"
     },
     zh: {
       "brand.home": "ParanO(1)d 首页",
@@ -304,9 +406,42 @@
       "announcement.contact": "联系开发者",
       "announcement.dismiss": "关闭公告",
       "nav.language": "语言",
-      "nav.read": "关于",
-      "nav.links": "链接",
       "nav.menu": "菜单",
+      "nav.downloads": "下载",
+      "nav.docs": "文档",
+      "repositoryGate.dialog": "Parano1d 源代码访问说明",
+      "repositoryGate.close": "关闭提示",
+      "repositoryGate.eyebrow": "源代码",
+      "repositoryGate.title": "代码将在网络启动前公开。",
+      "repositoryGate.copy": "核心代码仓库将在最终准备阶段保持私有。即将发布版本的代码将在公共网络启动前公开。",
+      "repositoryGate.launch": "公共网络启动 · 2026 年 8 月",
+      "repositoryGate.contact": "联系开发者",
+      "repositoryGate.dismiss": "关闭",
+      "downloads.dialog": "下载 Parano1d",
+      "downloads.close": "关闭下载页面",
+      "downloads.header": "下载",
+      "downloads.latest": "最新版本",
+      "downloads.open": "版本",
+      "downloads.all": "全部",
+      "downloads.release": "版本",
+      "downloads.gui.label": "01 / 原生应用",
+      "downloads.gui.title": "GUI 钱包",
+      "downloads.gui.copy": "像普通桌面应用一样安装。创建或恢复一个 256 位主密钥后，无需终端即可使用钱包、专用全节点、Scope 和矿工。",
+      "downloads.preview": "Parano1d GUI 钱包主界面",
+      "downloads.preview.app": "原生桌面应用",
+      "downloads.preview.stack": "钱包 + 专用全节点",
+      "downloads.preview.copy": "一个应用负责保管主密钥、验证网络并提交已证明的交易。",
+      "downloads.wallet.docs": "钱包文档",
+      "downloads.gui.builds": "GUI 钱包构建",
+      "downloads.download": "下载",
+      "downloads.core.label": "02 / 节点运维与挖矿",
+      "downloads.core.title": "Core 工具",
+      "downloads.core.copy": "适用于节点运维、自动化及独立挖矿进程。每个 Core 归档包都包含该平台所需的三个命令行程序。",
+      "downloads.core.includes": "一个归档包，三个专用工具。",
+      "downloads.core.binaries": "Core 可执行文件",
+      "downloads.core.builds": "Core 工具归档包",
+      "downloads.integrity.title": "请校验每个文件。",
+      "downloads.integrity.copy": "每个版本都会随安装包和归档包一并发布 SHA-256 校验和。",
       "readout.state": "状态",
       "readout.history": "历史",
       "readout.verify": "验证",
@@ -314,11 +449,10 @@
       "overview.title": "Proof-native<br><em>L1 statechain</em>",
       "overview.lead": "<strong>钱包证明所有权，矿工证明精确状态转移，每个节点验证最终结果。</strong> 无需签名。无需可信设置。无需从创世块重放。",
       "overview.enter": "为什么？ <span>→</span>",
-      "overview.read": "关于",
       "overview.fact.sync.value": "O(1) 同步",
       "overview.fact.sync.copy": "无历史。无需归档节点",
       "overview.fact.signatureless.value": "无签名",
-      "overview.fact.signatureless.copy": "纯哈希所有权 · 后量子就绪",
+      "overview.fact.signatureless.copy": "纯哈希所有权。<span class=\"nowrap\">后量子安全</span>",
       "overview.fact.pow.value": "POW 只负责排序",
       "overview.fact.pow.copy": "每次转移由证明授权",
       "dependency.index": "01 / 历史依赖",
@@ -331,8 +465,8 @@
       "dependency.row3.label": "网络年龄",
       "dependency.row3.value": "持续抬高独立验证的硬件门槛",
       "present.index": "02 / 摆脱历史依赖",
-      "present.title": "当前状态<br><em>无需历史即可验证。</em>",
-      "present.lead": "<strong>ParanO(1)d 将有效性与历史重放分离。</strong> 共识只承载可证明的实时 UTXO 状态：已花费输出释放槽位，过去多年的活动不会变成未来节点的永久负担。",
+      "present.title": "在 Parano1d 中<br><em>当前状态可以自证有效性。</em>",
+      "present.lead": "<strong>Parano1d 将有效性与历史重放分离。</strong> 共识只承载可证明的实时 UTXO 状态：已花费输出释放槽位，过去多年的活动不会变成未来节点的永久负担。",
       "present.row1.label": "状态增长",
       "present.row1.value": "<strong>取决于实时 UTXO，而非历史交易总量</strong>",
       "present.row2.label": "已花费输出",
@@ -341,7 +475,7 @@
       "present.row3.value": "不会增加永久存储，也无需从创世块重放",
       "proof.index": "04 / 范式转变",
       "proof.title": "数据在哪里，<br><em>就在哪里完成证明。</em>",
-      "proof.lead": "在 ParanO(1)d 中，由掌握所需数据的一方完成证明。网络接收已证明的结果，而不是再做一遍同样的工作。",
+      "proof.lead": "在 Parano1d 中，由掌握所需数据的一方完成证明。网络接收已证明的结果，而不是再做一遍同样的工作。",
       "proof.wallet.label": "钱包",
       "proof.wallet.copy": "证明私有授权，但不泄露花费秘密。",
       "proof.miner.label": "矿工",
@@ -359,7 +493,7 @@
       "living.expand.value": "占用率达到 75% 时接入规范空白半区——网络不停顿",
       "ownership.index": "06 / 无签名所有权",
       "ownership.title": "一个秘密就够了。<br><em>无需密钥对，无需签名。</em>",
-      "ownership.lead": "ParanO(1)d 需要的是 256 位秘密熵，而不是公私钥对或规定格式的助记词。钱包在不泄露秘密的前提下证明自己知道它；每次花费都会生成绑定完整交易的全新 ZK 证明。",
+      "ownership.lead": "Parano1d 需要的是 256 位秘密熵，而不是公私钥对或规定格式的助记词。钱包在不泄露秘密的前提下证明自己知道它；每次花费都会生成绑定完整交易的全新 ZK 证明。",
       "ownership.secret": "花费秘密",
       "ownership.address": "o1… 地址",
       "ownership.protocol.label": "协议",
@@ -367,7 +501,7 @@
       "ownership.wire.label": "线上数据",
       "ownership.wire.value": "没有公钥 · 没有交易签名",
       "ownership.consensus.label": "共识层",
-      "ownership.consensus.value": "<strong>纯哈希所有权 · 从创世起即面向后量子</strong>",
+      "ownership.consensus.value": "<strong>纯哈希所有权。自创世起即具备后量子安全性</strong>",
       "paged.index": "07 / PagedSpend",
       "paged.title": "许多 UTXO。<br><em>一笔交易。</em>",
       "paged.lead": "固定大小的证明页只是协议内部结构。最多 128 页仍是一笔不可分割的用户交易：一个 txid、一份手续费、一份 capsule、一张回执。",
@@ -381,7 +515,7 @@
       "history.age.value": "<strong>不会增加历史验证成本</strong>",
       "privacy.index": "09 / 非留存式隐私",
       "privacy.title": "无需隐私链，<br><em>也有隐私。</em>",
-      "privacy.lead": "实时状态是公开的，交易经过共识时也可被观察。ParanO(1)d 不要求每个节点永久保存完整交易关系图。若想多年追踪某个地址，外部追踪器必须持续实时记录全部交易，并自行承担不断增长的存储成本。",
+      "privacy.lead": "实时状态是公开的，交易经过共识时也可被观察。Parano1d 不要求每个节点永久保存完整交易关系图。若想多年追踪某个地址，外部追踪器必须持续实时记录全部交易，并自行承担不断增长的存储成本。",
       "privacy.live.label": "实时状态",
       "privacy.live.value": "金额公开 · 所有者公开",
       "privacy.graph.label": "历史关系图",
@@ -428,18 +562,16 @@
       "join.formula.node": "独立节点 ✓",
       "run.index": "13 / 适应不同硬件的去中心化",
       "run.title": "完整 L1。<br><em>就在你的笔记本上。</em>",
-      "run.lead": "你的笔记本就能保存全部实时状态，并独立验证整条 L1。ParanO(1)d 会根据可用计算能力自动调整区块容量：硬件越强，TPS 越高；硬件较弱，TPS 随之降低。吞吐量会变，网络不会停。",
+      "run.lead": "你的笔记本就能保存全部实时状态，并独立验证整条 L1。Parano1d 会根据可用计算能力自动调整区块容量：硬件越强，TPS 越高；硬件较弱，TPS 随之降低。吞吐量会变，网络不会停。",
       "run.capacity.modest": "你的笔记本",
       "run.capacity.modest.value": "较低 TPS",
       "run.capacity.fast": "更强硬件",
       "run.capacity.fast.value": "更高 TPS",
       "run.capacity.network": "网络",
       "run.capacity.network.value": "持续产生区块",
-      "run.implementation": "联系开发者",
-      "run.research": "FROST-GKR 研究",
-      "run.read": "关于",
+      "run.download": "下载钱包",
       "rail.label": "状态链章节",
-      "rail.0": "ParanO(1)d 概览",
+      "rail.0": "Parano1d 概览",
       "rail.1": "历史依赖",
       "rail.2": "当前状态",
       "rail.3": "独立启动",
@@ -452,12 +584,8 @@
       "rail.10": "可携带回执",
       "rail.11": "单一二进制证明栈",
       "rail.12": "Proof-native PoW",
-      "rail.13": "加入 ParanO(1)d",
-      "deck.previous": "上一个状态",
-      "reader.close": "关闭阅读模式",
-      "reader.close.short": "关闭",
-      "reader.dialog": "ParanO(1)d 文档",
-      "reader.header": "ParanO(1)d · README"
+      "rail.13": "加入 Parano1d",
+      "deck.previous": "上一个状态"
     }
   };
 
@@ -810,25 +938,25 @@
   const stateSequence = [0, 1, 2, 9, 3, 4, 5, 6, 7, 11, 12, 13, 8, 10];
 
   const interfaceCopy = {
-    en: { next: "ADVANCE STATE →", current: "CURRENT STATE ✓" },
-    ru: { next: "ДАЛЬШЕ →", current: "ТЕКУЩЕЕ ✓" },
-    zh: { next: "推进状态 →", current: "当前状态 ✓" }
+    en: { next: "NEXT", current: "CURRENT STATE ✓" },
+    ru: { next: "ДАЛЬШЕ", current: "ТЕКУЩЕЕ ✓" },
+    zh: { next: "下一步", current: "当前状态 ✓" }
   };
 
   const metaCopy = {
     en: {
-      title: "ParanO(1)d. Proof-native L1 statechain",
-      description: "ParanO(1)d (Parano1d) is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.",
+      title: "Parano1d. Proof-native L1 statechain",
+      description: "Parano1d is a proof-native L1 statechain secured by proof of work, with signatureless ownership and no historical replay.",
       locale: "en_US"
     },
     ru: {
-      title: "ParanO(1)d. Proof-native L1 statechain",
-      description: "ParanO(1)d (Parano1d) представляет собой proof-native L1 statechain, защищённый proof of work, с владением без подписей и проверкой без повтора истории.",
+      title: "Parano1d. Proof-native L1 statechain",
+      description: "Parano1d представляет собой proof-native L1 statechain, защищённый proof of work, с владением без подписей и проверкой без повтора истории.",
       locale: "ru_RU"
     },
     zh: {
-      title: "ParanO(1)d. Proof-native L1 statechain",
-      description: "ParanO(1)d（Parano1d）是一条由工作量证明保护的证明原生 L1 状态链，采用无签名所有权，无需重放历史。",
+      title: "Parano1d. Proof-native L1 statechain",
+      description: "Parano1d 是一条由工作量证明保护的证明原生 L1 状态链，采用无签名所有权，无需重放历史。",
       locale: "zh_CN"
     }
   };
@@ -1010,8 +1138,6 @@
   const wheelStepCooldownMs = 320;
   const wheelTriggerDistance = 34;
   let touchStart = null;
-  let readOpen = false;
-  let readerOpener = null;
   let scene = null;
   let wheelAudioContext = null;
   let wheelAudioOutput = null;
@@ -1102,20 +1228,6 @@
     } catch {}
   }
 
-  function renderReaderDocument(nextLanguage) {
-    const template = document.querySelector(`#reader-${nextLanguage}`) || document.querySelector("#reader-en");
-    const oldRange = Math.max(1, readPanel.scrollHeight - readPanel.clientHeight);
-    const progress = readPanel.scrollTop / oldRange;
-    readerBody.replaceChildren(template.content.cloneNode(true));
-    secureExternalLinks(readerBody);
-    if (readOpen && progress > 0) {
-      requestAnimationFrame(() => {
-        const newRange = Math.max(0, readPanel.scrollHeight - readPanel.clientHeight);
-        readPanel.scrollTop = newRange * progress;
-      });
-    }
-  }
-
   function applyLanguage(nextLanguage, persist = true) {
     language = ["en", "ru", "zh"].includes(nextLanguage) ? nextLanguage : "en";
     const selected = translations[language] || {};
@@ -1135,14 +1247,15 @@
       element.setAttribute("aria-label", language === "en" ? sourceAria.get(key) : (selected[key] ?? sourceAria.get(key)));
     });
     const languageLabels = { en: "EN", ru: "RU", zh: "中文" };
+    const languageAria = { en: "Language · EN", ru: "Язык · RU", zh: "语言 · 中文" };
     document.querySelectorAll(".language-current").forEach((label) => { label.textContent = languageLabels[language]; });
+    document.querySelectorAll(".language-dropdown > summary").forEach((summary) => { summary.setAttribute("aria-label", languageAria[language]); });
     document.querySelectorAll(".language-option").forEach((option) => {
       const active = option.dataset.lang === language;
       option.classList.toggle("active", active);
       option.setAttribute("aria-pressed", active ? "true" : "false");
     });
 
-    renderReaderDocument(language);
     nextButton.textContent = current === chapters.length - 1 ? interfaceCopy[language].current : interfaceCopy[language].next;
     updateLabels(current);
     syncMobileSceneLayouts();
@@ -1175,6 +1288,97 @@
       if (dropdown !== except) dropdown.removeAttribute("open");
     });
   }
+
+  let downloadsLastFocus = null;
+  let downloadsCloseTimer = 0;
+  let latestReleasePromise = null;
+
+  function loadDownloadsPreview() {
+    if (!downloadsPreview || downloadsPreview.getAttribute("src")) return;
+    const source = downloadsPreview.dataset.src;
+    if (source) downloadsPreview.setAttribute("src", source);
+  }
+
+  function hydrateLatestRelease() {
+    if (latestReleasePromise) return latestReleasePromise;
+    if (!["parano1d.org", "www.parano1d.org"].includes(window.location.hostname)) {
+      latestReleasePromise = Promise.resolve();
+      return latestReleasePromise;
+    }
+    latestReleasePromise = (async () => {
+      try {
+        const response = await fetch("https://api.github.com/repos/ignotusnemo/parano1d/releases/latest", {
+          credentials: "omit",
+          headers: { Accept: "application/vnd.github+json" }
+        });
+        if (!response.ok) return;
+        const release = await response.json();
+        const tag = typeof release.tag_name === "string" ? release.tag_name : "";
+        if (!tag || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
+
+        const assets = new Map(release.assets.map((asset) => [asset.name, asset.browser_download_url]));
+        document.querySelectorAll("[data-release-pattern]").forEach((link) => {
+          const expectedName = link.dataset.releasePattern.replace("{tag}", tag);
+          const downloadUrl = assets.get(expectedName);
+          if (downloadUrl) link.href = downloadUrl;
+        });
+        document.querySelectorAll("[data-release-page]").forEach((link) => {
+          if (release.html_url) link.href = release.html_url;
+        });
+        document.querySelectorAll("[data-release-tag]").forEach((label) => { label.textContent = tag; });
+      } catch {}
+    })();
+    return latestReleasePromise;
+  }
+
+  function openDownloads() {
+    if (!downloadsModal || !downloadsModal.hidden) return;
+    clearTimeout(downloadsCloseTimer);
+    downloadsLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setMobileMenu(false);
+    closeNavDropdowns();
+    downloadsModal.hidden = false;
+    downloadsModal.scrollTop = 0;
+    document.body.classList.add("downloads-open");
+    app.setAttribute("inert", "");
+    loadDownloadsPreview();
+    hydrateLatestRelease();
+    requestAnimationFrame(() => {
+      downloadsModal.scrollTop = 0;
+      downloadsModal.classList.add("is-open");
+      downloadsModal.focus({ preventScroll: true });
+    });
+  }
+
+  function closeDownloads() {
+    if (!downloadsModal || downloadsModal.hidden) return;
+    downloadsModal.classList.remove("is-open");
+    document.body.classList.remove("downloads-open");
+    app.removeAttribute("inert");
+    downloadsCloseTimer = window.setTimeout(() => { downloadsModal.hidden = true; }, 260);
+    downloadsLastFocus?.focus?.({ preventScroll: true });
+  }
+
+  downloadsOpeners.forEach((button) => button.addEventListener("click", openDownloads));
+  downloadsClose?.addEventListener("click", closeDownloads);
+  downloadsModal?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const focusable = [...downloadsModal.querySelectorAll('a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.closest("[hidden]"));
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (document.activeElement === downloadsModal) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
+    } else if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
 
   mobileMenuToggle?.addEventListener("click", () => {
     const open = mobileMenuToggle.getAttribute("aria-expanded") !== "true";
@@ -1336,7 +1540,6 @@
   }
 
   function advance(delta) {
-    if (readOpen) return;
     goTo(current + delta, { history: "push" });
   }
 
@@ -1351,37 +1554,16 @@
   prevButton.addEventListener("click", () => advance(-1));
   nextButton.addEventListener("click", () => advance(1));
 
-  function openReader(event) {
-    setMobileMenu(false);
-    closeNavDropdowns();
-    readOpen = true;
-    readerOpener = event?.currentTarget || document.activeElement;
-    readMode.classList.add("open");
-    readMode.setAttribute("aria-hidden", "false");
-    readPanel.scrollTop = 0;
-    document.querySelector(".read-close").focus({ preventScroll: true });
-  }
-
-  function closeReader() {
-    readOpen = false;
-    readMode.classList.remove("open");
-    readMode.setAttribute("aria-hidden", "true");
-    if (readerOpener?.focus) readerOpener.focus({ preventScroll: true });
-  }
-
-  document.querySelectorAll(".read-trigger").forEach((button) => button.addEventListener("click", openReader));
-  document.querySelectorAll(".read-close").forEach((button) => button.addEventListener("click", closeReader));
-
   window.addEventListener("keydown", (event) => {
+    if (downloadsModal && !downloadsModal.hidden) {
+      if (event.key === "Escape") closeDownloads();
+      return;
+    }
     if (event.key === "Escape") {
       const openDropdown = navDropdowns.find((dropdown) => dropdown.open);
       if (openDropdown) {
         openDropdown.removeAttribute("open");
         openDropdown.querySelector("summary")?.focus({ preventScroll: true });
-        return;
-      }
-      if (readOpen) {
-        closeReader();
         return;
       }
       if (mobileMenu && !mobileMenu.hidden) {
@@ -1390,7 +1572,7 @@
       }
       return;
     }
-    if (readOpen || ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
     if (["ArrowRight", "ArrowDown", "PageDown"].includes(event.key) || (event.key === " " && !event.shiftKey)) {
       event.preventDefault();
       advance(1);
@@ -1405,7 +1587,8 @@
   });
 
   window.addEventListener("wheel", (event) => {
-    if (readOpen || window.innerWidth <= 820 || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    if (downloadsModal && !downloadsModal.hidden) return;
+    if (window.innerWidth <= 820 || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
     const now = performance.now();
     const scale = event.deltaMode === 1 ? 32 : event.deltaMode === 2 ? window.innerHeight : 1;
     const delta = event.deltaY * scale;
@@ -1435,12 +1618,14 @@
   }, { passive: true });
 
   window.addEventListener("touchstart", (event) => {
+    if (downloadsModal && !downloadsModal.hidden) return;
     const touch = event.changedTouches[0];
     touchStart = { x: touch.clientX, y: touch.clientY, time: performance.now() };
   }, { passive: true });
 
   window.addEventListener("touchend", (event) => {
-    if (!touchStart || readOpen) return;
+    if (downloadsModal && !downloadsModal.hidden) return;
+    if (!touchStart) return;
     const touch = event.changedTouches[0];
     const dx = touch.clientX - touchStart.x;
     const dy = touch.clientY - touchStart.y;
@@ -3032,7 +3217,7 @@
       const spread = this.h * .5;
       for (let i = 0; i < pageCount; i += 1) {
         const lane = (i / (pageCount - 1) - .5);
-        const x = left + Math.abs(lane) * (l.mobile ? 14 : 28);
+        const x = left;
         const y = cy + lane * spread;
         const w = l.mobile ? 18 : 24;
         const h = l.mobile ? 9 : 12;
