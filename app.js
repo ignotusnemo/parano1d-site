@@ -659,8 +659,8 @@
       proof: "prove transition · freeze template · scan nonce",
       state: ["PROVEN BLOCK", "immutable template"],
       proofLabel: ["128-BIT NONCE", "ordering already-valid work"],
-      tail: ["ASERT", "15-second mean target"],
-      read: ["B64 · m23", "template locked", "pow"]
+      tail: ["ASERT", "complete block interval · 15-second mean"],
+      read: ["B25 · m22", "template locked", "pow"]
     },
     {
       title: "STATE 03 · INDEPENDENT BOOTSTRAP",
@@ -775,8 +775,8 @@
         proof: "доказать переход · зафиксировать шаблон · искать nonce",
         state: ["ДОКАЗАННЫЙ БЛОК", "неизменяемый шаблон"],
         proofLabel: ["128-БИТНЫЙ NONCE", "порядок уже корректных переходов"],
-        tail: ["ASERT", "средняя цель 15 секунд"],
-        read: ["B64 · m23", "шаблон зафиксирован", "PoW"]
+        tail: ["ASERT", "полный интервал блока · средняя цель 15 секунд"],
+        read: ["B25 · m22", "шаблон зафиксирован", "PoW"]
       },
       {
         title: "СОСТОЯНИЕ 03 · НЕЗАВИСИМЫЙ BOOTSTRAP",
@@ -889,8 +889,8 @@
         proof: "证明转移 · 冻结模板 · 搜索 nonce",
         state: ["已证明区块", "不可变模板"],
         proofLabel: ["128 位 NONCE", "只排列已有效工作"],
-        tail: ["ASERT", "平均 15 秒目标"],
-        read: ["B64 · m23", "模板已锁定", "pow"]
+        tail: ["ASERT", "完整区块间隔 · 平均目标 15 秒"],
+        read: ["B25 · m22", "模板已锁定", "pow"]
       },
       {
         title: "状态 03 · 独立启动",
