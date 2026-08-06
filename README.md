@@ -2,7 +2,7 @@
 
 Official website for [Parano1d](https://parano1d.org), a proof-native Layer 1 secured by proof of work.
 
-![Parano1d website](social-card-v3.png)
+![Parano1d website](social-card-v4.png)
 
 - [Documentation](https://docs.parano1d.org)
 - [Parano1d Lab](https://lab.parano1d.org)

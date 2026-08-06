@@ -34,6 +34,8 @@
   const PRIVATE_REPOSITORY_GATE = true;
   let repositoryGateLastFocus = null;
   let repositoryGateCloseTimer = 0;
+  let repositoryGateAddedAppInert = false;
+  let repositoryGateAddedDownloadsInert = false;
 
   const launchNoticeStorageKey = "parano1d-public-network-2026-08-dismissed";
   try {
@@ -67,8 +69,13 @@
     if (!repositoryGate || !repositoryGate.hidden) return;
     clearTimeout(repositoryGateCloseTimer);
     repositoryGateLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    repositoryGateAddedAppInert = !app.hasAttribute("inert");
+    repositoryGateAddedDownloadsInert = Boolean(downloadsModal && !downloadsModal.hidden && !downloadsModal.hasAttribute("inert"));
+    if (repositoryGateAddedAppInert) app.setAttribute("inert", "");
+    if (repositoryGateAddedDownloadsInert) downloadsModal.setAttribute("inert", "");
     repositoryGate.hidden = false;
     document.body.classList.add("repository-gate-open");
+    scene?.syncPlayback();
     requestAnimationFrame(() => {
       repositoryGate.classList.add("is-open");
       repositoryGateClose?.focus({ preventScroll: true });
@@ -79,7 +86,14 @@
     if (!repositoryGate || repositoryGate.hidden) return;
     repositoryGate.classList.remove("is-open");
     document.body.classList.remove("repository-gate-open");
-    repositoryGateCloseTimer = window.setTimeout(() => { repositoryGate.hidden = true; }, 220);
+    if (repositoryGateAddedAppInert) app.removeAttribute("inert");
+    if (repositoryGateAddedDownloadsInert) downloadsModal?.removeAttribute("inert");
+    repositoryGateAddedAppInert = false;
+    repositoryGateAddedDownloadsInert = false;
+    repositoryGateCloseTimer = window.setTimeout(() => {
+      repositoryGate.hidden = true;
+      scene?.syncPlayback();
+    }, 220);
     repositoryGateLastFocus?.focus?.({ preventScroll: true });
   }
 
@@ -132,7 +146,12 @@
   }
 
   function applyMobileSceneLayout() {
-    if (window.innerWidth > 820 || !controlDeck || !sceneElement) {
+    if (
+      window.innerWidth > 820 ||
+      !controlDeck ||
+      !sceneElement ||
+      getComputedStyle(sceneElement).display === "none"
+    ) {
       app.style.removeProperty("--mobile-scene-top");
       return;
     }
@@ -197,6 +216,7 @@
   syncViewportHeight();
   window.addEventListener("resize", syncViewportHeight, { passive: true });
   window.visualViewport?.addEventListener("resize", syncViewportHeight, { passive: true });
+  window.visualViewport?.addEventListener("scroll", syncViewportHeight, { passive: true });
 
   const sceneLabels = {
     stateTitle: document.querySelector("#scene-state-title"),
@@ -216,6 +236,7 @@
       "announcement.label": "Объявление о запуске сети",
       "announcement.launch": "Запуск публичной сети · август 2026",
       "announcement.contact": "Связаться с разработчиком",
+      "announcement.copyAction": "— скопировать адрес электронной почты",
       "announcement.dismiss": "Закрыть объявление",
       "nav.language": "Язык",
       "nav.menu": "Меню",
@@ -250,7 +271,6 @@
       "downloads.core.title": "Core-инструменты",
       "downloads.core.copy": "Для операторов нод, автоматизации и отдельного процесса майнинга. Каждый Core-архив содержит все три консольных бинарника для выбранной платформы.",
       "downloads.core.includes": "Один архив. Три специализированных инструмента.",
-      "downloads.core.binaries": "Бинарники Core",
       "downloads.core.builds": "Архивы Core-инструментов",
       "downloads.integrity.title": "Проверяйте каждый файл.",
       "downloads.integrity.copy": "Вместе с установщиками и архивами каждого релиза публикуются контрольные суммы SHA-256.",
@@ -258,85 +278,84 @@
       "readout.history": "история",
       "readout.verify": "проверка",
       "overview.index": "Сеть не повторяет исполнение. Она проверяет.",
-      "overview.title": "Proof-native<br><em>L1 network</em>",
-      "overview.lead": "<strong>Кошелёк доказывает владение. Майнер — точный переход состояния. Каждая нода проверяет результат.</strong> Без подписей. Без доверенной настройки. Без повтора с генезиса.",
+      "overview.title": "Proof-native<br><em>Layer 1</em>",
+      "overview.security": "Proof of work задаёт канонический порядок. Сквозная постквантовая безопасность доказана на уровне NIST Category 1.",
       "overview.enter": "ПОЧЕМУ? <span>→</span>",
-      "overview.fact.sync.value": "O(1) SYNC",
-      "overview.fact.sync.copy": "без истории. без архивных нод",
+      "overview.fact.sync.value": "ПРОВЕРКА ЗА O(1)",
+      "overview.fact.sync.copy": "без повтора с генезиса",
       "overview.fact.signatureless.value": "БЕЗ ПОДПИСЕЙ",
-      "overview.fact.signatureless.copy": "владение через хеш. <span class=\"nowrap\">PQ-safe</span>",
-      "overview.fact.pow.value": "POW - ПОРЯДОК",
-      "overview.fact.pow.copy": "переход разрешён доказательством",
-      "dependency.index": "01 / Наследуемая зависимость",
-      "dependency.title": "Классический блокчейн<br><em>Проверяет историю с генезиса.</em>",
-      "dependency.lead": "Bitcoin, Ethereum и почти все современные блокчейны доказывают текущее состояние только одним способом: исполняют цепочку от генезиса. Чем активнее и старше сеть, тем больше работы ждёт каждую новую ноду.",
-      "dependency.row1.label": "Основа доверия",
-      "dependency.row1.value": "<strong>Полный журнал исполнения</strong>",
+      "overview.fact.signatureless.copy": "владение доказано, а не подписано",
+      "overview.fact.pow.value": "СОСТОЯНИЕ",
+      "overview.fact.pow.copy": "потраченные выходы освобождают место",
+      "dependency.index": "01 / ЗАВИСИМОСТЬ ОТ ИСТОРИИ",
+      "dependency.title": "Привычный блокчейн<br><em>навсегда привязан<br>к истории.</em>",
+      "dependency.lead": "Bitcoin, Ethereum и большинство других блокчейнов восстанавливают текущее состояние, заново исполняя всю цепочку. Чем длиннее история, тем больше работы приходится проделать новой ноде при первом запуске.",
+      "dependency.row1.label": "Источник истины",
+      "dependency.row1.value": "<strong>Вся история исполнения</strong>",
       "dependency.row2.label": "Новая полная нода",
-      "dependency.row2.value": "Скачивает цепочку и исполняет её заново",
+      "dependency.row2.value": "Скачивает всю цепочку и заново исполняет каждый блок",
       "dependency.row3.label": "Возраст сети",
-      "dependency.row3.value": "С каждым годом повышает требования к железу",
-      "present.index": "02 / Разрыв с историей",
-      "present.title": "В Parano1d<br><em>настоящее проверяется без прошлого.</em>",
-      "present.lead": "<strong>Parano1d отделяет проверку корректности от повтора истории.</strong> Сеть поддерживает доказуемое живое UTXO-состояние: потраченные выходы освобождают место, а годы прошлой активности не превращаются в нагрузку для будущих нод.",
-      "present.row1.label": "Рост состояния",
-      "present.row1.value": "<strong>Живые UTXO, а не история транзакций</strong>",
+      "dependency.row3.value": "Увеличивает объём первоначальной проверки",
+      "present.index": "02 / РАЗРЫВ С ИСТОРИЕЙ",
+      "present.title": "Parano1d.<br>Настоящее доказывает<br><em>прошлое.</em>",
+      "present.lead": "Parano1d отделяет проверку текущего состояния от повторного исполнения истории. Текущий набор UTXO несёт рекурсивное доказательство всех допустимых переходов, которые к нему привели. Когда выход потрачен, его слот освобождается. Поэтому объём хранения зависит от числа текущих UTXO, а не от возраста цепочки.",
+      "present.row1.label": "Размер состояния",
+      "present.row1.value": "<strong>Зависит от текущих UTXO, а не от всех транзакций за время жизни сети</strong>",
       "present.row2.label": "Потраченные выходы",
-      "present.row2.value": "Слоты очищаются и возвращаются аллокатору",
-      "present.row3.label": "Возраст сети",
-      "present.row3.value": "Не требует хранить всю историю и повторять цепочку с генезиса",
-      "proof.index": "04 / Изменение парадигмы",
-      "proof.title": "Где хранятся данные,<br><em>там и доказывай.</em>",
-      "proof.lead": "Доказательство в Parano1d строит тот, у кого есть нужные данные. Сеть получает готовый результат, а не задачу повторить ту же работу.",
+      "present.row2.value": "Освобождают слоты для новых UTXO",
+      "present.row3.label": "Возраст цепочки",
+      "present.row3.value": "Не увеличивает работу при подключении новой ноды",
+      "proof.index": "04 / СМЕНА ПАРАДИГМЫ",
+      "proof.title": "Доказывай там,<br><em>где уже есть данные.</em>",
+      "proof.lead": "В Parano1d доказательство строит тот, у кого уже есть нужные данные. Сеть получает готовый результат, который можно проверить, и не повторяет исходные вычисления.",
       "proof.wallet.label": "Кошелёк",
-      "proof.wallet.copy": "Доказывает право расходования, не раскрывая секрет.",
+      "proof.wallet.copy": "Доказывает право потратить средства, не раскрывая секрет.",
       "proof.miner.label": "Майнер",
-      "proof.miner.copy": "Доказывает публичную логику транзакции и точный переход состояния.",
+      "proof.miner.copy": "Доказывает логику транзакций и точный переход состояния.",
       "proof.network.label": "Сеть",
-      "proof.network.copy": "Проверяет доказательства, применяет доказанные изменения слотов и проверяет PoW.",
-      "living.index": "05 / Живое состояние UTXO",
-      "living.title": "Состояние растёт<br>от использования.<br><em>Не от времени.</em>",
-      "living.lead": "Расходование освобождает слот. Аллокатор сначала использует свободные позиции и лишь затем расширяет состояние. Пустые сегменты существуют виртуально и исчезают, когда освобождён их последний UTXO.",
+      "proof.network.copy": "Проверяет оба доказательства и PoW, затем применяет подтверждённые изменения.",
+      "living.index": "05 / ТЕКУЩЕЕ СОСТОЯНИЕ UTXO",
+      "living.title": "Состояние растёт<br>с числом UTXO.<br><em>Не с возрастом сети.</em>",
+      "living.lead": "При расходовании UTXO его слот очищается. Перед расширением аллокатор заполняет свободные позиции. Если в сегменте не остаётся ни одного UTXO, такой сегмент снова становится виртуальным.",
       "living.spend.label": "Расходование",
-      "living.spend.value": "Очистить слот по индексу",
+      "living.spend.value": "Освобождает слот потраченного UTXO",
       "living.reuse.label": "Повторное использование",
-      "living.reuse.value": "Поместить новый <code>creation_id</code> в свободную позицию",
+      "living.reuse.value": "Новый <code>creation_id</code> записывается в свободный слот",
       "living.expand.label": "Расширение",
-      "living.expand.value": "При заполнении 75% подключить каноническую пустую половину без остановки сети",
-      "ownership.index": "06 / Владение без подписей",
-      "ownership.title": "Достаточно секрета.<br><em>Без пары ключей. Без подписи.</em>",
-      "ownership.lead": "Parano1d нужны 256 бит секретной энтропии, а не пара ключей или мнемонический формат. Кошелёк доказывает знание секрета, не раскрывая его; каждая трата создаёт новое ZK-доказательство, связанное со всей транзакцией.",
+      "living.expand.value": "При заполнении 75% подключается каноническая пустая половина без остановки сети",
+      "ownership.index": "06 / ВЛАДЕНИЕ БЕЗ ПОДПИСЕЙ",
+      "ownership.title": "Одного секрета достаточно.<br>Без пары ключей.<br><em>Без подписи.</em>",
+      "ownership.lead": "Адрес Parano1d выводится из 256 бит секретной энтропии. Пары открытого и закрытого ключей здесь нет. При каждой трате кошелёк доказывает знание секрета, не раскрывая его, и создаёт новое доказательство с нулевым разглашением, связанное со всей транзакцией.",
       "ownership.secret": "секрет расходования",
       "ownership.address": "адрес o1…",
       "ownership.protocol.label": "Протокол",
-      "ownership.protocol.value": "256-битный секрет · без обязательной мнемоники",
-      "ownership.wire.label": "В сети",
-      "ownership.wire.value": "Нет публичного ключа · нет подписи транзакции",
-      "ownership.consensus.label": "В консенсусе",
-      "ownership.consensus.value": "<strong>Владение только через хеш. <span class=\"nowrap\">PQ-safe</span> с генезиса</strong>",
-      "paged.index": "07 / PagedSpend",
-      "paged.title": "Много UTXO.<br><em>Одна транзакция.</em>",
-      "paged.lead": "Страницы доказательства — только внутренняя геометрия протокола. До 128 страниц всё ещё образуют одну неделимую транзакцию пользователя: один txid, одна комиссия, одна capsule и один чек.",
-      "paged.atomic": "1 020 входов · 256 выходов<br>ЕДИНЫЙ PAGEDSPEND",
-      "history.index": "08 / Рекурсивная история",
-      "history.title": "История сворачивается<br><em>в одно доказательство.</em>",
-      "history.lead": "Каждый <code>HistoryStep</code> доказывает текущий блок и в той же схеме проверяет предыдущий terminal. Размер доказательства и работа верификатора не зависят от высоты цепочки.",
+      "ownership.protocol.value": "256 бит секрета · без криптосистемы с открытым ключом",
+      "ownership.wire.label": "В транзакции",
+      "ownership.wire.value": "Нет ни открытого ключа, ни цифровой подписи",
+      "ownership.consensus.label": "Владение",
+      "ownership.consensus.value": "<strong>Доказывается знанием секрета с нулевым разглашением</strong>",
+      "paged.index": "07 / PAGEDSPEND",
+      "paged.title": "До 1 020 UTXO.<br><em>Одна транзакция.</em>",
+      "paged.lead": "Физическая страница <code>Tx8x2</code> вмещает до восьми входов и двух выходов. <code>PagedSpend</code> объединяет до 128 таких страниц в одну логическую транзакцию. Она атомарно тратит до 1 020 UTXO и создаёт до 256 выходов. При этом у неё один txid, одна комиссия, одна капсула авторизации и один чек.",
+      "history.index": "08 / РЕКУРСИВНАЯ ИСТОРИЯ",
+      "history.title": "История растёт.<br><em>Размер proof не меняется.</em>",
+      "history.lead": "Каждый <code>HistoryStep</code> одновременно доказывает новый блок и проверяет терминальное доказательство предыдущего шага. С каждым блоком терминальное доказательство обновляется, но его размер и объём работы при проверке не зависят от высоты цепочки.",
       "history.active.label": "Активная нода",
-      "history.active.value": "Текущее состояние + компактные заголовки + последние 18 полных блоков",
+      "history.active.value": "Текущее состояние + терминальное доказательство + последние 18 полных блоков",
       "history.age.label": "Возраст цепочки",
-      "history.age.value": "<strong>Не увеличивает стоимость проверки истории</strong>",
-      "privacy.index": "09 / Приватность через нехранение",
-      "privacy.title": "Приватность<br><em>без приватности.</em>",
-      "privacy.lead": "Текущее состояние публично, а транзакции видны, пока проходят через консенсус. Parano1d не заставляет каждую ноду сохранять постоянный граф транзакций. Чтобы годами следить за адресом, внешний трекер должен непрерывно записывать весь поток и сам оплачивать его хранение.",
-      "privacy.live.label": "Текущий state",
+      "history.age.value": "<strong>Не влияет на размер доказательства и стоимость проверки истории</strong>",
+      "privacy.index": "09 / ПРИВАТНОСТЬ БЕЗ ПОСТОЯННОГО АРХИВА",
+      "privacy.title": "Приватность<br><em>без секретов.</em>",
+      "privacy.lead": "Пока транзакции проходят через консенсус, Parano1d полностью прозрачен: видны суммы, владельцы и сами транзакции. Но консенсус не сохраняет постоянный граф транзакций. Чтобы отслеживать адреса годами, внешний наблюдатель должен непрерывно записывать поток и самостоятельно хранить собранные данные.",
+      "privacy.live.label": "Текущее состояние",
       "privacy.live.value": "Публичные суммы · публичные владельцы",
-      "privacy.graph.label": "Прошлый граф",
-      "privacy.graph.value": "<strong>Не сохраняется консенсусом</strong>",
-      "privacy.tracker.label": "Внешний трекинг",
-      "privacy.tracker.value": "Записывать каждую транзакцию в реальном времени",
+      "privacy.graph.label": "Граф прошлых транзакций",
+      "privacy.graph.value": "<strong>Консенсус его не сохраняет</strong>",
+      "privacy.tracker.label": "Долгосрочное наблюдение",
+      "privacy.tracker.value": "Требует непрерывной внешней записи",
       "receipts.index": "10 / Переносимое доказательство платежа",
       "receipts.title": "История исчезает.<br><em>Чек остаётся.</em>",
-      "receipts.lead": "После подтверждения платежа кошелёк отправителя сохраняет экспортируемый Merkle-чек. В нём находятся все публичные данные платежа и путь включения фиксированной глубины. Любая нода проверяет его по каноническому заголовку — старое тело блока не требуется.",
+      "receipts.lead": "После подтверждения платежа кошелёк отправителя сохраняет экспортируемый Merkle-чек. В нём находятся все публичные данные платежа и путь включения фиксированной глубины. Любая нода проверяет его по каноническому заголовку. Старое тело блока не требуется.",
       "receipts.formula.payment": "платёж",
       "receipts.formula.receipt": "переносимый чек",
       "receipts.formula.verify": "проверено ✓",
@@ -351,52 +370,65 @@
       "stack.lead": "Адреса, авторизация кошелька, транзакции, state, рекурсивная история и PoW используют один бинарный proof stack. FROST-GKR сворачивает повторяющиеся структуры Poseidon2b в общие булевы гиперкубы, а FRI-Binius замыкает relation без доверенной настройки.",
       "stack.formula.left": "владение + tx",
       "stack.formula.right": "state + история + PoW",
-      "stack.field.label": "Поле",
-      "stack.field.value": "<code>GF(2^128)</code> · единая бинарная арифметика",
+      "stack.field.label": "Поля",
+      "stack.field.value": "<span class=\"nowrap\">Трассы: <code>GF(2^128)</code></span> · <span class=\"nowrap\">Вызовы Fiat Shamir: <code>GF(2^256)</code></span>",
       "stack.prover.label": "Prover",
       "stack.prover.value": "<strong>В 10,50 раза быстрее</strong> в сравнении на 59 перестановках",
       "stack.proof.label": "Алгебраический proof",
       "stack.proof.value": "<strong>В 51,67 раза меньше</strong>",
-      "pow.index": "12 / Proof-native PoW",
+      "soundness.index": "12 / СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
+      "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
+      "soundness.lead": "Одна теорема охватывает авторизацию кошелька, корректность транзакций, точные переходы состояния, рекурсивную цепочку HistoryStep и конечное состояние, которое принимает нода.",
+      "soundness.result.label": "Результат",
+      "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
+      "soundness.floor.label": "Граница успеха 1/2",
+      "soundness.floor.value": "<strong><code>2^173.273866314232</code></strong>",
+      "soundness.bound.label": "Полная идеальная оценка",
+      "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
+      "soundness.proof": "Доказательство",
+      "soundness.certificate": "Исполняемый сертификат",
+      "pow.index": "13 / Proof-native PoW",
       "pow.title": "Сначала докажи.<br><em>Потом майни.</em>",
       "pow.lead": "PoW только определяет порядок уже доказанных переходов. Майнер завершает не зависящее от nonce доказательство блока, фиксирует неизменяемый шаблон и перебирает лишь 128-битный nonce.",
       "pow.target.label": "Цель блока",
       "pow.target.value": "<strong>В среднем 15 секунд</strong> · сложность ASERT",
-      "pow.majority.label": "Большинство хешрейта",
-      "pow.majority.value": "Может цензурировать · менять порядок · делать реорги",
+      "pow.role.label": "Роль PoW",
+      "pow.role.value": "<strong>Канонический порядок доказанных переходов</strong>",
       "pow.boundary.label": "Граница доказательства",
       "pow.boundary.value": "<strong>Не может подделать владение или принять некорректный state</strong>",
-      "join.index": "03 / Независимый bootstrap",
-      "join.title": "Bootstrap из доказательства.<br><em>Не из доверия.</em>",
-      "join.lead": "<strong>Пиры передают данные, а не доверие.</strong> Нода получает живое UTXO-состояние, соответствующий terminal и последние 18 полных блоков. Она подтверждает state, проверяет окно реорганизаций и становится независимой полной нодой. Процедура одинакова и в первый, и в десятый год сети.",
-      "join.formula.state": "живое состояние",
-      "join.formula.proof": "π<sub>tip</sub> + 18 блоков",
+      "join.index": "03 / НЕЗАВИСИМАЯ СИНХРОНИЗАЦИЯ",
+      "join.title": "Доказательство<br><em>вместо доверия<br>к пирам.</em>",
+      "join.lead": "Пиры передают данные, но не решают, каким данным верить. Нода получает текущее состояние UTXO, соответствующее терминальное доказательство и суффикс из последних 18 блоков. Она сама проверяет данные, после чего подключается к сети как независимая полная нода. Порядок действий не меняется ни через год, ни через десять лет.",
+      "join.formula.state": "текущее состояние",
+      "join.formula.proof": "терминальное доказательство",
+      "join.formula.suffix": "18 блоков",
       "join.formula.node": "независимая нода ✓",
-      "run.index": "13 / Децентрализация на любом железе",
+      "run.index": "14 / Децентрализация на любом железе",
       "run.title": "Вся L1.<br><em>На твоём ноутбуке.</em>",
-      "run.lead": "Твой ноутбук может хранить всё текущее состояние и поддерживать всю L1. Parano1d подстраивает ёмкость блока под доступную вычислительную мощность: сильное железо повышает TPS, слабое — снижает. Пропускная способность меняется. Сеть не останавливается.",
+      "run.lead": "Обычный ноутбук может хранить всё текущее состояние и самостоятельно проверять всю L1. Майнер выбирает ёмкость блока, которую успевает доказать на своём железе: более быстрая машина справляется с крупными блоками, более медленная выбирает меньшие. Пропускная способность подстраивается под железо, а полная проверка остаётся доступной каждой ноде.",
       "run.capacity.modest": "Твой ноутбук",
       "run.capacity.modest.value": "ниже TPS",
-      "run.capacity.fast": "Мощное железо",
+      "run.capacity.fast": "Более быстрое железо",
       "run.capacity.fast.value": "выше TPS",
       "run.capacity.network": "Сеть",
-      "run.capacity.network.value": "продолжает выпускать блоки",
+      "run.capacity.network.value": "продолжает работать",
       "run.download": "Загрузить кошелёк",
       "rail.label": "Разделы Parano1d",
       "rail.0": "Обзор Parano1d",
       "rail.1": "Зависимость от истории",
       "rail.2": "Настоящее",
-      "rail.3": "Независимый bootstrap",
+      "rail.3": "Независимая синхронизация",
       "rail.4": "Proof-native архитектура",
-      "rail.5": "Живой state",
+      "rail.5": "Текущее состояние UTXO",
       "rail.6": "Владение без подписей",
       "rail.7": "PagedSpend",
       "rail.8": "Рекурсивная история",
-      "rail.9": "Приватность через нехранение",
+      "rail.9": "Без постоянного архива",
       "rail.10": "Переносимые чеки",
       "rail.11": "Единый бинарный proof stack",
-      "rail.12": "Proof-native PoW",
-      "rail.13": "Подключиться к Parano1d",
+      "rail.12": "Сквозная постквантовая безопасность",
+      "rail.13": "Proof-native PoW",
+      "rail.14": "Децентрализация на любом железе",
       "deck.previous": "Предыдущее состояние"
     },
     zh: {
@@ -404,6 +436,7 @@
       "announcement.label": "网络启动公告",
       "announcement.launch": "公网启动 · 2026 年 8 月",
       "announcement.contact": "联系开发者",
+      "announcement.copyAction": "— 复制邮箱地址",
       "announcement.dismiss": "关闭公告",
       "nav.language": "语言",
       "nav.menu": "菜单",
@@ -438,7 +471,6 @@
       "downloads.core.title": "Core 工具",
       "downloads.core.copy": "适用于节点运维、自动化及独立挖矿进程。每个 Core 归档包都包含该平台所需的三个命令行程序。",
       "downloads.core.includes": "一个归档包，三个专用工具。",
-      "downloads.core.binaries": "Core 可执行文件",
       "downloads.core.builds": "Core 工具归档包",
       "downloads.integrity.title": "请校验每个文件。",
       "downloads.integrity.copy": "每个版本都会随安装包和归档包一并发布 SHA-256 校验和。",
@@ -446,82 +478,81 @@
       "readout.history": "历史",
       "readout.verify": "验证",
       "overview.index": "网络不重复执行，只验证证明。",
-      "overview.title": "Proof-native<br><em>L1 network</em>",
-      "overview.lead": "<strong>钱包证明所有权，矿工证明精确状态转移，每个节点验证最终结果。</strong> 无需签名。无需可信设置。无需从创世块重放。",
+      "overview.title": "证明原生<br><em>Layer 1</em>",
+      "overview.security": "工作量证明确定规范顺序。端到端后量子可靠性已证明达到 NIST Category 1 水平。",
       "overview.enter": "为什么？ <span>→</span>",
-      "overview.fact.sync.value": "O(1) 同步",
-      "overview.fact.sync.copy": "无历史。无需归档节点",
+      "overview.fact.sync.value": "O(1) 验证",
+      "overview.fact.sync.copy": "无需从创世块重放",
       "overview.fact.signatureless.value": "无签名",
-      "overview.fact.signatureless.copy": "纯哈希所有权。<span class=\"nowrap\">后量子安全</span>",
-      "overview.fact.pow.value": "POW 只负责排序",
-      "overview.fact.pow.copy": "每次转移由证明授权",
-      "dependency.index": "01 / 历史依赖",
-      "dependency.title": "传统区块链<br><em>从创世块开始验证全部历史。</em>",
-      "dependency.lead": "Bitcoin、Ethereum 和几乎所有现代区块链，都要从创世块开始执行全部历史，才能得到当前状态。网络使用得越多，每个未来验证者背负的永久启动成本就越高。",
-      "dependency.row1.label": "信任来源",
-      "dependency.row1.value": "<strong>完整执行日志</strong>",
+      "overview.fact.signatureless.copy": "所有权由证明建立，而非签名",
+      "overview.fact.pow.value": "实时状态",
+      "overview.fact.pow.copy": "已花费输出释放容量",
+      "dependency.index": "01 / 对历史的依赖",
+      "dependency.title": "传统区块链<br><em>永远离不开历史。</em>",
+      "dependency.lead": "Bitcoin、Ethereum 和大多数区块链都通过重放历史来重建当前状态。链越长，新节点首次验证需要完成的工作就越多。",
+      "dependency.row1.label": "状态依据",
+      "dependency.row1.value": "<strong>完整的执行历史</strong>",
       "dependency.row2.label": "新全节点",
-      "dependency.row2.value": "下载并重新执行整条链",
-      "dependency.row3.label": "网络年龄",
-      "dependency.row3.value": "持续抬高独立验证的硬件门槛",
-      "present.index": "02 / 摆脱历史依赖",
-      "present.title": "在 Parano1d 中<br><em>当前状态可以自证有效性。</em>",
-      "present.lead": "<strong>Parano1d 将有效性与历史重放分离。</strong> 共识只承载可证明的实时 UTXO 状态：已花费输出释放槽位，过去多年的活动不会变成未来节点的永久负担。",
-      "present.row1.label": "状态增长",
-      "present.row1.value": "<strong>取决于实时 UTXO，而非历史交易总量</strong>",
+      "dependency.row2.value": "下载整条链并重新执行",
+      "dependency.row3.label": "链龄",
+      "dependency.row3.value": "链越老，首次验证的工作量越大",
+      "present.index": "02 / 告别历史重放",
+      "present.title": "Parano1d.<br>当下证明<br><em>过去。</em>",
+      "present.lead": "Parano1d 将当前状态的验证与历史重放分离。当前 UTXO 状态携带递归证明，其中涵盖了产生该状态的全部有效转移。UTXO 花费后会释放槽位，因此存储量取决于当前仍存在的 UTXO，而不是链已经运行了多久。",
+      "present.row1.label": "状态规模",
+      "present.row1.value": "<strong>随当前 UTXO 数量变化，不随历史交易总量增长</strong>",
       "present.row2.label": "已花费输出",
-      "present.row2.value": "槽位清空后返回分配器复用",
+      "present.row2.value": "释放槽位，供后续输出复用",
       "present.row3.label": "链龄",
-      "present.row3.value": "不会增加永久存储，也无需从创世块重放",
-      "proof.index": "04 / 范式转变",
-      "proof.title": "数据在哪里，<br><em>就在哪里完成证明。</em>",
-      "proof.lead": "在 Parano1d 中，由掌握所需数据的一方完成证明。网络接收已证明的结果，而不是再做一遍同样的工作。",
+      "present.row3.value": "不会增加新节点接入时的验证工作",
+      "proof.index": "04 / 证明方式的改变",
+      "proof.title": "数据在哪里，<br><em>就在哪里证明。</em>",
+      "proof.lead": "在 Parano1d 中，谁掌握证明所需的信息，谁就在本地生成证明。网络只接收可验证的结果，不再重复同一套计算。",
       "proof.wallet.label": "钱包",
-      "proof.wallet.copy": "证明私有授权，但不泄露花费秘密。",
+      "proof.wallet.copy": "证明自己有权花费，但不泄露花费秘密。",
       "proof.miner.label": "矿工",
-      "proof.miner.copy": "证明公开交易逻辑与精确的状态转移。",
+      "proof.miner.copy": "证明交易逻辑和准确的状态转移。",
       "proof.network.label": "网络",
-      "proof.network.copy": "验证证明、应用已证明的槽位写入，并检查 PoW。",
-      "living.index": "05 / 活的 UTXO 状态",
-      "living.title": "状态随实际使用增长。<br><em>不随时间膨胀。</em>",
-      "living.lead": "花费会清空槽位。分配器优先复用空位，只有必要时才扩展状态。空段是虚拟的；其中最后一个 UTXO 花费后，该段也随之消失。",
+      "proof.network.copy": "验证两份证明和 PoW，再应用证明中确认的状态变更。",
+      "living.index": "05 / 当前 UTXO 状态",
+      "living.title": "状态规模取决于<br>当前 UTXO。<br><em>不取决于链龄。</em>",
+      "living.lead": "UTXO 花费后，对应槽位立即清空。分配器会先利用空位，只有不够时才扩展状态。某个分段内不再有 UTXO 时，它会重新变成虚拟分段。",
       "living.spend.label": "花费",
-      "living.spend.value": "清空对应的索引槽位",
+      "living.spend.value": "清空已花费 UTXO 对应的槽位",
       "living.reuse.label": "复用",
-      "living.reuse.value": "在空位中签发新的 <code>creation_id</code>",
+      "living.reuse.value": "把新的 <code>creation_id</code> 写入空位",
       "living.expand.label": "扩展",
-      "living.expand.value": "占用率达到 75% 时接入规范空白半区——网络不停顿",
+      "living.expand.value": "占用率达到 75% 时接入规范空白半区，过程不停顿",
       "ownership.index": "06 / 无签名所有权",
-      "ownership.title": "一个秘密就够了。<br><em>无需密钥对，无需签名。</em>",
-      "ownership.lead": "Parano1d 需要的是 256 位秘密熵，而不是公私钥对或规定格式的助记词。钱包在不泄露秘密的前提下证明自己知道它；每次花费都会生成绑定完整交易的全新 ZK 证明。",
+      "ownership.title": "一个秘密就够了。<br>无需密钥对。<br><em>无需签名。</em>",
+      "ownership.lead": "Parano1d 地址由一个 256 位秘密导出，不需要公私钥对。钱包可以在不泄露秘密的前提下证明自己知道它。每次花费都会生成一份新的零知识证明，并与整笔交易绑定。",
       "ownership.secret": "花费秘密",
       "ownership.address": "o1… 地址",
       "ownership.protocol.label": "协议",
-      "ownership.protocol.value": "256 位秘密 · 不强制助记词格式",
-      "ownership.wire.label": "线上数据",
-      "ownership.wire.value": "没有公钥 · 没有交易签名",
-      "ownership.consensus.label": "共识层",
-      "ownership.consensus.value": "<strong>纯哈希所有权。自创世起即具备后量子安全性</strong>",
-      "paged.index": "07 / PagedSpend",
-      "paged.title": "许多 UTXO。<br><em>一笔交易。</em>",
-      "paged.lead": "固定大小的证明页只是协议内部结构。最多 128 页仍是一笔不可分割的用户交易：一个 txid、一份手续费、一份 capsule、一张回执。",
-      "paged.atomic": "1,020 个输入 · 256 个输出<br>原子 PAGEDSPEND",
+      "ownership.protocol.value": "256 位秘密 · 不采用公钥密码体制",
+      "ownership.wire.label": "网络传输",
+      "ownership.wire.value": "不传输公钥，也没有交易签名",
+      "ownership.consensus.label": "所有权",
+      "ownership.consensus.value": "<strong>以零知识方式证明知道该秘密</strong>",
+      "paged.index": "07 / PAGEDSPEND",
+      "paged.title": "1,020 个 UTXO。<br><em>仍是一笔交易。</em>",
+      "paged.lead": "一个 <code>Tx8x2</code> 物理页最多容纳八个输入和两个输出。<code>PagedSpend</code> 可将最多 128 页合并为一笔逻辑交易，一次性花费最多 1,020 个 UTXO、创建最多 256 个输出，同时只使用一个 txid、一次手续费、一个授权胶囊和一张回执。",
       "history.index": "08 / 递归历史",
-      "history.title": "整段历史，<br><em>收敛为固定证明。</em>",
-      "history.lead": "每个 <code>HistoryStep</code> 都证明当前区块，并在同一关系内验证前一个 terminal。证明大小与验证工作不会随区块高度增长。",
-      "history.active.label": "在线节点",
-      "history.active.value": "实时状态 + 紧凑区块头 + 最近 18 个完整区块",
-      "history.age.label": "链的年龄",
-      "history.age.value": "<strong>不会增加历史验证成本</strong>",
-      "privacy.index": "09 / 非留存式隐私",
-      "privacy.title": "无需隐私链，<br><em>也有隐私。</em>",
-      "privacy.lead": "实时状态是公开的，交易经过共识时也可被观察。Parano1d 不要求每个节点永久保存完整交易关系图。若想多年追踪某个地址，外部追踪器必须持续实时记录全部交易，并自行承担不断增长的存储成本。",
-      "privacy.live.label": "实时状态",
+      "history.title": "历史继续增长。<br><em>证明大小不变。</em>",
+      "history.lead": "每个 <code>HistoryStep</code> 在证明新区块的同时，也会验证上一步的终端证明。终端证明会随新区块更新，但其大小和验证工作量始终不受链高影响。",
+      "history.active.label": "全节点保存",
+      "history.active.value": "当前状态 + 终端证明 + 最近 18 个完整区块",
+      "history.age.label": "链高",
+      "history.age.value": "<strong>不影响证明大小和历史验证成本</strong>",
+      "privacy.index": "09 / 不永久留存的隐私",
+      "privacy.title": "不靠保密，<br><em>也有隐私。</em>",
+      "privacy.lead": "交易通过共识时，Parano1d 完全透明：金额、所有者和交易内容均为公开信息。但共识不会永久保存交易关系图。若要长期追踪地址，外部观察者必须持续记录交易流，并独立保存这些数据。",
+      "privacy.live.label": "当前状态",
       "privacy.live.value": "金额公开 · 所有者公开",
       "privacy.graph.label": "历史关系图",
-      "privacy.graph.value": "<strong>共识不会永久保留</strong>",
-      "privacy.tracker.label": "外部追踪",
-      "privacy.tracker.value": "必须实时记录每一笔交易",
+      "privacy.graph.value": "<strong>共识不予留存</strong>",
+      "privacy.tracker.label": "长期追踪",
+      "privacy.tracker.value": "需要外部持续记录",
       "receipts.index": "10 / 可携带的付款证明",
       "receipts.title": "历史会退场。<br><em>回执仍可验证。</em>",
       "receipts.lead": "付款确认后，发送方钱包会保存一份可导出的 Merkle 回执。它包含完整的公开付款数据和固定深度的包含路径。任何节点都能依据规范区块头验证回执，无需保留旧区块正文。",
@@ -540,29 +571,41 @@
       "stack.formula.left": "所有权 + 交易",
       "stack.formula.right": "状态 + 历史 + PoW",
       "stack.field.label": "域",
-      "stack.field.value": "<code>GF(2^128)</code> · 统一二进制算术",
+      "stack.field.value": "<span class=\"nowrap\">轨迹：<code>GF(2^128)</code></span> · <span class=\"nowrap\">Fiat Shamir 挑战值：<code>GF(2^256)</code></span>",
       "stack.prover.label": "Prover",
       "stack.prover.value": "在 59 次置换对比中<strong>快 10.50 倍</strong>",
       "stack.proof.label": "代数证明",
       "stack.proof.value": "<strong>缩小 51.67 倍</strong>",
-      "pow.index": "12 / Proof-native PoW",
+      "soundness.index": "12 / 端到端后量子可靠性",
+      "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
+      "soundness.lead": "同一定理覆盖钱包授权、交易有效性、精确状态转换、递归 HistoryStep，以及节点最终接受的终端状态。",
+      "soundness.result.label": "结论",
+      "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
+      "soundness.floor.label": "半成功门深积下界",
+      "soundness.floor.value": "<strong><code>2^173.273866314232</code></strong>",
+      "soundness.bound.label": "完整理想模型上界",
+      "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
+      "soundness.proof": "证明",
+      "soundness.certificate": "可执行证书",
+      "pow.index": "13 / Proof-native PoW",
       "pow.title": "先证明。<br><em>再挖矿。</em>",
       "pow.lead": "PoW 只负责排列已被证明有效的状态转移。矿工先完成与 nonce 无关的区块证明，冻结不可变模板，然后只搜索 128 位 nonce。",
       "pow.target.label": "出块目标",
       "pow.target.value": "<strong>平均 15 秒</strong> · ASERT 难度",
-      "pow.majority.label": "多数算力",
-      "pow.majority.value": "可以审查 · 调整顺序 · 发起重组",
+      "pow.role.label": "PoW 的作用",
+      "pow.role.value": "<strong>确定已证明状态转移的规范顺序</strong>",
       "pow.boundary.label": "证明边界",
       "pow.boundary.value": "<strong>无法伪造所有权，也无法让无效状态通过验证</strong>",
-      "join.index": "03 / 独立启动",
-      "join.title": "从证明启动。<br><em>无需信任。</em>",
-      "join.lead": "<strong>对等节点提供数据，而不是信任。</strong> 新节点接收实时 UTXO 状态、匹配的 terminal 和最近 18 个完整区块，自行认证状态并验证重组窗口，最终成为独立全节点。无论网络运行一年还是十年，流程完全相同。",
-      "join.formula.state": "实时状态",
-      "join.formula.proof": "π<sub>tip</sub> + 18 个区块",
+      "join.index": "03 / 独立同步",
+      "join.title": "用证明完成同步。<br><em>无需信任对端。</em>",
+      "join.lead": "对等节点负责传输数据，却无权决定哪些数据可信。节点取得当前 UTXO 状态、对应的终端证明和最近 18 个区块组成的重组后缀，在本地完成验证后，便以独立全节点身份加入网络。无论网络运行一年还是十年，这套流程都不变。",
+      "join.formula.state": "当前状态",
+      "join.formula.proof": "终端证明",
+      "join.formula.suffix": "18 个区块",
       "join.formula.node": "独立节点 ✓",
-      "run.index": "13 / 适应不同硬件的去中心化",
+      "run.index": "14 / 适应不同硬件的去中心化",
       "run.title": "完整 L1。<br><em>就在你的笔记本上。</em>",
-      "run.lead": "你的笔记本就能保存全部实时状态，并独立验证整条 L1。Parano1d 会根据可用计算能力自动调整区块容量：硬件越强，TPS 越高；硬件较弱，TPS 随之降低。吞吐量会变，网络不会停。",
+      "run.lead": "一台笔记本就能保存完整的当前状态，并独立验证整个 L1。矿工根据自身的证明能力选择区块容量：更快的硬件证明更大的区块，较慢的硬件证明较小的区块。吞吐量随硬件调整，而每个节点始终都能完成完整验证。",
       "run.capacity.modest": "你的笔记本",
       "run.capacity.modest.value": "较低 TPS",
       "run.capacity.fast": "更强硬件",
@@ -574,41 +617,42 @@
       "rail.0": "Parano1d 概览",
       "rail.1": "历史依赖",
       "rail.2": "当前状态",
-      "rail.3": "独立启动",
-      "rail.4": "Proof-native 架构",
-      "rail.5": "活状态",
+      "rail.3": "独立同步",
+      "rail.4": "证明原生架构",
+      "rail.5": "当前 UTXO 状态",
       "rail.6": "无签名所有权",
       "rail.7": "PagedSpend",
       "rail.8": "递归历史",
-      "rail.9": "非留存式隐私",
+      "rail.9": "不永久留存",
       "rail.10": "可携带回执",
       "rail.11": "单一二进制证明栈",
-      "rail.12": "Proof-native PoW",
-      "rail.13": "加入 Parano1d",
+      "rail.12": "端到端后量子可靠性",
+      "rail.13": "Proof-native PoW",
+      "rail.14": "适应不同硬件的去中心化",
       "deck.previous": "上一个状态"
     }
   };
 
   const states = [
     {
-      title: "PARANO(1)D · PROOF-NATIVE LAYER 1",
-      proof: "prove once · verify everywhere",
-      state: ["ONE PROVER", "wallet + miner establish validity"],
-      proofLabel: ["FIXED PROOF", "crosses the consensus boundary"],
+      title: "PARANO1D · PROOF-NATIVE LAYER 1",
+      proof: "prove locally · prove the transition · verify everywhere",
+      state: ["WALLET + MINER", "prove where the information lives"],
+      proofLabel: ["PROVEN TRANSITION", "crosses the consensus boundary"],
       tail: ["EVERY NODE", "verifies · never re-executes"],
-      read: ["prove once", "fixed proof", "verify"]
+      read: ["local proofs", "proven transition", "verify"]
     },
     {
       title: "STATE 01 · THE DEPENDENCY",
       proof: "genesis → every transition → now",
-      state: ["THE PRESENT", "derived at the far end"],
+      state: ["THE PRESENT IS RECONSTRUCTED AT THE FAR END", ""],
       proofLabel: ["REPLAY", "work grows with history"],
       tail: ["PERMANENT LOG", "every past transition"],
       read: ["reconstructed", "full replay", "lifetime"]
     },
     {
-      title: "STATE 02 · THE PRESENT",
-      proof: "live state · no lifetime replay",
+      title: "STATE 02 · THE BREAK WITH HISTORY",
+      proof: "live state + history proof",
       state: ["LIVE UTXO STATE", "clear · reuse · expand"],
       proofLabel: ["π_tip", "fixed verification work"],
       tail: ["RECENT SUFFIX", "18 reorg blocks"],
@@ -617,15 +661,15 @@
     {
       title: "STATE 04 · PROOF-NATIVE",
       proof: "wallet proves · miner proves · network verifies",
-      state: ["NETWORK", "applies proven writes"],
-      proofLabel: ["PROOF FLOW", "information moves once"],
+      state: ["NETWORK", "applies verified writes"],
+      proofLabel: ["PROOF FLOW", "witnesses stay local"],
       tail: ["CONSENSUS", "verification, not re-execution"],
-      read: ["proven writes", "two proofs", "relations"]
+      read: ["authorized writes", "two proofs", "one transition"]
     },
     {
       title: "STATE 05 · LIVING STATE",
       proof: "spent → clear → reuse before growth",
-      state: ["LIVE SLOTS", "clear · reuse · expand"],
+      state: ["LIVE STATE", "clear · reuse · expand"],
       proofLabel: ["NEW ROOT", "exact indexed writes"],
       tail: ["OCCUPANCY", "growth follows live use"],
       read: ["46.8% live", "root_h", "writes"]
@@ -634,28 +678,28 @@
       title: "STATE 06 · OWNERSHIP",
       proof: "secret → Poseidon2b → address",
       state: ["SPENDING SECRET", "never enters consensus"],
-      proofLabel: ["ZK CAPSULE", "fresh randomized proof"],
-      tail: ["ADDRESS", "stateless ownership"],
+      proofLabel: ["ZK CAPSULE", "fresh · transaction-bound"],
+      tail: ["ADDRESS", "signatureless ownership"],
       read: ["o1 address", "zk capsule", "preimage"]
     },
     {
       title: "STATE 07 · PAGEDSPEND",
-      proof: "up to 128 pages · one logical transaction",
-      state: ["PROOF PAGES", "fixed internal geometry"],
+      proof: "up to 128 Tx8x2 pages · one logical transaction",
+      state: ["TX8X2 PAGES", "up to 8 inputs + 2 outputs each"],
       proofLabel: ["ONE TXID", "atomic acceptance"],
-      tail: ["USER INTENT", "1 fee · 1 capsule · 1 receipt"],
-      read: ["1,020 inputs", "one capsule", "atomic tx"]
+      tail: ["LOGICAL PAGEDSPEND", "1 fee · 1 capsule · 1 receipt"],
+      read: ["1,020 inputs", "256 outputs", "one txid"]
     },
     {
       title: "STATE 08 · HISTORYSTEP",
-      proof: "π_h−1 + block_h + state_h → π_h",
-      state: ["NEW TRANSITION", "block_h · state_h"],
-      proofLabel: ["π_h", "same terminal size"],
+      proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
+      state: ["NEW TRANSITION", "BLOCK_H + STATE_H"],
+      proofLabel: ["π_H", "same terminal size"],
       tail: ["RECENT SUFFIX", "18 complete blocks"],
-      read: ["state_h", "π_h", "fixed work"]
+      read: ["STATE_H", "π_H", "fixed work"]
     },
     {
-      title: "STATE 12 · PROOF-NATIVE POW",
+      title: "STATE 13 · PROOF-NATIVE POW",
       proof: "prove transition · freeze template · scan nonce",
       state: ["PROVEN BLOCK", "immutable template"],
       proofLabel: ["128-BIT NONCE", "ordering already-valid work"],
@@ -665,26 +709,26 @@
     {
       title: "STATE 03 · INDEPENDENT BOOTSTRAP",
       proof: "peer data → local verification → independent node",
-      state: ["PEER DATA", "live state · terminal · 18 blocks"],
-      proofLabel: ["VERIFY LOCALLY", "authenticate state + reorg window"],
-      tail: ["FULL NODE", "independent from its first state"],
+      state: ["PEER DATA", "live state · terminal proof · 18-block reorg suffix"],
+      proofLabel: ["VERIFY LOCALLY", "authenticate state + suffix"],
+      tail: ["INDEPENDENT FULL NODE", "same procedure in year one and year ten"],
       read: ["peer data", "local verify", "independent"]
     },
     {
-      title: "STATE 13 · HARDWARE-ADAPTIVE L1",
-      proof: "hardware changes TPS · the network keeps moving",
+      title: "STATE 14 · HARDWARE-ADAPTIVE L1",
+      proof: "hardware changes TPS · every node verifies everything",
       state: ["NODES ON ANY DEVICE", "each holds + verifies the entire L1"],
-      proofLabel: ["ADAPTIVE TPS", "capacity follows proving power"],
+      proofLabel: ["ADAPTIVE TPS", "block capacity follows proving power"],
       tail: ["LIVE NETWORK", "throughput changes · consensus advances"],
       read: ["entire L1", "adaptive TPS", "decentralized"]
     },
     {
       title: "STATE 09 · NON-RETENTION",
-      proof: "public present · no permanent transaction graph",
-      state: ["LIVE STATE", "transparent now"],
-      proofLabel: ["CONSENSUS", "does not retain provenance"],
-      tail: ["EXTERNAL TRACKER", "must record the stream itself"],
-      read: ["public state", "no graph", "own tracker"]
+      proof: "public present · no consensus-retained transaction graph",
+      state: ["LIVE STATE", "public values · public owners"],
+      proofLabel: ["CONSENSUS", "does not retain the past graph"],
+      tail: ["EXTERNAL ARCHIVER", "records and stores the stream independently"],
+      read: ["public now", "no retained graph", "external archive"]
     },
     {
       title: "STATE 10 · PORTABLE RECEIPT",
@@ -697,81 +741,89 @@
     {
       title: "STATE 11 · FROST-GKR",
       proof: "one binary arithmetic · end to end",
-      state: ["GF(2^128)", "ownership · tx · state · history · PoW"],
+      state: ["GF(2^128) + GF(2^256)", "trace arithmetic · Fiat Shamir challenges"],
       proofLabel: ["FROST-GKR", "shared Boolean hypercubes"],
       tail: ["FRI-BINIUS", "no trusted setup"],
-      read: ["one field", "10.50×", "51.67×"]
+      read: ["binary tower", "10.50×", "51.67×"]
+    },
+    {
+      title: "STATE 12 · END TO END POST QUANTUM",
+      proof: "wallet · transaction · state · recursive history · one security game",
+      state: ["NIST PQC CATEGORY 1", "complete State validation"],
+      proofLabel: ["2^173.273866314232", "half-success gate-depth floor"],
+      tail: ["0.053364140323608411", "complete ideal bound < 1/2"],
+      read: ["end to end", "Category 1", "proved"]
     }
   ];
 
   const stateTranslations = {
     ru: [
       {
-        title: "PARANO(1)D · PROOF-NATIVE LAYER 1",
-        proof: "доказать один раз · проверить везде",
-        state: ["ОДИН PROVER", "кошелёк и майнер доказывают корректность"],
-        proofLabel: ["КОМПАКТНОЕ ДОКАЗАТЕЛЬСТВО", "пересекает границу консенсуса"],
+        title: "PARANO1D · PROOF-NATIVE LAYER 1",
+        proof: "кошелёк и майнер доказывают · сеть проверяет",
+        state: ["КОШЕЛЁК + МАЙНЕР", "строят доказательства там, где находятся данные"],
+        proofLabel: ["ДОКАЗАННЫЙ ПЕРЕХОД", "пересекает границу консенсуса"],
         tail: ["КАЖДАЯ НОДА", "проверяет · не исполняет заново"],
-        read: ["одно доказательство", "фиксированный proof", "проверка"]
+        read: ["локальные доказательства", "доказанный переход", "проверка"]
       },
       {
-        title: "СОСТОЯНИЕ 01 · ЗАВИСИМОСТЬ",
-        proof: "генезис → каждый переход → сейчас",
-        state: ["НАСТОЯЩЕЕ", "получается лишь в конце истории"],
-        proofLabel: ["ПОВТОР ИСТОРИИ", "работа растёт вместе с ней"],
-        tail: ["ВЕЧНЫЙ ЖУРНАЛ", "все прошлые переходы"],
-        read: ["пересобрано", "полный повтор", "вся история"]
+        title: "СОСТОЯНИЕ 01 · ЗАВИСИМОСТЬ ОТ ИСТОРИИ",
+        proof: "генезис → повторить всю историю → получить текущее состояние",
+        state: ["ТЕКУЩЕЕ СОСТОЯНИЕ", "становится известно только после полного повторного исполнения"],
+        proofLabel: ["ПОВТОРНОЕ ИСПОЛНЕНИЕ", "работа растёт вместе с цепочкой"],
+        tail: ["ПОСТОЯННЫЙ ЖУРНАЛ", "хранит каждый прошлый переход"],
+        read: ["текущее состояние", "полное исполнение", "вся история"]
       },
       {
-        title: "СОСТОЯНИЕ 02 · НАСТОЯЩЕЕ",
-        proof: "живое состояние · без повтора всей истории",
-        state: ["ТЕКУЩЕЕ СОСТОЯНИЕ UTXO", "очищается · переиспользуется · расширяется"],
-        proofLabel: ["π_tip", "постоянная цена проверки"],
-        tail: ["ОКНО РЕОРГОВ", "18 свежих блоков"],
-        read: ["живые UTXO", "π_tip", "настоящее"]
+        title: "СОСТОЯНИЕ 02 · РАЗРЫВ С ИСТОРИЕЙ",
+        proof: "текущее состояние + доказательство истории",
+        state: ["ТЕКУЩИЙ НАБОР UTXO", "слоты очищаются · используются повторно · состояние расширяется по мере необходимости"],
+        proofLabel: ["π_tip", "стоимость проверки не растёт"],
+        tail: ["СУФФИКС РЕОРГАНИЗАЦИИ", "последние 18 блоков"],
+        read: ["текущие UTXO", "π_tip", "текущее состояние"]
       },
       {
         title: "СОСТОЯНИЕ 04 · PROOF-NATIVE",
-        proof: "кошелёк доказывает · майнер доказывает · сеть проверяет",
-        state: ["СЕТЬ", "применяет доказанные записи"],
-        proofLabel: ["ПОТОК ДОКАЗАТЕЛЬСТВ", "информация движется один раз"],
-        tail: ["КОНСЕНСУС", "проверка вместо повторного исполнения"],
-        read: ["доказанные записи", "два доказательства", "связи"]
+        proof: "кошелёк доказывает авторизацию · майнер доказывает переход · сеть проверяет",
+        state: ["СЕТЬ", "применяет только проверенные изменения"],
+        proofLabel: ["ПОТОК ДОКАЗАТЕЛЬСТВ", "свидетели остаются у владельцев данных"],
+        tail: ["КОНСЕНСУС", "проверяет результат вместо повторного исполнения"],
+        read: ["разрешённые изменения", "два доказательства", "один переход"]
       },
       {
-        title: "СОСТОЯНИЕ 05 · ЖИВОЕ СОСТОЯНИЕ",
-        proof: "расходовать → очистить → использовать снова → расширить",
-        state: ["ЖИВЫЕ СЛОТЫ", "очищаются · переиспользуются · расширяются"],
-        proofLabel: ["НОВЫЙ КОРЕНЬ", "точные индексированные записи"],
-        tail: ["ЗАПОЛНЕНИЕ", "рост следует за числом живых UTXO"],
-        read: ["46.8% занято", "root_h", "записи"]
+        title: "СОСТОЯНИЕ 05 · ТЕКУЩИЕ UTXO",
+        proof: "потратить → освободить слот → использовать его снова",
+        state: ["ТЕКУЩЕЕ СОСТОЯНИЕ", "очистка · повторное использование · расширение"],
+        proofLabel: ["НОВЫЙ КОРЕНЬ", "точно фиксирует изменённые слоты"],
+        tail: ["ЗАПОЛНЕННОСТЬ", "рост зависит только от текущих UTXO"],
+        read: ["46.8% занято", "root_h", "изменённые слоты"]
       },
       {
-        title: "СОСТОЯНИЕ 06 · ВЛАДЕНИЕ",
+        title: "СОСТОЯНИЕ 06 · ВЛАДЕНИЕ БЕЗ ПОДПИСЕЙ",
         proof: "секрет → Poseidon2b → адрес",
-        state: ["СЕКРЕТ РАСХОДОВАНИЯ", "не входит в консенсус"],
-        proofLabel: ["ZK CAPSULE", "новое рандомизированное доказательство"],
-        tail: ["АДРЕС", "stateless-владение"],
-        read: ["адрес o1", "ZK capsule", "прообраз"]
+        state: ["СЕКРЕТ РАСХОДОВАНИЯ", "никогда не передаётся в консенсус"],
+        proofLabel: ["КАПСУЛА АВТОРИЗАЦИИ", "создаётся заново · связана со всей транзакцией"],
+        tail: ["АДРЕС", "владение без подписей"],
+        read: ["адрес o1", "ZK доказательство", "знание прообраза"]
       },
       {
         title: "СОСТОЯНИЕ 07 · PAGEDSPEND",
-        proof: "до 128 страниц · одна логическая транзакция",
-        state: ["СТРАНИЦЫ ДОКАЗАТЕЛЬСТВА", "фиксированная внутренняя геометрия"],
-        proofLabel: ["ОДИН TXID", "атомарное принятие"],
-        tail: ["НАМЕРЕНИЕ ПОЛЬЗОВАТЕЛЯ", "1 комиссия · 1 capsule · 1 чек"],
-        read: ["1 020 входов", "одна capsule", "одна транзакция"]
+        proof: "до 128 страниц Tx8x2 · одна логическая транзакция",
+        state: ["СТРАНИЦЫ TX8X2", "до 8 входов и 2 выходов на каждой"],
+        proofLabel: ["ОДИН TXID", "транзакция принимается целиком"],
+        tail: ["ЛОГИЧЕСКИЙ PAGEDSPEND", "1 комиссия · 1 капсула · 1 чек"],
+        read: ["1 020 входов", "256 выходов", "один txid"]
       },
       {
         title: "СОСТОЯНИЕ 08 · HISTORYSTEP",
-        proof: "π_h−1 + block_h + state_h → π_h",
-        state: ["НОВЫЙ ПЕРЕХОД", "block_h · state_h"],
-        proofLabel: ["π_h", "размер terminal не меняется"],
-        tail: ["ОКНО РЕОРГОВ", "18 полных блоков"],
-        read: ["state_h", "π_h", "постоянная работа"]
+        proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
+        state: ["НОВЫЙ ПЕРЕХОД", "BLOCK_H + STATE_H"],
+        proofLabel: ["π_H", "размер доказательства не меняется"],
+        tail: ["ПОСЛЕДНИЙ УЧАСТОК ЦЕПОЧКИ", "18 полных блоков"],
+        read: ["STATE_H", "π_H", "постоянная стоимость"]
       },
       {
-        title: "СОСТОЯНИЕ 12 · PROOF-NATIVE POW",
+        title: "СОСТОЯНИЕ 13 · PROOF-NATIVE POW",
         proof: "доказать переход · зафиксировать шаблон · искать nonce",
         state: ["ДОКАЗАННЫЙ БЛОК", "неизменяемый шаблон"],
         proofLabel: ["128-БИТНЫЙ NONCE", "порядок уже корректных переходов"],
@@ -779,28 +831,28 @@
         read: ["B25 · m22", "шаблон зафиксирован", "PoW"]
       },
       {
-        title: "СОСТОЯНИЕ 03 · НЕЗАВИСИМЫЙ BOOTSTRAP",
-        proof: "данные пиров → локальная проверка → независимая нода",
-        state: ["ДАННЫЕ ПИРОВ", "живой state · terminal · 18 блоков"],
-        proofLabel: ["ПРОВЕРИТЬ ЛОКАЛЬНО", "подтвердить state и окно реоргов"],
-        tail: ["ПОЛНАЯ НОДА", "независима с первого состояния"],
-        read: ["данные пиров", "своя проверка", "независима"]
+        title: "СОСТОЯНИЕ 03 · НЕЗАВИСИМАЯ СИНХРОНИЗАЦИЯ",
+        proof: "данные от пира → локальная проверка → независимая нода",
+        state: ["ДАННЫЕ ОТ ЛЮБОГО ПИРА", "состояние · терминальное доказательство · 18 блоков"],
+        proofLabel: ["ЛОКАЛЬНАЯ ПРОВЕРКА", "проверить состояние и суффикс"],
+        tail: ["НЕЗАВИСИМАЯ ПОЛНАЯ НОДА", "тот же порядок через год и через десять лет"],
+        read: ["данные пира", "локальная проверка", "независимая нода"]
       },
       {
-        title: "СОСТОЯНИЕ 13 · АДАПТИВНАЯ L1",
-        proof: "железо меняет TPS · сеть продолжает работать",
+        title: "СОСТОЯНИЕ 14 · АДАПТИВНАЯ L1",
+        proof: "TPS зависит от железа · каждая нода проверяет всё",
         state: ["НОДЫ НА ЛЮБОМ УСТРОЙСТВЕ", "каждая хранит и проверяет всю L1"],
-        proofLabel: ["АДАПТИВНЫЙ TPS", "ёмкость следует за мощностью"],
-        tail: ["ЖИВАЯ СЕТЬ", "TPS меняется · консенсус движется"],
+        proofLabel: ["АДАПТИВНЫЙ TPS", "ёмкость блока соответствует мощности железа"],
+        tail: ["РАБОТАЮЩАЯ СЕТЬ", "пропускная способность меняется · блоки продолжают выходить"],
         read: ["вся L1", "адаптивный TPS", "децентрализована"]
       },
       {
-        title: "СОСТОЯНИЕ 09 · НЕХРАНЕНИЕ",
-        proof: "публичное настоящее · без вечного графа транзакций",
-        state: ["ТЕКУЩИЙ STATE", "прозрачен сейчас"],
-        proofLabel: ["КОНСЕНСУС", "не хранит происхождение вечно"],
-        tail: ["ВНЕШНИЙ ТРЕКЕР", "сам записывает весь поток"],
-        read: ["публичный state", "без графа", "свой трекер"]
+        title: "СОСТОЯНИЕ 09 · БЕЗ ПОСТОЯННОГО ХРАНЕНИЯ",
+        proof: "публичное настоящее · консенсус не хранит граф транзакций",
+        state: ["ТЕКУЩЕЕ СОСТОЯНИЕ", "публичные суммы · публичные владельцы"],
+        proofLabel: ["КОНСЕНСУС", "не сохраняет граф прошлых транзакций"],
+        tail: ["ВНЕШНИЙ АРХИВАТОР", "сам записывает и хранит поток"],
+        read: ["публично сейчас", "граф не хранится", "внешний архив"]
       },
       {
         title: "СОСТОЯНИЕ 10 · ПЕРЕНОСИМЫЙ ЧЕК",
@@ -813,79 +865,87 @@
       {
         title: "СОСТОЯНИЕ 11 · FROST-GKR",
         proof: "одна бинарная арифметика · от начала до конца",
-        state: ["GF(2^128)", "владение · tx · state · история · PoW"],
+        state: ["GF(2^128) + GF(2^256)", "арифметика трасс · вызовы Fiat Shamir"],
         proofLabel: ["FROST-GKR", "общие булевы гиперкубы"],
         tail: ["FRI-BINIUS", "без доверенной настройки"],
-        read: ["одно поле", "10,50×", "51,67×"]
+        read: ["бинарная башня", "10,50×", "51,67×"]
+      },
+      {
+        title: "СОСТОЯНИЕ 12 · СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
+        proof: "кошелёк · транзакции · состояние · рекурсивная история · единая игра",
+        state: ["NIST PQC CATEGORY 1", "полная проверка состояния"],
+        proofLabel: ["2^173.273866314232", "граница gate-depth при вероятности успеха 1/2"],
+        tail: ["0,053364140323608411", "полная идеальная оценка < 1/2"],
+        read: ["от начала до конца", "Category 1", "доказано"]
       }
     ],
     zh: [
       {
-        title: "PARANO(1)D · PROOF-NATIVE 状态链",
-        proof: "只证明一次 · 所有节点验证",
-        state: ["一个证明方", "钱包与矿工完成有效性证明"],
-        proofLabel: ["固定证明", "跨越共识边界"],
+        title: "PARANO1D · 证明原生 LAYER 1",
+        proof: "钱包与矿工生成证明 · 全网负责验证",
+        state: ["钱包 + 矿工", "在信息所在处生成证明"],
+        proofLabel: ["已证明状态转移", "跨越共识边界"],
         tail: ["每个节点", "只验证 · 不重复执行"],
-        read: ["一次证明", "固定证明", "验证"]
+        read: ["本地证明", "已证明状态转移", "验证"]
       },
       {
         title: "状态 01 · 历史依赖",
-        proof: "创世块 → 每次转移 → 此刻",
-        state: ["当前状态", "位于历史的最远端"],
-        proofLabel: ["重放", "工作量随历史增长"],
-        tail: ["永久日志", "每一次历史转移"],
-        read: ["重新构建", "完整重放", "全部历史"]
+        proof: "创世区块 → 重放全部历史 → 当前状态",
+        state: ["当前状态", "只有完整重放后才能重建"],
+        proofLabel: ["重新执行", "链越长，需要完成的工作越多"],
+        tail: ["永久历史记录", "保留过去的每次状态转移"],
+        read: ["当前状态", "完整重放", "全部历史"]
       },
       {
-        title: "状态 02 · 当前状态",
-        proof: "实时状态 · 无需重放全部历史",
-        state: ["实时 UTXO 状态", "清空 · 复用 · 扩展"],
-        proofLabel: ["π_tip", "固定验证成本"],
-        tail: ["近期重组后缀", "18 个近期区块"],
-        read: ["实时 utxo", "π_tip", "当前状态"]
+        title: "状态 02 · 无需重放历史",
+        proof: "当前状态 + 历史证明",
+        state: ["当前 UTXO 状态", "清空槽位 · 优先复用 · 按需扩展"],
+        proofLabel: ["π_tip", "验证成本不随链高增长"],
+        tail: ["重组窗口", "最近 18 个完整区块"],
+        read: ["当前 UTXO", "π_tip", "当前状态"]
       },
       {
-        title: "状态 04 · PROOF-NATIVE",
-        proof: "钱包证明 · 矿工证明 · 网络验证",
-        state: ["网络", "应用已证明写入"],
-        proofLabel: ["证明流", "信息只移动一次"],
-        tail: ["共识", "只验证，不重复执行"],
-        read: ["已证明写入", "两份证明", "关系"]
+        title: "状态 04 · 证明原生架构",
+        proof: "钱包证明授权 · 矿工证明转移 · 网络负责验证",
+        state: ["网络", "只应用验证通过的写入"],
+        proofLabel: ["证明流", "见证留在掌握数据的一方"],
+        tail: ["共识", "验证结果，不重复执行"],
+        read: ["授权写入", "两份证明", "一次状态转移"]
       },
       {
-        title: "状态 05 · 实时 UTXO 状态",
-        proof: "花费 → 清空 → 优先复用，再扩展",
-        state: ["活跃槽位", "清空 · 复用 · 扩展"],
-        proofLabel: ["新状态根", "精确索引写入"],
-        tail: ["占用率", "只随实际使用增长"],
-        read: ["46.8% 活跃", "root_h", "写入"]
+        title: "状态 05 · 当前 UTXO 状态",
+        proof: "花费 → 清空 → 扩展前优先复用",
+        state: ["当前状态", "清空 · 复用 · 按需扩展"],
+        proofLabel: ["新状态根", "准确绑定发生变化的槽位"],
+        tail: ["占用率", "只随当前 UTXO 数量增长"],
+        read: ["46.8% 已占用", "root_h", "槽位写入"]
       },
       {
-        title: "状态 06 · 所有权",
+        title: "状态 06 · 无签名所有权",
         proof: "秘密 → Poseidon2b → 地址",
-        state: ["花费秘密", "永不进入共识"],
-        proofLabel: ["ZK CAPSULE", "全新随机化证明"],
-        tail: ["地址", "无状态所有权"],
-        read: ["o1 地址", "zk capsule", "原像"]
+        state: ["花费秘密", "不会进入共识数据"],
+        proofLabel: ["授权胶囊", "每笔交易重新生成并与整笔交易绑定"],
+        tail: ["地址", "无签名所有权"],
+        read: ["o1 地址", "ZK capsule", "原像知识"]
       },
       {
         title: "状态 07 · PAGEDSPEND",
-        proof: "最多 128 页 · 一笔逻辑交易",
-        state: ["证明分页", "固定内部几何"],
-        proofLabel: ["一个 TXID", "原子接受"],
-        tail: ["用户意图", "1 份手续费 · 1 份 capsule · 1 张回执"],
-        read: ["1,020 个输入", "一个 capsule", "原子交易"]
+        proof: "最多 128 个 Tx8x2 页 · 一笔逻辑交易",
+        state: ["TX8X2 物理页", "每页最多 8 个输入和 2 个输出"],
+        proofLabel: ["同一 TXID", "整笔交易一次接受"],
+        tail: ["逻辑 PAGEDSPEND", "1 次手续费 · 1 个授权胶囊 · 1 张回执"],
+        read: ["1,020 个输入", "256 个输出", "同一 txid"]
       },
       {
         title: "状态 08 · HISTORYSTEP",
-        proof: "π_h−1 + block_h + state_h → π_h",
-        state: ["新状态转移", "block_h · state_h"],
-        proofLabel: ["π_h", "terminal 大小不变"],
-        tail: ["近期重组后缀", "18 个完整区块"],
-        read: ["state_h", "π_h", "固定工作量"]
+        proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
+        state: ["新状态转移", "BLOCK_H + STATE_H"],
+        proofLabel: ["π_H", "终端证明大小不变"],
+        tail: ["链的最新部分", "18 个完整区块"],
+        read: ["STATE_H", "π_H", "固定验证成本"]
       },
       {
-        title: "状态 12 · PROOF-NATIVE POW",
+        title: "状态 13 · PROOF-NATIVE POW",
         proof: "证明转移 · 冻结模板 · 搜索 nonce",
         state: ["已证明区块", "不可变模板"],
         proofLabel: ["128 位 NONCE", "只排列已有效工作"],
@@ -893,28 +953,28 @@
         read: ["B25 · m22", "模板已锁定", "pow"]
       },
       {
-        title: "状态 03 · 独立启动",
-        proof: "对等节点数据 → 本地验证 → 独立节点",
-        state: ["对等节点数据", "实时状态 · terminal · 18 个区块"],
-        proofLabel: ["本地验证", "认证状态与重组窗口"],
-        tail: ["完整节点", "从首个状态起独立"],
-        read: ["对等数据", "本地验证", "独立"]
+        title: "状态 03 · 独立同步",
+        proof: "对等节点传输数据 → 本地验证 → 独立全节点",
+        state: ["任意对等节点的数据", "当前状态 · 终端证明 · 18 个区块"],
+        proofLabel: ["本地验证", "验证状态和重组后缀"],
+        tail: ["独立全节点", "运行一年或十年，流程都相同"],
+        read: ["对等节点数据", "本地验证", "独立全节点"]
       },
       {
-        title: "状态 13 · 硬件自适应 L1",
-        proof: "硬件改变 TPS · 网络持续运行",
+        title: "状态 14 · 硬件自适应 L1",
+        proof: "TPS 随硬件调整 · 每个节点都完成完整验证",
         state: ["任意设备上的节点", "每个节点都保存并验证完整 L1"],
-        proofLabel: ["自适应 TPS", "容量跟随计算能力"],
-        tail: ["持续运行的网络", "TPS 会变 · 共识继续"],
+        proofLabel: ["自适应 TPS", "区块容量随证明能力调整"],
+        tail: ["持续运行的网络", "吞吐量动态调整 · 共识持续推进"],
         read: ["完整 L1", "自适应 TPS", "去中心化"]
       },
       {
-        title: "状态 09 · 非留存",
-        proof: "当前公开 · 不保留永久交易图",
-        state: ["实时状态", "此刻透明"],
-        proofLabel: ["共识", "不永久保存来源关系"],
-        tail: ["外部追踪器", "必须自行记录全部数据流"],
-        read: ["公开状态", "无永久图", "自行追踪"]
+        title: "状态 09 · 不永久留存",
+        proof: "当前公开 · 共识不保存永久交易图",
+        state: ["当前状态", "金额公开 · 所有者公开"],
+        proofLabel: ["共识", "不保留历史交易关系图"],
+        tail: ["外部归档方", "独立记录并保存交易流"],
+        read: ["此刻公开", "不留存交易图", "外部归档"]
       },
       {
         title: "状态 10 · 可携带回执",
@@ -927,92 +987,114 @@
       {
         title: "状态 11 · FROST-GKR",
         proof: "同一种二进制算术 · 贯穿始终",
-        state: ["GF(2^128)", "所有权 · 交易 · 状态 · 历史 · PoW"],
+        state: ["GF(2^128) + GF(2^256)", "轨迹算术 · Fiat Shamir 挑战值"],
         proofLabel: ["FROST-GKR", "共享布尔超立方体"],
         tail: ["FRI-BINIUS", "无需可信设置"],
-        read: ["同一个域", "10.50×", "51.67×"]
+        read: ["二进制塔域", "10.50×", "51.67×"]
+      },
+      {
+        title: "状态 12 · 端到端后量子可靠性",
+        proof: "钱包 · 交易 · 状态 · 递归历史 · 同一安全性游戏",
+        state: ["NIST PQC CATEGORY 1", "完整状态验证"],
+        proofLabel: ["2^173.273866314232", "半成功门深积下界"],
+        tail: ["0.053364140323608411", "完整理想模型上界 < 1/2"],
+        read: ["端到端", "Category 1", "已证明"]
       }
     ]
   };
 
-  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 6, 7, 11, 12, 13, 8, 10];
+  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 6, 7, 11, 12, 13, 14, 8, 10];
 
   const interfaceCopy = {
-    en: { next: "NEXT", current: "CURRENT STATE ✓" },
-    ru: { next: "ДАЛЬШЕ", current: "ТЕКУЩЕЕ ✓" },
-    zh: { next: "下一步", current: "当前状态 ✓" }
+    en: { next: "NEXT", current: "CURRENT STATE ✓", copied: "COPIED" },
+    ru: { next: "ДАЛЬШЕ", current: "ТЕКУЩЕЕ ✓", copied: "СКОПИРОВАНО" },
+    zh: { next: "下一步", current: "当前状态 ✓", copied: "已复制" }
   };
 
   const metaCopy = {
     en: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "Parano1d is a proof-native Layer 1 network secured by proof of work. Recursive proofs authenticate the current State without replaying transaction history.",
+      description: "Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1.",
       locale: "en_US"
     },
     ru: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "Parano1d — proof-native-сеть первого уровня, защищённая proof of work. Рекурсивные доказательства аутентифицируют текущий State без повтора истории транзакций.",
+      description: "Proof of work задаёт канонический порядок. Состояние сети проверяется от генезиса за O(1). Сквозная постквантовая безопасность доказана на уровне NIST PQC Category 1.",
       locale: "ru_RU"
     },
     zh: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "Parano1d 是一个由工作量证明保护的证明原生第一层网络。递归证明可认证当前 State，无需重放交易历史。",
+      description: "工作量证明确定规范顺序。网络状态自创世块起以 O(1) 复杂度完成验证。端到端后量子可靠性已证明达到 NIST PQC Category 1 水平。",
       locale: "zh_CN"
     }
   };
 
   const canvasTranslations = {
     ru: {
-      proveOnce: "ДОКАЗАТЬ ОДИН РАЗ",
+      proveLocally: "ДОКАЗАТЬ ЛОКАЛЬНО",
       proofBoundary: "ГРАНИЦА ДОКАЗАТЕЛЬСТВА",
-      verifyEverywhere: "КАЖДАЯ НОДА ПРОВЕРЯЕТ",
-      noReexecution: "БЕЗ ПОВТОРНОГО ИСПОЛНЕНИЯ",
-      liveStateAdvances: "ТЕКУЩЕЕ СОСТОЯНИЕ ОБНОВЛЕНО",
+      verifyEverywhere: "ПРОВЕРЯЕТ ВСЯ СЕТЬ",
+      proveTransition: "ДОКАЗАТЬ ПЕРЕХОД",
+      liveStateAdvances: "СОСТОЯНИЕ ОБНОВЛЕНО",
       provenBlock: "ДОКАЗАННЫЙ БЛОК",
-      snapshot: "СНИМОК СОСТОЯНИЯ · БЛОК",
+      snapshot: "СОСТОЯНИЕ · БЛОК",
       genesis: "ГЕНЕЗИС",
       now: "СЕЙЧАС",
-      transitions: "ИЗ ∞ ПЕРЕХОДОВ",
-      privateWitness: "СЕКРЕТНЫЕ ДАННЫЕ",
+      transitions: "ПЕРЕХОДОВ ИЗ ВСЕЙ ИСТОРИИ",
+      privateWitness: "ПРИВАТНЫЙ СВИДЕТЕЛЬ",
       publicTransition: "ПУБЛИЧНЫЙ ПЕРЕХОД",
-      verify: "ПРОВЕРКА",
-      authorizationProof: "доказательство владения",
-      writesProof: "доказательство точных записей",
+      verifyAndApply: "ПРОВЕРИТЬ И ПРИМЕНИТЬ",
+      walletRole: "КОШЕЛЁК",
+      minerRole: "МАЙНЕР",
+      networkRole: "СЕТЬ",
+      authorizationProof: "ДОКАЗАТЕЛЬСТВО АВТОРИЗАЦИИ",
+      stateTransitionProof: "ДОКАЗАТЕЛЬСТВО ТОЧНОГО ПЕРЕХОДА",
       virtualHalf: "ВИРТУАЛЬНАЯ ПУСТАЯ ПОЛОВИНА",
       secret: "СЕКРЕТ",
-      statelessAddress: "STATELESS-АДРЕС",
-      one: "ОДИН",
-      atomic: "АТОМАРНО",
-      blockState: "БЛОК + СОСТОЯНИЕ",
-      sameSize: "размер не растёт",
+      zeroKnowledgeProof: "ДОКАЗАТЕЛЬСТВО С НУЛЕВЫМ РАЗГЛАШЕНИЕМ",
+      o1Address: "АДРЕС O1",
+      pagedCapacity: "1 020 ВХОДОВ · 256 ВЫХОДОВ",
+      oneAtomicPagedSpend: "ЕДИНЫЙ АТОМАРНЫЙ PAGEDSPEND",
+      pagedPages: "СТРАНИЦЫ TX8X2",
+      pagedGeometry: "ДО 8 ВХОДОВ · 2 ВЫХОДА НА КАЖДОЙ",
+      pagedTxid: "ОДИН TXID",
+      pagedAcceptance: "ПРИНИМАЕТСЯ ЦЕЛИКОМ",
+      pagedIntent: "ОДНА ЛОГИЧЕСКАЯ ТРАНЗАКЦИЯ",
+      pagedIntentDetail: "1 КОМИССИЯ · 1 КАПСУЛА · 1 ЧЕК",
+      blockState: "BLOCK_H + STATE_H",
+      sameSize: "РАЗМЕР НЕ МЕНЯЕТСЯ",
+      newTransition: "НОВЫЙ ПЕРЕХОД",
+      recentSuffix: "ПОСЛЕДНИЙ УЧАСТОК ЦЕПОЧКИ",
+      completeBlocks18: "18 ПОЛНЫХ БЛОКОВ",
       proven: "ДОКАЗАН",
       template: "ШАБЛОН",
       nonceOnly: "ИЩЕМ ТОЛЬКО NONCE",
       asert: "15 с · ASERT",
       liveState: "ТЕКУЩЕЕ СОСТОЯНИЕ",
-      blocks18: "18 БЛОКОВ",
+      terminalProof: "ТЕРМИНАЛЬНОЕ ДОКАЗАТЕЛЬСТВО",
+      reorgSuffix18: "18 БЛОКОВ ДЛЯ РЕОРГАНИЗАЦИИ",
       independentNode: "НЕЗАВИСИМАЯ НОДА",
       fullVerification: "ПОЛНАЯ ПРОВЕРКА",
-      livePercent: "живых UTXO",
-      bitcoinFullNode: "BITCOIN FULL NODE",
-      everyBlockKept: "КАЖДЫЙ БЛОК ОСТАЁТСЯ",
-      historyGrows: "ДИСК И ЗАПУСК РАСТУТ С КАЖДЫМ БЛОКОМ",
-      paranoidNode: "НОДА PARANO(1)D",
-      slotsReused: "ПОТРАЧЕННЫЕ СЛОТЫ ОЧИЩАЮТСЯ И ИСПОЛЬЗУЮТСЯ СНОВА",
-      storageTracksLive: "ХРАНЕНИЕ ЗАВИСИТ ОТ ЖИВЫХ UTXO, А НЕ ОТ ВОЗРАСТА СЕТИ",
+      livePercent: "слотов занято",
+      conventionalFullNode: "ОБЫЧНАЯ ПОЛНАЯ НОДА",
+      bootstrapAccumulates: "РАБОТА ПРИ ПЕРВОМ ЗАПУСКЕ НАКАПЛИВАЕТСЯ",
+      historyGrows: "С КАЖДЫМ БЛОКОМ РАБОТЫ БОЛЬШЕ",
+      paranoidNode: "НОДА PARANO1D",
+      slotsReused: "ПОТРАЧЕННЫЕ ВЫХОДЫ ОСВОБОЖДАЮТ СЛОТЫ · НОВЫЕ ВЫХОДЫ ИХ ЗАНИМАЮТ",
+      storageTracksLive: "ХРАНЕНИЕ ЗАВИСИТ ОТ ТЕКУЩИХ UTXO, А НЕ ОТ ВОЗРАСТА ЦЕПОЧКИ",
       today: "СЕГОДНЯ",
       tenYears: "+10 ЛЕТ",
-      liveProofWindow: "ЖИВОЙ STATE · PROOF · 18 БЛОКОВ",
+      liveProofWindow: "ТЕКУЩЕЕ СОСТОЯНИЕ + ДОКАЗАТЕЛЬСТВО ИСТОРИИ",
       peerData: "ДАННЫЕ ОТ ЛЮБОГО ПИРА",
       verifyLocally: "ПРОВЕРИТЬ ЛОКАЛЬНО",
-      authenticated: "ПОДТВЕРЖДЕНО",
+      authenticated: "ПРОВЕРЕНО",
       independentFullNode: "НЕЗАВИСИМАЯ ПОЛНАЯ НОДА",
-      sameProcedure: "ОДНА ПРОЦЕДУРА · ГОД 1 → ГОД 10",
-      networkConsensus: "КОНСЕНСУС СЕТИ",
+      sameProcedure: "ТОТ ЖЕ ПОРЯДОК · ЧЕРЕЗ ГОД → ЧЕРЕЗ 10 ЛЕТ",
       transparentNow: "ПРОЗРАЧНО СЕЙЧАС",
-      externalTracker: "ВНЕШНИЙ ТРЕКЕР",
-      recordEverything: "ЗАПИСЫВАЕТ ВСЁ САМ",
-      lifetimeStorage: "ХРАНЕНИЕ РАСТЁТ ВСЮ ЖИЗНЬ СЕТИ",
+      externalArchiver: "ВНЕШНИЙ АРХИВАТОР",
+      recordStream: "НЕПРЕРЫВНО ЗАПИСЫВАЕТ ПОТОК",
+      permanentGraph: "ПОСТОЯННЫЙ ГРАФ",
+      externalRetention: "ТРЕБУЕТ ВНЕШНЕГО ХРАНЕНИЯ",
       payment: "ПЛАТЁЖ",
       portableReceipt: "ПЕРЕНОСИМЫЙ ЧЕК",
       canonicalHeader: "КАНОНИЧЕСКИЙ ЗАГОЛОВОК",
@@ -1024,62 +1106,76 @@
       stateLane: "STATE",
       historyLane: "ИСТОРИЯ",
       powLane: "POW",
-      oneBinaryField: "ОДНО БИНАРНОЕ ПОЛЕ",
+      oneBinaryTower: "ЕДИНАЯ БИНАРНАЯ БАШНЯ",
       oneProofStack: "ЕДИНЫЙ PROOF STACK",
       noTrustedSetup: "БЕЗ ДОВЕРЕННОЙ НАСТРОЙКИ",
       validityLocked: "КОРРЕКТНОСТЬ ЗАФИКСИРОВАНА ДО ХЕШРЕЙТА"
     },
     zh: {
-      proveOnce: "只证明一次",
+      proveLocally: "本地生成证明",
       proofBoundary: "证明边界",
-      verifyEverywhere: "每个节点只做验证",
-      noReexecution: "无需重复执行",
-      liveStateAdvances: "实时状态前进",
+      verifyEverywhere: "全网验证",
+      proveTransition: "证明状态转移",
+      liveStateAdvances: "当前状态已更新",
       provenBlock: "已证明区块",
       snapshot: "状态快照 :: 区块",
       genesis: "创世块",
       now: "当前",
-      transitions: "次 / 无限状态转移",
+      transitions: "次历史状态转移",
       privateWitness: "私有见证",
       publicTransition: "公开状态转移",
-      verify: "验证",
+      verifyAndApply: "验证并应用",
+      walletRole: "钱包",
+      minerRole: "矿工",
+      networkRole: "网络",
       authorizationProof: "授权证明",
-      writesProof: "精确写入证明",
+      stateTransitionProof: "精确状态转移证明",
       virtualHalf: "虚拟空白半区",
       secret: "秘密",
-      statelessAddress: "无状态地址",
-      one: "一笔",
-      atomic: "原子交易",
-      blockState: "区块 + 状态",
-      sameSize: "大小不变",
+      zeroKnowledgeProof: "零知识证明",
+      o1Address: "O1 地址",
+      pagedCapacity: "1,020 个输入 · 256 个输出",
+      oneAtomicPagedSpend: "一笔原子 PAGEDSPEND",
+      pagedPages: "TX8X2 物理页",
+      pagedGeometry: "每页最多 8 个输入 · 2 个输出",
+      pagedTxid: "一个 TXID",
+      pagedAcceptance: "整笔一次性接受",
+      pagedIntent: "一笔逻辑交易",
+      pagedIntentDetail: "1 次手续费 · 1 个授权胶囊 · 1 张回执",
+      blockState: "BLOCK_H + STATE_H",
+      sameSize: "证明大小不变",
+      newTransition: "新状态转移",
+      recentSuffix: "近期后缀",
+      completeBlocks18: "18 个完整区块",
       proven: "已证明",
       template: "模板",
       nonceOnly: "仅搜索 NONCE",
       asert: "15 秒 · ASERT",
-      liveState: "实时状态",
-      blocks18: "18 个区块",
+      liveState: "当前状态",
+      terminalProof: "终端证明",
+      reorgSuffix18: "18 个区块的重组后缀",
       independentNode: "独立节点",
       fullVerification: "完整验证",
-      livePercent: "有效 UTXO",
-      bitcoinFullNode: "BITCOIN 全节点",
-      everyBlockKept: "每个区块都永久保留",
-      historyGrows: "磁盘与启动负担随每个区块增长",
-      paranoidNode: "PARANO(1)D 节点",
-      slotsReused: "已花费槽位会清空并重新使用",
-      storageTracksLive: "存储取决于实时 UTXO，而非网络年龄",
+      livePercent: "当前 UTXO",
+      conventionalFullNode: "传统全节点",
+      bootstrapAccumulates: "首次验证的工作量不断累积",
+      historyGrows: "每增加一个区块，首次验证都更重",
+      paranoidNode: "PARANO1D 节点",
+      slotsReused: "已花费输出释放槽位 · 新输出重复利用",
+      storageTracksLive: "存储量取决于当前 UTXO，而不是链龄",
       today: "现在",
       tenYears: "+10 年",
-      liveProofWindow: "实时状态 · 证明 · 18 个区块",
+      liveProofWindow: "当前状态 + 历史证明",
       peerData: "来自任意对等节点的数据",
       verifyLocally: "本地验证",
-      authenticated: "已认证",
+      authenticated: "验证通过",
       independentFullNode: "独立全节点",
-      sameProcedure: "同一流程 · 第 1 年 → 第 10 年",
-      networkConsensus: "网络共识",
+      sameProcedure: "运行一年或十年 · 验证流程完全相同",
       transparentNow: "当前透明",
-      externalTracker: "外部追踪器",
-      recordEverything: "必须自行记录全部数据",
-      lifetimeStorage: "存储随网络寿命持续增长",
+      externalArchiver: "外部归档方",
+      recordStream: "持续记录交易流",
+      permanentGraph: "永久交易图",
+      externalRetention: "需要外部自行保存",
       payment: "付款",
       portableReceipt: "可携带回执",
       canonicalHeader: "规范区块头",
@@ -1091,7 +1187,7 @@
       stateLane: "状态",
       historyLane: "历史",
       powLane: "POW",
-      oneBinaryField: "同一个二进制域",
+      oneBinaryTower: "同一二进制塔域",
       oneProofStack: "单一证明栈",
       noTrustedSetup: "无需可信设置",
       validityLocked: "有效性在算力介入前已经锁定"
@@ -1141,6 +1237,7 @@
   let wheelDirection = 0;
   let wheelLastEventAt = 0;
   let wheelLastStepAt = 0;
+  let wheelScrollingChapter = false;
   const wheelGestureGapMs = 240;
   const wheelStepCooldownMs = 320;
   const wheelTriggerDistance = 34;
@@ -1149,6 +1246,29 @@
   let wheelAudioContext = null;
   let wheelAudioOutput = null;
   let wheelAudioResume = null;
+
+  function activeChapterScroller() {
+    return chapters[current] || null;
+  }
+
+  function chapterCanScroll(direction, chapter = activeChapterScroller()) {
+    if (!chapter || !direction) return false;
+    const maxScroll = chapter.scrollHeight - chapter.clientHeight;
+    if (maxScroll <= 2) return false;
+    return direction > 0
+      ? chapter.scrollTop < maxScroll - 2
+      : chapter.scrollTop > 2;
+  }
+
+  function scrollActiveChapter(direction, distance) {
+    const chapter = activeChapterScroller();
+    if (!chapterCanScroll(direction, chapter)) return false;
+    chapter.scrollBy({
+      top: direction * Math.max(44, distance),
+      behavior: reducedMotion.matches ? "auto" : "smooth"
+    });
+    return true;
+  }
 
   function ensureWheelAudio() {
     const AudioEngine = window.AudioContext || window.webkitAudioContext;
@@ -1175,8 +1295,17 @@
     } catch {}
   }
 
-  window.addEventListener("pointerdown", unlockWheelAudio, { passive: true });
-  window.addEventListener("keydown", unlockWheelAudio);
+  window.addEventListener("pointerdown", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest("[data-go], [data-next], #prev, #next")) unlockWheelAudio();
+  }, { passive: true });
+  window.addEventListener("keydown", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest("a, button, summary") && !target.closest("[data-go], [data-next], #prev, #next")) return;
+    if (["ArrowRight", "ArrowDown", "PageDown", "ArrowLeft", "ArrowUp", "PageUp", "Home", "End", " "].includes(event.key)) {
+      unlockWheelAudio();
+    }
+  });
 
   function scheduleWheelTick(context, at, direction, emphasis = 1) {
     const body = context.createOscillator();
@@ -1268,7 +1397,7 @@
     syncMobileSceneLayouts();
     if (scene) {
       scene.invalidateLayout();
-      scene.draw(performance.now());
+      scene.syncPlayback({ render: true });
     }
     if (persist) {
       try { localStorage.setItem("parano1d-language", language); } catch {}
@@ -1279,6 +1408,54 @@
     option.addEventListener("click", () => {
       applyLanguage(option.dataset.lang);
       option.closest(".language-dropdown")?.removeAttribute("open");
+    });
+  });
+
+  const emailCopyTimers = new WeakMap();
+  const emailCopyOriginalText = new WeakMap();
+
+  async function copyToClipboard(value) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return true;
+    } catch {
+      const input = document.createElement("textarea");
+      input.value = value;
+      input.readOnly = true;
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      input.style.pointerEvents = "none";
+      document.body.append(input);
+      input.select();
+      let copied = false;
+      try { copied = document.execCommand("copy"); } catch {}
+      input.remove();
+      return copied;
+    }
+  }
+
+  document.querySelectorAll("[data-copy-email]").forEach((control) => {
+    const feedback = control.querySelector("[data-copy-feedback]") || control;
+    emailCopyOriginalText.set(control, feedback.textContent || "");
+    control.addEventListener("click", async () => {
+      const address = control.dataset.copyEmail;
+      if (!address || !await copyToClipboard(address)) return;
+
+      const oldTimer = emailCopyTimers.get(control);
+      if (oldTimer) clearTimeout(oldTimer);
+      control.classList.add("is-copied");
+      feedback.textContent = interfaceCopy[language].copied;
+
+      const timer = window.setTimeout(() => {
+        const restoreKey = feedback.dataset.copyRestoreKey;
+        const translated = restoreKey
+          ? (language === "en" ? sourceCopy.get(restoreKey) : translations[language]?.[restoreKey])
+          : null;
+        feedback.textContent = translated || emailCopyOriginalText.get(control) || address;
+        control.classList.remove("is-copied");
+        emailCopyTimers.delete(control);
+      }, 1500);
+      emailCopyTimers.set(control, timer);
     });
   });
 
@@ -1348,6 +1525,7 @@
     downloadsModal.scrollTop = 0;
     document.body.classList.add("downloads-open");
     app.setAttribute("inert", "");
+    scene?.syncPlayback();
     loadDownloadsPreview();
     hydrateLatestRelease();
     requestAnimationFrame(() => {
@@ -1362,7 +1540,10 @@
     downloadsModal.classList.remove("is-open");
     document.body.classList.remove("downloads-open");
     app.removeAttribute("inert");
-    downloadsCloseTimer = window.setTimeout(() => { downloadsModal.hidden = true; }, 260);
+    downloadsCloseTimer = window.setTimeout(() => {
+      downloadsModal.hidden = true;
+      scene?.syncPlayback();
+    }, 260);
     downloadsLastFocus?.focus?.({ preventScroll: true });
   }
 
@@ -1449,7 +1630,7 @@
     if (instant) stateRail.classList.add("instant");
     const radius = Math.max(170, height * .48);
     const angleStep = 13 * Math.PI / 180;
-    const visibleDistance = 5.15;
+    const visibleDistance = 2.15;
 
     dots.forEach((dot, dotIndex) => {
       const delta = dotIndex - index;
@@ -1470,7 +1651,9 @@
       dot.style.setProperty("--wheel-blur", `${blur.toFixed(2)}px`);
       dot.style.setProperty("--wheel-order", String(100 - Math.round(distance * 10)));
       dot.classList.toggle("wheel-hidden", !visible);
-      dot.tabIndex = visible ? 0 : -1;
+      dot.tabIndex = dotIndex === index ? 0 : -1;
+      if (visible) dot.removeAttribute("aria-hidden");
+      else dot.setAttribute("aria-hidden", "true");
     });
 
     if (instant) {
@@ -1490,6 +1673,9 @@
         syncMobileSceneLayouts();
       }
     });
+    chapter.addEventListener("scroll", () => {
+      if (chapter.classList.contains("active")) syncMobileSceneLayouts();
+    }, { passive: true });
   });
 
   function goTo(next, { instant = false } = {}) {
@@ -1501,6 +1687,7 @@
     if (!instant) playWheelTicks(old, next);
     current = next;
     app.dataset.currentStep = String(next);
+    chapters[next].scrollTop = 0;
 
     if (instant) chapters.forEach((chapter) => { chapter.style.transition = "none"; });
 
@@ -1575,7 +1762,24 @@
       }
       return;
     }
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+    const eventTarget = event.target instanceof Element ? event.target : null;
+    if (eventTarget?.closest('input, textarea, select, [contenteditable="true"]')) return;
+    const interactiveTarget = eventTarget?.closest('a, button, summary, [role="button"]');
+    if (interactiveTarget && !["Home", "End"].includes(event.key)) return;
+
+    const scrollForward = ["ArrowDown", "PageDown"].includes(event.key) || (event.key === " " && !event.shiftKey);
+    const scrollBackward = ["ArrowUp", "PageUp"].includes(event.key) || (event.key === " " && event.shiftKey);
+    if (scrollForward || scrollBackward) {
+      const chapter = activeChapterScroller();
+      const pageDistance = ["PageDown", "PageUp", " "].includes(event.key)
+        ? (chapter?.clientHeight || window.innerHeight) * .72
+        : 72;
+      if (scrollActiveChapter(scrollForward ? 1 : -1, pageDistance)) {
+        event.preventDefault();
+        return;
+      }
+    }
+
     if (["ArrowRight", "ArrowDown", "PageDown"].includes(event.key) || (event.key === " " && !event.shiftKey)) {
       event.preventDefault();
       advance(1);
@@ -1600,9 +1804,21 @@
 
     const reversed = wheelDirection !== 0 && direction !== wheelDirection;
     const newGesture = now - wheelLastEventAt > wheelGestureGapMs;
-    if (reversed || newGesture) wheelAccumulator = 0;
+    if (reversed || newGesture) {
+      wheelAccumulator = 0;
+      wheelScrollingChapter = false;
+    }
     wheelDirection = direction;
     wheelLastEventAt = now;
+
+    const activeScroller = activeChapterScroller();
+    const overActiveChapter = activeScroller && event.composedPath().includes(activeScroller);
+    if (overActiveChapter && chapterCanScroll(direction, activeScroller)) {
+      wheelAccumulator = 0;
+      wheelScrollingChapter = true;
+      return;
+    }
+    if (wheelScrollingChapter) return;
 
     // A wheel or trackpad keeps emitting inertial events after the user's
     // physical gesture. Do not bank that tail and spend it on another slide
@@ -1623,25 +1839,39 @@
   window.addEventListener("touchstart", (event) => {
     if (downloadsModal && !downloadsModal.hidden) return;
     const touch = event.changedTouches[0];
-    touchStart = { x: touch.clientX, y: touch.clientY, time: performance.now() };
+    const scroller = activeChapterScroller();
+    const overActiveChapter = scroller && event.composedPath().includes(scroller);
+    touchStart = {
+      x: touch.clientX,
+      y: touch.clientY,
+      time: performance.now(),
+      scroller: overActiveChapter ? scroller : null,
+      scrollTop: overActiveChapter ? scroller.scrollTop : 0
+    };
   }, { passive: true });
 
   window.addEventListener("touchend", (event) => {
     if (downloadsModal && !downloadsModal.hidden) return;
     if (!touchStart) return;
+    const gesture = touchStart;
     const touch = event.changedTouches[0];
-    const dx = touch.clientX - touchStart.x;
-    const dy = touch.clientY - touchStart.y;
-    const elapsed = performance.now() - touchStart.time;
+    const dx = touch.clientX - gesture.x;
+    const dy = touch.clientY - gesture.y;
+    const elapsed = performance.now() - gesture.time;
     touchStart = null;
     if (elapsed > 800 || Math.abs(dy) < 52 || Math.abs(dy) < Math.abs(dx) * .8) return;
-    advance(dy < 0 ? 1 : -1);
+    const direction = dy < 0 ? 1 : -1;
+    if (gesture.scroller) {
+      const scrolled = Math.abs(gesture.scroller.scrollTop - gesture.scrollTop) > 2;
+      if (scrolled || chapterCanScroll(direction, gesture.scroller)) return;
+    }
+    advance(direction);
   }, { passive: true });
 
   class StateScene {
     constructor(canvas) {
       this.canvas = canvas;
-      this.ctx = canvas.getContext("2d", { alpha: true });
+      this.ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
       this.w = 1;
       this.h = 1;
       this.dpr = 1;
@@ -1649,6 +1879,8 @@
       this.fromStep = current;
       this.transitionAt = performance.now() - 1000;
       this.lastFrame = 0;
+      this.animationFrame = 0;
+      this.staticStepRendered = false;
       this.lastMutation = 0;
       this.mutation = { from: 0, to: 1, at: performance.now() };
       this.seed = 0x1f2e3d4c;
@@ -1692,6 +1924,7 @@
         r: .25 + this.random(1200 + i) * 1.1,
         a: .08 + this.random(1300 + i) * .3
       }));
+      this.starPaths = [];
       this.verificationGlow = document.createElement("canvas");
       this.contentRightCache = new Map();
       this.verificationGlow.width = 128;
@@ -1704,11 +1937,18 @@
       glowTexture.addColorStop(1, "rgba(2,8,7,0)");
       glowContext.fillStyle = glowTexture;
       glowContext.fillRect(0, 0, 128, 128);
-      this.resizeObserver = new ResizeObserver(() => this.resize());
+      this.frame = this.frame.bind(this);
+      this.resizeObserver = new ResizeObserver(() => {
+        const resized = this.resize();
+        if (resized && !this.animationFrame && !this.playbackBlocked()) this.draw(performance.now());
+        this.syncPlayback();
+      });
       this.resizeObserver.observe(canvas);
       this.resize();
-      this.frame = this.frame.bind(this);
-      requestAnimationFrame(this.frame);
+      this.handlePlaybackChange = () => this.syncPlayback({ render: true });
+      document.addEventListener("visibilitychange", this.handlePlaybackChange);
+      reducedMotion.addEventListener?.("change", this.handlePlaybackChange);
+      this.syncPlayback({ render: true });
     }
 
     random(n) {
@@ -1720,9 +1960,13 @@
 
     resize() {
       const rect = this.canvas.getBoundingClientRect();
-      const nextDpr = Math.min(window.devicePixelRatio || 1, 1.6);
       const nextW = Math.max(1, rect.width);
       const nextH = Math.max(1, rect.height);
+      const mobile = window.innerWidth <= 820;
+      const preferredDpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.6 : 1.4);
+      const pixelBudget = mobile ? 1500000 : 2400000;
+      const budgetDpr = Math.sqrt(pixelBudget / Math.max(1, nextW * nextH));
+      const nextDpr = Math.round(Math.max(.75, Math.min(preferredDpr, budgetDpr)) * 1000) / 1000;
       const pixelWidth = Math.round(nextW * nextDpr);
       const pixelHeight = Math.round(nextH * nextDpr);
       if (
@@ -1738,8 +1982,22 @@
       this.canvas.width = pixelWidth;
       this.canvas.height = pixelHeight;
       this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      this.prepareAtmosphere();
       this.invalidateLayout();
+      this.staticStepRendered = false;
       return true;
+    }
+
+    prepareAtmosphere() {
+      const paths = [new Path2D(), new Path2D(), new Path2D(), new Path2D()];
+      for (const star of this.stars) {
+        const group = Math.min(3, Math.floor((star.a - .08) / .075));
+        const x = star.x * this.w;
+        const y = star.y * this.h;
+        paths[group].moveTo(x + star.r, y);
+        paths[group].arc(x, y, star.r, 0, Math.PI * 2);
+      }
+      this.starPaths = paths;
     }
 
     invalidateLayout() {
@@ -1747,24 +2005,86 @@
     }
 
     setStep(step, fromStep = this.step) {
-      this.fromStep = fromStep;
+      const now = performance.now();
+      this.fromStep = reducedMotion.matches ? step : fromStep;
       this.step = step;
-      this.transitionAt = performance.now();
+      this.transitionAt = reducedMotion.matches ? now - 720 : now;
+      this.staticStepRendered = false;
+      this.syncPlayback({ render: true });
+    }
+
+    playbackBlocked() {
+      return document.hidden ||
+        this.w <= 2 ||
+        this.h <= 2 ||
+        (downloadsModal && !downloadsModal.hidden) ||
+        (repositoryGate && !repositoryGate.hidden);
+    }
+
+    transitioning(now = performance.now()) {
+      return this.fromStep !== this.step && now - this.transitionAt < 720;
+    }
+
+    shouldAnimate(now = performance.now()) {
+      if (reducedMotion.matches || this.playbackBlocked()) return false;
+      return this.step !== 12 || this.transitioning(now);
+    }
+
+    start() {
+      if (this.animationFrame || !this.shouldAnimate()) return;
+      this.lastFrame = 0;
+      this.animationFrame = requestAnimationFrame(this.frame);
+    }
+
+    stop() {
+      if (!this.animationFrame) return;
+      cancelAnimationFrame(this.animationFrame);
+      this.animationFrame = 0;
+    }
+
+    syncPlayback({ render = false } = {}) {
+      if (this.shouldAnimate()) {
+        this.start();
+        return;
+      }
+      this.stop();
+      if (render && !this.playbackBlocked()) {
+        this.draw(performance.now());
+        this.staticStepRendered = this.step === 12;
+      }
     }
 
     frame(now) {
-      if (now - this.lastFrame > (reducedMotion.matches ? 500 : 32)) {
-        this.lastFrame = now;
+      this.animationFrame = 0;
+      if (this.playbackBlocked()) return;
+
+      const transitioning = this.transitioning(now);
+      if (this.step === 12 && !transitioning) {
+        if (!this.staticStepRendered) this.draw(now);
+        this.staticStepRendered = true;
+        return;
+      }
+
+      if (reducedMotion.matches) {
+        this.draw(now);
+        return;
+      }
+
+      this.staticStepRendered = false;
+      const interval = 1000 / 24;
+      const elapsed = now - this.lastFrame;
+      if (elapsed >= interval) {
+        this.lastFrame = now - (elapsed % interval);
         this.draw(now);
       }
-      requestAnimationFrame(this.frame);
+      if (this.shouldAnimate(now)) this.animationFrame = requestAnimationFrame(this.frame);
     }
 
     draw(now) {
       const ctx = this.ctx;
       ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
       ctx.clearRect(0, 0, this.w, this.h);
-      this.drawAtmosphere(now);
+      this.drawAtmosphere();
 
       const raw = Math.min(1, (now - this.transitionAt) / 720);
       const mix = raw < .5 ? 4 * raw * raw * raw : 1 - Math.pow(-2 * raw + 2, 3) / 2;
@@ -1776,24 +2096,12 @@
       }
     }
 
-    drawAtmosphere(now) {
+    drawAtmosphere() {
       const ctx = this.ctx;
-      const pulse = .5 + .5 * Math.sin(now * .00038);
-      const radial = ctx.createRadialGradient(this.w * .73, this.h * .48, 0, this.w * .73, this.h * .48, this.w * .48);
-      radial.addColorStop(0, `rgba(58, 225, 158, ${.038 + pulse * .018})`);
-      radial.addColorStop(.45, "rgba(44, 94, 80, .018)");
-      radial.addColorStop(1, "rgba(2, 8, 7, 0)");
-      ctx.fillStyle = radial;
-      ctx.fillRect(0, 0, this.w, this.h);
-
-      for (const star of this.stars) {
-        const x = star.x * this.w;
-        const y = star.y * this.h;
-        ctx.beginPath();
-        ctx.arc(x, y, star.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(191,247,255,${star.a})`;
-        ctx.fill();
-      }
+      this.starPaths.forEach((path, group) => {
+        ctx.fillStyle = `rgba(191,247,255,${.115 + group * .075})`;
+        ctx.fill(path);
+      });
     }
 
     drawScene(index, alpha, now) {
@@ -1813,6 +2121,7 @@
         this.drawPrivacy,
         this.drawReceipt,
         this.drawProofStack,
+        this.drawSoundness,
         this.drawPow,
         this.drawNode
       ];
@@ -2526,7 +2835,7 @@
         : l.compact
           ? Math.min(29, width * .11)
           : Math.min(42, width * .068);
-      const labelSize = l.mobile ? 6.5 : l.compact ? 7.2 : 9;
+      const labelSize = l.mobile ? 7 : l.compact ? 8.4 : 11;
 
       const nodeSpecs = l.mobile
         ? [[.50, .49], [.57, .25], [.67, .75], [.78, .14], [.87, .46], [.84, .85]]
@@ -2639,7 +2948,7 @@
         ctx.stroke();
       }
       ctx.restore();
-      this.text("1×", proverX, centerY, "#effff8", l.mobile ? 8 : l.compact ? 9 : 11);
+      this.text("π", proverX, centerY, "#effff8", l.mobile ? 8 : l.compact ? 9 : 11);
 
       ctx.save();
       ctx.setLineDash([2, l.mobile ? 6 : 8]);
@@ -2913,10 +3222,10 @@
         ctx.fillRect(stripLeft + cell * (cellWidth + cellGap), stripY, cellWidth, l.mobile ? 3 : 4);
       }
 
-      this.text(canvasText("proveOnce", "PROVE ONCE"), proverX, top + labelSize, "rgba(255,255,255,.72)", labelSize);
-      this.text(canvasText("verifyEverywhere", "EVERY NODE VERIFIES"), left + width * .82, top + labelSize, "rgba(115,255,197,.72)", labelSize);
+      this.text(canvasText("proveLocally", "PROVE LOCALLY"), proverX, top + labelSize, "rgba(255,255,255,.88)", labelSize);
+      this.text(canvasText("verifyEverywhere", "VERIFY EVERYWHERE"), left + width * .82, top + labelSize, "rgba(115,255,197,.90)", labelSize);
       if (!l.mobile && !l.compact) this.text(canvasText("proofBoundary", "PROOF BOUNDARY"), boundaryX, top + labelSize * 3.4, "rgba(191,247,255,.34)", labelSize * .78);
-      this.text(canvasText("noReexecution", "NO RE-EXECUTION"), (proverX + boundaryX) / 2, centerY + proverRadius + (l.mobile ? 20 : 29), "rgba(194,170,255,.62)", labelSize * .86);
+      this.text(canvasText("proveTransition", "PROVE THE TRANSITION"), (proverX + boundaryX) / 2, centerY + proverRadius + (l.mobile ? 20 : 29), "rgba(194,170,255,.86)", labelSize);
       this.text(canvasText("liveStateAdvances", "LIVE STATE ADVANCES"), (stripLeft + stripRight) / 2, bottom - (l.mobile ? 4 : 7), stateProgress > .5 ? "rgba(115,255,197,.72)" : "rgba(115,255,197,.38)", labelSize * .82);
 
       ctx.restore();
@@ -2932,15 +3241,15 @@
         const canvasRect = this.canvas.getBoundingClientRect();
         const contentRect = presentDetails.getBoundingClientRect();
         const contentBoundary = contentRect.right - canvasRect.left;
-        const proportionalGap = this.w * .012;
+        const proportionalGap = this.w * .02;
         left = Math.min(right - this.w * .30, Math.max(baselineLeft, contentBoundary + proportionalGap));
       }
       const top = this.h * (l.mobile ? .055 : .295);
       const bottom = this.h * (l.mobile ? .94 : .695);
       const width = right - left;
       const height = bottom - top;
-      const labelSize = l.mobile ? 7.2 : l.compact ? 8.4 : 9.6;
-      const annotationSize = l.mobile ? 5.35 : labelSize * .74;
+      const labelSize = l.mobile ? 8.2 : l.compact ? 9.6 : 11;
+      const annotationSize = l.mobile ? 6.1 : labelSize * .74;
       const columns = l.mobile ? 28 : l.compact ? 34 : 40;
       const gap = l.mobile ? 1.15 : 1.8;
       const columnWidth = (width - gap * (columns - 1)) / columns;
@@ -2959,8 +3268,8 @@
 
       const historyBase = top + height * .42;
       const historyMax = height * .29;
-      this.text(canvasText("bitcoinFullNode", "BITCOIN FULL NODE"), left, top, "rgba(255,149,125,.95)", labelSize, "left");
-      this.text(canvasText("everyBlockKept", "EVERY BLOCK STAYS"), left, top + labelSize * 1.55, "rgba(255,149,125,.56)", annotationSize, "left");
+      this.text(canvasText("conventionalFullNode", "CONVENTIONAL FULL NODE"), left, top, "rgba(255,149,125,.95)", labelSize, "left");
+      this.text(canvasText("bootstrapAccumulates", "BOOTSTRAP WORK ACCUMULATES"), left, top + labelSize * 1.55, "rgba(255,149,125,.56)", annotationSize, "left");
 
       ctx.save();
       ctx.beginPath();
@@ -3006,13 +3315,13 @@
       const scanY = historyBase - historyMax * (.12 + .88 * Math.pow(scanT, .84));
       this.line([[scanX, top + labelSize * 3], [scanX, axisY]], "rgba(191,247,255,.08)", .65);
       this.dot(scanX, scanY, l.mobile ? 1.2 : 1.7, "#ff957d", l.mobile ? 3 : 5);
-      this.text(canvasText("historyGrows", "DISK + BOOTSTRAP GROW WITH EVERY BLOCK"), right, historyBase + labelSize * 1.55, "rgba(255,149,125,.72)", annotationSize, "right");
+      this.text(canvasText("historyGrows", "BOOTSTRAP WORK GROWS WITH EVERY BLOCK"), right, historyBase + labelSize * 1.55, "rgba(255,149,125,.72)", annotationSize, "right");
 
       const stateTop = top + height * .59;
       const stateRows = l.mobile ? 3 : 4;
       const stateHeight = height * (l.mobile ? .115 : .13);
       const stateCellHeight = (stateHeight - gap * (stateRows - 1)) / stateRows;
-      this.text(canvasText("paranoidNode", "PARANO(1)D NODE"), left, stateTop - labelSize * 1.4, "rgba(115,255,197,.96)", labelSize, "left");
+      this.text(canvasText("paranoidNode", "PARANO1D NODE"), left, stateTop - labelSize * 1.4, "rgba(115,255,197,.96)", labelSize, "left");
       this.text(canvasText("slotsReused", "SPENT SLOTS CLEAR · NEW OUTPUTS REUSE THEM"), left, stateTop, "rgba(115,255,197,.57)", annotationSize, "left");
 
       const gridTop = stateTop + labelSize * 1.25;
@@ -3066,8 +3375,8 @@
         ctx.fillStyle = i === tailCount - 1 ? "rgba(194,170,255,.72)" : "rgba(191,247,255,.20)";
         ctx.fillRect(x - size, proofY - size, size * 2, size * 2);
       }
-      this.text(canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs — NOT CHAIN AGE"), right, gridTop + stateHeight + labelSize * 1.25, "rgba(115,255,197,.76)", annotationSize, "right");
-      this.text(canvasText("liveProofWindow", "LIVE STATE · PROOF · 18 BLOCKS"), right, gridTop - labelSize * .62, "rgba(194,170,255,.68)", l.mobile ? 4.9 : annotationSize * .9, "right");
+      this.text(canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs, NOT CHAIN AGE"), right, gridTop + stateHeight + labelSize * 1.25, "rgba(115,255,197,.76)", annotationSize, "right");
+      this.text(canvasText("liveProofWindow", "LIVE STATE + HISTORY PROOF"), right, gridTop - labelSize * .62, "rgba(194,170,255,.68)", l.mobile ? 4.9 : annotationSize * .9, "right");
     }
 
     drawReplay(now) {
@@ -3120,23 +3429,31 @@
       const positions = [left, (left + right) / 2, right];
       const labels = ["W", "M", "N"];
       const colors = ["#ff957d", "#bff7ff", "#73ffc5"];
-      const words = [
+      const technicalLabels = [
         canvasText("privateWitness", "PRIVATE WITNESS"),
         canvasText("publicTransition", "PUBLIC TRANSITION"),
-        canvasText("verify", "VERIFY")
+        canvasText("verifyAndApply", "VERIFY AND APPLY")
       ];
+      const roleLabels = [
+        canvasText("walletRole", "WALLET"),
+        canvasText("minerRole", "MINER"),
+        canvasText("networkRole", "NETWORK")
+      ];
+      const technicalSize = l.mobile ? 5.8 : 8.2;
+      const roleSize = l.mobile ? 5.4 : 7.5;
 
       this.line([[left, y], [right, y]], "rgba(115,255,197,.14)", 1);
       positions.forEach((x, i) => {
         this.node(x, y, radius, labels[i], colors[i], now);
-        this.text(words[i], x, y + radius + 23, `${colors[i]}aa`, 7.5);
+        this.text(technicalLabels[i], x, y - radius - (l.mobile ? 14 : 20), `${colors[i]}cc`, technicalSize);
+        this.text(roleLabels[i], x, y + radius + (l.mobile ? 14 : 20), `${colors[i]}aa`, roleSize);
       });
       for (let lane = 0; lane < 3; lane += 1) {
         this.packetAlong(left + radius, y, positions[1] - radius, y, now * .00018 + lane * .33, "#c2aaff", 1.8);
         this.packetAlong(positions[1] + radius, y, right - radius, y, now * .00018 + .16 + lane * .33, "#73ffc5", 1.8);
       }
-      this.text(canvasText("authorizationProof", "proof of authorization"), (positions[0] + positions[1]) / 2, y - 22, "rgba(194,170,255,.62)", 7.5);
-      this.text(canvasText("writesProof", "proof of exact writes"), (positions[1] + positions[2]) / 2, y - 22, "rgba(115,255,197,.62)", 7.5);
+      this.text(canvasText("authorizationProof", "PROOF OF AUTHORIZATION"), (positions[0] + positions[1]) / 2, y - (l.mobile ? 13 : 22), "rgba(194,170,255,.72)", l.mobile ? 5 : 7.5);
+      this.text(canvasText("stateTransitionProof", "PROOF OF EXACT STATE TRANSITION"), (positions[1] + positions[2]) / 2, y - (l.mobile ? 13 : 22), "rgba(115,255,197,.72)", l.mobile ? 5 : 7.5);
     }
 
     drawLivingState(now) {
@@ -3160,13 +3477,22 @@
       this.ctx.strokeStyle = "rgba(115,255,197,.25)";
       this.ctx.strokeRect(segmentX, top, segmentW, bottom - top);
       this.ctx.restore();
-      this.text(canvasText("virtualHalf", "VIRTUAL EMPTY HALF"), segmentX + segmentW / 2, bottom + 18, "rgba(115,255,197,.43)", 7);
+      this.text(
+        canvasText("virtualHalf", "VIRTUAL EMPTY HALF"),
+        l.mobile ? this.w * .94 : segmentX + segmentW / 2,
+        bottom + 18,
+        "rgba(115,255,197,.43)",
+        l.mobile ? 5.8 : 7,
+        l.mobile ? "right" : "center"
+      );
       this.line([[board.x + board.w, (top + bottom) / 2], [segmentX, (top + bottom) / 2]], "rgba(115,255,197,.18)", 1);
     }
 
     drawOwnership(now) {
       const l = this.layout();
-      const left = l.mobile ? this.w * .13 : this.w * (l.compact ? .59 : .48);
+      const fallbackLeft = this.w * (l.compact ? .59 : .48);
+      const contentEdge = this.contentRight("#ownership h2, #ownership .lead, #ownership .ledger");
+      const left = l.mobile ? this.w * .13 : Math.max(fallbackLeft, contentEdge + 42);
       const mid = l.mobile ? this.w * .51 : this.w * (l.compact ? .75 : .68);
       const right = l.mobile ? this.w * .88 : this.w * (l.compact ? .92 : .88);
       const compactMobile = l.mobile && this.h < 170;
@@ -3200,21 +3526,38 @@
       const proofY = y + Math.sin(orbit) * orbitRadius;
       this.dot(proofX, proofY, 2, "#c2aaff", 10);
       if (!compactMobile) {
-        this.text(canvasText("secret", "SECRET"), left, y + radius + 23, "rgba(255,149,125,.58)", 7.5);
-        this.text("POSEIDON2b", mid, y + radius + 23, "rgba(194,170,255,.62)", 7.5);
-        this.text(canvasText("statelessAddress", "STATELESS ADDRESS"), right, y + radius + 23, "rgba(115,255,197,.58)", 7.5);
+        const labelSize = l.mobile ? 5.8 : 7.5;
+        this.text(canvasText("secret", "SECRET"), left, y + radius + 23, "rgba(255,149,125,.58)", labelSize);
+        this.text("POSEIDON2B", mid, y + radius + 23, "rgba(194,170,255,.62)", labelSize);
+        this.text(canvasText("o1Address", "O1 ADDRESS"), right, y + radius + 23, "rgba(115,255,197,.58)", labelSize);
+        this.text(
+          canvasText("zeroKnowledgeProof", "ZERO-KNOWLEDGE PROOF"),
+          l.mobile ? this.w * .94 : right,
+          y - radius - (l.mobile ? 16 : 23),
+          "rgba(194,170,255,.72)",
+          l.mobile ? 5.2 : 7.5,
+          l.mobile ? "right" : "center"
+        );
       }
     }
 
     drawPagedSpend(now) {
       const l = this.layout();
-      const left = l.mobile ? this.w * .10 : this.w * (l.compact ? .58 : .47);
       const txX = l.mobile ? this.w * .71 : this.w * (l.compact ? .83 : .80);
+      const txW = l.mobile ? 104 : (l.compact ? 132 : 168);
+      const txH = l.mobile ? 64 : 88;
+      const ingressX = txX - txW / 2;
+      const fallbackLeft = this.w * (l.compact ? .58 : .47);
+      const contentEdge = this.contentRight("#paged-spend h2, #paged-spend .lead");
+      const preferredLeft = Math.max(fallbackLeft, contentEdge + 42);
+      const left = l.mobile ? this.w * .10 : Math.min(preferredLeft, ingressX - 44);
       const cy = this.h * .48;
-      const pageCount = l.mobile ? 12 : 18;
-      const spread = this.h * .5;
+      const pageCount = 6;
+      const pagesPerSide = pageCount / 2;
+      const spread = this.h * (l.mobile ? .34 : .28);
       for (let i = 0; i < pageCount; i += 1) {
-        const lane = (i / (pageCount - 1) - .5);
+        const slot = i < pagesPerSide ? i : i + 2;
+        const lane = slot / (pageCount + 1) - .5;
         const x = left;
         const y = cy + lane * spread;
         const w = l.mobile ? 18 : 24;
@@ -3222,34 +3565,47 @@
         this.roundedRect(x, y - h / 2, w, h, 2, "rgba(115,255,197,.35)", "rgba(115,255,197,.07)");
         this.path((p) => {
           p.moveTo(x + w, y);
-          p.bezierCurveTo(x + (txX - x) * .46, y, txX - 60, cy, txX - 40, cy);
+          p.bezierCurveTo(x + (ingressX - x) * .46, y, ingressX - 24, cy, ingressX, cy);
         }, "rgba(115,255,197,.12)", .8);
         if (i % 4 === 0) {
           const phase = (now * .00013 + i / pageCount) % 1;
-          const px = x + w + (txX - 40 - x - w) * phase;
+          const px = x + w + (ingressX - x - w) * phase;
           const py = y + (cy - y) * phase * phase;
           this.dot(px, py, 1.4, "#73ffc5", 6);
         }
       }
-      const txW = l.mobile ? 88 : 116;
-      const txH = l.mobile ? 64 : 82;
+      for (const offset of [-7, 0, 7]) {
+        this.dot(left + (l.mobile ? 9 : 12), cy + offset, 1.05, "rgba(115,255,197,.6)", 3);
+      }
       this.roundedRect(txX - txW / 2, cy - txH / 2, txW, txH, 13, "rgba(194,170,255,.72)", "rgba(194,170,255,.08)", 1.2);
-      this.text(canvasText("one", "ONE"), txX, cy - 13, "rgba(194,170,255,.68)", 8);
-      this.text("PAGEDSPEND", txX, cy + 3, "#c2aaff", l.mobile ? 8 : 9);
-      this.text(canvasText("atomic", "ATOMIC"), txX, cy + 20, "rgba(239,255,248,.62)", 7);
-      this.node(l.mobile ? this.w * .91 : this.w * .91, cy, l.mobile ? 14 : 18, "✓", "#73ffc5", now);
+      this.text(canvasText("pagedCapacity", "1,020 INPUTS · 256 OUTPUTS"), txX, cy - 11, "rgba(239,255,248,.62)", l.mobile ? 5.3 : (l.compact ? 6.5 : 7.5));
+      this.text(canvasText("oneAtomicPagedSpend", "ONE ATOMIC PAGEDSPEND"), txX, cy + 11, "#c2aaff", l.mobile ? 5.8 : (l.compact ? 7 : 8.2));
+      const acceptanceX = this.w * (l.mobile ? .93 : (l.compact ? .95 : .91));
+      this.node(acceptanceX, cy, l.mobile ? 14 : 18, "✓", "#73ffc5", now);
+
+      if (l.mobile && this.h >= 170) {
+        this.text(canvasText("pagedPages", "TX8X2 PAGES"), this.w * .10, this.h * .12, "rgba(239,255,248,.82)", 6.2, "left");
+        this.text(canvasText("pagedGeometry", "UP TO 8 INPUTS · 2 OUTPUTS EACH"), this.w * .10, this.h * .16, "rgba(115,255,197,.55)", 5.1, "left");
+        this.text(canvasText("pagedTxid", "ONE TXID"), this.w * .94, this.h * .12, "rgba(239,255,248,.82)", 6.2, "right");
+        this.text(canvasText("pagedAcceptance", "ATOMIC ACCEPTANCE"), this.w * .94, this.h * .16, "rgba(194,170,255,.64)", 5.1, "right");
+        this.text(canvasText("pagedIntent", "ONE LOGICAL TRANSACTION"), this.w * .10, this.h * .86, "rgba(239,255,248,.82)", 6.2, "left");
+        this.text(canvasText("pagedIntentDetail", "1 FEE · 1 CAPSULE · 1 RECEIPT"), this.w * .10, this.h * .90, "rgba(191,247,255,.58)", 5.1, "left");
+      }
     }
 
     drawHistoryStep(now) {
       const l = this.layout();
-      const left = l.mobile ? this.w * .14 : this.w * (l.compact ? .59 : .49);
       const mid = l.mobile ? this.w * .52 : this.w * (l.compact ? .75 : .69);
       const right = l.mobile ? this.w * .87 : this.w * (l.compact ? .92 : .88);
       const y = this.h * (l.mobile ? .40 : .45);
       const r = l.mobile ? 21 : 28;
-      this.node(left, y, r, "π−1", "#c2aaff", now);
-
       const gridSize = l.mobile ? 48 : 62;
+      const fallbackLeft = this.w * (l.compact ? .59 : .49);
+      const contentEdge = this.contentRight("#history-step h2, #history-step .lead, #history-step .formula, #history-step .ledger");
+      const preferredLeft = Math.max(fallbackLeft, contentEdge + 42);
+      const left = l.mobile ? this.w * .14 : Math.min(preferredLeft, mid - gridSize / 2 - r - 24);
+      this.node(left, y, r, "πₕ₋₁", "#c2aaff", now);
+
       const ctx = this.ctx;
       ctx.save();
       ctx.translate(mid, y);
@@ -3263,22 +3619,30 @@
         this.line([[-gridSize / 2 + gridSize * i / 5, -gridSize / 2], [-gridSize / 2 + gridSize * i / 5, gridSize / 2]], "rgba(115,255,197,.16)", .6);
       }
       ctx.restore();
-      this.text(canvasText("blockState", "BLOCK + STATE"), mid, y + gridSize / 2 + 22, "rgba(115,255,197,.58)", 7.5);
+      this.text(canvasText("blockState", "BLOCK_H + STATE_H"), mid, y + gridSize / 2 + 22, "rgba(115,255,197,.58)", 7.5);
 
-      this.node(right, y, r + 4, "π", "#c2aaff", now);
+      this.node(right, y, r + 4, "πₕ", "#c2aaff", now);
       this.line([[left + r, y], [mid - gridSize / 2, y]], "rgba(194,170,255,.28)", 1);
       this.line([[mid + gridSize / 2, y], [right - r - 4, y]], "rgba(194,170,255,.34)", 1.2, 7);
       for (let i = 0; i < 3; i += 1) {
         this.packetAlong(left + r, y, mid - gridSize / 2, y, now * .0002 + i / 3, "#c2aaff", 1.8);
         this.packetAlong(mid + gridSize / 2, y, right - r - 4, y, now * .0002 + .2 + i / 3, "#c2aaff", 1.8);
       }
-      this.text(canvasText("sameSize", "same size"), right, y + r + 26, "rgba(194,170,255,.64)", 8);
-      this.drawTail(left, right, this.h * (l.mobile ? .68 : .77), now);
+      this.text(canvasText("sameSize", "SAME TERMINAL SIZE"), right, y + r + 26, "rgba(194,170,255,.64)", l.mobile ? 5.8 : 8);
+      const tailY = this.h * (l.mobile ? .68 : .77);
+      this.drawTail(left, right, tailY, now);
+
+      if (l.mobile && this.h >= 170) {
+        this.text(canvasText("newTransition", "NEW TRANSITION"), mid, y - gridSize / 2 - 20, "rgba(239,255,248,.8)", 6.2);
+        this.text(canvasText("recentSuffix", "RECENT SUFFIX"), left, tailY + 25, "rgba(239,255,248,.78)", 6.1, "left");
+        this.text(canvasText("completeBlocks18", "18 COMPLETE BLOCKS"), right, tailY + 25, "rgba(191,247,255,.58)", 5.3, "right");
+      }
     }
 
     drawPrivacy(now) {
       const l = this.layout();
       const ctx = this.ctx;
+      const stage = l.mobile ? null : this.desktopStageBounds();
       const left = l.mobile ? this.w * .055 : this.w * (l.compact ? .575 : .465);
       const right = l.mobile ? this.w * .945 : this.w * (l.compact ? .93 : .91);
       const width = right - left;
@@ -3291,9 +3655,11 @@
       const tapX = left + width * .39;
       const trackerX = left + width * .28;
       const labelSize = l.mobile ? Math.max(4.4, Math.min(6.2, this.h * .034)) : 7.4;
+      const headerY = l.mobile
+        ? this.h * .10
+        : stage.top + (app.classList.contains("launch-notice-visible") ? 48 : 20);
 
-      this.text(canvasText("networkConsensus", "NETWORK CONSENSUS"), left, this.h * .10, "rgba(115,255,197,.74)", labelSize, "left");
-      this.text(canvasText("transparentNow", "TRANSPARENT NOW"), right, this.h * .10, "rgba(191,247,255,.52)", labelSize, "right");
+      this.text(canvasText("transparentNow", "TRANSPARENT NOW"), right, headerY, "rgba(191,247,255,.52)", labelSize, "right");
       this.line([[left, streamY], [streamEnd, streamY]], "rgba(115,255,197,.18)", 1);
 
       const packetCount = l.mobile ? 15 : 22;
@@ -3348,8 +3714,8 @@
       }, "rgba(255,149,125,.34)", 1, l.mobile ? 0 : 4);
       this.packetAlong(tapX, streamY, trackerX, trackerY, now * .00016, "#ff957d", l.mobile ? 1.2 : 1.7);
       this.node(trackerX, trackerY, l.mobile ? 13 : 19, "T", "#ff957d", now);
-      this.text(canvasText("externalTracker", "EXTERNAL TRACKER"), trackerX, trackerY + (l.mobile ? 22 : 31), "rgba(255,149,125,.72)", labelSize);
-      this.text(canvasText("recordEverything", "RECORDS EVERYTHING ITSELF"), trackerX, trackerY + (l.mobile ? 31 : 43), "rgba(255,149,125,.43)", labelSize * .74);
+      this.text(canvasText("externalArchiver", "EXTERNAL ARCHIVER"), trackerX, trackerY + (l.mobile ? 22 : 31), "rgba(255,149,125,.72)", labelSize);
+      this.text(canvasText("recordStream", "RECORDS THE STREAM"), trackerX, trackerY + (l.mobile ? 31 : 43), "rgba(255,149,125,.43)", labelSize * .74);
 
       const archiveLeft = trackerX + (l.mobile ? 25 : 39);
       const archiveRight = right;
@@ -3371,7 +3737,8 @@
           ctx.strokeRect(x, y, columnW, cellHArchive);
         }
       }
-      this.text(canvasText("lifetimeStorage", "STORAGE GROWS FOR THE NETWORK'S LIFETIME"), archiveRight, this.h * .92, "rgba(255,149,125,.55)", labelSize * .78, "right");
+      this.text(canvasText("permanentGraph", "PERMANENT GRAPH"), archiveRight, this.h * .88, "rgba(255,149,125,.68)", labelSize * .88, "right");
+      this.text(canvasText("externalRetention", "REQUIRES EXTERNAL RETENTION"), archiveRight, this.h * .93, "rgba(255,149,125,.48)", labelSize * .74, "right");
     }
 
     drawReceipt(now) {
@@ -3555,7 +3922,7 @@
       ctx.restore();
 
       this.text("FROST-GKR", cubeX, centerY + cubeSize * .68, "rgba(191,247,255,.82)", labelSize * 1.05);
-      this.text(canvasText("oneBinaryField", "ONE BINARY FIELD"), cubeX, centerY - cubeSize * .68, "rgba(115,255,197,.62)", labelSize * .82);
+      this.text(canvasText("oneBinaryTower", "ONE BINARY TOWER"), cubeX, centerY - cubeSize * .68, "rgba(115,255,197,.62)", labelSize * .82);
       this.line([[cubeX + cubeSize / 2, centerY], [outputX, centerY]], "rgba(191,247,255,.38)", 1.2, l.mobile ? 0 : 6);
       for (let packet = 0; packet < 3; packet += 1) {
         this.packetAlong(cubeX + cubeSize / 2, centerY, outputX, centerY, now * .00017 + packet / 3, packet === 1 ? "#c2aaff" : "#bff7ff", l.mobile ? 1.1 : 1.6);
@@ -3564,6 +3931,165 @@
       this.text(canvasText("oneProofStack", "ONE PROOF STACK"), outputX, centerY + (l.mobile ? 24 : 31), "rgba(191,247,255,.65)", labelSize * .78);
       const footerY = l.mobile ? this.h * .92 : Math.min(stageBottom - labelSize * 2.4, centerY + laneSpan * .66);
       this.text(canvasText("noTrustedSetup", "NO TRUSTED SETUP"), (left + right) / 2, footerY, "rgba(194,170,255,.52)", labelSize * .84);
+    }
+
+    drawSoundness(now) {
+      const l = this.layout();
+      const ctx = this.ctx;
+      let centerX;
+      let centerY;
+      let radius;
+
+      if (l.mobile) {
+        centerX = this.w * .50;
+        centerY = this.h * .435;
+        radius = Math.min(this.w * .205, 82);
+      } else {
+        const stage = this.desktopStageBounds();
+        const contentEdge = this.contentRight("#soundness h2, #soundness .lead, #soundness .ledger, #soundness .chapter-actions .action");
+        const left = l.compact
+          ? Math.max(Math.min(contentEdge + 18, this.w * .66), this.w * .59)
+          : Math.max(contentEdge + 30, this.w * .50);
+        const right = this.w * (l.compact ? .925 : .91);
+        centerX = (left + right) / 2;
+        centerY = stage.center;
+        radius = Math.min((right - left) * (l.compact ? .36 : .31), (stage.bottom - stage.top) * .285, l.compact ? 142 : 178);
+      }
+
+      const yaw = -.55;
+      const pitch = -.24;
+      const cosYaw = Math.cos(yaw);
+      const sinYaw = Math.sin(yaw);
+      const cosPitch = Math.cos(pitch);
+      const sinPitch = Math.sin(pitch);
+      // The rotation preserves Bloch-vector norm. Orthographic projection keeps every unit vector inside the sphere silhouette.
+      const project = ([x, y, z]) => {
+        const rotatedX = x * cosYaw - y * sinYaw;
+        const rotatedY = x * sinYaw + y * cosYaw;
+        const cameraDepth = rotatedY * cosPitch - z * sinPitch;
+        const screenZ = rotatedY * sinPitch + z * cosPitch;
+        return [
+          centerX + radius * rotatedX,
+          centerY - radius * screenZ,
+          cameraDepth
+        ];
+      };
+      const spherePoint = (plane, angle) => {
+        const c = Math.cos(angle);
+        const s = Math.sin(angle);
+        if (plane === "xy") return [c, s, 0];
+        if (plane === "xz") return [c, 0, s];
+        return [0, c, s];
+      };
+      const drawGreatCircle = (plane, rgb) => {
+        const segments = 64;
+        const back = new Path2D();
+        const front = new Path2D();
+        for (let index = 0; index < segments; index += 1) {
+          const a = project(spherePoint(plane, index * Math.PI * 2 / segments));
+          const b = project(spherePoint(plane, (index + 1) * Math.PI * 2 / segments));
+          const depth = (a[2] + b[2]) / 2;
+          const path = depth < 0 ? back : front;
+          path.moveTo(a[0], a[1]);
+          path.lineTo(b[0], b[1]);
+        }
+        ctx.save();
+        ctx.strokeStyle = `rgba(${rgb},.10)`;
+        ctx.lineWidth = .65;
+        ctx.stroke(back);
+        ctx.strokeStyle = `rgba(${rgb},.34)`;
+        ctx.lineWidth = 1.05;
+        ctx.stroke(front);
+        ctx.restore();
+      };
+
+      const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius * 1.38);
+      halo.addColorStop(0, "rgba(115,255,197,.085)");
+      halo.addColorStop(.44, "rgba(115,255,197,.026)");
+      halo.addColorStop(1, "rgba(2,8,7,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(centerX - radius * 1.45, centerY - radius * 1.45, radius * 2.9, radius * 2.9);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius * 1.015, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(191,247,255,.22)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
+
+      drawGreatCircle("xy", "115,255,197");
+      drawGreatCircle("xz", "191,247,255");
+      drawGreatCircle("yz", "194,170,255");
+
+      const axes = [
+        [[-1, 0, 0], [1, 0, 0], "rgba(191,247,255,.20)"],
+        [[0, -1, 0], [0, 1, 0], "rgba(194,170,255,.18)"],
+        [[0, 0, -1], [0, 0, 1], "rgba(115,255,197,.24)"]
+      ];
+      axes.forEach(([from, to, color]) => {
+        const a = project(from);
+        const b = project(to);
+        this.line([[a[0], a[1]], [b[0], b[1]]], color, .8);
+      });
+
+      const coldSurface = new Path2D();
+      const warmSurface = new Path2D();
+      for (let index = 0; index < 18; index += 1) {
+        const u = this.random(29000 + index * 19);
+        const v = this.random(31000 + index * 23);
+        const theta = Math.acos(1 - 2 * u);
+        const phi = v * Math.PI * 2 + now * .000055;
+        const point = [Math.sin(theta) * Math.cos(phi), Math.sin(theta) * Math.sin(phi), Math.cos(theta)];
+        const [x, y, depth] = project(point);
+        if (depth > -.15) {
+          const pointRadius = l.mobile ? .65 : .95;
+          const path = depth > .25 ? warmSurface : coldSurface;
+          path.moveTo(x + pointRadius, y);
+          path.arc(x, y, pointRadius, 0, Math.PI * 2);
+        }
+      }
+      ctx.save();
+      ctx.fillStyle = "rgba(191,247,255,.72)";
+      ctx.fill(coldSurface);
+      ctx.fillStyle = "rgba(115,255,197,.84)";
+      ctx.fill(warmSurface);
+      ctx.restore();
+
+      ["xy", "xz", "yz"].forEach((plane, index) => {
+        const point = project(spherePoint(plane, now * (.00018 + index * .000035) + index * 1.9));
+        this.dot(point[0], point[1], l.mobile ? 1.25 : 1.8, index === 1 ? "#c2aaff" : "#73ffc5", l.mobile ? 5 : 9);
+      });
+
+      const theta = 1.0 + Math.sin(now * .00042) * .28;
+      const phi = now * .00034;
+      const state = [Math.sin(theta) * Math.cos(phi), Math.sin(theta) * Math.sin(phi), Math.cos(theta)];
+      const statePoint = project(state);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius * 1.01, 0, Math.PI * 2);
+      ctx.clip();
+      this.line([[centerX, centerY], [statePoint[0], statePoint[1]]], "rgba(115,255,197,.82)", l.mobile ? 1.15 : 1.6, l.mobile ? 5 : 9);
+      this.dot(statePoint[0], statePoint[1], l.mobile ? 2.2 : 3.2, "#73ffc5", l.mobile ? 10 : 16);
+      ctx.restore();
+      this.text("|ψ⟩", statePoint[0] + (statePoint[0] >= centerX ? 9 : -9), statePoint[1] - 9, "#73ffc5", l.mobile ? 7 : 10, statePoint[0] >= centerX ? "left" : "right");
+
+      this.dot(centerX, centerY, l.mobile ? 1.1 : 1.5, "#73ffc5", l.mobile ? 4 : 7);
+
+      const labelSize = l.mobile ? 7 : 10.5;
+      const endpoints = [
+        [[0, 0, 1], "|0⟩", 0, -13, "center", "#bff7ff"],
+        [[0, 0, -1], "|1⟩", 0, 14, "center", "#c2aaff"],
+        [[1, 0, 0], "|+⟩", 13, 0, "left", "#bff7ff"],
+        [[-1, 0, 0], "|−⟩", -13, 0, "right", "#bff7ff"],
+        [[0, 1, 0], "|+i⟩", 11, 9, "left", "#73ffc5"],
+        [[0, -1, 0], "|−i⟩", -11, -9, "right", "#73ffc5"]
+      ];
+      endpoints.forEach(([point, label, dx, dy, align, color]) => {
+        const [x, y] = project(point);
+        this.dot(x, y, l.mobile ? 1.65 : 2.25, color, l.mobile ? 6 : 10);
+        this.text(label, x + dx, y + dy, color, labelSize, align);
+      });
     }
 
     drawPow(now) {
@@ -3623,11 +4149,11 @@
       const laptopWidth = l.mobile ? Math.min(48, width * .17) : Math.min(88, width * .15);
       const gateSize = l.mobile ? Math.min(42, this.h * .29) : Math.min(66, this.h * .095);
       const inputRadius = l.mobile ? Math.min(10, this.h * .067) : 16;
-      const labelSize = l.mobile ? 5.4 : 7.4;
+      const labelSize = l.mobile ? 6.1 : 8.6;
       const inputs = [
         { y: y - span, label: canvasText("liveState", "LIVE STATE"), symbol: "S", color: "#73ffc5" },
-        { y, label: "π_tip", color: "#c2aaff" },
-        { y: y + span, label: canvasText("blocks18", "18 BLOCKS"), symbol: "18", color: "#bff7ff" }
+        { y, label: canvasText("terminalProof", "TERMINAL PROOF"), color: "#c2aaff" },
+        { y: y + span, label: canvasText("reorgSuffix18", "18-BLOCK REORG SUFFIX"), symbol: "18", color: "#bff7ff" }
       ];
 
       const inputHeaderY = Math.max(labelSize, y - span - inputRadius - (l.mobile ? 15 : 24));
@@ -3649,7 +4175,14 @@
           p.moveTo(left + inputRadius, input.y);
           p.quadraticCurveTo(left + (verifierX - left) * .58, input.y, verifierX - gateSize * .56, y);
         }, `${input.color}42`, 1, l.mobile ? 0 : 3);
-        this.text(input.label, left + inputRadius + (l.mobile ? 6 : 10), input.y, `${input.color}a8`, labelSize, "left");
+        this.text(
+          input.label,
+          left + inputRadius + (l.mobile ? 6 : 10),
+          input.y - labelSize * 1.15,
+          `${input.color}a8`,
+          labelSize,
+          "left"
+        );
 
         const phase = (now * .00014 + i * .29) % 1;
         const eased = phase * phase * (3 - 2 * phase);
@@ -3684,7 +4217,7 @@
         .7
       );
       this.text("✓", verifierX, y - gateSize * .08, "#73ffc5", l.mobile ? 10 : 14);
-      this.text(canvasText("verifyLocally", "VERIFY LOCALLY"), verifierX, y + gateSize * .18, "rgba(115,255,197,.72)", l.mobile ? 4.3 : 6.2);
+      this.text(canvasText("verifyLocally", "VERIFY LOCALLY"), verifierX, y + gateSize * .18, "rgba(115,255,197,.78)", l.mobile ? 4.8 : 7.2);
 
       const outputStart = verifierX + gateSize * .52;
       const outputEnd = laptopX - laptopWidth * .58;
@@ -3692,7 +4225,7 @@
       for (let packet = 0; packet < 3; packet += 1) {
         this.packetAlong(outputStart, y, outputEnd, y, now * .00016 + packet / 3, "#73ffc5", l.mobile ? 1.15 : 1.7);
       }
-      this.text(canvasText("authenticated", "AUTHENTICATED"), (outputStart + outputEnd) / 2, y - (l.mobile ? 9 : 15), "rgba(115,255,197,.58)", l.mobile ? 4.5 : 6.5);
+      this.text(canvasText("authenticated", "AUTHENTICATED"), (outputStart + outputEnd) / 2, y - (l.mobile ? 9 : 15), "rgba(115,255,197,.68)", l.mobile ? 5 : 7.4);
 
       this.drawLaptop(laptopX, y, laptopWidth);
       this.dot(laptopX, y, l.mobile ? 1.5 : 2.2, "#73ffc5", l.mobile ? 5 : 10);
@@ -3700,7 +4233,7 @@
 
       const timelineY = y + span + inputRadius + (l.mobile ? 14 : 27);
       this.line([[left, timelineY], [right, timelineY]], "rgba(191,247,255,.13)", .7);
-      this.text(canvasText("sameProcedure", "SAME PROCEDURE · YEAR 1 → YEAR 10"), (left + right) / 2, timelineY + (l.mobile ? 6 : 10), "rgba(191,247,255,.46)", l.mobile ? 4.6 : 6.8);
+      this.text(canvasText("sameProcedure", "SAME PROCEDURE · YEAR 1 → YEAR 10"), (left + right) / 2, timelineY + (l.mobile ? 6 : 10), "rgba(191,247,255,.58)", l.mobile ? 5.1 : 7.5);
     }
 
     drawNode(now) {

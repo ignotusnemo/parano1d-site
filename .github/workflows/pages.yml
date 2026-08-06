@@ -26,7 +26,8 @@ jobs:
         run: |
           test -f index.html
           test -f app.js
-          test -f social-card-v3.png
+          test -f favicon-v2.ico
+          test -f social-card-v4.png
           test "$(tr -d '\r\n' < CNAME)" = "parano1d.org"
           grep -q 'https://parano1d.org/' index.html
           grep -q 'https://parano1d.org/sitemap.xml' robots.txt
@@ -42,10 +43,14 @@ jobs:
             favicon-32.png \
             favicon-48.png \
             favicon.ico \
+            favicon-v2-16.png \
+            favicon-v2-32.png \
+            favicon-v2-48.png \
+            favicon-v2.ico \
             index.html \
             robots.txt \
             sitemap.xml \
-            social-card-v3.png \
+            social-card-v4.png \
             _site/
           touch _site/.nojekyll
 
