@@ -1176,6 +1176,8 @@
 
     .app[data-current-step="0"] .scene-label,
     .app[data-current-step="0"] .readout,
+    .app[data-current-step="1"] .scene-label,
+    .app[data-current-step="1"] .readout,
     .app[data-current-step="2"] .scene-label,
     .app[data-current-step="2"] .readout,
     .app[data-current-step="3"] .scene-label,
@@ -2295,21 +2297,20 @@
       <section class="chapter" id="dependency" data-step="1" aria-labelledby="title-dependency">
         <div class="chapter-inner shell">
           <div class="chapter-index" data-i18n="dependency.index">01 / THE DEPENDENCY</div>
-          <h2 id="title-dependency" data-i18n="dependency.title">Conventional<br>blockchains<br><em>depend on history<br>forever.</em></h2>
-          <p class="lead" data-i18n="dependency.lead">Bitcoin, Ethereum, and most blockchains establish the present by replaying the past. As history grows, so does the work inherited by every new verifier.</p>
+          <h2 id="title-dependency" data-i18n="dependency.title">The present depends<br><em>on accumulated history.</em></h2>
+          <p class="lead" data-i18n="dependency.lead">Bitcoin, Ethereum, Solana, Zcash, TRON, and most blockchains derive their current state from accumulated history. Some replay it directly, others shorten bootstrap with snapshots or checkpoints. Either way, a new verifier must reconstruct or inherit the path to the current state.</p>
           <dl class="ledger">
-            <div class="ledger-row"><dt data-i18n="dependency.row1.label">Source of truth</dt><dd data-i18n="dependency.row1.value"><strong>The complete execution history</strong></dd></div>
-            <div class="ledger-row"><dt data-i18n="dependency.row2.label">New full node</dt><dd data-i18n="dependency.row2.value">Downloads and re-executes the chain</dd></div>
-            <div class="ledger-row"><dt data-i18n="dependency.row3.label">Network age</dt><dd data-i18n="dependency.row3.value">Increases inherited bootstrap work</dd></div>
+            <div class="ledger-row"><dt data-i18n="dependency.row1.label">Basis of validity</dt><dd data-i18n="dependency.row1.value"><strong>Accumulated chain history</strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="dependency.row2.label">New verifier</dt><dd data-i18n="dependency.row2.value">Replays history or bootstraps from a snapshot/checkpoint</dd></div>
           </dl>
         </div>
       </section>
 
       <section class="chapter" id="present" data-step="2" aria-labelledby="title-present">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="present.index">02 / THE BREAK WITH HISTORY</div>
-          <h2 id="title-present" data-i18n="present.title">Parano1d.<br>Present proves<br><em>the past.</em></h2>
-          <p class="lead" data-i18n="present.lead">Parano1d separates state validity from historical replay. The live UTXO state is authenticated by a recursive proof of the valid transitions that produced it. Spent outputs release their slots, so storage follows live state rather than chain age.</p>
+          <div class="chapter-index" data-i18n="present.index">02 / THE INVERSION</div>
+          <h2 id="title-present" data-i18n="present.title">The present<br>proves <em>the past.</em></h2>
+          <p class="lead" data-i18n="present.lead">Parano1d separates state validity from historical replay. The live UTXO state is authenticated by a recursive proof from genesis to the present. Spent outputs release their slots, so storage follows live state rather than chain age.</p>
           <dl class="ledger">
             <div class="ledger-row"><dt data-i18n="present.row1.label">State growth</dt><dd data-i18n="present.row1.value"><strong>Tracks live UTXOs, not lifetime transactions</strong></dd></div>
             <div class="ledger-row"><dt data-i18n="present.row2.label">Spent outputs</dt><dd data-i18n="present.row2.value">Slots clear and can be reused</dd></div>
@@ -2494,7 +2495,7 @@
         </svg>
       </button>
       <button class="state-dot" type="button" data-go="1">01<span class="visually-hidden"> — <span data-i18n="rail.1">The dependency</span></span></button>
-      <button class="state-dot" type="button" data-go="2">02<span class="visually-hidden"> — <span data-i18n="rail.2">The present</span></span></button>
+      <button class="state-dot" type="button" data-go="2">02<span class="visually-hidden"> — <span data-i18n="rail.2">The inversion</span></span></button>
       <button class="state-dot" type="button" data-go="3">03<span class="visually-hidden"> — <span data-i18n="rail.3">Independent bootstrap</span></span></button>
       <button class="state-dot" type="button" data-go="4">04<span class="visually-hidden"> — <span data-i18n="rail.4">Proof-native</span></span></button>
       <button class="state-dot" type="button" data-go="5">05<span class="visually-hidden"> — <span data-i18n="rail.5">Living state</span></span></button>

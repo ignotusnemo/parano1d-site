@@ -324,24 +324,22 @@
       "overview.fact.signatureless.copy": "владение доказано, а не подписано",
       "overview.fact.pow.value": "СОСТОЯНИЕ",
       "overview.fact.pow.copy": "потраченные выходы освобождают место",
-      "dependency.index": "01 / ЗАВИСИМОСТЬ ОТ ИСТОРИИ",
-      "dependency.title": "Привычный блокчейн<br><em>навсегда привязан<br>к истории.</em>",
-      "dependency.lead": "Bitcoin, Ethereum и большинство других блокчейнов восстанавливают текущее состояние, заново исполняя всю цепочку. Чем длиннее история, тем больше работы приходится проделать новой ноде при первом запуске.",
-      "dependency.row1.label": "Источник истины",
-      "dependency.row1.value": "<strong>Вся история исполнения</strong>",
-      "dependency.row2.label": "Новая полная нода",
-      "dependency.row2.value": "Скачивает всю цепочку и заново исполняет каждый блок",
-      "dependency.row3.label": "Возраст сети",
-      "dependency.row3.value": "Увеличивает объём первоначальной проверки",
-      "present.index": "02 / РАЗРЫВ С ИСТОРИЕЙ",
-      "present.title": "Parano1d.<br>Настоящее доказывает<br><em>прошлое.</em>",
-      "present.lead": "Parano1d отделяет проверку текущего состояния от повторного исполнения истории. Текущий набор UTXO несёт рекурсивное доказательство всех допустимых переходов, которые к нему привели. Когда выход потрачен, его слот освобождается. Поэтому объём хранения зависит от числа текущих UTXO, а не от возраста цепочки.",
-      "present.row1.label": "Размер состояния",
-      "present.row1.value": "<strong>Зависит от текущих UTXO, а не от всех транзакций за время жизни сети</strong>",
+      "dependency.index": "01 / ЗАВИСИМОСТЬ",
+      "dependency.title": "Настоящее зависит<br><em>от накопленной истории.</em>",
+      "dependency.lead": "Bitcoin, Ethereum, Solana, Zcash, TRON и большинство других блокчейнов определяют текущее состояние по накопленной истории. Одни воспроизводят её напрямую, другие ускоряют первоначальную синхронизацию с помощью снимков состояния или контрольных точек. В любом случае новая нода либо сама восстанавливает путь к текущему состоянию, либо принимает готовую точку отсчёта из снимка состояния или контрольной точки.",
+      "dependency.row1.label": "Основа проверки",
+      "dependency.row1.value": "<strong>Накопленная история цепочки</strong>",
+      "dependency.row2.label": "Новая нода",
+      "dependency.row2.value": "Повторяет историю или начинает со снимка состояния либо контрольной точки",
+      "present.index": "02 / ИНВЕРСИЯ",
+      "present.title": "Настоящее<br>доказывает <em>прошлое.</em>",
+      "present.lead": "Parano1d отделяет проверку состояния от повторного исполнения истории. Корректность текущего набора UTXO подтверждает рекурсивное доказательство, охватывающее всю цепочку от генезиса до настоящего момента. Потраченные выходы освобождают слоты, поэтому объём хранения зависит от числа текущих UTXO, а не от возраста цепочки.",
+      "present.row1.label": "Рост состояния",
+      "present.row1.value": "<strong>Зависит от числа текущих UTXO, а не от всех прошлых транзакций</strong>",
       "present.row2.label": "Потраченные выходы",
-      "present.row2.value": "Освобождают слоты для новых UTXO",
+      "present.row2.value": "Освобождают слоты, которые можно использовать снова",
       "present.row3.label": "Возраст цепочки",
-      "present.row3.value": "Не увеличивает работу при подключении новой ноды",
+      "present.row3.value": "Не создаёт накопленной нагрузки при подключении новой ноды",
       "proof.index": "04 / СМЕНА ПАРАДИГМЫ",
       "proof.title": "Доказывай там,<br><em>где уже есть данные.</em>",
       "proof.lead": "В Parano1d доказательство строит тот, у кого уже есть нужные данные. Сеть получает готовый результат, который можно проверить, и не повторяет исходные вычисления.",
@@ -456,8 +454,8 @@
       "run.download": "Загрузить кошелёк",
       "rail.label": "Разделы Parano1d",
       "rail.0": "Обзор Parano1d",
-      "rail.1": "Зависимость от истории",
-      "rail.2": "Настоящее",
+      "rail.1": "Зависимость",
+      "rail.2": "Инверсия",
       "rail.3": "Независимая синхронизация",
       "rail.4": "Proof-native архитектура",
       "rail.5": "Текущее состояние UTXO",
@@ -529,24 +527,22 @@
       "overview.fact.signatureless.copy": "所有权由证明建立，而非签名",
       "overview.fact.pow.value": "实时状态",
       "overview.fact.pow.copy": "已花费输出释放容量",
-      "dependency.index": "01 / 对历史的依赖",
-      "dependency.title": "传统区块链<br><em>永远离不开历史。</em>",
-      "dependency.lead": "Bitcoin、Ethereum 和大多数区块链都通过重放历史来重建当前状态。链越长，新节点首次验证需要完成的工作就越多。",
-      "dependency.row1.label": "状态依据",
-      "dependency.row1.value": "<strong>完整的执行历史</strong>",
-      "dependency.row2.label": "新全节点",
-      "dependency.row2.value": "下载整条链并重新执行",
-      "dependency.row3.label": "链龄",
-      "dependency.row3.value": "链越老，首次验证的工作量越大",
-      "present.index": "02 / 告别历史重放",
-      "present.title": "Parano1d.<br>当下证明<br><em>过去。</em>",
-      "present.lead": "Parano1d 将当前状态的验证与历史重放分离。当前 UTXO 状态携带递归证明，其中涵盖了产生该状态的全部有效转移。UTXO 花费后会释放槽位，因此存储量取决于当前仍存在的 UTXO，而不是链已经运行了多久。",
-      "present.row1.label": "状态规模",
-      "present.row1.value": "<strong>随当前 UTXO 数量变化，不随历史交易总量增长</strong>",
+      "dependency.index": "01 / 历史依赖",
+      "dependency.title": "当前状态依赖<br><em>不断累积的历史。</em>",
+      "dependency.lead": "Bitcoin、Ethereum、Solana、Zcash、TRON 以及大多数其他区块链，都需要根据不断累积的历史来确定当前状态。有些直接重放历史，有些借助状态快照或检查点来缩短初始同步。无论采用哪种方式，新验证节点都必须自行重建当前状态的来路，或从状态快照或检查点继承已有的验证路径。",
+      "dependency.row1.label": "有效性依据",
+      "dependency.row1.value": "<strong>不断累积的链历史</strong>",
+      "dependency.row2.label": "新验证节点",
+      "dependency.row2.value": "重放历史，或从状态快照或检查点开始验证",
+      "present.index": "02 / 逻辑反转",
+      "present.title": "当前状态<br>证明<em>过去。</em>",
+      "present.lead": "Parano1d 将状态有效性与历史重放分离。当前 UTXO 状态的有效性由一份从创世块递归延伸至今的证明保证。UTXO 一旦花费，对应槽位便可释放，因此存储规模取决于当前仍然存在的 UTXO，而不是链龄。",
+      "present.row1.label": "状态增长",
+      "present.row1.value": "<strong>取决于当前 UTXO 数量，而不是历史交易总量</strong>",
       "present.row2.label": "已花费输出",
-      "present.row2.value": "释放槽位，供后续输出复用",
+      "present.row2.value": "清空槽位，之后可再次使用",
       "present.row3.label": "链龄",
-      "present.row3.value": "不会增加新节点接入时的验证工作",
+      "present.row3.value": "不会让新节点背上越来越重的历史重放负担",
       "proof.index": "04 / 证明方式的改变",
       "proof.title": "数据在哪里，<br><em>就在哪里证明。</em>",
       "proof.lead": "在 Parano1d 中，谁掌握证明所需的信息，谁就在本地生成证明。网络只接收可验证的结果，不再重复同一套计算。",
@@ -662,7 +658,7 @@
       "rail.label": "Parano1d 章节",
       "rail.0": "Parano1d 概览",
       "rail.1": "历史依赖",
-      "rail.2": "当前状态",
+      "rail.2": "逻辑反转",
       "rail.3": "独立同步",
       "rail.4": "证明原生架构",
       "rail.5": "当前 UTXO 状态",
@@ -691,19 +687,19 @@
     },
     {
       title: "STATE 01 · THE DEPENDENCY",
-      proof: "genesis → every transition → now",
-      state: ["THE PRESENT IS RECONSTRUCTED AT THE FAR END", ""],
-      proofLabel: ["REPLAY", "work grows with history"],
-      tail: ["PERMANENT LOG", "every past transition"],
-      read: ["reconstructed", "full replay", "lifetime"]
+      proof: "GENESIS → ACCUMULATED HISTORY → NOW",
+      state: ["STATE", "derived from history"],
+      proofLabel: ["HISTORY DEPENDENCY", "persists with network age"],
+      tail: ["ACCUMULATED HISTORY", "every past transition"],
+      read: ["replay", "snapshot", "checkpoint"]
     },
     {
-      title: "STATE 02 · THE BREAK WITH HISTORY",
-      proof: "live state + history proof",
-      state: ["LIVE UTXO STATE", "clear · reuse · expand"],
-      proofLabel: ["π_tip", "fixed verification work"],
-      tail: ["RECENT SUFFIX", "18 reorg blocks"],
-      read: ["live utxo", "π_tip", "present"]
+      title: "STATE 02 · THE INVERSION",
+      proof: "LIVE STATE + HISTORY PROOF",
+      state: ["PARANO1D", "live state + recursive history proof"],
+      proofLabel: ["SPENT SLOTS CLEAR", "new outputs reuse them"],
+      tail: ["STORAGE", "tracks live UTXOs, not chain age"],
+      read: ["live state", "history proof", "present"]
     },
     {
       title: "STATE 04 · PROOF-NATIVE",
@@ -822,20 +818,20 @@
         read: ["локальные доказательства", "доказанный переход", "проверка"]
       },
       {
-        title: "СОСТОЯНИЕ 01 · ЗАВИСИМОСТЬ ОТ ИСТОРИИ",
-        proof: "генезис → повторить всю историю → получить текущее состояние",
-        state: ["ТЕКУЩЕЕ СОСТОЯНИЕ", "становится известно только после полного повторного исполнения"],
-        proofLabel: ["ПОВТОРНОЕ ИСПОЛНЕНИЕ", "работа растёт вместе с цепочкой"],
-        tail: ["ПОСТОЯННЫЙ ЖУРНАЛ", "хранит каждый прошлый переход"],
-        read: ["текущее состояние", "полное исполнение", "вся история"]
+        title: "СОСТОЯНИЕ 01 · ЗАВИСИМОСТЬ",
+        proof: "ГЕНЕЗИС → НАКОПЛЕННАЯ ИСТОРИЯ → СЕЙЧАС",
+        state: ["СОСТОЯНИЕ", "выведено из истории"],
+        proofLabel: ["ЗАВИСИМОСТЬ ОТ ИСТОРИИ", "сохраняется с возрастом сети"],
+        tail: ["НАКОПЛЕННАЯ ИСТОРИЯ", "каждый прошлый переход"],
+        read: ["повтор", "снимок", "контрольная точка"]
       },
       {
-        title: "СОСТОЯНИЕ 02 · РАЗРЫВ С ИСТОРИЕЙ",
-        proof: "текущее состояние + доказательство истории",
-        state: ["ТЕКУЩИЙ НАБОР UTXO", "слоты очищаются · используются повторно · состояние расширяется по мере необходимости"],
-        proofLabel: ["π_tip", "стоимость проверки не растёт"],
-        tail: ["СУФФИКС РЕОРГАНИЗАЦИИ", "последние 18 блоков"],
-        read: ["текущие UTXO", "π_tip", "текущее состояние"]
+        title: "СОСТОЯНИЕ 02 · ИНВЕРСИЯ",
+        proof: "ТЕКУЩЕЕ СОСТОЯНИЕ + ДОКАЗАТЕЛЬСТВО ИСТОРИИ",
+        state: ["PARANO1D", "текущее состояние + рекурсивное доказательство истории"],
+        proofLabel: ["ПОТРАЧЕННЫЕ СЛОТЫ ОСВОБОЖДАЮТСЯ", "новые выходы занимают их снова"],
+        tail: ["ХРАНЕНИЕ", "зависит от текущих UTXO, а не от возраста цепочки"],
+        read: ["текущее состояние", "доказательство истории", "настоящее"]
       },
       {
         title: "СОСТОЯНИЕ 04 · PROOF-NATIVE",
@@ -953,19 +949,19 @@
       },
       {
         title: "状态 01 · 历史依赖",
-        proof: "创世区块 → 重放全部历史 → 当前状态",
-        state: ["当前状态", "只有完整重放后才能重建"],
-        proofLabel: ["重新执行", "链越长，需要完成的工作越多"],
-        tail: ["永久历史记录", "保留过去的每次状态转移"],
-        read: ["当前状态", "完整重放", "全部历史"]
+        proof: "创世块 → 累积历史 → 当前",
+        state: ["状态", "由历史推导"],
+        proofLabel: ["历史依赖", "随网络运行时间持续存在"],
+        tail: ["累积历史", "过去的每次状态转移"],
+        read: ["重放", "快照", "检查点"]
       },
       {
-        title: "状态 02 · 无需重放历史",
+        title: "状态 02 · 逻辑反转",
         proof: "当前状态 + 历史证明",
-        state: ["当前 UTXO 状态", "清空槽位 · 优先复用 · 按需扩展"],
-        proofLabel: ["π_tip", "验证成本不随链高增长"],
-        tail: ["重组窗口", "最近 18 个完整区块"],
-        read: ["当前 UTXO", "π_tip", "当前状态"]
+        state: ["PARANO1D", "当前状态 + 递归历史证明"],
+        proofLabel: ["已花费槽位立即释放", "新输出随后复用"],
+        tail: ["存储规模", "取决于当前 UTXO，而不是链龄"],
+        read: ["当前状态", "历史证明", "此刻"]
       },
       {
         title: "状态 04 · 证明原生架构",
@@ -1111,7 +1107,6 @@
       snapshot: "СОСТОЯНИЕ · БЛОК",
       genesis: "ГЕНЕЗИС",
       now: "СЕЙЧАС",
-      transitions: "ПЕРЕХОДОВ ИЗ ВСЕЙ ИСТОРИИ",
       privateWitness: "ПРИВАТНЫЙ СВИДЕТЕЛЬ",
       publicTransition: "ПУБЛИЧНЫЙ ПЕРЕХОД",
       verifyAndApply: "ПРОВЕРИТЬ И ПРИМЕНИТЬ",
@@ -1150,17 +1145,26 @@
       independentNode: "НЕЗАВИСИМАЯ НОДА",
       fullVerification: "ПОЛНАЯ ПРОВЕРКА",
       livePercent: "слотов занято",
-      conventionalFullNode: "ОБЫЧНАЯ ПОЛНАЯ НОДА",
-      conventionalNodeShort: "ОБЫЧНАЯ НОДА",
-      bootstrapAccumulates: "РАБОТА ПРИ ПЕРВОМ ЗАПУСКЕ НАКАПЛИВАЕТСЯ",
-      historyGrows: "С КАЖДЫМ БЛОКОМ РАБОТЫ БОЛЬШЕ",
-      paranoidNode: "НОДА PARANO1D",
-      paranoidNodeShort: "PARANO1D",
-      slotsReused: "ПОТРАЧЕННЫЕ ВЫХОДЫ ОСВОБОЖДАЮТ СЛОТЫ · НОВЫЕ ВЫХОДЫ ИХ ЗАНИМАЮТ",
+      presentDerived: "НАСТОЯЩЕЕ ВЫВОДИТСЯ ИЗ ПРОШЛОГО",
+      historyDependency: "ЗАВИСИМОСТЬ ОТ ИСТОРИИ",
+      persistsWithAge: "СОХРАНЯЕТСЯ С ВОЗРАСТОМ СЕТИ",
+      accumulatedHistory: "НАКОПЛЕННАЯ ИСТОРИЯ",
+      everyPastTransition: "КАЖДЫЙ ПРОШЛЫЙ ПЕРЕХОД",
+      stateLabel: "СОСТОЯНИЕ",
+      derived: "ВЫВЕДЕНО",
+      fromHistory: "ИЗ ИСТОРИИ",
+      replay: "ПОВТОР",
+      historySnapshot: "СНИМОК",
+      checkpoint: "КОНТРОЛЬНАЯ ТОЧКА",
+      historyBasedValidation: "ПРОВЕРКА ПО ИСТОРИИ",
+      bootstrapBurdenAccumulates: "НАГРУЗКА ПРИ ПЕРВОМ ЗАПУСКЕ НАКАПЛИВАЕТСЯ",
+      bootstrapBurdenGrows: "ЧЕМ ДЛИННЕЕ ИСТОРИЯ, ТЕМ ВЫШЕ НАГРУЗКА",
+      parano1d: "PARANO1D",
+      liveStateRecursiveProof: "ТЕКУЩЕЕ СОСТОЯНИЕ + РЕКУРСИВНОЕ ДОКАЗАТЕЛЬСТВО ИСТОРИИ",
+      slotsReused: "ПОТРАЧЕННЫЕ СЛОТЫ ОСВОБОЖДАЮТСЯ · НОВЫЕ ВЫХОДЫ ЗАНИМАЮТ ИХ СНОВА",
       storageTracksLive: "ХРАНЕНИЕ ЗАВИСИТ ОТ ТЕКУЩИХ UTXO, А НЕ ОТ ВОЗРАСТА ЦЕПОЧКИ",
       today: "СЕГОДНЯ",
       tenYears: "+10 ЛЕТ",
-      liveProofWindow: "ТЕКУЩЕЕ СОСТОЯНИЕ + ДОКАЗАТЕЛЬСТВО ИСТОРИИ",
       peerData: "ДАННЫЕ ОТ ЛЮБОГО ПИРА",
       verifyLocally: "ПРОВЕРИТЬ ЛОКАЛЬНО",
       verifyShort: "ПРОВЕРКА",
@@ -1214,7 +1218,6 @@
       snapshot: "状态快照 :: 区块",
       genesis: "创世块",
       now: "当前",
-      transitions: "次历史状态转移",
       privateWitness: "私有见证",
       publicTransition: "公开状态转移",
       verifyAndApply: "验证并应用",
@@ -1253,17 +1256,26 @@
       independentNode: "独立节点",
       fullVerification: "完整验证",
       livePercent: "当前 UTXO",
-      conventionalFullNode: "传统全节点",
-      conventionalNodeShort: "传统节点",
-      bootstrapAccumulates: "首次验证的工作量不断累积",
-      historyGrows: "每增加一个区块，首次验证都更重",
-      paranoidNode: "PARANO1D 节点",
-      paranoidNodeShort: "PARANO1D",
-      slotsReused: "已花费输出释放槽位 · 新输出重复利用",
-      storageTracksLive: "存储量取决于当前 UTXO，而不是链龄",
+      presentDerived: "当前状态由过去推导",
+      historyDependency: "历史依赖",
+      persistsWithAge: "随网络运行时间持续存在",
+      accumulatedHistory: "累积历史",
+      everyPastTransition: "过去的每次状态转移",
+      stateLabel: "状态",
+      derived: "由历史",
+      fromHistory: "推导",
+      replay: "重放",
+      historySnapshot: "快照",
+      checkpoint: "检查点",
+      historyBasedValidation: "基于历史的验证",
+      bootstrapBurdenAccumulates: "初始验证负担不断累积",
+      bootstrapBurdenGrows: "历史越长，初始验证负担越重",
+      parano1d: "PARANO1D",
+      liveStateRecursiveProof: "当前状态 + 递归历史证明",
+      slotsReused: "已花费槽位立即释放 · 新输出随后复用",
+      storageTracksLive: "存储规模取决于当前 UTXO，而不是链龄",
       today: "现在",
       tenYears: "+10 年",
-      liveProofWindow: "当前状态 + 历史证明",
       peerData: "来自任意对等节点的数据",
       verifyLocally: "本地验证",
       verifyShort: "验证",
@@ -2374,6 +2386,16 @@
       ctx.restore();
     }
 
+    fittedText(text, x, y, maxWidth, color = "rgba(239,255,248,.72)", size = 9, align = "center", minSize = 5.5) {
+      const ctx = this.ctx;
+      ctx.save();
+      ctx.font = `650 ${size}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+      const measured = ctx.measureText(text).width;
+      ctx.restore();
+      const fittedSize = measured > maxWidth ? Math.max(minSize, size * maxWidth / measured) : size;
+      this.text(text, x, y, color, fittedSize, align);
+    }
+
     roundedRect(x, y, width, height, radius, stroke, fill = null, lineWidth = 1) {
       const ctx = this.ctx;
       if (width <= 0 || height <= 0) return;
@@ -3381,23 +3403,23 @@
     drawPresent(now) {
       const l = this.layout();
       const ctx = this.ctx;
-      const right = this.w * (l.mobile ? .945 : l.compact ? .935 : .915);
-      const baselineLeft = this.w * (l.mobile ? .055 : l.compact ? .555 : .445);
+      const right = this.w * (l.mobile ? .95 : .93);
+      const baselineLeft = this.w * (l.mobile ? .05 : l.compact ? .56 : .45);
       let left = baselineLeft;
       if (!l.mobile && presentDetails) {
         const canvasRect = this.canvas.getBoundingClientRect();
         const contentRect = presentDetails.getBoundingClientRect();
         const contentBoundary = contentRect.right - canvasRect.left;
-        const proportionalGap = this.w * .02;
+        const proportionalGap = this.w * .018;
         left = Math.min(right - this.w * .30, Math.max(baselineLeft, contentBoundary + proportionalGap));
       }
-      const top = this.h * (l.mobile ? .055 : .295);
-      const bottom = this.h * (l.mobile ? .94 : .695);
+      const top = this.h * (l.mobile ? .045 : .25);
+      const bottom = this.h * (l.mobile ? .93 : .72);
       const width = right - left;
       const height = bottom - top;
-      const labelSize = l.mobile ? 8.2 : l.compact ? 9.6 : 11;
-      const annotationSize = l.mobile ? 6.1 : labelSize * .74;
-      const columns = l.mobile ? 28 : l.compact ? 34 : 40;
+      const labelSize = l.mobile ? 8 : l.compact ? 10.2 : 12;
+      const annotationSize = l.mobile ? 6.1 : labelSize * .73;
+      const columns = l.mobile ? 26 : l.compact ? 34 : 40;
       const gap = l.mobile ? 1.15 : 1.8;
       const columnWidth = (width - gap * (columns - 1)) / columns;
       const scanCycle = (now * .00005) % 1;
@@ -3410,23 +3432,31 @@
         const x = left + width * tick / 5;
         this.line([[x, axisY - 3], [x, axisY + 3]], "rgba(191,247,255,.22)", .8);
       }
-      const axisLabelY = l.mobile ? axisY - 7 : axisY + 12;
+      const axisLabelY = l.mobile ? axisY - 8 : axisY + 12;
       this.text(canvasText("today", "TODAY"), left, axisLabelY, "rgba(191,247,255,.52)", annotationSize, "left");
       this.text(canvasText("tenYears", "+10 YEARS"), right, axisLabelY, "rgba(191,247,255,.72)", annotationSize, "right");
 
-      const historyBase = top + height * .42;
-      const historyMax = height * .29;
-      this.text(
-        canvasText(l.mobile ? "conventionalNodeShort" : "conventionalFullNode", l.mobile ? "LEGACY NODE" : "CONVENTIONAL FULL NODE"),
+      this.fittedText(
+        canvasText("historyBasedValidation", "HISTORY-BASED VALIDATION"),
         left,
         top,
+        width * .66,
         "rgba(255,149,125,.95)",
         labelSize,
         "left"
       );
-      if (!l.mobile) {
-        this.text(canvasText("bootstrapAccumulates", "BOOTSTRAP WORK ACCUMULATES"), left, top + labelSize * 1.55, "rgba(255,149,125,.56)", annotationSize, "left");
-      }
+      this.fittedText(
+        canvasText("bootstrapBurdenAccumulates", "BOOTSTRAP BURDEN ACCUMULATES"),
+        left,
+        top + labelSize * 1.55,
+        width * .82,
+        "rgba(255,149,125,.56)",
+        annotationSize,
+        "left"
+      );
+
+      const historyBase = top + height * .36;
+      const historyMax = height * .20;
 
       ctx.save();
       ctx.beginPath();
@@ -3472,27 +3502,48 @@
       const scanY = historyBase - historyMax * (.12 + .88 * Math.pow(scanT, .84));
       this.line([[scanX, top + labelSize * 3], [scanX, axisY]], "rgba(191,247,255,.08)", .65);
       this.dot(scanX, scanY, l.mobile ? 1.2 : 1.7, "#ff957d", l.mobile ? 3 : 5);
-      if (!l.mobile) {
-        this.text(canvasText("historyGrows", "BOOTSTRAP WORK GROWS WITH EVERY BLOCK"), right, historyBase + labelSize * 1.55, "rgba(255,149,125,.72)", annotationSize, "right");
-      }
+      this.fittedText(
+        canvasText("bootstrapBurdenGrows", "BOOTSTRAP BURDEN GROWS WITH HISTORY"),
+        right,
+        historyBase + labelSize * 1.45,
+        width,
+        "rgba(255,149,125,.72)",
+        annotationSize,
+        "right"
+      );
 
-      const stateTop = top + height * .59;
+      const stateTop = top + height * .57;
       const stateRows = l.mobile ? 3 : 4;
-      const stateHeight = height * (l.mobile ? .115 : .13);
+      const stateHeight = height * (l.mobile ? .12 : .13);
       const stateCellHeight = (stateHeight - gap * (stateRows - 1)) / stateRows;
       this.text(
-        canvasText(l.mobile ? "paranoidNodeShort" : "paranoidNode", l.mobile ? "PARANO1D" : "PARANO1D NODE"),
+        canvasText("parano1d", "PARANO1D"),
         left,
-        stateTop - labelSize * 1.4,
+        stateTop,
         "rgba(115,255,197,.96)",
         labelSize,
         "left"
       );
-      if (!l.mobile) {
-        this.text(canvasText("slotsReused", "SPENT SLOTS CLEAR · NEW OUTPUTS REUSE THEM"), left, stateTop, "rgba(115,255,197,.57)", annotationSize, "left");
-      }
+      this.fittedText(
+        canvasText("liveStateRecursiveProof", "LIVE STATE + RECURSIVE HISTORY PROOF"),
+        right,
+        stateTop,
+        width * .73,
+        "rgba(194,170,255,.78)",
+        annotationSize,
+        "right"
+      );
+      this.fittedText(
+        canvasText("slotsReused", "SPENT SLOTS CLEAR · NEW OUTPUTS REUSE THEM"),
+        left,
+        stateTop + labelSize * 1.65,
+        width,
+        "rgba(115,255,197,.57)",
+        annotationSize,
+        "left"
+      );
 
-      const gridTop = stateTop + labelSize * 1.25;
+      const gridTop = stateTop + labelSize * 3;
       const mutationPhase = (now * .00034) % 1;
       const mutationColumn = Math.floor(mutationPhase * columns);
       for (let column = 0; column < columns; column += 1) {
@@ -3533,59 +3584,136 @@
       ctx.restore();
       this.text("π", proofX, proofY + .2, "#c2aaff", labelSize * .9);
 
-      const tailCount = 18;
-      const tailRight = proofX - proofRadius - gap * 2;
-      const tailWidth = Math.min(width * (l.mobile ? .23 : .18), l.mobile ? 58 : 112);
-      const tailLeft = tailRight - tailWidth;
-      for (let i = 0; i < tailCount; i += 1) {
-        const x = tailLeft + tailWidth * i / (tailCount - 1);
-        const size = l.mobile ? 1.15 : 1.7;
-        ctx.fillStyle = i === tailCount - 1 ? "rgba(194,170,255,.72)" : "rgba(191,247,255,.20)";
-        ctx.fillRect(x - size, proofY - size, size * 2, size * 2);
-      }
-      if (!l.mobile) {
-        this.text(canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs, NOT CHAIN AGE"), right, gridTop + stateHeight + labelSize * 1.25, "rgba(115,255,197,.76)", annotationSize, "right");
-        this.text(canvasText("liveProofWindow", "LIVE STATE + HISTORY PROOF"), right, gridTop - labelSize * .62, "rgba(194,170,255,.68)", annotationSize * .9, "right");
-      }
+      this.fittedText(
+        canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs, NOT CHAIN AGE"),
+        right,
+        gridTop + stateHeight + labelSize * 1.25,
+        width,
+        "rgba(115,255,197,.76)",
+        annotationSize,
+        "right"
+      );
     }
 
     drawReplay(now) {
       const l = this.layout();
-      const startX = l.mobile ? this.w * .05 : this.w * (l.compact ? .56 : .39);
-      const endX = l.mobile ? this.w * .92 : this.w * (l.compact ? .93 : .91);
-      const cy = this.h * .49;
-      const count = l.mobile ? 30 : 54;
-      const amplitude = this.h * (l.compact ? .145 : .18);
       const ctx = this.ctx;
-      this.path((p) => {
-        p.moveTo(startX, cy);
-        p.bezierCurveTo(startX + (endX - startX) * .34, cy - amplitude, startX + (endX - startX) * .68, cy + amplitude, endX, cy);
-      }, "rgba(255,149,125,.24)", 1.2, 8);
+      const right = this.w * (l.mobile ? .95 : .93);
+      const fallbackLeft = this.w * (l.compact ? .56 : .45);
+      const contentEdge = this.contentRight("#dependency h2, #dependency .lead, #dependency .ledger");
+      const left = l.mobile ? this.w * .05 : Math.max(fallbackLeft, contentEdge + this.w * .018);
+      const top = this.h * (l.mobile ? .06 : .255);
+      const bottom = this.h * (l.mobile ? .91 : .72);
+      const width = right - left;
+      const height = bottom - top;
+      const labelSize = l.mobile ? 8 : l.compact ? 10.2 : 12;
+      const annotationSize = l.mobile ? 6.1 : labelSize * .74;
+      const flowY = top + height * .47;
+      const stateWidth = width * (l.mobile ? .235 : .225);
+      const stateHeight = height * (l.mobile ? .31 : .29);
+      const stateX = right - stateWidth;
+      const stateY = flowY - stateHeight * .5;
+      const genesisX = left + width * .025;
+      const historyStart = left + width * .13;
+      const historyEnd = stateX - width * .065;
+      const historyWidth = historyEnd - historyStart;
 
+      this.fittedText(
+        canvasText("presentDerived", "THE PRESENT IS DERIVED FROM THE PAST"),
+        left + width * .5,
+        top,
+        width,
+        "rgba(239,255,248,.90)",
+        labelSize
+      );
+      this.fittedText(
+        canvasText("historyDependency", "HISTORY DEPENDENCY"),
+        left,
+        top + labelSize * 2.35,
+        width * .55,
+        "rgba(255,149,125,.92)",
+        labelSize * .9,
+        "left"
+      );
+      this.fittedText(
+        canvasText("persistsWithAge", "PERSISTS WITH NETWORK AGE"),
+        left,
+        top + labelSize * 3.7,
+        width * .68,
+        "rgba(255,149,125,.52)",
+        annotationSize,
+        "left"
+      );
+
+      this.line([[genesisX, flowY], [stateX, flowY]], "rgba(255,149,125,.27)", 1);
+      this.dot(genesisX, flowY, l.mobile ? 1.7 : 2.1, "#ff957d", l.mobile ? 4 : 7);
+      this.text(canvasText("genesis", "GENESIS"), genesisX, flowY + stateHeight * .69, "rgba(255,149,125,.66)", annotationSize);
+
+      const count = l.mobile ? 13 : 19;
+      const gap = l.mobile ? 2 : 3;
+      const cellWidth = (historyWidth - gap * (count - 1)) / count;
+      const phase = (now * .000075) % 1;
+      const activeCell = Math.min(count - 1, Math.floor(phase * count));
       for (let i = 0; i < count; i += 1) {
-        const t = i / (count - 1);
-        const x = startX + (endX - startX) * t;
-        const y = cy + Math.sin(t * Math.PI * 2) * amplitude * .53;
-        const s = 2.2 + t * 3.5;
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(t * 1.7);
-        ctx.fillStyle = `rgba(255,149,125,${.05 + t * .2})`;
-        ctx.strokeStyle = `rgba(255,149,125,${.18 + t * .45})`;
-        ctx.lineWidth = .75;
-        ctx.fillRect(-s, -s, s * 2, s * 2);
-        ctx.strokeRect(-s, -s, s * 2, s * 2);
-        ctx.restore();
+        const t = i / Math.max(1, count - 1);
+        const x = historyStart + i * (cellWidth + gap);
+        const cellHeight = stateHeight * (.22 + t * .23);
+        const y = flowY - cellHeight * .5;
+        const active = i === activeCell;
+        ctx.fillStyle = active ? "rgba(255,149,125,.34)" : `rgba(255,149,125,${.045 + t * .095})`;
+        ctx.fillRect(x, y, cellWidth, cellHeight);
+        ctx.strokeStyle = active ? "rgba(255,205,190,.82)" : `rgba(255,149,125,${.19 + t * .20})`;
+        ctx.lineWidth = active ? .9 : .55;
+        ctx.strokeRect(x, y, cellWidth, cellHeight);
       }
-      const t = (now * .0001) % 1;
-      const px = startX + (endX - startX) * t;
-      const py = cy + Math.sin(t * Math.PI * 2) * amplitude * .53;
-      this.dot(px, py, 2.8, "#ff957d", 14);
-      this.node(endX, cy, l.mobile ? 21 : 29, canvasText("now", "NOW"), "#ff957d", now);
-      this.text(canvasText("genesis", "GENESIS"), startX, cy + 35, "rgba(255,149,125,.55)", l.mobile ? 6.2 : 8);
-      if (!l.mobile) {
-        this.text(`${count} ${canvasText("transitions", "OF ∞ TRANSITIONS")}`, (startX + endX) / 2, cy + amplitude * .88, "rgba(255,149,125,.48)", 8);
-      }
+      const pulseX = historyStart + historyWidth * phase;
+      this.dot(pulseX, flowY, l.mobile ? 1.3 : 1.8, "#ff957d", l.mobile ? 3 : 6);
+
+      this.fittedText(
+        canvasText("accumulatedHistory", "ACCUMULATED HISTORY"),
+        historyStart + historyWidth * .5,
+        flowY - stateHeight * .43,
+        historyWidth,
+        "rgba(255,149,125,.88)",
+        labelSize * .82
+      );
+      this.fittedText(
+        canvasText("everyPastTransition", "EVERY PAST TRANSITION"),
+        historyStart + historyWidth * .5,
+        flowY + stateHeight * .43,
+        historyWidth,
+        "rgba(255,149,125,.48)",
+        annotationSize
+      );
+
+      this.text(canvasText("now", "NOW"), historyEnd, flowY - stateHeight * .36, "rgba(191,247,255,.76)", annotationSize);
+      this.line([[historyEnd, flowY], [stateX, flowY]], "rgba(191,247,255,.45)", 1.05, 4);
+      this.dot(historyEnd, flowY, l.mobile ? 1.6 : 2.1, "#bff7ff", l.mobile ? 3 : 6);
+
+      this.roundedRect(stateX, stateY, stateWidth, stateHeight, l.mobile ? 7 : 10, "rgba(191,247,255,.34)", "rgba(9,27,27,.58)", .9);
+      this.text(canvasText("stateLabel", "STATE"), stateX + stateWidth * .5, stateY + stateHeight * .30, "rgba(191,247,255,.92)", labelSize * .88);
+      this.text(canvasText("derived", "DERIVED"), stateX + stateWidth * .5, stateY + stateHeight * .53, "rgba(239,255,248,.72)", annotationSize);
+      this.text(canvasText("fromHistory", "FROM HISTORY"), stateX + stateWidth * .5, stateY + stateHeight * .69, "rgba(239,255,248,.72)", annotationSize);
+
+      const modes = [
+        canvasText("replay", "REPLAY"),
+        canvasText("historySnapshot", "SNAPSHOT"),
+        canvasText("checkpoint", "CHECKPOINT")
+      ];
+      const modesTop = top + height * .79;
+      const modesWidth = width * (l.mobile ? .78 : .72);
+      const modesLeft = left + (width - modesWidth) * .5;
+      const modeGap = width * .018;
+      const modeWidth = (modesWidth - modeGap * 2) / 3;
+      const modeHeight = l.mobile ? 20 : 27;
+      modes.forEach((mode, i) => {
+        const x = modesLeft + i * (modeWidth + modeGap);
+        const selected = Math.floor((now * .00022) % 3) === i;
+        const sourceX = historyStart + historyWidth * (.18 + i * .32);
+        this.line([[sourceX, flowY + stateHeight * .25], [x + modeWidth * .5, modesTop]], selected ? "rgba(191,247,255,.34)" : "rgba(191,247,255,.10)", .65);
+        this.roundedRect(x, modesTop, modeWidth, modeHeight, l.mobile ? 5 : 7, selected ? "rgba(191,247,255,.58)" : "rgba(191,247,255,.18)", selected ? "rgba(191,247,255,.055)" : "rgba(7,20,20,.40)", .75);
+        this.fittedText(mode, x + modeWidth * .5, modesTop + modeHeight * .52, modeWidth - 8, selected ? "rgba(191,247,255,.92)" : "rgba(191,247,255,.52)", annotationSize, "center", 4.8);
+      });
     }
 
     drawProofFlow(now) {
