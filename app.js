@@ -14,7 +14,6 @@
   const stateRail = document.querySelector(".state-rail");
   const overviewFacts = document.querySelector("#overview .hero-facts");
   const presentDetails = document.querySelector("#present .ledger");
-  const mobileSceneAnchors = chapters.map((chapter) => chapter.querySelector(".chapter-inner")?.lastElementChild || null);
   const controlDeck = document.querySelector(".control-deck");
   const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
   const mobileMenu = document.querySelector("#mobile-menu");
@@ -29,6 +28,7 @@
   const repositoryGateClose = document.querySelector("#repository-gate-close");
   const repositoryGateDismiss = document.querySelector("#repository-gate-dismiss");
   let mobileSceneLayoutFrame = 0;
+  let viewportSettleFrame = 0;
 
   // Disable this single flag when the core repository becomes public.
   const PRIVATE_REPOSITORY_GATE = true;
@@ -145,7 +145,22 @@
     }
   }
 
+  function mobileSceneAnchor(chapter) {
+    const inner = chapter?.querySelector(".chapter-inner");
+    if (!inner) return null;
+    const candidates = [...inner.children];
+    for (let index = candidates.length - 1; index >= 0; index -= 1) {
+      const candidate = candidates[index];
+      const style = getComputedStyle(candidate);
+      if (style.display !== "none" && style.visibility !== "hidden" && candidate.getBoundingClientRect().height > 0) {
+        return candidate;
+      }
+    }
+    return inner;
+  }
+
   function applyMobileSceneLayout() {
+    chapters.forEach((chapter) => chapter.classList.remove("mobile-copy-compact"));
     if (
       window.innerWidth > 820 ||
       !controlDeck ||
@@ -153,18 +168,22 @@
       getComputedStyle(sceneElement).display === "none"
     ) {
       app.style.removeProperty("--mobile-scene-top");
+      app.style.removeProperty("--mobile-scene-bottom");
       return;
     }
 
     const appRect = app.getBoundingClientRect();
     const deckRect = controlDeck.getBoundingClientRect();
     const deckTop = deckRect.top - appRect.top;
+    const sceneBottomInset = appRect.height - deckTop + 2;
+    app.style.setProperty("--mobile-scene-bottom", `${Math.max(0, Math.round(sceneBottomInset))}px`);
     const activeStep = Math.max(0, Math.min(chapters.length - 1, Number(app.dataset.currentStep || 0)));
-    const anchor = activeStep === 0 ? overviewFacts : mobileSceneAnchors[activeStep];
+    const activeChapter = chapters[activeStep];
+    let anchor = activeStep === 0 ? overviewFacts : mobileSceneAnchor(activeChapter);
     if (!anchor) return;
 
-    const transitionOffset = activeChapterTranslateY(chapters[activeStep]);
-    const contentBottom = anchor.getBoundingClientRect().bottom - appRect.top - transitionOffset;
+    const transitionOffset = activeChapterTranslateY(activeChapter);
+    let contentBottom = anchor.getBoundingClientRect().bottom - appRect.top - transitionOffset;
     if (activeStep === 0) {
       const minimumSceneHeight = Math.min(190, Math.max(150, appRect.height * .25));
       const sceneTop = Math.min(contentBottom + 5, deckTop - minimumSceneHeight);
@@ -174,8 +193,17 @@
 
     const sceneBottom = sceneElement.getBoundingClientRect().bottom - appRect.top;
     const gap = Math.min(8, Math.max(4, appRect.height * .009));
-    const minimumVisibleHeight = Math.min(96, Math.max(72, appRect.height * .115));
-    const sceneTop = Math.min(contentBottom + gap, sceneBottom - minimumVisibleHeight);
+    const preferredSceneHeight = Math.min(180, Math.max(120, appRect.height * .20));
+    if (sceneBottom - (contentBottom + gap) < preferredSceneHeight && activeChapter.querySelector(".lead")) {
+      activeChapter.classList.add("mobile-copy-compact");
+      anchor = mobileSceneAnchor(activeChapter);
+      if (anchor) contentBottom = anchor.getBoundingClientRect().bottom - appRect.top - transitionOffset;
+    }
+    const minimumVisibleHeight = Math.min(80, Math.max(72, appRect.height * .10));
+    const naturalSceneTop = contentBottom + gap;
+    const sceneTop = sceneBottom - naturalSceneTop < minimumVisibleHeight
+      ? sceneBottom
+      : naturalSceneTop;
     app.style.setProperty("--mobile-scene-top", `${Math.max(0, Math.round(sceneTop))}px`);
   }
 
@@ -211,6 +239,15 @@
     const height = Math.round(window.visualViewport?.height || window.innerHeight);
     document.documentElement.style.setProperty("--app-height", `${height}px`);
     syncMobileSceneLayouts();
+    cancelAnimationFrame(viewportSettleFrame);
+    viewportSettleFrame = requestAnimationFrame(() => {
+      viewportSettleFrame = requestAnimationFrame(() => {
+        viewportSettleFrame = 0;
+        const settledHeight = Math.round(window.visualViewport?.height || window.innerHeight);
+        document.documentElement.style.setProperty("--app-height", `${settledHeight}px`);
+        syncMobileSceneLayouts({ immediate: true });
+      });
+    });
   }
 
   syncViewportHeight();
@@ -1050,36 +1087,36 @@
       authorizationProof: "ДОКАЗАТЕЛЬСТВО АВТОРИЗАЦИИ",
       stateTransitionProof: "ДОКАЗАТЕЛЬСТВО ТОЧНОГО ПЕРЕХОДА",
       virtualHalf: "ВИРТУАЛЬНАЯ ПУСТАЯ ПОЛОВИНА",
+      emptyHalfShort: "ПУСТАЯ ПОЛОВИНА",
       secret: "СЕКРЕТ",
       zeroKnowledgeProof: "ДОКАЗАТЕЛЬСТВО С НУЛЕВЫМ РАЗГЛАШЕНИЕМ",
       o1Address: "АДРЕС O1",
       pagedCapacity: "1 020 ВХОДОВ · 256 ВЫХОДОВ",
+      pagedCapacityShort: "1 020 ВХ · 256 ВЫХ",
       oneAtomicPagedSpend: "ЕДИНЫЙ АТОМАРНЫЙ PAGEDSPEND",
-      pagedPages: "СТРАНИЦЫ TX8X2",
-      pagedGeometry: "ДО 8 ВХОДОВ · 2 ВЫХОДА НА КАЖДОЙ",
-      pagedTxid: "ОДИН TXID",
-      pagedAcceptance: "ПРИНИМАЕТСЯ ЦЕЛИКОМ",
-      pagedIntent: "ОДНА ЛОГИЧЕСКАЯ ТРАНЗАКЦИЯ",
-      pagedIntentDetail: "1 КОМИССИЯ · 1 КАПСУЛА · 1 ЧЕК",
+      pagedSpendShort: "ОДИН PAGEDSPEND",
       blockState: "BLOCK_H + STATE_H",
       sameSize: "РАЗМЕР НЕ МЕНЯЕТСЯ",
-      newTransition: "НОВЫЙ ПЕРЕХОД",
-      recentSuffix: "ПОСЛЕДНИЙ УЧАСТОК ЦЕПОЧКИ",
-      completeBlocks18: "18 ПОЛНЫХ БЛОКОВ",
+      sameSizeShort: "РАЗМЕР ТОТ ЖЕ",
       proven: "ДОКАЗАН",
       template: "ШАБЛОН",
       nonceOnly: "ИЩЕМ ТОЛЬКО NONCE",
       asert: "15 с · ASERT",
       liveState: "ТЕКУЩЕЕ СОСТОЯНИЕ",
+      liveStateShort: "СОСТОЯНИЕ",
       terminalProof: "ТЕРМИНАЛЬНОЕ ДОКАЗАТЕЛЬСТВО",
+      terminalProofShort: "PROOF",
       reorgSuffix18: "18 БЛОКОВ ДЛЯ РЕОРГАНИЗАЦИИ",
+      reorgSuffixShort: "18 БЛОКОВ",
       independentNode: "НЕЗАВИСИМАЯ НОДА",
       fullVerification: "ПОЛНАЯ ПРОВЕРКА",
       livePercent: "слотов занято",
       conventionalFullNode: "ОБЫЧНАЯ ПОЛНАЯ НОДА",
+      conventionalNodeShort: "ОБЫЧНАЯ НОДА",
       bootstrapAccumulates: "РАБОТА ПРИ ПЕРВОМ ЗАПУСКЕ НАКАПЛИВАЕТСЯ",
       historyGrows: "С КАЖДЫМ БЛОКОМ РАБОТЫ БОЛЬШЕ",
       paranoidNode: "НОДА PARANO1D",
+      paranoidNodeShort: "PARANO1D",
       slotsReused: "ПОТРАЧЕННЫЕ ВЫХОДЫ ОСВОБОЖДАЮТ СЛОТЫ · НОВЫЕ ВЫХОДЫ ИХ ЗАНИМАЮТ",
       storageTracksLive: "ХРАНЕНИЕ ЗАВИСИТ ОТ ТЕКУЩИХ UTXO, А НЕ ОТ ВОЗРАСТА ЦЕПОЧКИ",
       today: "СЕГОДНЯ",
@@ -1087,20 +1124,26 @@
       liveProofWindow: "ТЕКУЩЕЕ СОСТОЯНИЕ + ДОКАЗАТЕЛЬСТВО ИСТОРИИ",
       peerData: "ДАННЫЕ ОТ ЛЮБОГО ПИРА",
       verifyLocally: "ПРОВЕРИТЬ ЛОКАЛЬНО",
+      verifyShort: "ПРОВЕРКА",
       authenticated: "ПРОВЕРЕНО",
       independentFullNode: "НЕЗАВИСИМАЯ ПОЛНАЯ НОДА",
+      fullNodeShort: "ПОЛНАЯ НОДА",
       sameProcedure: "ТОТ ЖЕ ПОРЯДОК · ЧЕРЕЗ ГОД → ЧЕРЕЗ 10 ЛЕТ",
       transparentNow: "ПРОЗРАЧНО СЕЙЧАС",
       externalArchiver: "ВНЕШНИЙ АРХИВАТОР",
+      externalArchiveShort: "ВНЕШНИЙ АРХИВ",
       recordStream: "НЕПРЕРЫВНО ЗАПИСЫВАЕТ ПОТОК",
       permanentGraph: "ПОСТОЯННЫЙ ГРАФ",
       externalRetention: "ТРЕБУЕТ ВНЕШНЕГО ХРАНЕНИЯ",
       payment: "ПЛАТЁЖ",
       portableReceipt: "ПЕРЕНОСИМЫЙ ЧЕК",
+      receiptShort: "ЧЕК",
       canonicalHeader: "КАНОНИЧЕСКИЙ ЗАГОЛОВОК",
+      headerShort: "ЗАГОЛОВОК",
       noBlockBody: "СТАРОЕ ТЕЛО БЛОКА НЕ НУЖНО",
       merklePath8: "MERKLE-ПУТЬ ×8",
       verifiedCanonical: "ПРОВЕРЕНО · КАНОНИЧЕСКАЯ ЦЕПЬ",
+      verifiedShort: "ПРОВЕРЕНО",
       ownershipLane: "ВЛАДЕНИЕ",
       transactionLane: "ТРАНЗАКЦИЯ",
       stateLane: "STATE",
@@ -1108,6 +1151,7 @@
       powLane: "POW",
       oneBinaryTower: "ЕДИНАЯ БИНАРНАЯ БАШНЯ",
       oneProofStack: "ЕДИНЫЙ PROOF STACK",
+      oneProofShort: "ОДИН PROOF",
       noTrustedSetup: "БЕЗ ДОВЕРЕННОЙ НАСТРОЙКИ",
       validityLocked: "КОРРЕКТНОСТЬ ЗАФИКСИРОВАНА ДО ХЕШРЕЙТА"
     },
@@ -1131,36 +1175,36 @@
       authorizationProof: "授权证明",
       stateTransitionProof: "精确状态转移证明",
       virtualHalf: "虚拟空白半区",
+      emptyHalfShort: "空白半区",
       secret: "秘密",
       zeroKnowledgeProof: "零知识证明",
       o1Address: "O1 地址",
       pagedCapacity: "1,020 个输入 · 256 个输出",
+      pagedCapacityShort: "1,020 入 · 256 出",
       oneAtomicPagedSpend: "一笔原子 PAGEDSPEND",
-      pagedPages: "TX8X2 物理页",
-      pagedGeometry: "每页最多 8 个输入 · 2 个输出",
-      pagedTxid: "一个 TXID",
-      pagedAcceptance: "整笔一次性接受",
-      pagedIntent: "一笔逻辑交易",
-      pagedIntentDetail: "1 次手续费 · 1 个授权胶囊 · 1 张回执",
+      pagedSpendShort: "一笔 PAGEDSPEND",
       blockState: "BLOCK_H + STATE_H",
       sameSize: "证明大小不变",
-      newTransition: "新状态转移",
-      recentSuffix: "近期后缀",
-      completeBlocks18: "18 个完整区块",
+      sameSizeShort: "大小不变",
       proven: "已证明",
       template: "模板",
       nonceOnly: "仅搜索 NONCE",
       asert: "15 秒 · ASERT",
       liveState: "当前状态",
+      liveStateShort: "状态",
       terminalProof: "终端证明",
+      terminalProofShort: "证明",
       reorgSuffix18: "18 个区块的重组后缀",
+      reorgSuffixShort: "18 个区块",
       independentNode: "独立节点",
       fullVerification: "完整验证",
       livePercent: "当前 UTXO",
       conventionalFullNode: "传统全节点",
+      conventionalNodeShort: "传统节点",
       bootstrapAccumulates: "首次验证的工作量不断累积",
       historyGrows: "每增加一个区块，首次验证都更重",
       paranoidNode: "PARANO1D 节点",
+      paranoidNodeShort: "PARANO1D",
       slotsReused: "已花费输出释放槽位 · 新输出重复利用",
       storageTracksLive: "存储量取决于当前 UTXO，而不是链龄",
       today: "现在",
@@ -1168,20 +1212,26 @@
       liveProofWindow: "当前状态 + 历史证明",
       peerData: "来自任意对等节点的数据",
       verifyLocally: "本地验证",
+      verifyShort: "验证",
       authenticated: "验证通过",
       independentFullNode: "独立全节点",
+      fullNodeShort: "全节点",
       sameProcedure: "运行一年或十年 · 验证流程完全相同",
       transparentNow: "当前透明",
       externalArchiver: "外部归档方",
+      externalArchiveShort: "外部归档",
       recordStream: "持续记录交易流",
       permanentGraph: "永久交易图",
       externalRetention: "需要外部自行保存",
       payment: "付款",
       portableReceipt: "可携带回执",
+      receiptShort: "回执",
       canonicalHeader: "规范区块头",
+      headerShort: "区块头",
       noBlockBody: "无需旧区块正文",
       merklePath8: "MERKLE 路径 ×8",
       verifiedCanonical: "验证通过 · 规范链",
+      verifiedShort: "验证通过",
       ownershipLane: "所有权",
       transactionLane: "交易",
       stateLane: "状态",
@@ -1189,6 +1239,7 @@
       powLane: "POW",
       oneBinaryTower: "同一二进制塔域",
       oneProofStack: "单一证明栈",
+      oneProofShort: "单一证明",
       noTrustedSetup: "无需可信设置",
       validityLocked: "有效性在算力介入前已经锁定"
     }
@@ -1704,12 +1755,12 @@
       else dot.removeAttribute("aria-current");
     });
     updateStateWheel(next, { instant });
-    syncMobileSceneLayouts({ immediate: true });
 
     prevButton.disabled = next === 0;
     nextButton.disabled = next === chapters.length - 1;
     nextButton.textContent = next === chapters.length - 1 ? interfaceCopy[language].current : interfaceCopy[language].next;
     updateLabels(next);
+    syncMobileSceneLayouts({ immediate: true });
 
     if (!instant && !reducedMotion.matches) {
       flash.classList.remove("run");
@@ -2232,7 +2283,8 @@
 
     roundedRect(x, y, width, height, radius, stroke, fill = null, lineWidth = 1) {
       const ctx = this.ctx;
-      const r = Math.min(radius, width / 2, height / 2);
+      if (width <= 0 || height <= 0) return;
+      const r = Math.max(0, Math.min(radius, width / 2, height / 2));
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(x + r, y);
@@ -2824,7 +2876,7 @@
       const stage = l.mobile ? null : this.desktopStageBounds();
       const sceneHeight = this.h * .54;
       const top = l.mobile ? this.h * .02 : stage.center - sceneHeight / 2;
-      const bottom = l.mobile ? this.h * .84 : stage.center + sceneHeight / 2;
+      const bottom = l.mobile ? this.h * .94 : stage.center + sceneHeight / 2;
       const width = right - left;
       const height = bottom - top;
       const centerY = (top + bottom) / 2;
@@ -3225,8 +3277,10 @@
       this.text(canvasText("proveLocally", "PROVE LOCALLY"), proverX, top + labelSize, "rgba(255,255,255,.88)", labelSize);
       this.text(canvasText("verifyEverywhere", "VERIFY EVERYWHERE"), left + width * .82, top + labelSize, "rgba(115,255,197,.90)", labelSize);
       if (!l.mobile && !l.compact) this.text(canvasText("proofBoundary", "PROOF BOUNDARY"), boundaryX, top + labelSize * 3.4, "rgba(191,247,255,.34)", labelSize * .78);
-      this.text(canvasText("proveTransition", "PROVE THE TRANSITION"), (proverX + boundaryX) / 2, centerY + proverRadius + (l.mobile ? 20 : 29), "rgba(194,170,255,.86)", labelSize);
-      this.text(canvasText("liveStateAdvances", "LIVE STATE ADVANCES"), (stripLeft + stripRight) / 2, bottom - (l.mobile ? 4 : 7), stateProgress > .5 ? "rgba(115,255,197,.72)" : "rgba(115,255,197,.38)", labelSize * .82);
+      if (!l.mobile) {
+        this.text(canvasText("proveTransition", "PROVE THE TRANSITION"), (proverX + boundaryX) / 2, centerY + proverRadius + 29, "rgba(194,170,255,.86)", labelSize);
+        this.text(canvasText("liveStateAdvances", "LIVE STATE ADVANCES"), (stripLeft + stripRight) / 2, bottom - 7, stateProgress > .5 ? "rgba(115,255,197,.72)" : "rgba(115,255,197,.38)", labelSize * .82);
+      }
 
       ctx.restore();
     }
@@ -3263,13 +3317,23 @@
         const x = left + width * tick / 5;
         this.line([[x, axisY - 3], [x, axisY + 3]], "rgba(191,247,255,.22)", .8);
       }
-      this.text(canvasText("today", "TODAY"), left, axisY + (l.mobile ? 8 : 12), "rgba(191,247,255,.52)", annotationSize, "left");
-      this.text(canvasText("tenYears", "+10 YEARS"), right, axisY + (l.mobile ? 8 : 12), "rgba(191,247,255,.72)", annotationSize, "right");
+      const axisLabelY = l.mobile ? axisY - 7 : axisY + 12;
+      this.text(canvasText("today", "TODAY"), left, axisLabelY, "rgba(191,247,255,.52)", annotationSize, "left");
+      this.text(canvasText("tenYears", "+10 YEARS"), right, axisLabelY, "rgba(191,247,255,.72)", annotationSize, "right");
 
       const historyBase = top + height * .42;
       const historyMax = height * .29;
-      this.text(canvasText("conventionalFullNode", "CONVENTIONAL FULL NODE"), left, top, "rgba(255,149,125,.95)", labelSize, "left");
-      this.text(canvasText("bootstrapAccumulates", "BOOTSTRAP WORK ACCUMULATES"), left, top + labelSize * 1.55, "rgba(255,149,125,.56)", annotationSize, "left");
+      this.text(
+        canvasText(l.mobile ? "conventionalNodeShort" : "conventionalFullNode", l.mobile ? "LEGACY NODE" : "CONVENTIONAL FULL NODE"),
+        left,
+        top,
+        "rgba(255,149,125,.95)",
+        labelSize,
+        "left"
+      );
+      if (!l.mobile) {
+        this.text(canvasText("bootstrapAccumulates", "BOOTSTRAP WORK ACCUMULATES"), left, top + labelSize * 1.55, "rgba(255,149,125,.56)", annotationSize, "left");
+      }
 
       ctx.save();
       ctx.beginPath();
@@ -3315,14 +3379,25 @@
       const scanY = historyBase - historyMax * (.12 + .88 * Math.pow(scanT, .84));
       this.line([[scanX, top + labelSize * 3], [scanX, axisY]], "rgba(191,247,255,.08)", .65);
       this.dot(scanX, scanY, l.mobile ? 1.2 : 1.7, "#ff957d", l.mobile ? 3 : 5);
-      this.text(canvasText("historyGrows", "BOOTSTRAP WORK GROWS WITH EVERY BLOCK"), right, historyBase + labelSize * 1.55, "rgba(255,149,125,.72)", annotationSize, "right");
+      if (!l.mobile) {
+        this.text(canvasText("historyGrows", "BOOTSTRAP WORK GROWS WITH EVERY BLOCK"), right, historyBase + labelSize * 1.55, "rgba(255,149,125,.72)", annotationSize, "right");
+      }
 
       const stateTop = top + height * .59;
       const stateRows = l.mobile ? 3 : 4;
       const stateHeight = height * (l.mobile ? .115 : .13);
       const stateCellHeight = (stateHeight - gap * (stateRows - 1)) / stateRows;
-      this.text(canvasText("paranoidNode", "PARANO1D NODE"), left, stateTop - labelSize * 1.4, "rgba(115,255,197,.96)", labelSize, "left");
-      this.text(canvasText("slotsReused", "SPENT SLOTS CLEAR · NEW OUTPUTS REUSE THEM"), left, stateTop, "rgba(115,255,197,.57)", annotationSize, "left");
+      this.text(
+        canvasText(l.mobile ? "paranoidNodeShort" : "paranoidNode", l.mobile ? "PARANO1D" : "PARANO1D NODE"),
+        left,
+        stateTop - labelSize * 1.4,
+        "rgba(115,255,197,.96)",
+        labelSize,
+        "left"
+      );
+      if (!l.mobile) {
+        this.text(canvasText("slotsReused", "SPENT SLOTS CLEAR · NEW OUTPUTS REUSE THEM"), left, stateTop, "rgba(115,255,197,.57)", annotationSize, "left");
+      }
 
       const gridTop = stateTop + labelSize * 1.25;
       const mutationPhase = (now * .00034) % 1;
@@ -3375,8 +3450,10 @@
         ctx.fillStyle = i === tailCount - 1 ? "rgba(194,170,255,.72)" : "rgba(191,247,255,.20)";
         ctx.fillRect(x - size, proofY - size, size * 2, size * 2);
       }
-      this.text(canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs, NOT CHAIN AGE"), right, gridTop + stateHeight + labelSize * 1.25, "rgba(115,255,197,.76)", annotationSize, "right");
-      this.text(canvasText("liveProofWindow", "LIVE STATE + HISTORY PROOF"), right, gridTop - labelSize * .62, "rgba(194,170,255,.68)", l.mobile ? 4.9 : annotationSize * .9, "right");
+      if (!l.mobile) {
+        this.text(canvasText("storageTracksLive", "STORAGE TRACKS LIVE UTXOs, NOT CHAIN AGE"), right, gridTop + stateHeight + labelSize * 1.25, "rgba(115,255,197,.76)", annotationSize, "right");
+        this.text(canvasText("liveProofWindow", "LIVE STATE + HISTORY PROOF"), right, gridTop - labelSize * .62, "rgba(194,170,255,.68)", annotationSize * .9, "right");
+      }
     }
 
     drawReplay(now) {
@@ -3412,14 +3489,16 @@
       const py = cy + Math.sin(t * Math.PI * 2) * amplitude * .53;
       this.dot(px, py, 2.8, "#ff957d", 14);
       this.node(endX, cy, l.mobile ? 21 : 29, canvasText("now", "NOW"), "#ff957d", now);
-      this.text(canvasText("genesis", "GENESIS"), startX, cy + 35, "rgba(255,149,125,.55)", 8);
-      this.text(`${count} ${canvasText("transitions", "OF ∞ TRANSITIONS")}`, (startX + endX) / 2, cy + amplitude * .88, "rgba(255,149,125,.48)", 8);
+      this.text(canvasText("genesis", "GENESIS"), startX, cy + 35, "rgba(255,149,125,.55)", l.mobile ? 6.2 : 8);
+      if (!l.mobile) {
+        this.text(`${count} ${canvasText("transitions", "OF ∞ TRANSITIONS")}`, (startX + endX) / 2, cy + amplitude * .88, "rgba(255,149,125,.48)", 8);
+      }
     }
 
     drawProofFlow(now) {
       const l = this.layout();
       const right = l.mobile ? this.w * .87 : this.w * (l.compact ? .92 : .88);
-      const radius = l.mobile ? 22 : 31;
+      const radius = l.mobile ? 25 : 31;
       const fallbackLeft = this.w * (l.compact ? .59 : .48);
       const contentEdge = this.contentRight("#proof-native h2, #proof-native .lead, #proof-native .role-list");
       const left = l.mobile
@@ -3429,7 +3508,7 @@
       const positions = [left, (left + right) / 2, right];
       const labels = ["W", "M", "N"];
       const colors = ["#ff957d", "#bff7ff", "#73ffc5"];
-      const technicalLabels = [
+      const technicalLabels = l.mobile ? null : [
         canvasText("privateWitness", "PRIVATE WITNESS"),
         canvasText("publicTransition", "PUBLIC TRANSITION"),
         canvasText("verifyAndApply", "VERIFY AND APPLY")
@@ -3445,15 +3524,17 @@
       this.line([[left, y], [right, y]], "rgba(115,255,197,.14)", 1);
       positions.forEach((x, i) => {
         this.node(x, y, radius, labels[i], colors[i], now);
-        this.text(technicalLabels[i], x, y - radius - (l.mobile ? 14 : 20), `${colors[i]}cc`, technicalSize);
+        if (technicalLabels) this.text(technicalLabels[i], x, y - radius - 20, `${colors[i]}cc`, technicalSize);
         this.text(roleLabels[i], x, y + radius + (l.mobile ? 14 : 20), `${colors[i]}aa`, roleSize);
       });
       for (let lane = 0; lane < 3; lane += 1) {
         this.packetAlong(left + radius, y, positions[1] - radius, y, now * .00018 + lane * .33, "#c2aaff", 1.8);
         this.packetAlong(positions[1] + radius, y, right - radius, y, now * .00018 + .16 + lane * .33, "#73ffc5", 1.8);
       }
-      this.text(canvasText("authorizationProof", "PROOF OF AUTHORIZATION"), (positions[0] + positions[1]) / 2, y - (l.mobile ? 13 : 22), "rgba(194,170,255,.72)", l.mobile ? 5 : 7.5);
-      this.text(canvasText("stateTransitionProof", "PROOF OF EXACT STATE TRANSITION"), (positions[1] + positions[2]) / 2, y - (l.mobile ? 13 : 22), "rgba(115,255,197,.72)", l.mobile ? 5 : 7.5);
+      if (!l.mobile) {
+        this.text(canvasText("authorizationProof", "PROOF OF AUTHORIZATION"), (positions[0] + positions[1]) / 2, y - 22, "rgba(194,170,255,.72)", 7.5);
+        this.text(canvasText("stateTransitionProof", "PROOF OF EXACT STATE TRANSITION"), (positions[1] + positions[2]) / 2, y - 22, "rgba(115,255,197,.72)", 7.5);
+      }
     }
 
     drawLivingState(now) {
@@ -3478,7 +3559,7 @@
       this.ctx.strokeRect(segmentX, top, segmentW, bottom - top);
       this.ctx.restore();
       this.text(
-        canvasText("virtualHalf", "VIRTUAL EMPTY HALF"),
+        canvasText(l.mobile ? "emptyHalfShort" : "virtualHalf", l.mobile ? "EMPTY HALF" : "VIRTUAL EMPTY HALF"),
         l.mobile ? this.w * .94 : segmentX + segmentW / 2,
         bottom + 18,
         "rgba(115,255,197,.43)",
@@ -3525,27 +3606,26 @@
       const proofX = right + Math.cos(orbit) * orbitRadius;
       const proofY = y + Math.sin(orbit) * orbitRadius;
       this.dot(proofX, proofY, 2, "#c2aaff", 10);
-      if (!compactMobile) {
-        const labelSize = l.mobile ? 5.8 : 7.5;
+      if (l.mobile) {
+        if (this.h >= 120) {
+          const labelY = y + radius + 13;
+          this.text(canvasText("secret", "SECRET"), left, labelY, "rgba(255,149,125,.58)", 5.8);
+          this.text(canvasText("o1Address", "O1 ADDRESS"), right, labelY, "rgba(115,255,197,.58)", 5.8);
+        }
+      } else if (!compactMobile) {
+        const labelSize = 7.5;
         this.text(canvasText("secret", "SECRET"), left, y + radius + 23, "rgba(255,149,125,.58)", labelSize);
         this.text("POSEIDON2B", mid, y + radius + 23, "rgba(194,170,255,.62)", labelSize);
         this.text(canvasText("o1Address", "O1 ADDRESS"), right, y + radius + 23, "rgba(115,255,197,.58)", labelSize);
-        this.text(
-          canvasText("zeroKnowledgeProof", "ZERO-KNOWLEDGE PROOF"),
-          l.mobile ? this.w * .94 : right,
-          y - radius - (l.mobile ? 16 : 23),
-          "rgba(194,170,255,.72)",
-          l.mobile ? 5.2 : 7.5,
-          l.mobile ? "right" : "center"
-        );
+        this.text(canvasText("zeroKnowledgeProof", "ZERO-KNOWLEDGE PROOF"), right, y - radius - 23, "rgba(194,170,255,.72)", labelSize);
       }
     }
 
     drawPagedSpend(now) {
       const l = this.layout();
       const txX = l.mobile ? this.w * .71 : this.w * (l.compact ? .83 : .80);
-      const txW = l.mobile ? 104 : (l.compact ? 132 : 168);
-      const txH = l.mobile ? 64 : 88;
+      const txW = l.mobile ? Math.min(112, this.w * .31) : (l.compact ? 132 : 168);
+      const txH = l.mobile ? Math.min(72, this.h * .52) : 88;
       const ingressX = txX - txW / 2;
       const fallbackLeft = this.w * (l.compact ? .58 : .47);
       const contentEdge = this.contentRight("#paged-spend h2, #paged-spend .lead");
@@ -3578,28 +3658,34 @@
         this.dot(left + (l.mobile ? 9 : 12), cy + offset, 1.05, "rgba(115,255,197,.6)", 3);
       }
       this.roundedRect(txX - txW / 2, cy - txH / 2, txW, txH, 13, "rgba(194,170,255,.72)", "rgba(194,170,255,.08)", 1.2);
-      this.text(canvasText("pagedCapacity", "1,020 INPUTS · 256 OUTPUTS"), txX, cy - 11, "rgba(239,255,248,.62)", l.mobile ? 5.3 : (l.compact ? 6.5 : 7.5));
-      this.text(canvasText("oneAtomicPagedSpend", "ONE ATOMIC PAGEDSPEND"), txX, cy + 11, "#c2aaff", l.mobile ? 5.8 : (l.compact ? 7 : 8.2));
+      this.text(
+        canvasText(l.mobile ? "pagedCapacityShort" : "pagedCapacity", l.mobile ? "1,020 IN · 256 OUT" : "1,020 INPUTS · 256 OUTPUTS"),
+        txX,
+        cy - 11,
+        "rgba(239,255,248,.62)",
+        l.mobile ? 5.3 : (l.compact ? 6.5 : 7.5)
+      );
+      this.text(
+        canvasText(l.mobile ? "pagedSpendShort" : "oneAtomicPagedSpend", l.mobile ? "ONE PAGEDSPEND" : "ONE ATOMIC PAGEDSPEND"),
+        txX,
+        cy + 11,
+        "#c2aaff",
+        l.mobile ? 5.8 : (l.compact ? 7 : 8.2)
+      );
       const acceptanceX = this.w * (l.mobile ? .93 : (l.compact ? .95 : .91));
       this.node(acceptanceX, cy, l.mobile ? 14 : 18, "✓", "#73ffc5", now);
 
-      if (l.mobile && this.h >= 170) {
-        this.text(canvasText("pagedPages", "TX8X2 PAGES"), this.w * .10, this.h * .12, "rgba(239,255,248,.82)", 6.2, "left");
-        this.text(canvasText("pagedGeometry", "UP TO 8 INPUTS · 2 OUTPUTS EACH"), this.w * .10, this.h * .16, "rgba(115,255,197,.55)", 5.1, "left");
-        this.text(canvasText("pagedTxid", "ONE TXID"), this.w * .94, this.h * .12, "rgba(239,255,248,.82)", 6.2, "right");
-        this.text(canvasText("pagedAcceptance", "ATOMIC ACCEPTANCE"), this.w * .94, this.h * .16, "rgba(194,170,255,.64)", 5.1, "right");
-        this.text(canvasText("pagedIntent", "ONE LOGICAL TRANSACTION"), this.w * .10, this.h * .86, "rgba(239,255,248,.82)", 6.2, "left");
-        this.text(canvasText("pagedIntentDetail", "1 FEE · 1 CAPSULE · 1 RECEIPT"), this.w * .10, this.h * .90, "rgba(191,247,255,.58)", 5.1, "left");
-      }
     }
 
     drawHistoryStep(now) {
       const l = this.layout();
+      const mobileScale = l.mobile ? Math.min(1, Math.max(.55, this.h / 128)) : 1;
+      const showPrimaryLabel = !l.mobile || this.h >= 110;
       const mid = l.mobile ? this.w * .52 : this.w * (l.compact ? .75 : .69);
       const right = l.mobile ? this.w * .87 : this.w * (l.compact ? .92 : .88);
-      const y = this.h * (l.mobile ? .40 : .45);
-      const r = l.mobile ? 21 : 28;
-      const gridSize = l.mobile ? 48 : 62;
+      const y = this.h * (l.mobile && this.h < 110 ? .38 : l.mobile ? .40 : .45);
+      const r = l.mobile ? 21 * mobileScale : 28;
+      const gridSize = l.mobile ? 48 * mobileScale : 62;
       const fallbackLeft = this.w * (l.compact ? .59 : .49);
       const contentEdge = this.contentRight("#history-step h2, #history-step .lead, #history-step .formula, #history-step .ledger");
       const preferredLeft = Math.max(fallbackLeft, contentEdge + 42);
@@ -3619,7 +3705,9 @@
         this.line([[-gridSize / 2 + gridSize * i / 5, -gridSize / 2], [-gridSize / 2 + gridSize * i / 5, gridSize / 2]], "rgba(115,255,197,.16)", .6);
       }
       ctx.restore();
-      this.text(canvasText("blockState", "BLOCK_H + STATE_H"), mid, y + gridSize / 2 + 22, "rgba(115,255,197,.58)", 7.5);
+      if (!l.mobile) {
+        this.text(canvasText("blockState", "BLOCK_H + STATE_H"), mid, y + gridSize / 2 + 22, "rgba(115,255,197,.58)", 7.5);
+      }
 
       this.node(right, y, r + 4, "πₕ", "#c2aaff", now);
       this.line([[left + r, y], [mid - gridSize / 2, y]], "rgba(194,170,255,.28)", 1);
@@ -3628,15 +3716,14 @@
         this.packetAlong(left + r, y, mid - gridSize / 2, y, now * .0002 + i / 3, "#c2aaff", 1.8);
         this.packetAlong(mid + gridSize / 2, y, right - r - 4, y, now * .0002 + .2 + i / 3, "#c2aaff", 1.8);
       }
-      this.text(canvasText("sameSize", "SAME TERMINAL SIZE"), right, y + r + 26, "rgba(194,170,255,.64)", l.mobile ? 5.8 : 8);
-      const tailY = this.h * (l.mobile ? .68 : .77);
-      this.drawTail(left, right, tailY, now);
-
-      if (l.mobile && this.h >= 170) {
-        this.text(canvasText("newTransition", "NEW TRANSITION"), mid, y - gridSize / 2 - 20, "rgba(239,255,248,.8)", 6.2);
-        this.text(canvasText("recentSuffix", "RECENT SUFFIX"), left, tailY + 25, "rgba(239,255,248,.78)", 6.1, "left");
-        this.text(canvasText("completeBlocks18", "18 COMPLETE BLOCKS"), right, tailY + 25, "rgba(191,247,255,.58)", 5.3, "right");
+      if (showPrimaryLabel) {
+        const sameSizeKey = l.mobile ? "sameSizeShort" : "sameSize";
+        const sameSizeText = l.mobile ? "SAME SIZE" : "SAME TERMINAL SIZE";
+        const sameSizeY = l.mobile ? Math.max(8, y - r - 15) : y + r + 26;
+        this.text(canvasText(sameSizeKey, sameSizeText), right, sameSizeY, "rgba(194,170,255,.64)", l.mobile ? 5.8 : 8);
       }
+      const tailY = this.h * (l.mobile ? (showPrimaryLabel ? .84 : .82) : .77);
+      this.drawTail(left, right, tailY, now);
     }
 
     drawPrivacy(now) {
@@ -3648,8 +3735,8 @@
       const width = right - left;
       const streamY = this.h * .34;
       const trackerY = this.h * .72;
-      const stateW = Math.min(l.mobile ? 68 : 104, width * .22);
-      const stateH = Math.min(l.mobile ? 48 : 68, this.h * .34);
+      const stateW = Math.min(l.mobile ? 76 : 104, width * (l.mobile ? .24 : .22));
+      const stateH = Math.min(l.mobile ? 56 : 68, this.h * (l.mobile ? .38 : .34));
       const stateX = right - stateW * .55;
       const streamEnd = stateX - stateW * .58;
       const tapX = left + width * .39;
@@ -3659,7 +3746,9 @@
         ? this.h * .10
         : stage.top + (app.classList.contains("launch-notice-visible") ? 48 : 20);
 
-      this.text(canvasText("transparentNow", "TRANSPARENT NOW"), right, headerY, "rgba(191,247,255,.52)", labelSize, "right");
+      if (!l.mobile) {
+        this.text(canvasText("transparentNow", "TRANSPARENT NOW"), right, headerY, "rgba(191,247,255,.52)", labelSize, "right");
+      }
       this.line([[left, streamY], [streamEnd, streamY]], "rgba(115,255,197,.18)", 1);
 
       const packetCount = l.mobile ? 15 : 22;
@@ -3713,9 +3802,17 @@
         p.bezierCurveTo(tapX, streamY + this.h * .12, trackerX, trackerY - this.h * .12, trackerX, trackerY);
       }, "rgba(255,149,125,.34)", 1, l.mobile ? 0 : 4);
       this.packetAlong(tapX, streamY, trackerX, trackerY, now * .00016, "#ff957d", l.mobile ? 1.2 : 1.7);
-      this.node(trackerX, trackerY, l.mobile ? 13 : 19, "T", "#ff957d", now);
-      this.text(canvasText("externalArchiver", "EXTERNAL ARCHIVER"), trackerX, trackerY + (l.mobile ? 22 : 31), "rgba(255,149,125,.72)", labelSize);
-      this.text(canvasText("recordStream", "RECORDS THE STREAM"), trackerX, trackerY + (l.mobile ? 31 : 43), "rgba(255,149,125,.43)", labelSize * .74);
+      this.node(trackerX, trackerY, l.mobile ? 15 : 19, "T", "#ff957d", now);
+      this.text(
+        canvasText(l.mobile ? "externalArchiveShort" : "externalArchiver", l.mobile ? "EXTERNAL ARCHIVE" : "EXTERNAL ARCHIVER"),
+        trackerX,
+        trackerY + (l.mobile ? 24 : 31),
+        "rgba(255,149,125,.72)",
+        labelSize
+      );
+      if (!l.mobile) {
+        this.text(canvasText("recordStream", "RECORDS THE STREAM"), trackerX, trackerY + 43, "rgba(255,149,125,.43)", labelSize * .74);
+      }
 
       const archiveLeft = trackerX + (l.mobile ? 25 : 39);
       const archiveRight = right;
@@ -3737,8 +3834,10 @@
           ctx.strokeRect(x, y, columnW, cellHArchive);
         }
       }
-      this.text(canvasText("permanentGraph", "PERMANENT GRAPH"), archiveRight, this.h * .88, "rgba(255,149,125,.68)", labelSize * .88, "right");
-      this.text(canvasText("externalRetention", "REQUIRES EXTERNAL RETENTION"), archiveRight, this.h * .93, "rgba(255,149,125,.48)", labelSize * .74, "right");
+      if (!l.mobile) {
+        this.text(canvasText("permanentGraph", "PERMANENT GRAPH"), archiveRight, this.h * .88, "rgba(255,149,125,.68)", labelSize * .88, "right");
+        this.text(canvasText("externalRetention", "REQUIRES EXTERNAL RETENTION"), archiveRight, this.h * .93, "rgba(255,149,125,.48)", labelSize * .74, "right");
+      }
     }
 
     drawReceipt(now) {
@@ -3750,7 +3849,8 @@
         const canvasRect = this.canvas.getBoundingClientRect();
         const content = [...document.querySelectorAll("#receipts h2, #receipts .lead, #receipts .ledger")];
         const contentRight = content.reduce((edge, element) => Math.max(edge, element.getBoundingClientRect().right - canvasRect.left), 0);
-        left = Math.max(left, contentRight + this.w * (l.compact ? .016 : .022));
+        const preferredLeft = Math.max(left, contentRight + this.w * (l.compact ? .016 : .022));
+        left = Math.min(right - this.w * .30, preferredLeft);
       }
       const width = right - left;
       const y = this.h * .50;
@@ -3796,7 +3896,13 @@
         [receiptX + receiptW / 2 - fold, y - cardH * .58 + fold],
         [receiptX + receiptW / 2, y - cardH * .58 + fold]
       ], "rgba(194,170,255,.42)", .8);
-      this.text(canvasText("portableReceipt", "PORTABLE RECEIPT"), receiptX, y - cardH * .39, "rgba(194,170,255,.88)", labelSize * .86);
+      this.text(
+        canvasText(l.mobile ? "receiptShort" : "portableReceipt", l.mobile ? "RECEIPT" : "PORTABLE RECEIPT"),
+        receiptX,
+        y - cardH * .39,
+        "rgba(194,170,255,.88)",
+        labelSize * .86
+      );
       const receiptLineLeft = receiptX - receiptW * .31;
       for (let row = 0; row < 5; row += 1) {
         const lineY = y - cardH * .17 + row * cardH * .12;
@@ -3822,17 +3928,33 @@
         ctx.restore();
       }
       this.packetAlong(pathStart, pathY, pathEnd, pathY, now * .00018, "#bff7ff", l.mobile ? 1.1 : 1.6);
-      this.text(canvasText("merklePath8", "MERKLE PATH ×8"), (pathStart + pathEnd) / 2, pathY + (l.mobile ? 13 : 20), "rgba(191,247,255,.48)", labelSize * .78);
+      if (!l.mobile) {
+        this.text(canvasText("merklePath8", "MERKLE PATH ×8"), (pathStart + pathEnd) / 2, pathY + 20, "rgba(191,247,255,.48)", labelSize * .78);
+      }
 
       const verifyRadius = l.mobile ? 15 : 22;
       this.node(verifyX, y, verifyRadius, "✓", "#73ffc5", now);
       const headerY = Math.max(this.h * .12, y - cardH * .48);
       const headerW = l.mobile ? 54 : 82;
       this.roundedRect(verifyX - headerW / 2, headerY - (l.mobile ? 8 : 11), headerW, l.mobile ? 16 : 22, 5, "rgba(115,255,197,.30)", "rgba(6,25,19,.52)", .8);
-      this.text(canvasText("canonicalHeader", "CANONICAL HEADER"), verifyX, headerY, "rgba(115,255,197,.66)", labelSize * .68);
+      this.text(
+        canvasText(l.mobile ? "headerShort" : "canonicalHeader", l.mobile ? "HEADER" : "CANONICAL HEADER"),
+        verifyX,
+        headerY,
+        "rgba(115,255,197,.66)",
+        labelSize * .68
+      );
       this.line([[verifyX, headerY + (l.mobile ? 8 : 11)], [verifyX, y - verifyRadius]], "rgba(115,255,197,.24)", .8);
-      this.text(canvasText("verifiedCanonical", "VERIFIED · CANONICAL"), verifyX, y + verifyRadius + (l.mobile ? 14 : 21), "rgba(115,255,197,.70)", labelSize * .78);
-      this.text(canvasText("noBlockBody", "NO HISTORICAL BLOCK BODY"), (left + right) / 2, this.h * .92, "rgba(239,255,248,.44)", labelSize * .82);
+      this.text(
+        canvasText(l.mobile ? "verifiedShort" : "verifiedCanonical", l.mobile ? "VERIFIED" : "VERIFIED · CANONICAL"),
+        verifyX,
+        y + verifyRadius + (l.mobile ? 14 : 21),
+        "rgba(115,255,197,.70)",
+        labelSize * .78
+      );
+      if (!l.mobile) {
+        this.text(canvasText("noBlockBody", "NO HISTORICAL BLOCK BODY"), (left + right) / 2, this.h * .92, "rgba(239,255,248,.44)", labelSize * .82);
+      }
     }
 
     drawProofStack(now) {
@@ -3922,15 +4044,25 @@
       ctx.restore();
 
       this.text("FROST-GKR", cubeX, centerY + cubeSize * .68, "rgba(191,247,255,.82)", labelSize * 1.05);
-      this.text(canvasText("oneBinaryTower", "ONE BINARY TOWER"), cubeX, centerY - cubeSize * .68, "rgba(115,255,197,.62)", labelSize * .82);
+      if (!l.mobile) {
+        this.text(canvasText("oneBinaryTower", "ONE BINARY TOWER"), cubeX, centerY - cubeSize * .68, "rgba(115,255,197,.62)", labelSize * .82);
+      }
       this.line([[cubeX + cubeSize / 2, centerY], [outputX, centerY]], "rgba(191,247,255,.38)", 1.2, l.mobile ? 0 : 6);
       for (let packet = 0; packet < 3; packet += 1) {
         this.packetAlong(cubeX + cubeSize / 2, centerY, outputX, centerY, now * .00017 + packet / 3, packet === 1 ? "#c2aaff" : "#bff7ff", l.mobile ? 1.1 : 1.6);
       }
       this.node(outputX, centerY, l.mobile ? 13 : 18, "π", "#bff7ff", now);
-      this.text(canvasText("oneProofStack", "ONE PROOF STACK"), outputX, centerY + (l.mobile ? 24 : 31), "rgba(191,247,255,.65)", labelSize * .78);
+      this.text(
+        canvasText(l.mobile ? "oneProofShort" : "oneProofStack", l.mobile ? "ONE PROOF" : "ONE PROOF STACK"),
+        outputX,
+        centerY + (l.mobile ? 24 : 31),
+        "rgba(191,247,255,.65)",
+        labelSize * .78
+      );
       const footerY = l.mobile ? this.h * .92 : Math.min(stageBottom - labelSize * 2.4, centerY + laneSpan * .66);
-      this.text(canvasText("noTrustedSetup", "NO TRUSTED SETUP"), (left + right) / 2, footerY, "rgba(194,170,255,.52)", labelSize * .84);
+      if (!l.mobile) {
+        this.text(canvasText("noTrustedSetup", "NO TRUSTED SETUP"), (left + right) / 2, footerY, "rgba(194,170,255,.52)", labelSize * .84);
+      }
     }
 
     drawSoundness(now) {
@@ -3942,8 +4074,8 @@
 
       if (l.mobile) {
         centerX = this.w * .50;
-        centerY = this.h * .435;
-        radius = Math.min(this.w * .205, 82);
+        centerY = this.h * .50;
+        radius = Math.min(this.w * .205, 82, this.h * .39);
       } else {
         const stage = this.desktopStageBounds();
         const contentEdge = this.contentRight("#soundness h2, #soundness .lead, #soundness .ledger, #soundness .chapter-actions .action");
@@ -4085,10 +4217,12 @@
         [[0, 1, 0], "|+i⟩", 11, 9, "left", "#73ffc5"],
         [[0, -1, 0], "|−i⟩", -11, -9, "right", "#73ffc5"]
       ];
-      endpoints.forEach(([point, label, dx, dy, align, color]) => {
+      endpoints.forEach(([point, label, dx, dy, align, color], index) => {
         const [x, y] = project(point);
         this.dot(x, y, l.mobile ? 1.65 : 2.25, color, l.mobile ? 6 : 10);
-        this.text(label, x + dx, y + dy, color, labelSize, align);
+        if (!l.mobile || this.h >= 150 || index < 2) {
+          this.text(label, x + dx, y + dy, color, labelSize, align);
+        }
       });
     }
 
@@ -4097,7 +4231,7 @@
       const blockX = l.mobile ? this.w * .32 : this.w * (l.compact ? .67 : .60);
       const nonceX = l.mobile ? this.w * .76 : this.w * (l.compact ? .88 : .84);
       const y = this.h * .48;
-      const size = l.mobile ? 78 : 108;
+      const size = l.mobile ? Math.min(90, this.h * .52) : 108;
       const ctx = this.ctx;
       const cold = ctx.createLinearGradient(blockX - size / 2, y - size / 2, blockX + size / 2, y + size / 2);
       cold.addColorStop(0, "rgba(191,247,255,.03)");
@@ -4110,10 +4244,10 @@
       }
       const scanY = y - size / 2 + ((now * .00012) % 1) * size;
       this.line([[blockX - size / 2, scanY], [blockX + size / 2, scanY]], "rgba(191,247,255,.65)", 1.3, 9);
-      this.text(canvasText("proven", "PROVEN"), blockX, y - 10, "rgba(191,247,255,.65)", 8);
-      this.text(canvasText("template", "TEMPLATE"), blockX, y + 9, "#bff7ff", 10);
+      if (!l.mobile) this.text(canvasText("proven", "PROVEN"), blockX, y - 10, "rgba(191,247,255,.65)", 8);
+      this.text(canvasText("template", "TEMPLATE"), blockX, y + (l.mobile ? 0 : 9), "#bff7ff", 10);
       this.line([[blockX + size / 2, y], [nonceX - 31, y]], "rgba(191,247,255,.25)", 1);
-      this.node(nonceX, y, l.mobile ? 25 : 34, "128", "#73ffc5", now);
+      this.node(nonceX, y, l.mobile ? 28 : 34, "128", "#73ffc5", now);
       for (let ring = 0; ring < 3; ring += 1) {
         ctx.save();
         ctx.beginPath();
@@ -4124,8 +4258,10 @@
         ctx.stroke();
         ctx.restore();
       }
-      this.text(canvasText("nonceOnly", "NONCE ONLY"), nonceX, y + (l.mobile ? 64 : 82), "rgba(115,255,197,.58)", 8);
-      this.text(canvasText("asert", "15 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
+      this.text(canvasText("nonceOnly", "NONCE ONLY"), nonceX, y + (l.mobile ? 64 : 82), "rgba(115,255,197,.58)", l.mobile ? 7 : 8);
+      if (!l.mobile) {
+        this.text(canvasText("asert", "15 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
+      }
     }
 
     drawLaptop(x, y, width, color = "#73ffc5") {
@@ -4143,7 +4279,7 @@
       const right = l.mobile ? this.w * .925 : this.w * (l.compact ? .925 : .91);
       const width = right - left;
       const y = this.h * .50;
-      const span = this.h * (l.mobile ? .27 : .145);
+      const span = this.h * (l.mobile ? .31 : .145);
       const verifierX = left + width * (l.mobile ? .60 : .59);
       const laptopX = left + width * .90;
       const laptopWidth = l.mobile ? Math.min(48, width * .17) : Math.min(88, width * .15);
@@ -4151,13 +4287,29 @@
       const inputRadius = l.mobile ? Math.min(10, this.h * .067) : 16;
       const labelSize = l.mobile ? 6.1 : 8.6;
       const inputs = [
-        { y: y - span, label: canvasText("liveState", "LIVE STATE"), symbol: "S", color: "#73ffc5" },
-        { y, label: canvasText("terminalProof", "TERMINAL PROOF"), color: "#c2aaff" },
-        { y: y + span, label: canvasText("reorgSuffix18", "18-BLOCK REORG SUFFIX"), symbol: "18", color: "#bff7ff" }
+        {
+          y: y - span,
+          label: canvasText(l.mobile ? "liveStateShort" : "liveState", l.mobile ? "STATE" : "LIVE STATE"),
+          symbol: "S",
+          color: "#73ffc5"
+        },
+        {
+          y,
+          label: canvasText(l.mobile ? "terminalProofShort" : "terminalProof", l.mobile ? "PROOF" : "TERMINAL PROOF"),
+          color: "#c2aaff"
+        },
+        {
+          y: y + span,
+          label: canvasText(l.mobile ? "reorgSuffixShort" : "reorgSuffix18", l.mobile ? "18 BLOCKS" : "18-BLOCK REORG SUFFIX"),
+          symbol: "18",
+          color: "#bff7ff"
+        }
       ];
 
       const inputHeaderY = Math.max(labelSize, y - span - inputRadius - (l.mobile ? 15 : 24));
-      this.text(canvasText("peerData", "DATA FROM ANY PEER"), left, inputHeaderY, "rgba(255,149,125,.68)", labelSize, "left");
+      if (!l.mobile) {
+        this.text(canvasText("peerData", "DATA FROM ANY PEER"), left, inputHeaderY, "rgba(255,149,125,.68)", labelSize, "left");
+      }
 
       const bezierPoint = (x1, y1, x2, y2, t) => {
         const controlX = x1 + (x2 - x1) * .58;
@@ -4217,7 +4369,13 @@
         .7
       );
       this.text("✓", verifierX, y - gateSize * .08, "#73ffc5", l.mobile ? 10 : 14);
-      this.text(canvasText("verifyLocally", "VERIFY LOCALLY"), verifierX, y + gateSize * .18, "rgba(115,255,197,.78)", l.mobile ? 4.8 : 7.2);
+      this.text(
+        canvasText(l.mobile ? "verifyShort" : "verifyLocally", l.mobile ? "VERIFY" : "VERIFY LOCALLY"),
+        verifierX,
+        y + gateSize * .18,
+        "rgba(115,255,197,.78)",
+        l.mobile ? 4.8 : 7.2
+      );
 
       const outputStart = verifierX + gateSize * .52;
       const outputEnd = laptopX - laptopWidth * .58;
@@ -4225,15 +4383,25 @@
       for (let packet = 0; packet < 3; packet += 1) {
         this.packetAlong(outputStart, y, outputEnd, y, now * .00016 + packet / 3, "#73ffc5", l.mobile ? 1.15 : 1.7);
       }
-      this.text(canvasText("authenticated", "AUTHENTICATED"), (outputStart + outputEnd) / 2, y - (l.mobile ? 9 : 15), "rgba(115,255,197,.68)", l.mobile ? 5 : 7.4);
+      if (!l.mobile) {
+        this.text(canvasText("authenticated", "AUTHENTICATED"), (outputStart + outputEnd) / 2, y - 15, "rgba(115,255,197,.68)", 7.4);
+      }
 
       this.drawLaptop(laptopX, y, laptopWidth);
       this.dot(laptopX, y, l.mobile ? 1.5 : 2.2, "#73ffc5", l.mobile ? 5 : 10);
-      this.text(canvasText("independentFullNode", "INDEPENDENT FULL NODE"), laptopX, y + laptopWidth * .48, "rgba(115,255,197,.72)", labelSize);
+      this.text(
+        canvasText(l.mobile ? "fullNodeShort" : "independentFullNode", l.mobile ? "FULL NODE" : "INDEPENDENT FULL NODE"),
+        laptopX,
+        y + laptopWidth * .48,
+        "rgba(115,255,197,.72)",
+        labelSize
+      );
 
       const timelineY = y + span + inputRadius + (l.mobile ? 14 : 27);
-      this.line([[left, timelineY], [right, timelineY]], "rgba(191,247,255,.13)", .7);
-      this.text(canvasText("sameProcedure", "SAME PROCEDURE · YEAR 1 → YEAR 10"), (left + right) / 2, timelineY + (l.mobile ? 6 : 10), "rgba(191,247,255,.58)", l.mobile ? 5.1 : 7.5);
+      if (!l.mobile) {
+        this.line([[left, timelineY], [right, timelineY]], "rgba(191,247,255,.13)", .7);
+        this.text(canvasText("sameProcedure", "SAME PROCEDURE · YEAR 1 → YEAR 10"), (left + right) / 2, timelineY + 10, "rgba(191,247,255,.58)", 7.5);
+      }
     }
 
     drawNode(now) {
