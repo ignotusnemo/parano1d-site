@@ -1084,6 +1084,11 @@
       walletRole: "КОШЕЛЁК",
       minerRole: "МАЙНЕР",
       networkRole: "СЕТЬ",
+      proofActionProves: "ДОКАЗЫВАЕТ",
+      proofActionAuthorization: "АВТОРИЗАЦИЮ",
+      proofActionTransition: "ПЕРЕХОД",
+      proofActionVerifies: "ПРОВЕРЯЕТ",
+      proofActionApplies: "ПРИМЕНЯЕТ",
       authorizationProof: "ДОКАЗАТЕЛЬСТВО АВТОРИЗАЦИИ",
       stateTransitionProof: "ДОКАЗАТЕЛЬСТВО ТОЧНОГО ПЕРЕХОДА",
       virtualHalf: "ВИРТУАЛЬНАЯ ПУСТАЯ ПОЛОВИНА",
@@ -1172,6 +1177,11 @@
       walletRole: "钱包",
       minerRole: "矿工",
       networkRole: "网络",
+      proofActionProves: "生成证明",
+      proofActionAuthorization: "授权",
+      proofActionTransition: "状态转移",
+      proofActionVerifies: "验证",
+      proofActionApplies: "应用",
       authorizationProof: "授权证明",
       stateTransitionProof: "精确状态转移证明",
       virtualHalf: "虚拟空白半区",
@@ -3513,19 +3523,28 @@
         canvasText("publicTransition", "PUBLIC TRANSITION"),
         canvasText("verifyAndApply", "VERIFY AND APPLY")
       ];
+      const mobileActionLabels = l.mobile ? [
+        [canvasText("proofActionProves", "PROVES"), canvasText("proofActionAuthorization", "AUTHORIZATION")],
+        [canvasText("proofActionProves", "PROVES"), canvasText("proofActionTransition", "TRANSITION")],
+        [canvasText("proofActionVerifies", "VERIFIES"), canvasText("proofActionApplies", "APPLIES")]
+      ] : null;
       const roleLabels = [
         canvasText("walletRole", "WALLET"),
         canvasText("minerRole", "MINER"),
         canvasText("networkRole", "NETWORK")
       ];
-      const technicalSize = l.mobile ? 5.8 : 8.2;
-      const roleSize = l.mobile ? 5.4 : 7.5;
+      const technicalSize = l.mobile ? 7 : 8.2;
+      const roleSize = l.mobile ? 6.2 : 7.5;
 
       this.line([[left, y], [right, y]], "rgba(115,255,197,.14)", 1);
       positions.forEach((x, i) => {
         this.node(x, y, radius, labels[i], colors[i], now);
         if (technicalLabels) this.text(technicalLabels[i], x, y - radius - 20, `${colors[i]}cc`, technicalSize);
-        this.text(roleLabels[i], x, y + radius + (l.mobile ? 14 : 20), `${colors[i]}aa`, roleSize);
+        if (mobileActionLabels) {
+          this.text(mobileActionLabels[i][0], x, y - radius - 24, `${colors[i]}c2`, technicalSize * .88);
+          this.text(mobileActionLabels[i][1], x, y - radius - 14, `${colors[i]}f2`, technicalSize);
+        }
+        this.text(roleLabels[i], x, y + radius + (l.mobile ? 14 : 20), `${colors[i]}c2`, roleSize);
       });
       for (let lane = 0; lane < 3; lane += 1) {
         this.packetAlong(left + radius, y, positions[1] - radius, y, now * .00018 + lane * .33, "#c2aaff", 1.8);

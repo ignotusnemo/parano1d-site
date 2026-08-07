@@ -1866,21 +1866,7 @@
         display: none;
       }
 
-      #proof-native .role-list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      #proof-native .role {
-        min-width: 0;
-        min-height: 43px;
-        padding: 6px;
-        grid-template-columns: 25px minmax(0, 1fr);
-        gap: 5px;
-      }
-
-      #proof-native .role i { width: 23px; height: 23px; }
-      #proof-native .role b { min-width: 0; font-size: 9px; }
-      #proof-native .role span { display: none; }
+      #proof-native .role-list { display: none; }
       .chapter.mobile-copy-compact .lead { display: none; }
 
       .scene-label { display: none; }
@@ -2193,6 +2179,8 @@
 
     @media (max-width: 820px) and (max-height: 540px) {
       .scene { display: none; }
+      .app[data-current-step="4"] .scene { display: block; }
+      #proof-native .lead { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
