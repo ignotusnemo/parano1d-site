@@ -3776,9 +3776,12 @@
       const photoFrameHeight = photoFrameWidth * 4 / 3;
       const groupHeight = optionHeight + optionRowGap + photoFrameHeight;
       const groupTop = top + Math.max(0, (visualBottom - top - groupHeight) / 2);
-      const optionY = groupTop;
+      const optionLift = l.mobile
+        ? Math.max(6, Math.min(10, height * .04))
+        : (l.compact ? 14 : 18);
+      const optionY = Math.max(top, groupTop - optionLift);
       const photoX = left;
-      const photoY = optionY + optionHeight + optionRowGap;
+      const photoY = groupTop + optionHeight + optionRowGap;
       const centerY = photoY + photoFrameHeight / 2;
       const scanY = photoY + photoFrameHeight * scanProgress;
       let optionX = left + (width - optionWidth) / 2;
