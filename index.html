@@ -1180,14 +1180,16 @@
     .app[data-current-step="2"] .readout,
     .app[data-current-step="3"] .scene-label,
     .app[data-current-step="3"] .readout,
-    .app[data-current-step="9"] .scene-label,
-    .app[data-current-step="9"] .readout,
+    .app[data-current-step="7"] .scene-label,
+    .app[data-current-step="7"] .readout,
     .app[data-current-step="10"] .scene-label,
     .app[data-current-step="10"] .readout,
     .app[data-current-step="11"] .scene-label,
     .app[data-current-step="11"] .readout,
     .app[data-current-step="12"] .scene-label,
-    .app[data-current-step="12"] .readout {
+    .app[data-current-step="12"] .readout,
+    .app[data-current-step="13"] .scene-label,
+    .app[data-current-step="13"] .readout {
       opacity: 0;
       transform: translateY(8px);
       visibility: hidden;
@@ -1867,6 +1869,17 @@
       }
 
       #proof-native .role-list { display: none; }
+      #photo-key .lead {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
       .chapter.mobile-copy-compact .lead { display: none; }
 
       .scene-label { display: none; }
@@ -2179,8 +2192,27 @@
 
     @media (max-width: 820px) and (max-height: 540px) {
       .scene { display: none; }
-      .app[data-current-step="4"] .scene { display: block; }
+      .app[data-current-step="4"] .scene,
+      .app[data-current-step="7"] .scene { display: block; }
       #proof-native .lead { display: none; }
+      #photo-key .chapter-index { display: none; }
+      #photo-key h2 {
+        font-size: clamp(26px, 7.1vh, 32px);
+        line-height: .93;
+      }
+      html[lang="ru"] #photo-key h2 { font-size: clamp(25px, 6.7vh, 30px); }
+      #photo-key .chapter-actions { margin-top: 6px; }
+    }
+
+    @media (min-width: 521px) and (max-width: 820px) and (max-height: 540px) {
+      #photo-key .chapter-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: end;
+        column-gap: 16px;
+      }
+      #photo-key h2 { grid-column: 1; min-width: 0; }
+      #photo-key .chapter-actions { grid-column: 2; margin: 0 0 2px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2334,17 +2366,28 @@
         </div>
       </section>
 
-      <section class="chapter" id="paged-spend" data-step="7" aria-labelledby="title-paged-spend">
+      <section class="chapter" id="photo-key" data-step="7" aria-labelledby="title-photo-key" aria-describedby="photo-key-description">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="paged.index">07 / PAGEDSPEND</div>
+          <div class="chapter-index" data-i18n="photo.index">07 / PHOTO-DERIVED KEY</div>
+          <h2 id="title-photo-key" data-i18n="photo.title">Any photo<br>can become<br><em>a master secret.</em></h2>
+          <p class="lead" id="photo-key-description" data-i18n="photo.lead">A Parano1d wallet can generate a new master secret, import an existing one, or derive one from a private image. Photo Key reads the image locally, never uploads it, and keeps no copy. The same decoded pixels recreate the same 256-bit secret and every address derived from it. Change the pixels, and you get a different wallet.</p>
+          <div class="chapter-actions">
+            <button class="action primary" type="button" data-download-open data-i18n="photo.download">Download</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="paged-spend" data-step="8" aria-labelledby="title-paged-spend">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="paged.index">08 / PAGEDSPEND</div>
           <h2 id="title-paged-spend" data-i18n="paged.title">Up to 1,020 UTXOs.<br><em>One transaction.</em></h2>
           <p class="lead" data-i18n="paged.lead">A physical <code>Tx8x2</code> page holds up to eight inputs and two outputs. <code>PagedSpend</code> joins up to 128 pages into one logical transaction. It can atomically spend up to 1,020 UTXOs and create up to 256 outputs with one txid, one fee, one authorization capsule, and one receipt.</p>
         </div>
       </section>
 
-      <section class="chapter" id="history-step" data-step="8" aria-labelledby="title-history-step">
+      <section class="chapter" id="history-step" data-step="9" aria-labelledby="title-history-step">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="history.index">08 / RECURSIVE HISTORY</div>
+          <div class="chapter-index" data-i18n="history.index">09 / RECURSIVE HISTORY</div>
           <h2 id="title-history-step" data-i18n="history.title">History advances<br><em>as a fixed-size proof.</em></h2>
           <p class="lead" data-i18n="history.lead">Each <code>HistoryStep</code> proves the new block and verifies the preceding terminal within the same relation. The terminal changes with every block, but its size and verification work do not grow with chain height.</p>
           <div class="formula"><b>π<sub>h−1</sub></b><span>+</span><b>block<sub>h</sub> · state<sub>h</sub></b><span>→</span><b>π<sub>h</sub></b></div>
@@ -2355,9 +2398,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="privacy" data-step="9" aria-labelledby="title-privacy">
+      <section class="chapter" id="privacy" data-step="10" aria-labelledby="title-privacy">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="privacy.index">09 / PRIVACY BY NON-RETENTION</div>
+          <div class="chapter-index" data-i18n="privacy.index">10 / PRIVACY BY NON-RETENTION</div>
           <h2 id="title-privacy" data-i18n="privacy.title">Privacy<br><em>without secrecy.</em></h2>
           <p class="lead" data-i18n="privacy.lead">Parano1d is transparent while transactions pass through consensus: values, owners, and transactions are public. But consensus does not retain a permanent transaction graph. Long-term address tracking requires an external observer to record the stream continuously and store it independently.</p>
           <dl class="ledger">
@@ -2368,9 +2411,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="receipts" data-step="10" aria-labelledby="title-receipts">
+      <section class="chapter" id="receipts" data-step="11" aria-labelledby="title-receipts">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="receipts.index">10 / Portable proof of payment</div>
+          <div class="chapter-index" data-i18n="receipts.index">11 / Portable proof of payment</div>
           <h2 id="title-receipts" data-i18n="receipts.title">History expires.<br><em>The receipt does not.</em></h2>
           <p class="lead" data-i18n="receipts.lead">When a payment confirms, the sender's wallet saves an exportable Merkle receipt. It carries the complete public payment data and a fixed-depth inclusion path. Any node verifies it against the canonical header. The historical block body is not required.</p>
           <dl class="ledger">
@@ -2381,9 +2424,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="proof-stack" data-step="11" aria-labelledby="title-proof-stack">
+      <section class="chapter" id="proof-stack" data-step="12" aria-labelledby="title-proof-stack">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="stack.index">11 / One binary proof stack</div>
+          <div class="chapter-index" data-i18n="stack.index">12 / One binary proof stack</div>
           <h2 id="title-proof-stack" data-i18n="stack.title">One arithmetic.<br><em>End to end.</em></h2>
           <p class="lead" data-i18n="stack.lead">Addresses, wallet authorization, transactions, state, recursive history and PoW share one binary proof stack. FROST-GKR folds repeated Poseidon2b structure into shared Boolean hypercubes; FRI-Binius closes the relation without a trusted setup.</p>
           <div class="formula"><b data-i18n="stack.formula.left">ownership + tx</b><span>→</span><b>FROST-GKR</b><span>→</span><b data-i18n="stack.formula.right">state + history + PoW</b></div>
@@ -2395,9 +2438,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="soundness" data-step="12" aria-labelledby="title-soundness">
+      <section class="chapter" id="soundness" data-step="13" aria-labelledby="title-soundness">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="soundness.index">12 / End to end post quantum soundness</div>
+          <div class="chapter-index" data-i18n="soundness.index">13 / End to end post quantum soundness</div>
           <h2 id="title-soundness" data-i18n="soundness.title">Post-quantum.<br><em>Provable from genesis.</em></h2>
           <p class="lead" data-i18n="soundness.lead">One theorem covers wallet authorization, transaction validity, exact State transitions, recursive HistoryStep and the terminal State accepted by every node.</p>
           <dl class="ledger soundness-ledger">
@@ -2412,9 +2455,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="pow" data-step="13" aria-labelledby="title-pow">
+      <section class="chapter" id="pow" data-step="14" aria-labelledby="title-pow">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="pow.index">13 / Proof-native PoW</div>
+          <div class="chapter-index" data-i18n="pow.index">14 / Proof-native PoW</div>
           <h2 id="title-pow" data-i18n="pow.title">Prove first.<br><em>Mine second.</em></h2>
           <p class="lead" data-i18n="pow.lead">PoW chooses the order of already-proven transitions. The miner completes the nonce-independent block proof, freezes an immutable template, then searches only the 128-bit nonce.</p>
           <dl class="ledger">
@@ -2425,9 +2468,9 @@
         </div>
       </section>
 
-      <section class="chapter" id="run" data-step="14" aria-labelledby="title-run">
+      <section class="chapter" id="run" data-step="15" aria-labelledby="title-run">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="run.index">14 / Hardware-adaptive decentralization</div>
+          <div class="chapter-index" data-i18n="run.index">15 / Hardware-adaptive decentralization</div>
           <h2 id="title-run" data-i18n="run.title">The entire L1.<br><em>On your laptop.</em></h2>
           <p class="lead" data-i18n="run.lead">A laptop can hold the complete live state and independently verify the entire L1. Miners choose block capacity that matches their proving power: faster hardware proves larger blocks; slower hardware proves smaller ones. Throughput adapts. Full verification remains universal.</p>
           <div class="capacity-rule">
@@ -2456,14 +2499,15 @@
       <button class="state-dot" type="button" data-go="4">04<span class="visually-hidden"> — <span data-i18n="rail.4">Proof-native</span></span></button>
       <button class="state-dot" type="button" data-go="5">05<span class="visually-hidden"> — <span data-i18n="rail.5">Living state</span></span></button>
       <button class="state-dot" type="button" data-go="6">06<span class="visually-hidden"> — <span data-i18n="rail.6">Signatureless ownership</span></span></button>
-      <button class="state-dot" type="button" data-go="7">07<span class="visually-hidden"> — <span data-i18n="rail.7">PagedSpend</span></span></button>
-      <button class="state-dot" type="button" data-go="8">08<span class="visually-hidden"> — <span data-i18n="rail.8">Recursive history</span></span></button>
-      <button class="state-dot" type="button" data-go="9">09<span class="visually-hidden"> — <span data-i18n="rail.9">Privacy by non-retention</span></span></button>
-      <button class="state-dot" type="button" data-go="10">10<span class="visually-hidden"> — <span data-i18n="rail.10">Portable receipts</span></span></button>
-      <button class="state-dot" type="button" data-go="11">11<span class="visually-hidden"> — <span data-i18n="rail.11">One binary proof stack</span></span></button>
-      <button class="state-dot" type="button" data-go="12">12<span class="visually-hidden"> — <span data-i18n="rail.12">End to end post quantum soundness</span></span></button>
-      <button class="state-dot" type="button" data-go="13">13<span class="visually-hidden"> — <span data-i18n="rail.13">Proof-native PoW</span></span></button>
-      <button class="state-dot" type="button" data-go="14">14<span class="visually-hidden"> — <span data-i18n="rail.14">Hardware-adaptive decentralization</span></span></button>
+      <button class="state-dot" type="button" data-go="7">07<span class="visually-hidden"> — <span data-i18n="rail.7">Photo-derived key</span></span></button>
+      <button class="state-dot" type="button" data-go="8">08<span class="visually-hidden"> — <span data-i18n="rail.8">PagedSpend</span></span></button>
+      <button class="state-dot" type="button" data-go="9">09<span class="visually-hidden"> — <span data-i18n="rail.9">Recursive history</span></span></button>
+      <button class="state-dot" type="button" data-go="10">10<span class="visually-hidden"> — <span data-i18n="rail.10">Privacy by non-retention</span></span></button>
+      <button class="state-dot" type="button" data-go="11">11<span class="visually-hidden"> — <span data-i18n="rail.11">Portable receipts</span></span></button>
+      <button class="state-dot" type="button" data-go="12">12<span class="visually-hidden"> — <span data-i18n="rail.12">One binary proof stack</span></span></button>
+      <button class="state-dot" type="button" data-go="13">13<span class="visually-hidden"> — <span data-i18n="rail.13">End to end post quantum soundness</span></span></button>
+      <button class="state-dot" type="button" data-go="14">14<span class="visually-hidden"> — <span data-i18n="rail.14">Proof-native PoW</span></span></button>
+      <button class="state-dot" type="button" data-go="15">15<span class="visually-hidden"> — <span data-i18n="rail.15">Hardware-adaptive decentralization</span></span></button>
     </nav>
 
     <div class="control-deck shell">

@@ -371,17 +371,21 @@
       "ownership.wire.value": "Нет ни открытого ключа, ни цифровой подписи",
       "ownership.consensus.label": "Владение",
       "ownership.consensus.value": "<strong>Доказывается знанием секрета с нулевым разглашением</strong>",
-      "paged.index": "07 / PAGEDSPEND",
+      "photo.index": "07 / КЛЮЧ ИЗ ФОТОГРАФИИ",
+      "photo.title": "Любое фото<br>может стать<br><em>мастер-секретом.</em>",
+      "photo.lead": "Кошелёк Parano1d может создать новый мастер-секрет, импортировать существующий или получить его из приватного изображения. Photo Key считывает изображение локально, никуда его не загружает и не сохраняет копию. Те же декодированные пиксели восстанавливают тот же 256-битный секрет и все выведенные из него адреса. Измените пиксели — получите другой кошелёк.",
+      "photo.download": "Загрузить",
+      "paged.index": "08 / PAGEDSPEND",
       "paged.title": "До 1 020 UTXO.<br><em>Одна транзакция.</em>",
       "paged.lead": "Физическая страница <code>Tx8x2</code> вмещает до восьми входов и двух выходов. <code>PagedSpend</code> объединяет до 128 таких страниц в одну логическую транзакцию. Она атомарно тратит до 1 020 UTXO и создаёт до 256 выходов. При этом у неё один txid, одна комиссия, одна капсула авторизации и один чек.",
-      "history.index": "08 / РЕКУРСИВНАЯ ИСТОРИЯ",
+      "history.index": "09 / РЕКУРСИВНАЯ ИСТОРИЯ",
       "history.title": "История растёт.<br><em>Размер proof не меняется.</em>",
       "history.lead": "Каждый <code>HistoryStep</code> одновременно доказывает новый блок и проверяет терминальное доказательство предыдущего шага. С каждым блоком терминальное доказательство обновляется, но его размер и объём работы при проверке не зависят от высоты цепочки.",
       "history.active.label": "Активная нода",
       "history.active.value": "Текущее состояние + терминальное доказательство + последние 18 полных блоков",
       "history.age.label": "Возраст цепочки",
       "history.age.value": "<strong>Не влияет на размер доказательства и стоимость проверки истории</strong>",
-      "privacy.index": "09 / ПРИВАТНОСТЬ БЕЗ ПОСТОЯННОГО АРХИВА",
+      "privacy.index": "10 / ПРИВАТНОСТЬ БЕЗ ПОСТОЯННОГО АРХИВА",
       "privacy.title": "Приватность<br><em>без секретов.</em>",
       "privacy.lead": "Пока транзакции проходят через консенсус, Parano1d полностью прозрачен: видны суммы, владельцы и сами транзакции. Но консенсус не сохраняет постоянный граф транзакций. Чтобы отслеживать адреса годами, внешний наблюдатель должен непрерывно записывать поток и самостоятельно хранить собранные данные.",
       "privacy.live.label": "Текущее состояние",
@@ -390,7 +394,7 @@
       "privacy.graph.value": "<strong>Консенсус его не сохраняет</strong>",
       "privacy.tracker.label": "Долгосрочное наблюдение",
       "privacy.tracker.value": "Требует непрерывной внешней записи",
-      "receipts.index": "10 / Переносимое доказательство платежа",
+      "receipts.index": "11 / Переносимое доказательство платежа",
       "receipts.title": "История исчезает.<br><em>Чек остаётся.</em>",
       "receipts.lead": "После подтверждения платежа кошелёк отправителя сохраняет экспортируемый Merkle-чек. В нём находятся все публичные данные платежа и путь включения фиксированной глубины. Любая нода проверяет его по каноническому заголовку. Старое тело блока не требуется.",
       "receipts.formula.payment": "платёж",
@@ -402,7 +406,7 @@
       "receipts.path.value": "Восемь уровней Poseidon2b",
       "receipts.body.label": "Старое тело блока",
       "receipts.body.value": "<strong>Не требуется</strong>",
-      "stack.index": "11 / Единый бинарный proof stack",
+      "stack.index": "12 / Единый бинарный proof stack",
       "stack.title": "Одна арифметика.<br><em>От начала до конца.</em>",
       "stack.lead": "Адреса, авторизация кошелька, транзакции, state, рекурсивная история и PoW используют один бинарный proof stack. FROST-GKR сворачивает повторяющиеся структуры Poseidon2b в общие булевы гиперкубы, а FRI-Binius замыкает relation без доверенной настройки.",
       "stack.formula.left": "владение + tx",
@@ -413,7 +417,7 @@
       "stack.prover.value": "<strong>В 10,50 раза быстрее</strong> в сравнении на 59 перестановках",
       "stack.proof.label": "Алгебраический proof",
       "stack.proof.value": "<strong>В 51,67 раза меньше</strong>",
-      "soundness.index": "12 / СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
+      "soundness.index": "13 / СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
       "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
       "soundness.lead": "Одна теорема охватывает авторизацию кошелька, корректность транзакций, точные переходы состояния, рекурсивную цепочку HistoryStep и конечное состояние, которое принимает нода.",
       "soundness.result.label": "Результат",
@@ -424,7 +428,7 @@
       "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
       "soundness.proof": "Доказательство",
       "soundness.certificate": "Исполняемый сертификат",
-      "pow.index": "13 / Proof-native PoW",
+      "pow.index": "14 / Proof-native PoW",
       "pow.title": "Сначала докажи.<br><em>Потом майни.</em>",
       "pow.lead": "PoW только определяет порядок уже доказанных переходов. Майнер завершает не зависящее от nonce доказательство блока, фиксирует неизменяемый шаблон и перебирает лишь 128-битный nonce.",
       "pow.target.label": "Цель блока",
@@ -440,7 +444,7 @@
       "join.formula.proof": "терминальное доказательство",
       "join.formula.suffix": "18 блоков",
       "join.formula.node": "независимая нода ✓",
-      "run.index": "14 / Децентрализация на любом железе",
+      "run.index": "15 / Децентрализация на любом железе",
       "run.title": "Вся L1.<br><em>На твоём ноутбуке.</em>",
       "run.lead": "Обычный ноутбук может хранить всё текущее состояние и самостоятельно проверять всю L1. Майнер выбирает ёмкость блока, которую успевает доказать на своём железе: более быстрая машина справляется с крупными блоками, более медленная выбирает меньшие. Пропускная способность подстраивается под железо, а полная проверка остаётся доступной каждой ноде.",
       "run.capacity.modest": "Твой ноутбук",
@@ -458,14 +462,15 @@
       "rail.4": "Proof-native архитектура",
       "rail.5": "Текущее состояние UTXO",
       "rail.6": "Владение без подписей",
-      "rail.7": "PagedSpend",
-      "rail.8": "Рекурсивная история",
-      "rail.9": "Без постоянного архива",
-      "rail.10": "Переносимые чеки",
-      "rail.11": "Единый бинарный proof stack",
-      "rail.12": "Сквозная постквантовая безопасность",
-      "rail.13": "Proof-native PoW",
-      "rail.14": "Децентрализация на любом железе",
+      "rail.7": "Ключ из фотографии",
+      "rail.8": "PagedSpend",
+      "rail.9": "Рекурсивная история",
+      "rail.10": "Без постоянного архива",
+      "rail.11": "Переносимые чеки",
+      "rail.12": "Единый бинарный proof stack",
+      "rail.13": "Сквозная постквантовая безопасность",
+      "rail.14": "Proof-native PoW",
+      "rail.15": "Децентрализация на любом железе",
       "deck.previous": "Предыдущее состояние"
     },
     zh: {
@@ -571,17 +576,21 @@
       "ownership.wire.value": "不传输公钥，也没有交易签名",
       "ownership.consensus.label": "所有权",
       "ownership.consensus.value": "<strong>以零知识方式证明知道该秘密</strong>",
-      "paged.index": "07 / PAGEDSPEND",
+      "photo.index": "07 / 照片派生密钥",
+      "photo.title": "任何照片<br>都可以成为<br><em>主密钥。</em>",
+      "photo.lead": "Parano1d 钱包可以生成新的主密钥、导入现有主密钥，也可以从私有图像中派生主密钥。Photo Key 只在本机读取图像，不会上传，也不会保留副本。相同的解码像素会恢复相同的 256 位主密钥及其派生的全部地址；像素一旦改变，就会得到另一个钱包。",
+      "photo.download": "下载",
+      "paged.index": "08 / PAGEDSPEND",
       "paged.title": "1,020 个 UTXO。<br><em>仍是一笔交易。</em>",
       "paged.lead": "一个 <code>Tx8x2</code> 物理页最多容纳八个输入和两个输出。<code>PagedSpend</code> 可将最多 128 页合并为一笔逻辑交易，一次性花费最多 1,020 个 UTXO、创建最多 256 个输出，同时只使用一个 txid、一次手续费、一个授权胶囊和一张回执。",
-      "history.index": "08 / 递归历史",
+      "history.index": "09 / 递归历史",
       "history.title": "历史继续增长。<br><em>证明大小不变。</em>",
       "history.lead": "每个 <code>HistoryStep</code> 在证明新区块的同时，也会验证上一步的终端证明。终端证明会随新区块更新，但其大小和验证工作量始终不受链高影响。",
       "history.active.label": "全节点保存",
       "history.active.value": "当前状态 + 终端证明 + 最近 18 个完整区块",
       "history.age.label": "链高",
       "history.age.value": "<strong>不影响证明大小和历史验证成本</strong>",
-      "privacy.index": "09 / 不永久留存的隐私",
+      "privacy.index": "10 / 不永久留存的隐私",
       "privacy.title": "不靠保密，<br><em>也有隐私。</em>",
       "privacy.lead": "交易通过共识时，Parano1d 完全透明：金额、所有者和交易内容均为公开信息。但共识不会永久保存交易关系图。若要长期追踪地址，外部观察者必须持续记录交易流，并独立保存这些数据。",
       "privacy.live.label": "当前状态",
@@ -590,7 +599,7 @@
       "privacy.graph.value": "<strong>共识不予留存</strong>",
       "privacy.tracker.label": "长期追踪",
       "privacy.tracker.value": "需要外部持续记录",
-      "receipts.index": "10 / 可携带的付款证明",
+      "receipts.index": "11 / 可携带的付款证明",
       "receipts.title": "历史会退场。<br><em>回执仍可验证。</em>",
       "receipts.lead": "付款确认后，发送方钱包会保存一份可导出的 Merkle 回执。它包含完整的公开付款数据和固定深度的包含路径。任何节点都能依据规范区块头验证回执，无需保留旧区块正文。",
       "receipts.formula.payment": "付款",
@@ -602,7 +611,7 @@
       "receipts.path.value": "八层 Poseidon2b",
       "receipts.body.label": "旧区块正文",
       "receipts.body.value": "<strong>无需保留</strong>",
-      "stack.index": "11 / 单一二进制证明栈",
+      "stack.index": "12 / 单一二进制证明栈",
       "stack.title": "同一种算术。<br><em>贯穿始终。</em>",
       "stack.lead": "地址、钱包授权、交易、状态、递归历史与 PoW 共用同一套二进制证明栈。FROST-GKR 把重复的 Poseidon2b 结构折叠进共享布尔超立方体，FRI-Binius 则在无需可信设置的前提下闭合整个关系。",
       "stack.formula.left": "所有权 + 交易",
@@ -613,7 +622,7 @@
       "stack.prover.value": "在 59 次置换对比中<strong>快 10.50 倍</strong>",
       "stack.proof.label": "代数证明",
       "stack.proof.value": "<strong>缩小 51.67 倍</strong>",
-      "soundness.index": "12 / 端到端后量子可靠性",
+      "soundness.index": "13 / 端到端后量子可靠性",
       "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
       "soundness.lead": "同一定理覆盖钱包授权、交易有效性、精确状态转换、递归 HistoryStep，以及节点最终接受的终端状态。",
       "soundness.result.label": "结论",
@@ -624,7 +633,7 @@
       "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
       "soundness.proof": "证明",
       "soundness.certificate": "可执行证书",
-      "pow.index": "13 / Proof-native PoW",
+      "pow.index": "14 / Proof-native PoW",
       "pow.title": "先证明。<br><em>再挖矿。</em>",
       "pow.lead": "PoW 只负责排列已被证明有效的状态转移。矿工先完成与 nonce 无关的区块证明，冻结不可变模板，然后只搜索 128 位 nonce。",
       "pow.target.label": "出块目标",
@@ -640,7 +649,7 @@
       "join.formula.proof": "终端证明",
       "join.formula.suffix": "18 个区块",
       "join.formula.node": "独立节点 ✓",
-      "run.index": "14 / 适应不同硬件的去中心化",
+      "run.index": "15 / 适应不同硬件的去中心化",
       "run.title": "完整 L1。<br><em>就在你的笔记本上。</em>",
       "run.lead": "一台笔记本就能保存完整的当前状态，并独立验证整个 L1。矿工根据自身的证明能力选择区块容量：更快的硬件证明更大的区块，较慢的硬件证明较小的区块。吞吐量随硬件调整，而每个节点始终都能完成完整验证。",
       "run.capacity.modest": "你的笔记本",
@@ -658,14 +667,15 @@
       "rail.4": "证明原生架构",
       "rail.5": "当前 UTXO 状态",
       "rail.6": "无签名所有权",
-      "rail.7": "PagedSpend",
-      "rail.8": "递归历史",
-      "rail.9": "不永久留存",
-      "rail.10": "可携带回执",
-      "rail.11": "单一二进制证明栈",
-      "rail.12": "端到端后量子可靠性",
-      "rail.13": "Proof-native PoW",
-      "rail.14": "适应不同硬件的去中心化",
+      "rail.7": "照片派生密钥",
+      "rail.8": "PagedSpend",
+      "rail.9": "递归历史",
+      "rail.10": "不永久留存",
+      "rail.11": "可携带回执",
+      "rail.12": "单一二进制证明栈",
+      "rail.13": "端到端后量子可靠性",
+      "rail.14": "Proof-native PoW",
+      "rail.15": "适应不同硬件的去中心化",
       "deck.previous": "上一个状态"
     }
   };
@@ -720,7 +730,7 @@
       read: ["o1 address", "zk capsule", "preimage"]
     },
     {
-      title: "STATE 07 · PAGEDSPEND",
+      title: "STATE 08 · PAGEDSPEND",
       proof: "up to 128 Tx8x2 pages · one logical transaction",
       state: ["TX8X2 PAGES", "up to 8 inputs + 2 outputs each"],
       proofLabel: ["ONE TXID", "atomic acceptance"],
@@ -728,7 +738,7 @@
       read: ["1,020 inputs", "256 outputs", "one txid"]
     },
     {
-      title: "STATE 08 · HISTORYSTEP",
+      title: "STATE 09 · HISTORYSTEP",
       proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
       state: ["NEW TRANSITION", "BLOCK_H + STATE_H"],
       proofLabel: ["π_H", "same terminal size"],
@@ -736,7 +746,7 @@
       read: ["STATE_H", "π_H", "fixed work"]
     },
     {
-      title: "STATE 13 · PROOF-NATIVE POW",
+      title: "STATE 14 · PROOF-NATIVE POW",
       proof: "prove transition · freeze template · scan nonce",
       state: ["PROVEN BLOCK", "immutable template"],
       proofLabel: ["128-BIT NONCE", "ordering already-valid work"],
@@ -752,7 +762,7 @@
       read: ["peer data", "local verify", "independent"]
     },
     {
-      title: "STATE 14 · HARDWARE-ADAPTIVE L1",
+      title: "STATE 15 · HARDWARE-ADAPTIVE L1",
       proof: "hardware changes TPS · every node verifies everything",
       state: ["NODES ON ANY DEVICE", "each holds + verifies the entire L1"],
       proofLabel: ["ADAPTIVE TPS", "block capacity follows proving power"],
@@ -760,7 +770,7 @@
       read: ["entire L1", "adaptive TPS", "decentralized"]
     },
     {
-      title: "STATE 09 · NON-RETENTION",
+      title: "STATE 10 · NON-RETENTION",
       proof: "public present · no consensus-retained transaction graph",
       state: ["LIVE STATE", "public values · public owners"],
       proofLabel: ["CONSENSUS", "does not retain the past graph"],
@@ -768,7 +778,7 @@
       read: ["public now", "no retained graph", "external archive"]
     },
     {
-      title: "STATE 10 · PORTABLE RECEIPT",
+      title: "STATE 11 · PORTABLE RECEIPT",
       proof: "payment + Merkle path + canonical header",
       state: ["PAYMENT DATA", "txid · recipients · amounts"],
       proofLabel: ["POSEIDON2b PATH", "eight fixed levels"],
@@ -776,7 +786,7 @@
       read: ["payment", "8-level path", "canonical"]
     },
     {
-      title: "STATE 11 · FROST-GKR",
+      title: "STATE 12 · FROST-GKR",
       proof: "one binary arithmetic · end to end",
       state: ["GF(2^128) + GF(2^256)", "trace arithmetic · Fiat Shamir challenges"],
       proofLabel: ["FROST-GKR", "shared Boolean hypercubes"],
@@ -784,12 +794,20 @@
       read: ["binary tower", "10.50×", "51.67×"]
     },
     {
-      title: "STATE 12 · END TO END POST QUANTUM",
+      title: "STATE 13 · END TO END POST QUANTUM",
       proof: "wallet · transaction · state · recursive history · one security game",
       state: ["NIST PQC CATEGORY 1", "complete State validation"],
       proofLabel: ["2^173.273866314232", "half-success gate-depth floor"],
       tail: ["0.053364140323608411", "complete ideal bound < 1/2"],
       read: ["end to end", "Category 1", "proved"]
+    },
+    {
+      title: "STATE 07 · PHOTO-DERIVED KEY",
+      proof: "generate · import · or derive locally from pixels",
+      state: ["PRIVATE IMAGE", "decoded locally · never uploaded"],
+      proofLabel: ["256-BIT MASTER SECRET", "same pixels · same wallet"],
+      tail: ["KEY ID", "fingerprint before import"],
+      read: ["RGBA8 pixels", "BLAKE3 derive-key", "o1 address"]
     }
   ];
 
@@ -844,7 +862,7 @@
         read: ["адрес o1", "ZK доказательство", "знание прообраза"]
       },
       {
-        title: "СОСТОЯНИЕ 07 · PAGEDSPEND",
+        title: "СОСТОЯНИЕ 08 · PAGEDSPEND",
         proof: "до 128 страниц Tx8x2 · одна логическая транзакция",
         state: ["СТРАНИЦЫ TX8X2", "до 8 входов и 2 выходов на каждой"],
         proofLabel: ["ОДИН TXID", "транзакция принимается целиком"],
@@ -852,7 +870,7 @@
         read: ["1 020 входов", "256 выходов", "один txid"]
       },
       {
-        title: "СОСТОЯНИЕ 08 · HISTORYSTEP",
+        title: "СОСТОЯНИЕ 09 · HISTORYSTEP",
         proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
         state: ["НОВЫЙ ПЕРЕХОД", "BLOCK_H + STATE_H"],
         proofLabel: ["π_H", "размер доказательства не меняется"],
@@ -860,7 +878,7 @@
         read: ["STATE_H", "π_H", "постоянная стоимость"]
       },
       {
-        title: "СОСТОЯНИЕ 13 · PROOF-NATIVE POW",
+        title: "СОСТОЯНИЕ 14 · PROOF-NATIVE POW",
         proof: "доказать переход · зафиксировать шаблон · искать nonce",
         state: ["ДОКАЗАННЫЙ БЛОК", "неизменяемый шаблон"],
         proofLabel: ["128-БИТНЫЙ NONCE", "порядок уже корректных переходов"],
@@ -876,7 +894,7 @@
         read: ["данные пира", "локальная проверка", "независимая нода"]
       },
       {
-        title: "СОСТОЯНИЕ 14 · АДАПТИВНАЯ L1",
+        title: "СОСТОЯНИЕ 15 · АДАПТИВНАЯ L1",
         proof: "TPS зависит от железа · каждая нода проверяет всё",
         state: ["НОДЫ НА ЛЮБОМ УСТРОЙСТВЕ", "каждая хранит и проверяет всю L1"],
         proofLabel: ["АДАПТИВНЫЙ TPS", "ёмкость блока соответствует мощности железа"],
@@ -884,7 +902,7 @@
         read: ["вся L1", "адаптивный TPS", "децентрализована"]
       },
       {
-        title: "СОСТОЯНИЕ 09 · БЕЗ ПОСТОЯННОГО ХРАНЕНИЯ",
+        title: "СОСТОЯНИЕ 10 · БЕЗ ПОСТОЯННОГО ХРАНЕНИЯ",
         proof: "публичное настоящее · консенсус не хранит граф транзакций",
         state: ["ТЕКУЩЕЕ СОСТОЯНИЕ", "публичные суммы · публичные владельцы"],
         proofLabel: ["КОНСЕНСУС", "не сохраняет граф прошлых транзакций"],
@@ -892,7 +910,7 @@
         read: ["публично сейчас", "граф не хранится", "внешний архив"]
       },
       {
-        title: "СОСТОЯНИЕ 10 · ПЕРЕНОСИМЫЙ ЧЕК",
+        title: "СОСТОЯНИЕ 11 · ПЕРЕНОСИМЫЙ ЧЕК",
         proof: "платёж + Merkle-путь + канонический заголовок",
         state: ["ДАННЫЕ ПЛАТЕЖА", "txid · получатели · суммы"],
         proofLabel: ["ПУТЬ POSEIDON2b", "восемь фиксированных уровней"],
@@ -900,7 +918,7 @@
         read: ["платёж", "путь ×8", "канонический"]
       },
       {
-        title: "СОСТОЯНИЕ 11 · FROST-GKR",
+        title: "СОСТОЯНИЕ 12 · FROST-GKR",
         proof: "одна бинарная арифметика · от начала до конца",
         state: ["GF(2^128) + GF(2^256)", "арифметика трасс · вызовы Fiat Shamir"],
         proofLabel: ["FROST-GKR", "общие булевы гиперкубы"],
@@ -908,12 +926,20 @@
         read: ["бинарная башня", "10,50×", "51,67×"]
       },
       {
-        title: "СОСТОЯНИЕ 12 · СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
+        title: "СОСТОЯНИЕ 13 · СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
         proof: "кошелёк · транзакции · состояние · рекурсивная история · единая игра",
         state: ["NIST PQC CATEGORY 1", "полная проверка состояния"],
         proofLabel: ["2^173.273866314232", "граница gate-depth при вероятности успеха 1/2"],
         tail: ["0,053364140323608411", "полная идеальная оценка < 1/2"],
         read: ["от начала до конца", "Category 1", "доказано"]
+      },
+      {
+        title: "СОСТОЯНИЕ 07 · КЛЮЧ ИЗ ФОТОГРАФИИ",
+        proof: "создать · импортировать · или получить локально из пикселей",
+        state: ["ПРИВАТНОЕ ИЗОБРАЖЕНИЕ", "декодируется локально · не загружается"],
+        proofLabel: ["256-БИТНЫЙ МАСТЕР-СЕКРЕТ", "те же пиксели · тот же кошелёк"],
+        tail: ["KEY ID", "отпечаток перед импортом"],
+        read: ["пиксели RGBA8", "BLAKE3 derive-key", "адрес o1"]
       }
     ],
     zh: [
@@ -966,7 +992,7 @@
         read: ["o1 地址", "ZK capsule", "原像知识"]
       },
       {
-        title: "状态 07 · PAGEDSPEND",
+        title: "状态 08 · PAGEDSPEND",
         proof: "最多 128 个 Tx8x2 页 · 一笔逻辑交易",
         state: ["TX8X2 物理页", "每页最多 8 个输入和 2 个输出"],
         proofLabel: ["同一 TXID", "整笔交易一次接受"],
@@ -974,7 +1000,7 @@
         read: ["1,020 个输入", "256 个输出", "同一 txid"]
       },
       {
-        title: "状态 08 · HISTORYSTEP",
+        title: "状态 09 · HISTORYSTEP",
         proof: "π_H−1 + BLOCK_H + STATE_H → π_H",
         state: ["新状态转移", "BLOCK_H + STATE_H"],
         proofLabel: ["π_H", "终端证明大小不变"],
@@ -982,7 +1008,7 @@
         read: ["STATE_H", "π_H", "固定验证成本"]
       },
       {
-        title: "状态 13 · PROOF-NATIVE POW",
+        title: "状态 14 · PROOF-NATIVE POW",
         proof: "证明转移 · 冻结模板 · 搜索 nonce",
         state: ["已证明区块", "不可变模板"],
         proofLabel: ["128 位 NONCE", "只排列已有效工作"],
@@ -998,7 +1024,7 @@
         read: ["对等节点数据", "本地验证", "独立全节点"]
       },
       {
-        title: "状态 14 · 硬件自适应 L1",
+        title: "状态 15 · 硬件自适应 L1",
         proof: "TPS 随硬件调整 · 每个节点都完成完整验证",
         state: ["任意设备上的节点", "每个节点都保存并验证完整 L1"],
         proofLabel: ["自适应 TPS", "区块容量随证明能力调整"],
@@ -1006,7 +1032,7 @@
         read: ["完整 L1", "自适应 TPS", "去中心化"]
       },
       {
-        title: "状态 09 · 不永久留存",
+        title: "状态 10 · 不永久留存",
         proof: "当前公开 · 共识不保存永久交易图",
         state: ["当前状态", "金额公开 · 所有者公开"],
         proofLabel: ["共识", "不保留历史交易关系图"],
@@ -1014,7 +1040,7 @@
         read: ["此刻公开", "不留存交易图", "外部归档"]
       },
       {
-        title: "状态 10 · 可携带回执",
+        title: "状态 11 · 可携带回执",
         proof: "付款 + Merkle 路径 + 规范区块头",
         state: ["付款数据", "txid · 收款地址 · 金额"],
         proofLabel: ["POSEIDON2b 路径", "固定八层"],
@@ -1022,7 +1048,7 @@
         read: ["付款", "八层路径", "规范链"]
       },
       {
-        title: "状态 11 · FROST-GKR",
+        title: "状态 12 · FROST-GKR",
         proof: "同一种二进制算术 · 贯穿始终",
         state: ["GF(2^128) + GF(2^256)", "轨迹算术 · Fiat Shamir 挑战值"],
         proofLabel: ["FROST-GKR", "共享布尔超立方体"],
@@ -1030,17 +1056,25 @@
         read: ["二进制塔域", "10.50×", "51.67×"]
       },
       {
-        title: "状态 12 · 端到端后量子可靠性",
+        title: "状态 13 · 端到端后量子可靠性",
         proof: "钱包 · 交易 · 状态 · 递归历史 · 同一安全性游戏",
         state: ["NIST PQC CATEGORY 1", "完整状态验证"],
         proofLabel: ["2^173.273866314232", "半成功门深积下界"],
         tail: ["0.053364140323608411", "完整理想模型上界 < 1/2"],
         read: ["端到端", "Category 1", "已证明"]
+      },
+      {
+        title: "状态 07 · 照片派生密钥",
+        proof: "生成 · 导入 · 或从像素在本地派生",
+        state: ["私有图像", "仅在本机解码 · 不会上传"],
+        proofLabel: ["256 位主密钥", "相同像素 · 相同钱包"],
+        tail: ["KEY ID", "导入前的密钥指纹"],
+        read: ["RGBA8 像素", "BLAKE3 derive-key", "o1 地址"]
       }
     ]
   };
 
-  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 6, 7, 11, 12, 13, 14, 8, 10];
+  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 15, 6, 7, 11, 12, 13, 14, 8, 10];
 
   const interfaceCopy = {
     en: { next: "NEXT", current: "CURRENT STATE ✓", copied: "COPIED" },
@@ -1158,7 +1192,17 @@
       oneProofStack: "ЕДИНЫЙ PROOF STACK",
       oneProofShort: "ОДИН PROOF",
       noTrustedSetup: "БЕЗ ДОВЕРЕННОЙ НАСТРОЙКИ",
-      validityLocked: "КОРРЕКТНОСТЬ ЗАФИКСИРОВАНА ДО ХЕШРЕЙТА"
+      validityLocked: "КОРРЕКТНОСТЬ ЗАФИКСИРОВАНА ДО ХЕШРЕЙТА",
+      photoGenerate: "СОЗДАТЬ",
+      photoImport: "ИМПОРТ",
+      photoOption: "PHOTO KEY",
+      photoScan: "СКАНИРОВАНИЕ ПИКСЕЛЕЙ",
+      photoCanonical: "КАНОНИЧЕСКИЙ RGBA8",
+      photoDerive: "BLAKE3 · DERIVE KEY",
+      photoSecret: "МАСТЕР-СЕКРЕТ · 256 БИТ",
+      photoSame: "ТЕ ЖЕ ПИКСЕЛИ · ТОТ ЖЕ КОШЕЛЁК",
+      photoAddress: "АДРЕС O1",
+      photoLocal: "ЛОКАЛЬНО · БЕЗ ЗАГРУЗКИ"
     },
     zh: {
       proveLocally: "本地生成证明",
@@ -1251,7 +1295,17 @@
       oneProofStack: "单一证明栈",
       oneProofShort: "单一证明",
       noTrustedSetup: "无需可信设置",
-      validityLocked: "有效性在算力介入前已经锁定"
+      validityLocked: "有效性在算力介入前已经锁定",
+      photoGenerate: "生成",
+      photoImport: "导入",
+      photoOption: "PHOTO KEY",
+      photoScan: "扫描像素",
+      photoCanonical: "规范 RGBA8",
+      photoDerive: "BLAKE3 · DERIVE KEY",
+      photoSecret: "主密钥 · 256 位",
+      photoSame: "相同像素 · 相同钱包",
+      photoAddress: "O1 地址",
+      photoLocal: "本地处理 · 不上传"
     }
   };
 
@@ -1285,6 +1339,9 @@
   }
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const PHOTO_KEY_STEP = 7;
+  const SOUNDNESS_STEP = 13;
+  const PHOTO_KEY_DURATION = 2350;
   const hashIndex = chapters.findIndex((chapter) => `#${chapter.id}` === window.location.hash);
   let current = hashIndex >= 0 ? hashIndex : 0;
   if (window.location.hash) {
@@ -1787,6 +1844,11 @@
       requestAnimationFrame(() => requestAnimationFrame(() => {
         chapters.forEach((chapter) => { chapter.style.removeProperty("transition"); });
       }));
+      window.setTimeout(() => {
+        syncMobileSceneLayouts({ immediate: true });
+        scene.resize();
+        scene.syncPlayback({ render: true });
+      }, 160);
     }
   }
 
@@ -1972,6 +2034,18 @@
       this.blockCycle = 5600;
       this.nextBlockAt = startedAt + 1750;
       this.photo = null;
+      this.photoKeyStartedAt = reducedMotion.matches ? startedAt - PHOTO_KEY_DURATION : startedAt;
+      this.photoKeyImageReady = false;
+      this.photoKeyImage = new Image();
+      this.photoKeyImage.decoding = "async";
+      this.photoKeyImage.addEventListener("load", () => {
+        this.photoKeyImageReady = true;
+        if (this.step === PHOTO_KEY_STEP) {
+          this.staticStepRendered = false;
+          this.syncPlayback({ render: true });
+        }
+      });
+      this.photoKeyImage.src = "assets/photo-key-demo.webp";
       this.overflowBlock = null;
       this.tailShiftAt = -99999;
       this.proofBurstAt = -99999;
@@ -2070,6 +2144,9 @@
       this.fromStep = reducedMotion.matches ? step : fromStep;
       this.step = step;
       this.transitionAt = reducedMotion.matches ? now - 720 : now;
+      if (step === PHOTO_KEY_STEP) {
+        this.photoKeyStartedAt = reducedMotion.matches ? now - PHOTO_KEY_DURATION : now;
+      }
       this.staticStepRendered = false;
       this.syncPlayback({ render: true });
     }
@@ -2088,7 +2165,11 @@
 
     shouldAnimate(now = performance.now()) {
       if (reducedMotion.matches || this.playbackBlocked()) return false;
-      return this.step !== 12 || this.transitioning(now);
+      if (this.step === SOUNDNESS_STEP) return this.transitioning(now);
+      if (this.step === PHOTO_KEY_STEP) {
+        return this.transitioning(now) || now - this.photoKeyStartedAt < PHOTO_KEY_DURATION;
+      }
+      return true;
     }
 
     start() {
@@ -2111,7 +2192,7 @@
       this.stop();
       if (render && !this.playbackBlocked()) {
         this.draw(performance.now());
-        this.staticStepRendered = this.step === 12;
+        this.staticStepRendered = this.step === SOUNDNESS_STEP || this.step === PHOTO_KEY_STEP;
       }
     }
 
@@ -2120,7 +2201,8 @@
       if (this.playbackBlocked()) return;
 
       const transitioning = this.transitioning(now);
-      if (this.step === 12 && !transitioning) {
+      const photoKeyComplete = this.step === PHOTO_KEY_STEP && now - this.photoKeyStartedAt >= PHOTO_KEY_DURATION;
+      if ((this.step === SOUNDNESS_STEP || photoKeyComplete) && !transitioning) {
         if (!this.staticStepRendered) this.draw(now);
         this.staticStepRendered = true;
         return;
@@ -2177,6 +2259,7 @@
         this.drawProofFlow,
         this.drawLivingState,
         this.drawOwnership,
+        this.drawPhotoKey,
         this.drawPagedSpend,
         this.drawHistoryStep,
         this.drawPrivacy,
@@ -3637,6 +3720,299 @@
         this.text("POSEIDON2B", mid, y + radius + 23, "rgba(194,170,255,.62)", labelSize);
         this.text(canvasText("o1Address", "O1 ADDRESS"), right, y + radius + 23, "rgba(115,255,197,.58)", labelSize);
         this.text(canvasText("zeroKnowledgeProof", "ZERO-KNOWLEDGE PROOF"), right, y - radius - 23, "rgba(194,170,255,.72)", labelSize);
+      }
+    }
+
+    drawPhotoKey(now) {
+      const l = this.layout();
+      const ctx = this.ctx;
+      if (this.w < 40 || this.h < 48) return;
+      const elapsed = reducedMotion.matches
+        ? PHOTO_KEY_DURATION
+        : Math.max(0, now - this.photoKeyStartedAt);
+      const progress = Math.max(0, Math.min(1, elapsed / PHOTO_KEY_DURATION));
+      const scanProgress = this.ease((progress - .06) / .62);
+      const coreProgress = this.ease((progress - .31) / .30);
+      const secretProgress = this.ease((progress - .50) / .38);
+      const finalProgress = this.ease((progress - .76) / .18);
+
+      let left;
+      let right;
+      let top;
+      let bottom;
+      if (l.mobile) {
+        left = this.w * .06;
+        right = this.w * .94;
+        top = this.h * .04;
+        bottom = this.h * .94;
+      } else {
+        const stage = this.desktopStageBounds();
+        const contentEdge = this.contentRight("#photo-key h2, #photo-key .lead, #photo-key .chapter-actions .action");
+        left = Math.max(this.w * (l.compact ? .565 : .475), contentEdge + (l.compact ? 22 : 38));
+        right = this.w * (l.compact ? .94 : .91);
+        top = stage.top + Math.max(15, (stage.bottom - stage.top) * .07);
+        bottom = stage.bottom - Math.max(17, (stage.bottom - stage.top) * .06);
+      }
+
+      const width = Math.max(1, right - left);
+      const height = Math.max(1, bottom - top);
+      const optionHeight = l.mobile ? Math.max(19, Math.min(24, height * .13)) : 32;
+      const optionGap = l.mobile ? 5 : 8;
+      const optionRowGap = l.mobile ? Math.max(9, Math.min(12, height * .055)) : 18;
+      const optionWidth = Math.min(width, l.mobile ? 260 : 330);
+      const generateWidth = optionWidth * .28;
+      const importWidth = optionWidth * .25;
+      const photoWidth = optionWidth - generateWidth - importWidth - optionGap * 2;
+      const visualBottom = bottom - (l.mobile ? 1 : 28);
+      const visualHeight = Math.max(24, visualBottom - top - optionHeight - optionRowGap);
+      const photoFrameWidth = Math.max(
+        30,
+        Math.min(
+          l.mobile ? 72 : (l.compact ? 108 : 142),
+          width * (l.mobile ? .25 : .29),
+          visualHeight * .75
+        )
+      );
+      const photoFrameHeight = photoFrameWidth * 4 / 3;
+      const groupHeight = optionHeight + optionRowGap + photoFrameHeight;
+      const groupTop = top + Math.max(0, (visualBottom - top - groupHeight) / 2);
+      const optionY = groupTop;
+      const photoX = left;
+      const photoY = optionY + optionHeight + optionRowGap;
+      const centerY = photoY + photoFrameHeight / 2;
+      const scanY = photoY + photoFrameHeight * scanProgress;
+      let optionX = left + (width - optionWidth) / 2;
+      const optionTextSize = l.mobile ? Math.max(5.4, Math.min(7, optionHeight * .31)) : 8.8;
+      const options = [
+        [canvasText("photoGenerate", "GENERATE"), generateWidth, false],
+        [canvasText("photoImport", "IMPORT"), importWidth, false],
+        [canvasText("photoOption", "PHOTO KEY"), photoWidth, true]
+      ];
+      options.forEach(([label, optionCellWidth, active]) => {
+        this.roundedRect(
+          optionX,
+          optionY,
+          optionCellWidth,
+          optionHeight,
+          optionHeight / 2,
+          active ? "rgba(194,170,255,.72)" : "rgba(115,255,197,.16)",
+          active ? "rgba(194,170,255,.12)" : "rgba(4,18,14,.42)",
+          active ? 1.1 : .8
+        );
+        this.text(
+          label,
+          optionX + optionCellWidth / 2,
+          optionY + optionHeight / 2 + .3,
+          active ? "rgba(223,213,255,.95)" : "rgba(154,177,167,.55)",
+          optionTextSize
+        );
+        optionX += optionCellWidth + optionGap;
+      });
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(photoX, photoY, photoFrameWidth, photoFrameHeight);
+      ctx.clip();
+      ctx.fillStyle = "rgba(4,13,12,.88)";
+      ctx.fillRect(photoX, photoY, photoFrameWidth, photoFrameHeight);
+      if (this.photoKeyImageReady) {
+        ctx.globalAlpha *= .38;
+        ctx.drawImage(this.photoKeyImage, photoX, photoY, photoFrameWidth, photoFrameHeight);
+        ctx.globalAlpha /= .38;
+        ctx.fillStyle = "rgba(2,11,9,.38)";
+        ctx.fillRect(photoX, photoY, photoFrameWidth, photoFrameHeight);
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(photoX, photoY, photoFrameWidth, photoFrameHeight * scanProgress);
+        ctx.clip();
+        ctx.globalAlpha *= .92;
+        ctx.drawImage(this.photoKeyImage, photoX, photoY, photoFrameWidth, photoFrameHeight);
+        ctx.globalAlpha /= .92;
+        ctx.fillStyle = "rgba(115,255,197,.045)";
+        ctx.fillRect(photoX, photoY, photoFrameWidth, photoFrameHeight * scanProgress);
+        ctx.restore();
+      } else {
+        const placeholder = ctx.createLinearGradient(photoX, photoY, photoX, photoY + photoFrameHeight);
+        placeholder.addColorStop(0, "rgba(194,170,255,.12)");
+        placeholder.addColorStop(1, "rgba(115,255,197,.05)");
+        ctx.fillStyle = placeholder;
+        ctx.fillRect(photoX, photoY, photoFrameWidth, photoFrameHeight);
+      }
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(photoX, photoY, photoFrameWidth, Math.max(0, photoFrameHeight * scanProgress));
+      ctx.clip();
+      ctx.strokeStyle = "rgba(191,247,255,.12)";
+      ctx.lineWidth = .55;
+      const gridStep = Math.max(7, photoFrameWidth / 7);
+      for (let x = photoX + gridStep; x < photoX + photoFrameWidth; x += gridStep) {
+        ctx.beginPath();
+        ctx.moveTo(x, photoY);
+        ctx.lineTo(x, photoY + photoFrameHeight);
+        ctx.stroke();
+      }
+      for (let y = photoY + gridStep; y < photoY + photoFrameHeight; y += gridStep) {
+        ctx.beginPath();
+        ctx.moveTo(photoX, y);
+        ctx.lineTo(photoX + photoFrameWidth, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      const statusHeight = Math.max(10, Math.min(l.mobile ? 14 : 18, photoFrameHeight * .14));
+      ctx.fillStyle = "rgba(1,8,7,.78)";
+      ctx.fillRect(photoX, photoY + photoFrameHeight - statusHeight, photoFrameWidth, statusHeight);
+      ctx.restore();
+
+      this.roundedRect(
+        photoX,
+        photoY,
+        photoFrameWidth,
+        photoFrameHeight,
+        l.mobile ? 4 : 6,
+        "rgba(115,255,197,.42)",
+        null,
+        1
+      );
+
+      const scanLineAlpha = 1 - this.ease((progress - .78) / .13);
+      if (scanLineAlpha > .01) {
+        ctx.save();
+        ctx.globalAlpha *= scanLineAlpha;
+        const scanGlow = ctx.createLinearGradient(photoX, scanY - 10, photoX, scanY + 7);
+        scanGlow.addColorStop(0, "rgba(115,255,197,0)");
+        scanGlow.addColorStop(.72, "rgba(115,255,197,.20)");
+        scanGlow.addColorStop(1, "rgba(115,255,197,0)");
+        ctx.fillStyle = scanGlow;
+        ctx.fillRect(photoX, scanY - 10, photoFrameWidth, 17);
+        this.line([[photoX, scanY], [photoX + photoFrameWidth, scanY]], "rgba(115,255,197,.95)", 1, 9);
+        ctx.restore();
+      }
+
+      const corner = l.mobile ? 5 : 8;
+      const bracket = "rgba(191,247,255,.78)";
+      this.line([[photoX, photoY + corner], [photoX, photoY], [photoX + corner, photoY]], bracket, 1);
+      this.line([[photoX + photoFrameWidth - corner, photoY], [photoX + photoFrameWidth, photoY], [photoX + photoFrameWidth, photoY + corner]], bracket, 1);
+      this.line([[photoX, photoY + photoFrameHeight - corner], [photoX, photoY + photoFrameHeight], [photoX + corner, photoY + photoFrameHeight]], bracket, 1);
+      this.line([[photoX + photoFrameWidth - corner, photoY + photoFrameHeight], [photoX + photoFrameWidth, photoY + photoFrameHeight], [photoX + photoFrameWidth, photoY + photoFrameHeight - corner]], bracket, 1);
+
+      const scanLabel = scanProgress < 1
+        ? `${canvasText("photoScan", "SCANNING PIXELS")} · ${Math.round(scanProgress * 100)}%`
+        : canvasText("photoCanonical", "CANONICAL RGBA8");
+      this.text(
+        scanLabel,
+        photoX + photoFrameWidth / 2,
+        photoY + photoFrameHeight - statusHeight / 2,
+        "rgba(191,247,255,.88)",
+        l.mobile ? Math.max(3.7, Math.min(5, photoFrameWidth / 15)) : 6.2
+      );
+
+      if (!l.mobile || this.h >= 132) {
+        this.text(
+          canvasText("photoLocal", "LOCAL · NO UPLOAD"),
+          photoX + photoFrameWidth / 2,
+          photoY - (l.mobile ? 6 : 12),
+          "rgba(115,255,197,.58)",
+          l.mobile ? 4.6 : 6.6
+        );
+      }
+
+      const coreX = left + width * (l.mobile ? .52 : .54);
+      const coreSize = Math.max(18, Math.min(l.mobile ? 36 : 54, width * .14, visualHeight * .30));
+      const photoEdge = photoX + photoFrameWidth;
+      const coreEdge = coreX - coreSize / 2;
+      this.line([[photoEdge, centerY], [coreEdge, centerY]], "rgba(115,255,197,.16)", .9);
+      if (coreProgress > .01) {
+        const relayX = photoEdge + (coreEdge - photoEdge) * coreProgress;
+        this.dot(relayX, centerY, l.mobile ? 1.2 : 1.8, "#73ffc5", l.mobile ? 4 : 8);
+      }
+
+      ctx.save();
+      ctx.translate(coreX, centerY);
+      ctx.rotate((progress - .5) * .5);
+      ctx.globalAlpha *= .25 + coreProgress * .75;
+      for (let ring = 0; ring < 3; ring += 1) {
+        const inset = ring * coreSize * .16;
+        ctx.strokeStyle = ring === 0 ? "rgba(194,170,255,.82)" : `rgba(194,170,255,${.46 - ring * .10})`;
+        ctx.lineWidth = ring === 0 ? 1.1 : .7;
+        ctx.strokeRect(-coreSize / 2 + inset, -coreSize / 2 + inset, coreSize - inset * 2, coreSize - inset * 2);
+      }
+      ctx.restore();
+      this.text("B3", coreX, centerY, "rgba(223,213,255,.92)", l.mobile ? 6 : 8.5);
+      if (!l.mobile || this.h >= 145) {
+        this.text(
+          canvasText("photoDerive", "BLAKE3 · DERIVE KEY"),
+          coreX,
+          centerY + coreSize / 2 + (l.mobile ? 7 : 13),
+          "rgba(194,170,255,.62)",
+          l.mobile ? 4.2 : 6.4
+        );
+      }
+
+      const gridColumns = 8;
+      const gridRows = 4;
+      const cellGap = l.mobile ? 1.1 : 1.8;
+      const secretAreaLeft = left + width * (l.mobile ? .68 : .70);
+      const secretAreaWidth = Math.max(20, right - secretAreaLeft);
+      const cellSize = Math.max(
+        2.8,
+        Math.min(
+          l.mobile ? 8 : 11,
+          (secretAreaWidth - cellGap * (gridColumns - 1)) / gridColumns,
+          (visualHeight * .47 - cellGap * (gridRows - 1)) / gridRows
+        )
+      );
+      const secretWidth = cellSize * gridColumns + cellGap * (gridColumns - 1);
+      const secretHeight = cellSize * gridRows + cellGap * (gridRows - 1);
+      const secretX = right - secretWidth;
+      const secretY = centerY - secretHeight / 2;
+      const secretEdge = secretX;
+      this.line([[coreX + coreSize / 2, centerY], [secretEdge, centerY]], "rgba(194,170,255,.17)", .9);
+      if (secretProgress > .01) {
+        const relayX = coreX + coreSize / 2 + (secretEdge - coreX - coreSize / 2) * secretProgress;
+        this.dot(relayX, centerY, l.mobile ? 1.2 : 1.8, "#c2aaff", l.mobile ? 4 : 8);
+      }
+
+      for (let index = 0; index < gridColumns * gridRows; index += 1) {
+        const col = index % gridColumns;
+        const row = Math.floor(index / gridColumns);
+        const x = secretX + col * (cellSize + cellGap);
+        const y = secretY + row * (cellSize + cellGap);
+        const threshold = (index + 1) / (gridColumns * gridRows);
+        const revealed = secretProgress >= threshold;
+        const violet = this.random(4700 + index * 17) > .72;
+        ctx.fillStyle = revealed
+          ? (violet ? "rgba(194,170,255,.56)" : "rgba(115,255,197,.50)")
+          : "rgba(115,255,197,.018)";
+        ctx.strokeStyle = revealed ? "rgba(191,247,255,.40)" : "rgba(115,255,197,.11)";
+        ctx.lineWidth = .65;
+        ctx.fillRect(x, y, cellSize, cellSize);
+        ctx.strokeRect(x, y, cellSize, cellSize);
+      }
+
+      this.text(
+        canvasText("photoSecret", "MASTER SECRET · 256 BIT"),
+        secretX + secretWidth / 2,
+        secretY - (l.mobile ? 6 : 13),
+        secretProgress > .05 ? "rgba(115,255,197,.82)" : "rgba(115,255,197,.22)",
+        l.mobile ? 4.4 : 6.8
+      );
+
+      if (!l.mobile || this.h >= 128) {
+        this.text(
+          canvasText("photoSame", "SAME PIXELS · SAME WALLET"),
+          secretX + secretWidth / 2,
+          secretY + secretHeight + (l.mobile ? 7 : 13),
+          `rgba(191,247,255,${.18 + finalProgress * .55})`,
+          l.mobile ? 4.1 : 6.5
+        );
+      }
+
+      if (!l.mobile) {
+        const footerY = bottom - 5;
+        this.text("KEY ID · 9797·9fd6·57ba·9ad9", left, footerY, `rgba(194,170,255,${.18 + finalProgress * .62})`, 7, "left");
+        this.text(canvasText("photoAddress", "O1 ADDRESS"), right, footerY, `rgba(115,255,197,${.18 + finalProgress * .56})`, 7, "right");
       }
     }
 
