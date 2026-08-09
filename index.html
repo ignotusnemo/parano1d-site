@@ -215,7 +215,7 @@
       z-index: 29;
       top: calc(max(18px, env(safe-area-inset-top)) + 76px);
       left: 50%;
-      width: min(600px, calc(100% - 64px));
+      width: min(760px, calc(100% - 64px));
       min-height: 34px;
       padding: 6px 38px 6px 30px;
       display: flex;
@@ -254,7 +254,7 @@
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       gap: 8px;
       color: var(--dim);
       font: 680 10px/1.25 ui-monospace, monospace;
@@ -275,6 +275,14 @@
       width: 1px;
       height: 12px;
       background: var(--line-strong);
+    }
+
+    .launch-notice-links {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
     }
 
     .launch-notice-contact {
@@ -301,6 +309,16 @@
     .launch-notice-contact:focus-visible { outline: 1px solid var(--mint); outline-offset: 4px; }
     .launch-notice-contact.is-copied [data-copy-feedback] { color: var(--mint); }
     .launch-notice-email { color: var(--mint); letter-spacing: 0; text-transform: none; }
+    .launch-notice-github {
+      flex: 0 0 auto;
+      color: var(--mint);
+      letter-spacing: 0;
+      text-decoration: none;
+      text-transform: none;
+      white-space: nowrap;
+    }
+    .launch-notice-github:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .launch-notice-github:focus-visible { outline: 1px solid var(--mint); outline-offset: 4px; }
     .email-copy-icon {
       width: 12px;
       height: 12px;
@@ -626,6 +644,14 @@
     }
 
     .repository-gate-meta p { margin: 0; }
+    .repository-gate-meta a {
+      color: var(--mint);
+      letter-spacing: 0;
+      text-decoration: none;
+      text-transform: none;
+    }
+    .repository-gate-meta a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .repository-gate-meta a:focus-visible { outline: 1px solid var(--mint); outline-offset: 3px; }
     .repository-gate-email {
       appearance: none;
       padding: 0;
@@ -1922,10 +1948,13 @@
       .launch-notice-copy {
         flex-direction: column;
         align-items: flex-start;
+        justify-content: flex-start;
         gap: 2px;
         font-size: 8.5px;
       }
       .launch-notice-separator { display: none; }
+      .launch-notice-links { gap: 6px; }
+      .launch-notice-links .launch-notice-separator { display: block; }
       .chapter { padding-top: calc(84px + env(safe-area-inset-top) + var(--launch-content-offset)); }
       .chapter-index { margin-bottom: 12px; }
       h1, .chapter h2 { font-size: clamp(43px, 12.4vw, 58px); line-height: .92; }
@@ -2256,9 +2285,13 @@
 
     <aside class="launch-notice" id="launch-notice" aria-label="Network launch announcement" data-i18n-aria="announcement.label">
       <div class="launch-notice-copy">
-        <strong data-i18n="announcement.launch">Public network launch · August 2026</strong>
+        <strong data-i18n="announcement.launch">Public network launch · Aug 12, 2026</strong>
         <span class="launch-notice-separator" aria-hidden="true"></span>
-        <button class="launch-notice-contact" type="button" data-copy-email="dev@parano1d.org"><span data-i18n="announcement.contact" data-copy-feedback data-copy-restore-key="announcement.contact" aria-live="polite">Contact developer</span><span aria-hidden="true">·</span><span class="launch-notice-email">dev@parano1d.org</span><span class="visually-hidden" data-i18n="announcement.copyAction">— copy email address</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button>
+        <span class="launch-notice-links">
+          <button class="launch-notice-contact" type="button" data-copy-email="dev@parano1d.org"><span data-i18n="announcement.contact" data-copy-feedback data-copy-restore-key="announcement.contact" aria-live="polite">Contact</span><span aria-hidden="true">·</span><span class="launch-notice-email">dev@parano1d.org</span><span class="visually-hidden" data-i18n="announcement.copyAction">— copy email address</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button>
+          <span class="launch-notice-separator" aria-hidden="true"></span>
+          <a class="launch-notice-github" href="https://github.com/ignotusnemo" target="_blank" rel="noopener noreferrer" data-i18n="announcement.github">GitHub</a>
+        </span>
       </div>
       <button class="launch-notice-close" id="launch-notice-close" type="button" aria-label="Dismiss announcement" data-i18n-aria="announcement.dismiss">
         <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2L2 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -2532,8 +2565,9 @@
       <h2 id="repository-gate-title" data-i18n="repositoryGate.title">Code opens before launch.</h2>
       <p class="repository-gate-copy" data-i18n="repositoryGate.copy">The core repository remains private during the final preparation stage. The code for the upcoming release will be published before the public network launches.</p>
       <div class="repository-gate-meta">
-        <p data-i18n="repositoryGate.launch">Public network launch · August 2026</p>
-        <p><span data-i18n="repositoryGate.contact">Contact developer</span> · <button class="repository-gate-email" type="button" data-copy-email="dev@parano1d.org"><span data-copy-feedback aria-live="polite">dev@parano1d.org</span><span class="visually-hidden" data-i18n="announcement.copyAction">— copy email address</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button></p>
+        <p data-i18n="repositoryGate.launch">Public network launch · Aug 12, 2026</p>
+        <p><span data-i18n="repositoryGate.contact">Contact Developer</span> · <button class="repository-gate-email" type="button" data-copy-email="dev@parano1d.org"><span data-copy-feedback aria-live="polite">dev@parano1d.org</span><span class="visually-hidden" data-i18n="announcement.copyAction">— copy email address</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button></p>
+        <p><span data-i18n="repositoryGate.github">GitHub</span> · <a href="https://github.com/ignotusnemo" target="_blank" rel="noopener noreferrer">github.com/ignotusnemo</a></p>
       </div>
       <button class="repository-gate-dismiss" id="repository-gate-dismiss" type="button" data-i18n="repositoryGate.dismiss">Close</button>
     </div>
