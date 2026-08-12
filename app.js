@@ -30,14 +30,14 @@
   let mobileSceneLayoutFrame = 0;
   let viewportSettleFrame = 0;
 
-  // Disable this single flag when the core repository becomes public.
-  const PRIVATE_REPOSITORY_GATE = true;
+  // The core repository is public. GitHub links navigate directly.
+  const PRIVATE_REPOSITORY_GATE = false;
   let repositoryGateLastFocus = null;
   let repositoryGateCloseTimer = 0;
   let repositoryGateAddedAppInert = false;
   let repositoryGateAddedDownloadsInert = false;
 
-  const launchNoticeStorageKey = "parano1d-public-network-2026-08-dismissed";
+  const launchNoticeStorageKey = "parano1d-mainnet-live-0.1.0-dismissed";
   try {
     if (localStorage.getItem(launchNoticeStorageKey) === "1") {
       launchNotice.hidden = true;
@@ -270,12 +270,7 @@
   const translations = {
     ru: {
       "brand.home": "Главная ParanO(1)d",
-      "announcement.label": "Объявление о запуске сети",
-      "announcement.launch": "Запуск публичной сети · 12 августа 2026",
-      "announcement.contact": "Контакт",
-      "announcement.github": "GitHub",
       "announcement.copyAction": "— скопировать адрес электронной почты",
-      "announcement.dismiss": "Закрыть объявление",
       "nav.language": "Язык",
       "nav.menu": "Меню",
       "nav.downloads": "Загрузки",
@@ -476,12 +471,7 @@
     },
     zh: {
       "brand.home": "ParanO(1)d 首页",
-      "announcement.label": "网络启动公告",
-      "announcement.launch": "公网启动 · 2026 年 8 月 12 日",
-      "announcement.contact": "联系",
-      "announcement.github": "GitHub",
       "announcement.copyAction": "— 复制邮箱地址",
-      "announcement.dismiss": "关闭公告",
       "nav.language": "语言",
       "nav.menu": "菜单",
       "nav.downloads": "下载",
@@ -1580,7 +1570,7 @@
       const oldTimer = emailCopyTimers.get(control);
       if (oldTimer) clearTimeout(oldTimer);
       control.classList.add("is-copied");
-      feedback.textContent = interfaceCopy[language].copied;
+      feedback.textContent = control.dataset.copySuccess || interfaceCopy[language].copied;
 
       const timer = window.setTimeout(() => {
         const restoreKey = feedback.dataset.copyRestoreKey;
@@ -1637,11 +1627,14 @@
         if (!tag || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
 
         const assets = new Map(release.assets.map((asset) => [asset.name, asset.browser_download_url]));
-        document.querySelectorAll("[data-release-pattern]").forEach((link) => {
+        const releaseLinks = [...document.querySelectorAll("[data-release-pattern]")];
+        const resolvedAssets = releaseLinks.map((link) => {
           const expectedName = link.dataset.releasePattern.replace("{tag}", tag);
-          const downloadUrl = assets.get(expectedName);
-          if (downloadUrl) link.href = downloadUrl;
+          return [link, assets.get(expectedName)];
         });
+        if (resolvedAssets.some(([, downloadUrl]) => !downloadUrl)) return;
+
+        resolvedAssets.forEach(([link, downloadUrl]) => { link.href = downloadUrl; });
         document.querySelectorAll("[data-release-page]").forEach((link) => {
           if (release.html_url) link.href = release.html_url;
         });
