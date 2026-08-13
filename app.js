@@ -37,7 +37,8 @@
   let repositoryGateAddedAppInert = false;
   let repositoryGateAddedDownloadsInert = false;
 
-  const launchNoticeStorageKey = "parano1d-mainnet-live-0.1.0-dismissed";
+  const launchNoticeStorageKey = "parano1d-mainnet-launch-2026-08-13-dismissed";
+  const downloadsReleaseTag = "v1.0.0";
   try {
     if (localStorage.getItem(launchNoticeStorageKey) === "1") {
       launchNotice.hidden = true;
@@ -1624,7 +1625,7 @@
         if (!response.ok) return;
         const release = await response.json();
         const tag = typeof release.tag_name === "string" ? release.tag_name : "";
-        if (!tag || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
+        if (tag !== downloadsReleaseTag || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
 
         const assets = new Map(release.assets.map((asset) => [asset.name, asset.browser_download_url]));
         const releaseLinks = [...document.querySelectorAll("[data-release-pattern]")];
