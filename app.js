@@ -38,7 +38,7 @@
   let repositoryGateAddedDownloadsInert = false;
 
   const launchNoticeStorageKey = "parano1d-testnet-live-2026-08-13-dismissed";
-  const downloadsReleaseTag = "v1.0.1";
+  const downloadsReleaseTag = "v2.0.1";
   try {
     if (localStorage.getItem(launchNoticeStorageKey) === "1") {
       launchNotice.hidden = true;
