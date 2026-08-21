@@ -37,8 +37,8 @@
   let repositoryGateAddedAppInert = false;
   let repositoryGateAddedDownloadsInert = false;
 
-  const launchNoticeStorageKey = "parano1d-mainnet-launch-2026-08-21-dismissed";
-  const downloadsReleaseTag = "v2.1.0";
+  const launchNoticeStorageKey = "parano1d-mainnet-live-dismissed";
+  const downloadsReleaseTag = "v1.0.0";
   try {
     if (localStorage.getItem(launchNoticeStorageKey) === "1") {
       launchNotice.hidden = true;
@@ -429,7 +429,7 @@
       "pow.title": "Сначала докажи.<br><em>Потом майни.</em>",
       "pow.lead": "PoW только определяет порядок уже доказанных переходов. Майнер завершает не зависящее от nonce доказательство блока, фиксирует неизменяемый шаблон и перебирает лишь 128-битный nonce.",
       "pow.target.label": "Цель блока",
-      "pow.target.value": "<strong>В среднем 15 секунд</strong> · сложность ASERT",
+      "pow.target.value": "<strong>В среднем 20 секунд</strong> · сложность ASERT",
       "pow.role.label": "Роль PoW",
       "pow.role.value": "<strong>Канонический порядок доказанных переходов</strong>",
       "pow.boundary.label": "Граница доказательства",
@@ -630,7 +630,7 @@
       "pow.title": "先证明。<br><em>再挖矿。</em>",
       "pow.lead": "PoW 只负责排列已被证明有效的状态转移。矿工先完成与 nonce 无关的区块证明，冻结不可变模板，然后只搜索 128 位 nonce。",
       "pow.target.label": "出块目标",
-      "pow.target.value": "<strong>平均 15 秒</strong> · ASERT 难度",
+      "pow.target.value": "<strong>平均 20 秒</strong> · ASERT 难度",
       "pow.role.label": "PoW 的作用",
       "pow.role.value": "<strong>确定已证明状态转移的规范顺序</strong>",
       "pow.boundary.label": "证明边界",
@@ -743,7 +743,7 @@
       proof: "prove transition · freeze template · scan nonce",
       state: ["PROVEN BLOCK", "immutable template"],
       proofLabel: ["128-BIT NONCE", "ordering already-valid work"],
-      tail: ["ASERT", "complete block interval · 15-second mean"],
+      tail: ["ASERT", "complete block interval · 20-second mean"],
       read: ["B25 · m22", "template locked", "pow"]
     },
     {
@@ -875,7 +875,7 @@
         proof: "доказать переход · зафиксировать шаблон · искать nonce",
         state: ["ДОКАЗАННЫЙ БЛОК", "неизменяемый шаблон"],
         proofLabel: ["128-БИТНЫЙ NONCE", "порядок уже корректных переходов"],
-        tail: ["ASERT", "полный интервал блока · средняя цель 15 секунд"],
+        tail: ["ASERT", "полный интервал блока · средняя цель 20 секунд"],
         read: ["B25 · m22", "шаблон зафиксирован", "PoW"]
       },
       {
@@ -1005,7 +1005,7 @@
         proof: "证明转移 · 冻结模板 · 搜索 nonce",
         state: ["已证明区块", "不可变模板"],
         proofLabel: ["128 位 NONCE", "只排列已有效工作"],
-        tail: ["ASERT", "完整区块间隔 · 平均目标 15 秒"],
+        tail: ["ASERT", "完整区块间隔 · 平均目标 20 秒"],
         read: ["B25 · m22", "模板已锁定", "pow"]
       },
       {
@@ -1132,7 +1132,7 @@
       proven: "ДОКАЗАН",
       template: "ШАБЛОН",
       nonceOnly: "ИЩЕМ ТОЛЬКО NONCE",
-      asert: "15 с · ASERT",
+      asert: "20 с · ASERT",
       liveState: "ТЕКУЩЕЕ СОСТОЯНИЕ",
       liveStateShort: "СОСТОЯНИЕ",
       terminalProof: "ТЕРМИНАЛЬНОЕ ДОКАЗАТЕЛЬСТВО",
@@ -1243,7 +1243,7 @@
       proven: "已证明",
       template: "模板",
       nonceOnly: "仅搜索 NONCE",
-      asert: "15 秒 · ASERT",
+      asert: "20 秒 · ASERT",
       liveState: "当前状态",
       liveStateShort: "状态",
       terminalProof: "终端证明",
@@ -4786,7 +4786,7 @@
       }
       this.text(canvasText("nonceOnly", "NONCE ONLY"), nonceX, y + (l.mobile ? 64 : 82), "rgba(115,255,197,.58)", l.mobile ? 7 : 8);
       if (!l.mobile) {
-        this.text(canvasText("asert", "15 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
+        this.text(canvasText("asert", "20 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
       }
     }
 
