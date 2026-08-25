@@ -109,6 +109,17 @@
       "tags": ["BLOCK EXPLORER", "STATE ANALYTICS"]
     },
     {
+      "id": "parano1d-pool-explorer",
+      "category": "analytics",
+      "name": "Parano1d Explorer",
+      "description": "Read-only community explorer for blocks, transactions, addresses, UTXOs and network data.",
+      "maintainer": "lucasan123",
+      "url": "https://parano1d-pool.fun/explorer/",
+      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/18",
+      "source": "closed",
+      "tags": ["BLOCK EXPLORER", "NETWORK DATA"]
+    },
+    {
       "id": "ethereum-research",
       "category": "research",
       "name": "Ethereum Research",
