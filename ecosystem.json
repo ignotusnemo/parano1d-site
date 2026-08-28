@@ -56,6 +56,28 @@
       "tags": ["SELF-HOSTED", "SOLO", "STRATUM V2"]
     },
     {
+      "id": "innovlab-pool",
+      "category": "pools",
+      "name": "InnovLab Pool",
+      "description": "Public NOID mining pool with live network, miner, block and payout statistics.",
+      "maintainer": "InnovLab",
+      "url": "https://noid.innovlab.cc/",
+      "supportUrl": "https://discord.gg/NDVsmSJ72X",
+      "source": "closed",
+      "tags": ["PUBLIC POOL"]
+    },
+    {
+      "id": "nurserypool",
+      "category": "pools",
+      "name": "NurseryPool",
+      "description": "Public address-based NOID mining pool with PPLNS accounting, automatic payouts and setup instructions.",
+      "maintainer": "NurseryPool",
+      "url": "https://noid.nurserypool.com/",
+      "supportUrl": "https://discord.gg/uqEJjUeuNX",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PPLNS"]
+    },
+    {
       "id": "ariaminer-noid",
       "category": "miners",
       "name": "AriaMiner NOID",
@@ -97,6 +119,28 @@
       "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/23",
       "source": "closed",
       "tags": ["GPU", "PRE-RELEASE", "STRATUM V2"]
+    },
+    {
+      "id": "invminer",
+      "category": "miners",
+      "name": "INVminer",
+      "description": "Binary CPU and NVIDIA GPU miner for InnovLab Pool on Linux and HiveOS.",
+      "maintainer": "InnovLab",
+      "url": "https://github.com/getrigeos/INVminer-Release",
+      "supportUrl": "https://discord.gg/NDVsmSJ72X",
+      "source": "closed",
+      "tags": ["CPU", "NVIDIA", "LINUX", "HIVEOS"]
+    },
+    {
+      "id": "nurserypool-noid-miner",
+      "category": "miners",
+      "name": "NurseryPool NOID Miner",
+      "description": "Binary NVIDIA GPU miner for NurseryPool on Linux.",
+      "maintainer": "NurseryPool",
+      "url": "https://noid.nurserypool.com/help.html",
+      "supportUrl": "https://discord.gg/uqEJjUeuNX",
+      "source": "closed",
+      "tags": ["NVIDIA", "LINUX"]
     },
     {
       "id": "noidscan",
