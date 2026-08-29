@@ -78,6 +78,17 @@
       "tags": ["PUBLIC POOL", "PPLNS"]
     },
     {
+      "id": "noidpool",
+      "category": "pools",
+      "name": "noidpool.xyz",
+      "description": "Public PPLNS pool with a 4% pool fee, automatic hourly payouts from 1 NOID, a built-in explorer and a bundled Linux NVIDIA GPU miner.",
+      "maintainer": "noidpool",
+      "url": "https://noidpool.xyz/",
+      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/39",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PPLNS", "HOURLY PAYOUTS", "GPU MINER"]
+    },
+    {
       "id": "ariaminer-noid",
       "category": "miners",
       "name": "AriaMiner NOID",
@@ -141,6 +152,17 @@
       "supportUrl": "https://discord.gg/uqEJjUeuNX",
       "source": "closed",
       "tags": ["NVIDIA", "LINUX"]
+    },
+    {
+      "id": "ntmminer-noid",
+      "category": "miners",
+      "name": "NTMminer NOID",
+      "description": "Binary CPU and NVIDIA GPU miner for Windows, Linux and HiveOS with published checksums, built-in consensus self-tests and a 3% developer fee.",
+      "maintainer": "haiik-q",
+      "url": "https://www.ntmminer.com/download/noid",
+      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/40",
+      "source": "closed",
+      "tags": ["CPU", "NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
       "id": "noidscan",
