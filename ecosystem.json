@@ -102,12 +102,12 @@
       "id": "hashborn-noid-miner",
       "category": "miners",
       "name": "Hashborn NOID Miner",
-      "description": "Binary NVIDIA GPU miner for Linux and HiveOS.",
+      "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS.",
       "maintainer": "hashborn72",
       "url": "https://github.com/hashborn72/noid_miner",
       "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/16",
       "source": "closed",
-      "tags": ["NVIDIA", "LINUX", "HIVEOS"]
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
       "id": "noid-gpu-miner",
@@ -124,12 +124,12 @@
       "id": "peakminer",
       "category": "miners",
       "name": "PeakMiner",
-      "description": "Pre-release GPU miner for self-hosted Parano1d mining through PeakPool.",
+      "description": "Binary NVIDIA GPU miner for public pool and self-hosted solo NOID mining on Windows, Linux and HiveOS.",
       "maintainer": "PeakMiner",
-      "url": "https://github.com/peakminer/peakminer/releases/tag/v2.12.0rc1",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/23",
+      "url": "https://github.com/peakminer/peakminer/releases/tag/v2.14.0",
+      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/32",
       "source": "closed",
-      "tags": ["GPU", "PRE-RELEASE", "STRATUM V2"]
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM V2"]
     },
     {
       "id": "invminer",
@@ -163,6 +163,17 @@
       "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/40",
       "source": "closed",
       "tags": ["CPU", "NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
+    },
+    {
+      "id": "fl4shminer",
+      "category": "miners",
+      "name": "Fl4shMiner",
+      "description": "Binary NVIDIA GPU miner for Windows and HiveOS with NOID/Poseidon2b support and a disclosed 3% developer fee.",
+      "maintainer": "Fl4sh9174",
+      "url": "https://github.com/Fl4sh9174/Fl4shMiner",
+      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/33",
+      "source": "closed",
+      "tags": ["NVIDIA", "WINDOWS", "HIVEOS"]
     },
     {
       "id": "noidscan",
