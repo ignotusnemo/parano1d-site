@@ -123,7 +123,6 @@
       --line: rgba(115, 255, 197, .14);
       --line-strong: rgba(115, 255, 197, .32);
       --max: 1440px;
-      --launch-content-offset: 0px;
     }
 
     * { box-sizing: border-box; }
@@ -189,8 +188,6 @@
       isolation: isolate;
     }
 
-    .app.launch-notice-visible { --launch-content-offset: 38px; }
-
     .topbar {
       position: absolute;
       z-index: 30;
@@ -210,106 +207,6 @@
       backdrop-filter: blur(20px) saturate(125%);
     }
 
-    .launch-notice {
-      position: absolute;
-      z-index: 29;
-      top: calc(max(18px, env(safe-area-inset-top)) + 76px);
-      left: 50%;
-      width: max-content;
-      max-width: calc(100% - 64px);
-      min-height: 34px;
-      padding: 6px 38px 6px 30px;
-      display: flex;
-      align-items: center;
-      border: 1px solid rgba(115,255,197,.16);
-      border-radius: 12px;
-      background: linear-gradient(90deg, rgba(7,28,22,.9), rgba(3,15,12,.82));
-      box-shadow: 0 14px 42px rgba(0,0,0,.24), inset 0 1px rgba(255,255,255,.025);
-      backdrop-filter: blur(18px) saturate(125%);
-      transform: translateX(-50%);
-      transition: opacity .24s ease, transform .28s cubic-bezier(.16,.88,.24,1);
-    }
-
-    .launch-notice::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 14px;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--mint);
-      box-shadow: 0 0 12px rgba(115,255,197,.72);
-      transform: translateY(-50%);
-    }
-
-    .launch-notice[hidden] { display: none; }
-    .launch-notice.is-closing {
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -6px);
-    }
-
-    .launch-notice-copy {
-      min-width: 0;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--dim);
-      font: 680 10px/1.25 ui-monospace, monospace;
-      letter-spacing: .025em;
-      text-align: left;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .launch-notice-copy strong {
-      flex: 0 0 auto;
-      color: var(--text);
-      font-weight: 720;
-      letter-spacing: .045em;
-    }
-
-    .launch-notice-separator {
-      width: 1px;
-      height: 12px;
-      background: var(--line-strong);
-    }
-
-    .launch-notice-links {
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-
-    .launch-notice-contact {
-      appearance: none;
-      flex: 0 0 auto;
-      overflow: visible;
-      padding: 0;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font: inherit;
-      letter-spacing: inherit;
-      text-align: left;
-      text-overflow: clip;
-      text-transform: inherit;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: color .2s ease;
-    }
-
-    .launch-notice-contact:focus-visible { outline: 1px solid var(--mint); outline-offset: 4px; }
-    .launch-notice-contact.is-copied [data-copy-feedback] { color: var(--mint); }
-    .launch-notice-email { color: var(--mint); letter-spacing: 0; text-transform: none; }
     .email-copy-icon {
       width: 12px;
       height: 12px;
@@ -318,32 +215,6 @@
       transition: color .2s ease, filter .2s ease;
     }
     .email-copy-icon rect { fill: none; stroke: currentColor; stroke-width: 1.15; }
-    .launch-notice-contact:hover .email-copy-icon,
-    .launch-notice-contact.is-copied .email-copy-icon {
-      color: var(--mint);
-      filter: drop-shadow(0 0 4px rgba(115,255,197,.35));
-    }
-
-    .launch-notice-close {
-      position: absolute;
-      top: 50%;
-      right: 6px;
-      width: 26px;
-      height: 26px;
-      padding: 0;
-      display: grid;
-      place-items: center;
-      border: 0;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--dim);
-      cursor: pointer;
-      transform: translateY(-50%);
-      transition: color .2s ease, background .2s ease;
-    }
-
-    .launch-notice-close:hover { color: var(--text); background: rgba(255,255,255,.045); }
-    .launch-notice-close svg { width: 12px; height: 12px; }
 
     .brand {
       display: flex;
@@ -359,6 +230,8 @@
     }
 
     .brand-name em { color: var(--mint); font-style: normal; }
+    .brand > .brand-name { display: inline-flex; align-items: center; gap: .2em; line-height: 1; }
+    .brand > .brand-name em { display: inline-block; line-height: 1; transform: translateY(0); }
 
     .top-actions {
       position: relative;
@@ -449,6 +322,346 @@
     .language-option.active { color: var(--mint); background: rgba(115,255,197,.075); }
     .language-option.active small { color: var(--mint); }
 
+    .official-links-dropdown > summary { min-width: 112px; }
+
+    .message-center { display: flex; flex: 0 0 auto; }
+    .message-center-toggle {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(115,255,197,.16);
+      border-radius: 11px;
+      background: rgba(3,14,11,.46);
+      color: var(--muted);
+      cursor: pointer;
+      transition: color .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .message-center-toggle:hover,
+    .message-center-toggle[aria-expanded="true"] {
+      color: var(--mint);
+      border-color: rgba(115,255,197,.34);
+      background: rgba(115,255,197,.07);
+    }
+    .message-center-toggle.has-unread {
+      color: var(--mint);
+      border-color: rgba(115,255,197,.32);
+      box-shadow: 0 0 24px rgba(34,217,148,.12);
+    }
+    .message-envelope { width: 19px; height: 19px; overflow: visible; }
+    .message-envelope path,
+    .message-envelope polyline {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: opacity .18s ease, transform .22s ease;
+      transform-origin: 10px 10px;
+    }
+    .message-envelope-open { opacity: 0; transform: translateY(2px) scale(.88); }
+    .message-center-toggle.has-unread .message-envelope-closed { opacity: 0; transform: translateY(1px) scale(.9); }
+    .message-center-toggle.has-unread .message-envelope-open {
+      opacity: 1;
+      transform: none;
+      animation: message-envelope-attention 3.2s ease-in-out infinite;
+    }
+    .message-unread-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      display: none;
+      place-items: center;
+      border: 2px solid #06110f;
+      border-radius: 999px;
+      background: var(--coral);
+      color: #160603;
+      font: 800 8px/1 ui-monospace, monospace;
+      box-shadow: 0 0 14px rgba(255,149,125,.34);
+    }
+    .message-center-toggle.has-unread .message-unread-count { display: grid; }
+
+    @keyframes message-envelope-attention {
+      0%, 68%, 100% { transform: translateY(0) rotate(0); filter: drop-shadow(0 0 0 transparent); }
+      74% { transform: translateY(-1px) rotate(-5deg); filter: drop-shadow(0 0 4px rgba(115,255,197,.42)); }
+      80% { transform: translateY(0) rotate(4deg); }
+      86% { transform: translateY(-1px) rotate(-2deg); }
+      92% { transform: translateY(0) rotate(0); filter: drop-shadow(0 0 4px rgba(115,255,197,.2)); }
+    }
+
+    .message-popover {
+      position: absolute;
+      z-index: 60;
+      top: calc(100% + 15px);
+      right: 0;
+      width: min(540px, calc(100vw - 64px));
+      max-height: min(720px, calc(100dvh - 118px));
+      overflow: hidden;
+      border: 1px solid rgba(115,255,197,.22);
+      border-radius: 17px;
+      background:
+        radial-gradient(circle at 96% 0%, rgba(115,255,197,.09), transparent 17rem),
+        linear-gradient(155deg, rgba(7,25,20,.985), rgba(2,12,10,.99));
+      box-shadow: 0 28px 90px rgba(0,0,0,.58), inset 0 1px rgba(255,255,255,.035);
+      backdrop-filter: blur(22px) saturate(128%);
+      animation: message-popover-in .2s cubic-bezier(.16,.88,.24,1);
+    }
+    .message-popover[hidden],
+    .message-inbox[hidden],
+    .message-reader[hidden] { display: none; }
+
+    @keyframes message-popover-in {
+      from { opacity: 0; transform: translateY(-7px) scale(.985); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .message-inbox,
+    .message-reader {
+      max-height: min(720px, calc(100dvh - 118px));
+      display: flex;
+      flex-direction: column;
+    }
+    .message-popover-head,
+    .message-reader-toolbar {
+      min-height: 68px;
+      padding: 13px 15px 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .message-popover-eyebrow,
+    .message-reader-label,
+    .message-sender-label {
+      margin: 0 0 5px;
+      color: var(--mint);
+      font: 720 8px/1 ui-monospace, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .message-reader-toolbar h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.15;
+      letter-spacing: -.025em;
+    }
+    .message-popover-from {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 470;
+      line-height: 1.3;
+    }
+    .message-popover-from > span { color: var(--text); }
+    .message-sender-email.message-popover-email {
+      margin: 0;
+      color: var(--mint);
+      font-size: 10px;
+      font-weight: 560;
+    }
+    .message-popover-close,
+    .message-reader-back {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(115,255,197,.14);
+      border-radius: 9px;
+      background: rgba(255,255,255,.018);
+      color: var(--dim);
+      cursor: pointer;
+    }
+    .message-popover-close:hover,
+    .message-reader-back:hover { color: var(--mint); background: rgba(115,255,197,.06); }
+    .message-popover-close svg { width: 13px; height: 13px; }
+    .message-reader-back { display: flex; gap: 7px; font: 700 9px/1 ui-monospace, monospace; text-transform: uppercase; }
+
+    .message-list {
+      min-height: 0;
+      overflow: hidden auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(115,255,197,.22) transparent;
+    }
+    .message-list-item {
+      width: 100%;
+      min-height: 90px;
+      padding: 15px 18px;
+      display: grid;
+      grid-template-columns: 8px minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 12px;
+      border: 0;
+      border-bottom: 1px solid rgba(115,255,197,.09);
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: background .18s ease;
+    }
+    .message-list-item:last-child { border-bottom: 0; }
+    .message-list-item:hover { background: rgba(115,255,197,.045); }
+    .message-list-item.is-unread { background: linear-gradient(90deg, rgba(115,255,197,.055), transparent 76%); }
+    .message-list-dot {
+      width: 7px;
+      height: 7px;
+      margin-top: 5px;
+      border: 1px solid rgba(115,255,197,.28);
+      border-radius: 50%;
+    }
+    .message-list-item.is-unread .message-list-dot {
+      border-color: var(--coral);
+      background: var(--coral);
+      box-shadow: 0 0 10px rgba(255,149,125,.36);
+    }
+    .message-list-copy { min-width: 0; }
+    .message-list-copy b {
+      display: block;
+      overflow: hidden;
+      color: var(--text);
+      font: 730 11px/1.3 ui-monospace, monospace;
+      letter-spacing: .015em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .message-list-copy span {
+      margin-top: 7px;
+      display: -webkit-box;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+    .message-list-item time {
+      color: var(--dim);
+      font: 650 8px/1.25 ui-monospace, monospace;
+      white-space: nowrap;
+    }
+
+    .message-reader-toolbar { flex: 0 0 auto; justify-content: flex-start; }
+    .message-reader-toolbar-title { min-width: 0; flex: 1; }
+    .message-reader-toolbar h2 {
+      overflow: hidden;
+      font: 730 12px/1.25 ui-monospace, monospace;
+      letter-spacing: .01em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .message-reader-toolbar h2:focus { outline: none; }
+    .message-reader-scroll {
+      min-height: 0;
+      overflow: hidden auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(115,255,197,.22) transparent;
+    }
+    .message-sender {
+      padding: 17px 19px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: rgba(115,255,197,.025);
+    }
+    .message-sender-avatar {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(115,255,197,.28);
+      border-radius: 50%;
+      color: var(--mint);
+      font: 800 10px/1 ui-monospace, monospace;
+      box-shadow: inset 0 0 16px rgba(115,255,197,.06);
+    }
+    .message-sender-copy { min-width: 0; }
+    .message-sender-copy strong { display: block; font-size: 12px; line-height: 1.2; }
+    .message-sender-email {
+      max-width: 100%;
+      margin-top: 4px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 0;
+      background: transparent;
+      color: var(--mint);
+      font: 650 10px/1.2 ui-monospace, monospace;
+      cursor: pointer;
+    }
+    .message-sender-email:hover .email-copy-icon,
+    .message-sender-email.is-copied .email-copy-icon {
+      color: var(--mint);
+      filter: drop-shadow(0 0 4px rgba(115,255,197,.35));
+    }
+    .message-sender time {
+      color: var(--dim);
+      font: 650 9px/1.3 ui-monospace, monospace;
+      text-align: right;
+    }
+    .message-letter-body {
+      padding: 23px 23px 28px;
+      color: #d8eee4;
+      font: 450 13.5px/1.65 ui-monospace, monospace;
+    }
+    .message-letter-body p { margin: 0 0 17px; text-wrap: pretty; }
+    .message-letter-body p:first-child { color: var(--mint); font-weight: 760; letter-spacing: .045em; }
+    .message-letter-body p:last-child { margin-bottom: 0; }
+    .message-parameters-title {
+      margin: 24px 0 9px;
+      color: var(--mint);
+      font: 740 9px/1.2 ui-monospace, monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .message-parameters {
+      margin: 5px 0 21px;
+      border: 1px solid rgba(115,255,197,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.15);
+    }
+    .message-parameter {
+      min-height: 41px;
+      padding: 9px 12px;
+      display: grid;
+      grid-template-columns: minmax(120px, .8fr) minmax(0, 1.35fr);
+      gap: 14px;
+      align-items: center;
+      border-bottom: 1px solid rgba(115,255,197,.09);
+    }
+    .message-parameter:last-child { border-bottom: 0; }
+    .message-parameter span { color: var(--dim); font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
+    .message-parameter b { min-width: 0; color: var(--text); font-size: 10px; overflow-wrap: anywhere; }
+    .message-letter-link {
+      min-height: 40px;
+      margin-top: 21px;
+      padding: 0 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid rgba(115,255,197,.2);
+      border-radius: 9px;
+      color: var(--mint);
+      text-decoration: none;
+      font: 720 9px/1 ui-monospace, monospace;
+      text-transform: uppercase;
+    }
+    .message-letter-link:hover { background: rgba(115,255,197,.06); }
+
     .mobile-menu-toggle,
     .mobile-menu { display: none; }
 
@@ -485,12 +698,17 @@
       top: calc(100% + 9px);
       right: 0;
       width: min(310px, calc(100vw - 34px));
+      max-height: calc(var(--app-height, 100dvh) - max(8px, env(safe-area-inset-top)) - 78px);
       padding: 8px;
+      overflow: hidden auto;
+      overscroll-behavior: contain;
       border: 1px solid rgba(115,255,197,.18);
       border-radius: 15px;
       background: rgba(3,15,12,.98);
       box-shadow: 0 24px 70px rgba(0,0,0,.52);
       backdrop-filter: blur(20px) saturate(125%);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(115,255,197,.22) transparent;
     }
     .mobile-menu-item {
       width: 100%;
@@ -511,6 +729,16 @@
     }
     .mobile-menu-item:hover { background: rgba(115,255,197,.065); color: var(--mint); }
     .mobile-menu-github { color: var(--mint); }
+    .mobile-menu-label {
+      margin: 7px 12px 3px;
+      padding-top: 10px;
+      display: block;
+      border-top: 1px solid rgba(115,255,197,.1);
+      color: var(--dim);
+      font: 700 8px/1 ui-monospace, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
 
     body.downloads-open,
     body.ecosystem-open,
@@ -2301,6 +2529,7 @@
       .desktop-nav-action { display: none; }
       .mobile-menu-toggle { display: grid; }
       .mobile-menu:not([hidden]) { display: block; }
+      .message-popover { right: -12px; }
     }
 
     @media (max-width: 820px) {
@@ -2312,16 +2541,17 @@
         min-height: 0;
       }
       .topbar { top: max(8px, env(safe-area-inset-top)); min-height: 59px; padding: 0 9px 0 11px; }
-      .app.launch-notice-visible { --launch-content-offset: 46px; }
-      .launch-notice {
-        top: calc(max(8px, env(safe-area-inset-top)) + 66px);
-        width: calc(100% - 34px);
-        max-width: calc(100% - 34px);
-        min-height: 38px;
-      }
       .desktop-nav-action { display: none; }
       .mobile-menu-toggle { display: grid; }
       .mobile-menu:not([hidden]) { display: block; }
+      .message-popover {
+        top: calc(100% + 15px);
+        right: -9px;
+        width: calc(100vw - 34px);
+        max-height: calc(var(--app-height, 100dvh) - max(8px, env(safe-area-inset-top)) - 76px);
+      }
+      .message-inbox,
+      .message-reader { max-height: calc(var(--app-height, 100dvh) - max(8px, env(safe-area-inset-top)) - 76px); }
 
       .scene {
         top: var(--mobile-scene-top, 50%);
@@ -2334,7 +2564,7 @@
       .chapters { bottom: calc(78px + env(safe-area-inset-bottom)); }
       .chapter {
         align-items: start;
-        padding-top: calc(88px + env(safe-area-inset-top) + var(--launch-content-offset));
+        padding-top: calc(88px + env(safe-area-inset-top));
         padding-bottom: 12px;
       }
       .chapter-inner { width: calc(100% - 34px); max-width: none; margin-inline: auto; padding-top: 0; }
@@ -2419,21 +2649,19 @@
         height: auto;
       }
       .chapters { bottom: calc(70px + env(safe-area-inset-bottom)); }
-      .launch-notice {
-        min-height: 42px;
-        padding-block: 6px;
-      }
-      .launch-notice-copy {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 2px;
-        font-size: 8.5px;
-      }
-      .launch-notice-separator { display: none; }
-      .launch-notice-links { gap: 6px; }
-      .launch-notice-links .launch-notice-separator { display: block; }
-      .chapter { padding-top: calc(84px + env(safe-area-inset-top) + var(--launch-content-offset)); }
+      .chapter { padding-top: calc(84px + env(safe-area-inset-top)); }
+      .message-popover-head,
+      .message-reader-toolbar { min-height: 61px; padding: 11px 12px 10px 14px; }
+      .message-popover-from { font-size: 10.5px; }
+      .message-list-item { min-height: 84px; padding: 13px 14px; gap: 10px; }
+      .message-list-copy b { font-size: 11px; }
+      .message-list-copy span { font-size: 11px; }
+      .message-sender { padding: 14px; grid-template-columns: 34px minmax(0, 1fr); }
+      .message-sender-avatar { width: 34px; height: 34px; }
+      .message-sender time { grid-column: 2; text-align: left; }
+      .message-letter-body { padding: 19px 16px 24px; font-size: 13px; line-height: 1.62; }
+      .message-parameter { grid-template-columns: 1fr; gap: 5px; }
+      .message-parameter b { font-size: 11px; }
       .chapter-index { margin-bottom: 12px; }
       h1, .chapter h2 { font-size: clamp(43px, 12.4vw, 58px); line-height: .92; }
       html[lang="ru"] h1, html[lang="ru"] .chapter h2 { font-size: clamp(37px, 10.5vw, 49px); line-height: .96; }
@@ -2509,9 +2737,8 @@
 
     @media (max-width: 360px) {
       .topbar { gap: 10px; }
-      .launch-notice { width: calc(100% - 34px); }
-      .launch-notice-copy { font-size: 8px; letter-spacing: .025em; }
       .language-dropdown > summary { min-width: 50px; padding-inline: 9px; }
+      .message-center-toggle { width: 34px; height: 34px; }
     }
 
     @media (max-width: 520px) and (max-height: 700px) {
@@ -2522,14 +2749,8 @@
 
       .brand-name { font-size: 20px; }
       .language-dropdown > summary { min-height: 34px; }
+      .message-center-toggle { width: 34px; height: 34px; }
       .mobile-menu-toggle { width: 34px; height: 34px; }
-
-      .app.launch-notice-visible { --launch-content-offset: 42px; }
-      .launch-notice {
-        top: calc(max(6px, env(safe-area-inset-top)) + 58px);
-        min-height: 38px;
-        padding-block: 5px;
-      }
 
       .scene {
         bottom: var(--mobile-scene-bottom, calc(60px + env(safe-area-inset-bottom)));
@@ -2539,7 +2760,7 @@
       }
 
       .chapters { bottom: calc(62px + env(safe-area-inset-bottom)); }
-      .chapter { padding-top: calc(68px + env(safe-area-inset-top) + var(--launch-content-offset)); }
+      .chapter { padding-top: calc(68px + env(safe-area-inset-top)); }
       .chapter-index { margin-bottom: 8px; font-size: 7px; }
       .chapter-index::before { width: 26px; }
 
@@ -2601,7 +2822,7 @@
 
     @media (max-height: 820px) and (min-width: 821px) {
       .chapters {
-        top: calc(max(18px, env(safe-area-inset-top)) + 116px);
+        top: calc(max(18px, env(safe-area-inset-top)) + 94px);
         bottom: calc(max(17px, env(safe-area-inset-bottom)) + 70px);
       }
       .chapter { align-items: safe center; padding-block: 8px; }
@@ -2616,7 +2837,6 @@
 
     @media (max-height: 540px) {
       .app { min-height: 0; }
-      .app.launch-notice-visible { --launch-content-offset: 0px; }
 
       .topbar {
         top: max(6px, env(safe-area-inset-top));
@@ -2625,17 +2845,11 @@
       }
       .brand-name { font-size: 20px; }
       .nav-action { min-height: 34px; padding-inline: 10px; }
+      .message-center-toggle { width: 34px; height: 34px; }
       .mobile-menu-toggle { width: 34px; height: 34px; }
 
-      .launch-notice {
-        top: calc(max(6px, env(safe-area-inset-top)) + 56px);
-        min-height: 32px;
-        padding-block: 4px;
-      }
-      .launch-notice-copy { font-size: 8px; }
-
       .chapters {
-        top: calc(max(6px, env(safe-area-inset-top)) + 94px);
+        top: calc(max(6px, env(safe-area-inset-top)) + 62px);
         bottom: calc(max(6px, env(safe-area-inset-bottom)) + 56px);
       }
       .chapter {
@@ -2731,10 +2945,10 @@
   </style>
 </head>
 <body>
-  <main class="app launch-notice-visible" id="app">
+  <main class="app" id="app">
     <header class="topbar shell">
-      <a class="brand" href="/" data-go="0" aria-label="ParanO(1)d home" data-i18n-aria="brand.home">
-        <span class="brand-name">Paran<em>O(1)</em>d</span>
+      <a class="brand" href="/" data-go="0" aria-label="Parano1d ① home" data-i18n-aria="brand.home">
+        <span class="brand-name">Parano1d<em>①</em></span>
       </a>
       <div class="top-actions">
         <details class="nav-dropdown language-dropdown">
@@ -2746,39 +2960,74 @@
           </div>
         </details>
         <button class="nav-action desktop-nav-action" type="button" data-download-open data-i18n="nav.downloads">Downloads</button>
-        <a class="nav-action desktop-nav-action" href="https://docs.parano1d.org/" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.docs">Docs</span><span class="external-mark" aria-hidden="true">↗</span></a>
-        <a class="nav-action desktop-nav-action" href="https://lab.parano1d.org/" target="_blank" rel="noopener noreferrer"><span>Lab</span><span class="external-mark" aria-hidden="true">↗</span></a>
-        <a class="nav-action desktop-nav-action" href="https://noid.network/" target="_blank" rel="noopener noreferrer"><span>AutoResearch</span><span class="external-mark" aria-hidden="true">↗</span></a>
-        <button class="nav-action desktop-nav-action" type="button" data-ecosystem-open data-i18n="nav.ecosystem">Links</button>
-        <a class="nav-action desktop-nav-action" href="https://github.com/ignotusnemo/parano1d/discussions" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.discuss">Discuss</span><span class="external-mark" aria-hidden="true">↗</span></a>
+        <details class="nav-dropdown official-links-dropdown desktop-nav-action">
+          <summary class="nav-action"><span data-i18n="nav.official">Official links</span><span class="nav-dropdown-chevron" aria-hidden="true">⌄</span></summary>
+          <div class="nav-dropdown-panel">
+            <a href="https://docs.parano1d.org/" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.docs">Docs</span><span class="external-mark" aria-hidden="true">↗</span></a>
+            <a href="https://lab.parano1d.org/" target="_blank" rel="noopener noreferrer"><span>Lab</span><span class="external-mark" aria-hidden="true">↗</span></a>
+            <a href="https://noid.network/" target="_blank" rel="noopener noreferrer"><span>AutoResearch</span><span class="external-mark" aria-hidden="true">↗</span></a>
+            <a href="https://github.com/ignotusnemo/parano1d/discussions" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.discuss">Discuss</span><span class="external-mark" aria-hidden="true">↗</span></a>
+          </div>
+        </details>
+        <button class="nav-action desktop-nav-action" type="button" data-ecosystem-open data-i18n="nav.thirdParty">Third-party</button>
+        <div class="message-center">
+          <button class="message-center-toggle" id="message-center-toggle" type="button" aria-label="Messages from Ignotus" aria-expanded="false" aria-controls="message-popover">
+            <svg class="message-envelope" viewBox="0 0 20 20" aria-hidden="true">
+              <g class="message-envelope-closed"><path d="M2.5 5.25h15v10h-15z"/><polyline points="3,6 10,11.25 17,6"/></g>
+              <g class="message-envelope-open"><path d="M2.5 8.1 10 2.8l7.5 5.3v8.1h-15z"/><polyline points="2.9,8.5 10,13.4 17.1,8.5"/><path d="m3.2 15.7 4.9-4.1M16.8 15.7l-4.9-4.1"/></g>
+            </svg>
+            <span class="message-unread-count" id="message-unread-count" aria-hidden="true"></span>
+          </button>
+          <section class="message-popover" id="message-popover" role="dialog" aria-label="Messages from Ignotus" hidden>
+            <div class="message-inbox" id="message-inbox">
+              <header class="message-popover-head">
+                <div>
+                  <p class="message-popover-eyebrow" id="message-popover-eyebrow">Direct transmission</p>
+                  <p class="message-popover-from" id="message-popover-title"><span id="message-popover-from-label">From Ignotus</span><button class="message-sender-email message-popover-email" type="button" data-copy-email="dev@parano1d.org" aria-label="Copy developer email address"><span data-copy-feedback aria-live="polite">&lt;dev@parano1d.org&gt;</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button></p>
+                </div>
+                <button class="message-popover-close" id="message-popover-close" type="button" aria-label="Close messages"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+              </header>
+              <div class="message-list" id="message-list"></div>
+            </div>
+            <article class="message-reader" id="message-reader" hidden>
+              <header class="message-reader-toolbar">
+                <button class="message-reader-back" id="message-reader-back" type="button"><span aria-hidden="true">←</span><span id="message-back-label">Inbox</span></button>
+                <div class="message-reader-toolbar-title"><p class="message-reader-label" id="message-reader-label">Message</p><h2 id="message-reader-subject" tabindex="-1"></h2></div>
+                <button class="message-popover-close" id="message-reader-close" type="button" aria-label="Close messages"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+              </header>
+              <div class="message-reader-scroll">
+                <div class="message-sender">
+                  <span class="message-sender-avatar" aria-hidden="true">IN</span>
+                  <div class="message-sender-copy">
+                    <p class="message-sender-label" id="message-sender-label">From</p>
+                    <strong>Ignotus Nemo</strong>
+                    <button class="message-sender-email" type="button" data-copy-email="dev@parano1d.org" aria-label="Copy developer email address"><span data-copy-feedback aria-live="polite">dev@parano1d.org</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button>
+                  </div>
+                  <time id="message-reader-date"></time>
+                </div>
+                <div class="message-letter-body" id="message-letter-body"></div>
+              </div>
+            </article>
+          </section>
+        </div>
         <a class="nav-action primary desktop-nav-action" href="https://github.com/ignotusnemo/parano1d" target="_blank" rel="noopener noreferrer">GitHub</a>
         <button class="mobile-menu-toggle" type="button" aria-label="Menu" data-i18n-aria="nav.menu" aria-expanded="false" aria-controls="mobile-menu">
           <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
         </button>
         <nav class="mobile-menu" id="mobile-menu" aria-label="Menu" data-i18n-aria="nav.menu" hidden>
           <button class="mobile-menu-item" type="button" data-download-open><span data-i18n="nav.downloads">Downloads</span><span class="external-mark" aria-hidden="true">↓</span></button>
+          <span class="mobile-menu-label" data-i18n="nav.official">Official links</span>
           <a class="mobile-menu-item" href="https://docs.parano1d.org/" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.docs">Docs</span> <span class="external-mark" aria-hidden="true">↗</span></a>
           <a class="mobile-menu-item" href="https://lab.parano1d.org/" target="_blank" rel="noopener noreferrer">Lab <span class="external-mark" aria-hidden="true">↗</span></a>
           <a class="mobile-menu-item" href="https://noid.network/" target="_blank" rel="noopener noreferrer">AutoResearch <span class="external-mark" aria-hidden="true">↗</span></a>
-          <button class="mobile-menu-item" type="button" data-ecosystem-open><span data-i18n="nav.ecosystem">Links</span><span class="external-mark" aria-hidden="true">→</span></button>
           <a class="mobile-menu-item" href="https://github.com/ignotusnemo/parano1d/discussions" target="_blank" rel="noopener noreferrer"><span data-i18n="nav.discuss">Discuss</span><span class="external-mark" aria-hidden="true">↗</span></a>
+          <span class="mobile-menu-label" data-i18n="nav.ecosystem">Community builds</span>
+          <button class="mobile-menu-item" type="button" data-ecosystem-open><span data-i18n="nav.thirdParty">Third-party</span><span class="external-mark" aria-hidden="true">→</span></button>
+          <span class="mobile-menu-label" data-i18n="nav.source">Source code</span>
           <a class="mobile-menu-item mobile-menu-github" href="https://github.com/ignotusnemo/parano1d" target="_blank" rel="noopener noreferrer">GitHub <span class="external-mark" aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
-
-    <aside class="launch-notice" id="launch-notice" aria-label="Parano1d mainnet status announcement">
-      <div class="launch-notice-copy">
-        <strong>Parano1d mainnet is live</strong>
-        <span class="launch-notice-separator" aria-hidden="true"></span>
-        <span class="launch-notice-links">
-          <button class="launch-notice-contact" type="button" data-copy-email="dev@parano1d.org" data-copy-success="Copied" aria-label="Copy developer email address"><span data-copy-feedback aria-live="polite">DEV CONTACT</span><span aria-hidden="true">·</span><span class="launch-notice-email">dev@parano1d.org</span><span class="visually-hidden">— copy email address</span><svg class="email-copy-icon" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="1.5" width="8" height="8" rx="1.2"/><rect x="1.5" y="4.5" width="8" height="8" rx="1.2"/></svg></button>
-        </span>
-      </div>
-      <button class="launch-notice-close" id="launch-notice-close" type="button" aria-label="Dismiss mainnet status announcement">
-        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 2l8 8M10 2L2 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-      </button>
-    </aside>
 
     <div class="scene" aria-hidden="true">
       <canvas id="state-scene"></canvas>
@@ -3055,15 +3304,15 @@
     </div>
   </section>
 
-  <section class="ecosystem-modal" id="ecosystem-modal" role="dialog" aria-modal="true" aria-labelledby="ecosystem-title" aria-label="Parano1d links" data-i18n-aria="ecosystem.dialog" tabindex="-1" hidden>
+  <section class="ecosystem-modal" id="ecosystem-modal" role="dialog" aria-modal="true" aria-labelledby="ecosystem-title" aria-label="Parano1d community builds" data-i18n-aria="ecosystem.dialog" tabindex="-1" hidden>
     <div class="ecosystem-surface">
       <header class="downloads-topbar">
         <div class="downloads-topbar-inner shell">
           <div class="downloads-brand">
             <span class="brand-name">Paran<em>O(1)</em>d</span>
-            <span class="downloads-brand-context" data-i18n="ecosystem.header">Links</span>
+            <span class="downloads-brand-context" data-i18n="ecosystem.header">Community builds</span>
           </div>
-          <button class="downloads-close" id="ecosystem-close" type="button" aria-label="Close links directory" data-i18n-aria="ecosystem.close">
+          <button class="downloads-close" id="ecosystem-close" type="button" aria-label="Close community builds" data-i18n-aria="ecosystem.close">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -3082,16 +3331,16 @@
           </aside>
         </section>
 
-        <nav class="ecosystem-category-nav" id="ecosystem-category-nav" aria-label="Link categories" data-i18n-aria="ecosystem.categories" hidden></nav>
-        <div class="ecosystem-status" id="ecosystem-status" role="status" aria-live="polite" data-i18n="ecosystem.loading">Loading links…</div>
+        <nav class="ecosystem-category-nav" id="ecosystem-category-nav" aria-label="Community build categories" data-i18n-aria="ecosystem.categories" hidden></nav>
+        <div class="ecosystem-status" id="ecosystem-status" role="status" aria-live="polite" data-i18n="ecosystem.loading">Loading community builds…</div>
         <div class="ecosystem-sections" id="ecosystem-sections"></div>
 
         <aside class="ecosystem-contribute">
           <div>
             <h3 data-i18n="ecosystem.contribute.title">Built something for Parano1d?</h3>
-            <p data-i18n="ecosystem.contribute.copy">Propose it through a focused pull request. Every submission is reviewed; opening a pull request does not guarantee a listing.</p>
+            <p data-i18n="ecosystem.contribute.copy">Propose it for Community builds through a focused pull request. Every submission is reviewed; opening a pull request does not guarantee inclusion.</p>
           </div>
-          <a class="ecosystem-contribute-link" href="https://github.com/ignotusnemo/parano1d-site/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer"><span data-i18n="ecosystem.contribute.action">Contribution rules</span><span aria-hidden="true">↗</span></a>
+          <a class="ecosystem-contribute-link" href="https://github.com/ignotusnemo/parano1d-site/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer"><span data-i18n="ecosystem.contribute.action">Add a community build</span><span aria-hidden="true">↗</span></a>
         </aside>
       </div>
     </div>
@@ -3305,6 +3554,6 @@
   </section>
 
 
-  <script defer src="app.js?v=downloads-latest-2026-08-26"></script>
+  <script defer src="app.js?v=messages-2026-09-01-2"></script>
 </body>
 </html>

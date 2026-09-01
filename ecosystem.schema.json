@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://parano1d.org/ecosystem.schema.json",
-  "title": "Parano1d links directory",
+  "title": "Parano1d community builds directory",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "categories", "projects"],

@@ -17,9 +17,19 @@
   const controlDeck = document.querySelector(".control-deck");
   const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
   const mobileMenu = document.querySelector("#mobile-menu");
-  const launchNotice = document.querySelector("#launch-notice");
-  const launchNoticeClose = document.querySelector("#launch-notice-close");
   const navDropdowns = [...document.querySelectorAll(".nav-dropdown")];
+  const messageCenterToggle = document.querySelector("#message-center-toggle");
+  const messageUnreadCount = document.querySelector("#message-unread-count");
+  const messagePopover = document.querySelector("#message-popover");
+  const messagePopoverClose = document.querySelector("#message-popover-close");
+  const messageInbox = document.querySelector("#message-inbox");
+  const messageList = document.querySelector("#message-list");
+  const messageReader = document.querySelector("#message-reader");
+  const messageReaderBack = document.querySelector("#message-reader-back");
+  const messageReaderClose = document.querySelector("#message-reader-close");
+  const messageReaderSubject = document.querySelector("#message-reader-subject");
+  const messageReaderDate = document.querySelector("#message-reader-date");
+  const messageLetterBody = document.querySelector("#message-letter-body");
   const downloadsModal = document.querySelector("#downloads-modal");
   const downloadsClose = document.querySelector("#downloads-close");
   const downloadsOpeners = [...document.querySelectorAll("[data-download-open]")];
@@ -43,14 +53,6 @@
   let repositoryGateAddedAppInert = false;
   let repositoryGateAddedDownloadsInert = false;
   let repositoryGateAddedEcosystemInert = false;
-
-  const launchNoticeStorageKey = "parano1d-mainnet-live-dismissed";
-  try {
-    if (localStorage.getItem(launchNoticeStorageKey) === "1") {
-      launchNotice.hidden = true;
-      app.classList.remove("launch-notice-visible");
-    }
-  } catch {}
 
   function secureExternalLinks(root = document) {
     root.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach((link) => {
@@ -231,21 +233,6 @@
     });
   }
 
-  function dismissLaunchNotice() {
-    if (!launchNotice || launchNotice.hidden) return;
-    launchNotice.classList.add("is-closing");
-    app.classList.remove("launch-notice-visible");
-    try { localStorage.setItem(launchNoticeStorageKey, "1"); } catch {}
-    syncMobileSceneLayouts();
-    window.setTimeout(() => {
-      launchNotice.hidden = true;
-      launchNotice.classList.remove("is-closing");
-      syncMobileSceneLayouts({ immediate: true });
-    }, 280);
-  }
-
-  launchNoticeClose?.addEventListener("click", dismissLaunchNotice);
-
   function syncViewportHeight() {
     const height = Math.round(window.visualViewport?.height || window.innerHeight);
     document.documentElement.style.setProperty("--app-height", `${height}px`);
@@ -280,27 +267,30 @@
 
   const translations = {
     ru: {
-      "brand.home": "Главная ParanO(1)d",
+      "brand.home": "Главная Parano1d ①",
       "announcement.copyAction": "— скопировать адрес электронной почты",
       "nav.language": "Язык",
       "nav.menu": "Меню",
       "nav.downloads": "Загрузки",
+      "nav.official": "Официальные ссылки",
       "nav.docs": "Документация",
-      "nav.ecosystem": "Ссылки",
+      "nav.ecosystem": "Сборки сообщества",
       "nav.discuss": "Обсудить",
-      "ecosystem.dialog": "Ссылки Parano1d",
-      "ecosystem.close": "Закрыть каталог ссылок",
-      "ecosystem.header": "Ссылки",
+      "nav.thirdParty": "Сторонние проекты",
+      "nav.source": "Исходный код",
+      "ecosystem.dialog": "Сборки сообщества Parano1d",
+      "ecosystem.close": "Закрыть каталог сборок сообщества",
+      "ecosystem.header": "Сборки сообщества",
       "ecosystem.eyebrow": "Независимое сообщество",
       "ecosystem.title": "Создано вокруг<br><em>Parano1d.</em>",
       "ecosystem.lead": "Независимые программы, сервисы и другие ресурсы сообщества.",
       "ecosystem.disclaimer.title": "Независимые проекты",
       "ecosystem.disclaimer.copy": "Размещённые здесь проекты поддерживаются их авторами. Размещение здесь не означает аудит, одобрение, партнёрство или гарантию со стороны Parano1d.",
-      "ecosystem.categories": "Категории ссылок",
-      "ecosystem.loading": "Загрузка ссылок…",
+      "ecosystem.categories": "Категории сторонних проектов",
+      "ecosystem.loading": "Загрузка сборок сообщества…",
       "ecosystem.contribute.title": "Создали что-то для Parano1d?",
-      "ecosystem.contribute.copy": "Предложите проект отдельным pull request. Каждая заявка проверяется; открытый pull request не гарантирует размещение.",
-      "ecosystem.contribute.action": "Правила добавления",
+      "ecosystem.contribute.copy": "Предложите проект для Community builds отдельным pull request. Каждая заявка проверяется; открытый pull request не гарантирует размещение.",
+      "ecosystem.contribute.action": "Добавить проект",
       "repositoryGate.dialog": "Доступ к исходному коду Parano1d",
       "repositoryGate.close": "Закрыть сообщение",
       "repositoryGate.eyebrow": "Исходный код",
@@ -495,27 +485,30 @@
       "deck.previous": "Предыдущее состояние"
     },
     zh: {
-      "brand.home": "ParanO(1)d 首页",
+      "brand.home": "Parano1d ① 首页",
       "announcement.copyAction": "— 复制邮箱地址",
       "nav.language": "语言",
       "nav.menu": "菜单",
       "nav.downloads": "下载",
+      "nav.official": "官方链接",
       "nav.docs": "文档",
-      "nav.ecosystem": "链接",
+      "nav.ecosystem": "社区构建",
       "nav.discuss": "讨论",
-      "ecosystem.dialog": "Parano1d 链接",
-      "ecosystem.close": "关闭链接目录",
-      "ecosystem.header": "链接",
+      "nav.thirdParty": "第三方",
+      "nav.source": "源代码",
+      "ecosystem.dialog": "Parano1d 社区构建",
+      "ecosystem.close": "关闭社区构建目录",
+      "ecosystem.header": "社区构建",
       "ecosystem.eyebrow": "独立社区",
       "ecosystem.title": "围绕<br><em>Parano1d 构建。</em>",
       "ecosystem.lead": "独立软件、服务和其他社区资源。",
       "ecosystem.disclaimer.title": "独立项目",
       "ecosystem.disclaimer.copy": "此处列出的项目由各自作者维护。收录于此不代表 Parano1d 对其进行审计、认可、合作或提供保证。",
-      "ecosystem.categories": "链接分类",
-      "ecosystem.loading": "正在加载链接…",
+      "ecosystem.categories": "第三方项目分类",
+      "ecosystem.loading": "正在加载社区构建…",
       "ecosystem.contribute.title": "为 Parano1d 构建了项目？",
-      "ecosystem.contribute.copy": "请通过独立的 pull request 提交。每项申请都会经过审核；提交并不保证收录。",
-      "ecosystem.contribute.action": "提交规则",
+      "ecosystem.contribute.copy": "请通过独立的 pull request 将项目提交到社区构建。每项申请都会经过审核；提交并不保证收录。",
+      "ecosystem.contribute.action": "添加社区项目",
       "repositoryGate.dialog": "Parano1d 源代码访问说明",
       "repositoryGate.close": "关闭提示",
       "repositoryGate.eyebrow": "源代码",
@@ -1113,9 +1106,113 @@
     zh: { next: "下一步", current: "当前状态 ✓", copied: "已复制" }
   };
 
+  const messageCenterCopy = {
+    en: {
+      eyebrow: "Direct transmission",
+      title: "Messages from Ignotus",
+      fromIgnotus: "From Ignotus",
+      inbox: "Inbox",
+      message: "Message",
+      from: "From",
+      close: "Close messages",
+      toggle: "Messages from Ignotus",
+      unread: "unread",
+      copyEmail: "Copy developer email address",
+      parameters: "Mainnet parameters",
+      openParameters: "Open all mainnet parameters"
+    },
+    ru: {
+      eyebrow: "Прямая передача",
+      title: "Сообщения от Ignotus",
+      fromIgnotus: "От Ignotus",
+      inbox: "Входящие",
+      message: "Сообщение",
+      from: "От",
+      close: "Закрыть сообщения",
+      toggle: "Сообщения от Ignotus",
+      unread: "не прочитано",
+      copyEmail: "Скопировать email разработчика",
+      parameters: "Параметры mainnet",
+      openParameters: "Открыть все параметры mainnet"
+    },
+    zh: {
+      eyebrow: "直接传输",
+      title: "Ignotus 的消息",
+      fromIgnotus: "来自 Ignotus",
+      inbox: "收件箱",
+      message: "消息",
+      from: "发件人",
+      close: "关闭消息",
+      toggle: "Ignotus 的消息",
+      unread: "未读",
+      copyEmail: "复制开发者邮箱",
+      parameters: "主网参数",
+      openParameters: "打开全部主网参数"
+    }
+  };
+
+  const siteMessages = [
+    {
+      id: "mainnet-live-2026-08-21",
+      subject: "PARANO1D MAINNET IS LIVE.",
+      date: "2026-08-21T16:00:00Z",
+      preview: "The fixed mainnet genesis began on August 21, 2026 at 16:00 UTC.",
+      paragraphs: [
+        "PARANO1D MAINNET IS LIVE.",
+        "The network began from its fixed genesis on August 21, 2026 at 16:00:00 UTC.",
+        "From this point forward, canonical order is established by proof of work and every accepted state transition is proved before the network applies it.",
+        "The present must prove the past. Now it does."
+      ],
+      parameters: [
+        ["Genesis block", "860e70453390bf815718e933aa4927167a13d098b0151391eefd722ee1add610"],
+        ["Block target", "20 seconds"],
+        ["Difficulty", "ASERT · 6-block epoch · 120-second half-life"],
+        ["Hard finality", "18 blocks"],
+        ["State domain", "2^24 to 2^32 reusable slots"],
+        ["Proof classes", "B25 · up to 25 positions / B255 · up to 255 positions"],
+        ["Block capacity", "255 user page positions · 12.75 one-page TPS"],
+        ["Network", "NOID · P2P 9600 · local RPC 9601"]
+      ],
+      link: {
+        href: "https://docs.parano1d.org/protocol/parameters.html"
+      }
+    },
+    {
+      id: "origin-2026-04-29",
+      subject: "GREETINGS, CRYPTO PARANOIDS.",
+      date: "2026-04-29T22:04:02Z",
+      preview: "I have watched blockchains drift toward the very thing they were meant to destroy.",
+      paragraphs: [
+        "GREETINGS, CRYPTO PARANOIDS.",
+        "I have watched blockchains drift toward the very thing they were meant to destroy.",
+        "History grows without end. Verification becomes heavier. People stop determining truth for themselves and borrow it from APIs, explorers, exchanges, foundations and data centers.",
+        "This is not decentralization. It is rented verification.",
+        "The post-quantum transition will make this worse. Larger signatures and heavier cryptography, appended forever, will turn today's debt into tomorrow's dependency.",
+        "You can build post-quantum signatures and other primitives. But they alone do not make a system post-quantum.",
+        "Security targets and conjectures are not proofs. Marketing is not soundness.",
+        "I wanted a system that ordinary hardware could fully verify today and decades from now. Post-quantum from the first block. Not promised for later. Proven end to end.",
+        "That became Parano1d.",
+        "Proofs establish validity. Proof of work establishes canonical order. State is validated from genesis in O(1). End-to-end post-quantum soundness meets the NIST PQC Category 1 threshold.",
+        "I searched for a blockchain where the present could prove the past without replaying it. I found none.",
+        "So I built one ①."
+      ]
+    }
+  ];
+
+  const messageReadStorageKey = "parano1d-read-messages-v1";
+  let readMessageIds = new Set();
+  let currentMessageId = null;
+  try {
+    const storedMessageIds = JSON.parse(localStorage.getItem(messageReadStorageKey) || "[]");
+    const knownMessageIds = new Set(siteMessages.map((message) => message.id));
+    if (Array.isArray(storedMessageIds)) {
+      readMessageIds = new Set(storedMessageIds.filter((id) => knownMessageIds.has(id)));
+    }
+  } catch {}
+
   const ecosystemRuntimeCopy = {
     en: {
-      error: "The links directory could not be loaded.",
+      error: "Community builds could not be loaded.",
       maintainedBy: "Maintained by",
       support: "Support",
       sourceOpen: "Open source",
@@ -1128,7 +1225,7 @@
       }
     },
     ru: {
-      error: "Не удалось загрузить каталог ссылок.",
+      error: "Не удалось загрузить сборки сообщества.",
       maintainedBy: "Поддерживает",
       support: "Поддержка",
       sourceOpen: "Открытый код",
@@ -1141,7 +1238,7 @@
       }
     },
     zh: {
-      error: "无法加载链接目录。",
+      error: "无法加载社区构建。",
       maintainedBy: "维护者",
       support: "支持",
       sourceOpen: "开源",
@@ -1602,6 +1699,7 @@
     nextButton.textContent = current === chapters.length - 1 ? interfaceCopy[language].current : interfaceCopy[language].next;
     updateLabels(current);
     syncEcosystemLanguage();
+    syncMessageCenterLanguage();
     syncMobileSceneLayouts();
     if (scene) {
       scene.invalidateLayout();
@@ -1667,9 +1765,176 @@
     });
   });
 
+  function messageElement(tagName, className = "", copy = null) {
+    const element = document.createElement(tagName);
+    if (className) element.className = className;
+    if (copy !== null) element.textContent = copy;
+    return element;
+  }
+
+  function messageDate(isoDate, { short = false } = {}) {
+    const locale = { en: "en-GB", ru: "ru-RU", zh: "zh-CN" }[language] || "en-GB";
+    try {
+      return new Intl.DateTimeFormat(locale, {
+        day: "numeric",
+        month: short ? "short" : "long",
+        year: "numeric",
+        timeZone: "UTC"
+      }).format(new Date(isoDate));
+    } catch {
+      return isoDate.slice(0, 10);
+    }
+  }
+
+  function persistReadMessages() {
+    try { localStorage.setItem(messageReadStorageKey, JSON.stringify([...readMessageIds])); } catch {}
+  }
+
+  function syncMessageBadge() {
+    if (!messageCenterToggle || !messageUnreadCount) return;
+    const copy = messageCenterCopy[language] || messageCenterCopy.en;
+    const unreadCount = siteMessages.filter((message) => !readMessageIds.has(message.id)).length;
+    messageCenterToggle.classList.toggle("has-unread", unreadCount > 0);
+    messageUnreadCount.textContent = unreadCount > 9 ? "9+" : String(unreadCount);
+    messageCenterToggle.setAttribute(
+      "aria-label",
+      unreadCount > 0 ? `${copy.toggle}. ${unreadCount} ${copy.unread}.` : copy.toggle
+    );
+  }
+
+  function renderMessageList() {
+    if (!messageList) return;
+    messageList.replaceChildren();
+    siteMessages.forEach((message) => {
+      const item = messageElement("button", "message-list-item");
+      item.type = "button";
+      item.dataset.messageId = message.id;
+      item.classList.toggle("is-unread", !readMessageIds.has(message.id));
+
+      const dot = messageElement("span", "message-list-dot");
+      dot.setAttribute("aria-hidden", "true");
+      const itemCopy = messageElement("span", "message-list-copy");
+      itemCopy.append(
+        messageElement("b", "", message.subject),
+        messageElement("span", "", message.preview)
+      );
+      const date = messageElement("time", "", messageDate(message.date, { short: true }));
+      date.dateTime = message.date;
+      item.append(dot, itemCopy, date);
+      item.addEventListener("click", () => openMessage(message.id));
+      messageList.append(item);
+    });
+  }
+
+  function markMessageRead(messageId) {
+    if (readMessageIds.has(messageId)) return;
+    readMessageIds.add(messageId);
+    persistReadMessages();
+    syncMessageBadge();
+    renderMessageList();
+  }
+
+  function renderMessage(message) {
+    if (!message || !messageLetterBody || !messageReaderSubject || !messageReaderDate) return;
+    const copy = messageCenterCopy[language] || messageCenterCopy.en;
+    currentMessageId = message.id;
+    messageReaderSubject.textContent = message.subject;
+    messageReaderDate.textContent = messageDate(message.date);
+    messageReaderDate.dateTime = message.date;
+    messageLetterBody.replaceChildren();
+
+    message.paragraphs.forEach((paragraph) => {
+      messageLetterBody.append(messageElement("p", "", paragraph));
+    });
+
+    if (message.parameters?.length) {
+      const parametersTitle = messageElement("h3", "message-parameters-title", copy.parameters);
+      const parameters = messageElement("div", "message-parameters");
+      message.parameters.forEach(([label, value]) => {
+        const row = messageElement("div", "message-parameter");
+        row.append(messageElement("span", "", label), messageElement("b", "", value));
+        parameters.append(row);
+      });
+      messageLetterBody.append(parametersTitle, parameters);
+    }
+
+    if (message.link) {
+      const link = messageElement("a", "message-letter-link");
+      link.href = message.link.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.append(document.createTextNode(copy.openParameters), messageElement("span", "", "↗"));
+      messageLetterBody.append(link);
+    }
+  }
+
+  function openMessage(messageId) {
+    const message = siteMessages.find((candidate) => candidate.id === messageId);
+    if (!message || !messageInbox || !messageReader) return;
+    markMessageRead(message.id);
+    renderMessage(message);
+    messageInbox.hidden = true;
+    messageReader.hidden = false;
+    messageReader.querySelector(".message-reader-scroll")?.scrollTo({ top: 0, behavior: "auto" });
+    messageReaderSubject.focus({ preventScroll: true });
+  }
+
+  function showMessageInbox({ focus = false } = {}) {
+    if (!messageInbox || !messageReader) return;
+    currentMessageId = null;
+    messageReader.hidden = true;
+    messageInbox.hidden = false;
+    renderMessageList();
+    if (focus) messageList?.querySelector(".message-list-item")?.focus({ preventScroll: true });
+  }
+
+  function syncMessageCenterLanguage() {
+    const copy = messageCenterCopy[language] || messageCenterCopy.en;
+    const eyebrow = document.querySelector("#message-popover-eyebrow");
+    const fromLabel = document.querySelector("#message-popover-from-label");
+    const back = document.querySelector("#message-back-label");
+    const readerLabel = document.querySelector("#message-reader-label");
+    const senderLabel = document.querySelector("#message-sender-label");
+    if (eyebrow) eyebrow.textContent = copy.eyebrow;
+    if (fromLabel) fromLabel.textContent = copy.fromIgnotus;
+    if (back) back.textContent = copy.inbox;
+    if (readerLabel) readerLabel.textContent = copy.message;
+    if (senderLabel) senderLabel.textContent = copy.from;
+    messagePopover?.setAttribute("aria-label", copy.title);
+    messagePopoverClose?.setAttribute("aria-label", copy.close);
+    messageReaderClose?.setAttribute("aria-label", copy.close);
+    document.querySelectorAll(".message-sender-email").forEach((control) => {
+      control.setAttribute("aria-label", copy.copyEmail);
+    });
+    syncMessageBadge();
+    renderMessageList();
+    if (currentMessageId) {
+      renderMessage(siteMessages.find((message) => message.id === currentMessageId));
+    }
+  }
+
+  function setMessagePopover(open, { restoreFocus = false } = {}) {
+    if (!messagePopover || !messageCenterToggle) return;
+    const next = Boolean(open);
+    if (next) {
+      setMobileMenu(false);
+      closeNavDropdowns();
+      showMessageInbox();
+    }
+    messagePopover.hidden = !next;
+    messageCenterToggle.setAttribute("aria-expanded", next ? "true" : "false");
+    if (next) {
+      requestAnimationFrame(() => messageList?.querySelector(".message-list-item")?.focus({ preventScroll: true }));
+    } else {
+      showMessageInbox();
+      if (restoreFocus) messageCenterToggle.focus({ preventScroll: true });
+    }
+  }
+
   function setMobileMenu(open, { restoreFocus = false } = {}) {
     if (!mobileMenu || !mobileMenuToggle) return;
     const next = Boolean(open);
+    if (next) setMessagePopover(false);
     mobileMenu.hidden = !next;
     mobileMenuToggle.setAttribute("aria-expanded", next ? "true" : "false");
     if (!next && restoreFocus) mobileMenuToggle.focus({ preventScroll: true });
@@ -1899,7 +2164,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=links-2026-08-25-2", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=community-builds-2026-09-01", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
@@ -1927,6 +2192,7 @@
     if (!ecosystemModal || !ecosystemModal.hidden) return;
     clearTimeout(ecosystemCloseTimer);
     ecosystemLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setMessagePopover(false);
     setMobileMenu(false);
     closeNavDropdowns();
     ecosystemModal.hidden = false;
@@ -1958,6 +2224,7 @@
     if (!downloadsModal || !downloadsModal.hidden) return;
     clearTimeout(downloadsCloseTimer);
     downloadsLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setMessagePopover(false);
     setMobileMenu(false);
     closeNavDropdowns();
     downloadsModal.hidden = false;
@@ -2028,6 +2295,15 @@
     }
   });
 
+  messageCenterToggle?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setMessagePopover(messageCenterToggle.getAttribute("aria-expanded") !== "true", { restoreFocus: true });
+  });
+  messagePopoverClose?.addEventListener("click", () => setMessagePopover(false, { restoreFocus: true }));
+  messageReaderClose?.addEventListener("click", () => setMessagePopover(false, { restoreFocus: true }));
+  messageReaderBack?.addEventListener("click", () => showMessageInbox({ focus: true }));
+  messagePopover?.addEventListener("click", (event) => event.stopPropagation());
+
   mobileMenuToggle?.addEventListener("click", () => {
     const open = mobileMenuToggle.getAttribute("aria-expanded") !== "true";
     closeNavDropdowns();
@@ -2041,6 +2317,7 @@
   navDropdowns.forEach((dropdown) => {
     dropdown.addEventListener("toggle", () => {
       if (dropdown.open) {
+        setMessagePopover(false);
         setMobileMenu(false);
         closeNavDropdowns(dropdown);
       }
@@ -2057,6 +2334,9 @@
     navDropdowns.forEach((dropdown) => {
       if (dropdown.open && !dropdown.contains(event.target)) dropdown.removeAttribute("open");
     });
+    if (messagePopover && !messagePopover.hidden && !messagePopover.contains(event.target) && !messageCenterToggle?.contains(event.target)) {
+      setMessagePopover(false);
+    }
   });
 
   window.addEventListener("resize", () => {
@@ -2218,6 +2498,13 @@
       if (event.key === "Escape") closeDownloads();
       return;
     }
+    if (messagePopover && !messagePopover.hidden) {
+      if (event.key === "Escape") {
+        if (messageReader && !messageReader.hidden) showMessageInbox({ focus: true });
+        else setMessagePopover(false, { restoreFocus: true });
+      }
+      return;
+    }
     if (event.key === "Escape") {
       const openDropdown = navDropdowns.find((dropdown) => dropdown.open);
       if (openDropdown) {
@@ -2263,7 +2550,11 @@
   });
 
   window.addEventListener("wheel", (event) => {
-    if ((downloadsModal && !downloadsModal.hidden) || (ecosystemModal && !ecosystemModal.hidden)) return;
+    if (
+      (downloadsModal && !downloadsModal.hidden)
+      || (ecosystemModal && !ecosystemModal.hidden)
+      || (messagePopover && !messagePopover.hidden)
+    ) return;
     if (window.innerWidth <= 820 || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
     const now = performance.now();
     const scale = event.deltaMode === 1 ? 32 : event.deltaMode === 2 ? window.innerHeight : 1;
@@ -2306,7 +2597,11 @@
   }, { passive: true });
 
   window.addEventListener("touchstart", (event) => {
-    if ((downloadsModal && !downloadsModal.hidden) || (ecosystemModal && !ecosystemModal.hidden)) return;
+    if (
+      (downloadsModal && !downloadsModal.hidden)
+      || (ecosystemModal && !ecosystemModal.hidden)
+      || (messagePopover && !messagePopover.hidden)
+    ) return;
     const touch = event.changedTouches[0];
     const scroller = activeChapterScroller();
     const overActiveChapter = scroller && event.composedPath().includes(scroller);
@@ -2320,7 +2615,11 @@
   }, { passive: true });
 
   window.addEventListener("touchend", (event) => {
-    if ((downloadsModal && !downloadsModal.hidden) || (ecosystemModal && !ecosystemModal.hidden)) return;
+    if (
+      (downloadsModal && !downloadsModal.hidden)
+      || (ecosystemModal && !ecosystemModal.hidden)
+      || (messagePopover && !messagePopover.hidden)
+    ) return;
     if (!touchStart) return;
     const gesture = touchStart;
     const touch = event.changedTouches[0];
@@ -4605,7 +4904,7 @@
       const labelSize = l.mobile ? Math.max(4.4, Math.min(6.2, this.h * .034)) : 7.4;
       const headerY = l.mobile
         ? this.h * .10
-        : stage.top + (app.classList.contains("launch-notice-visible") ? 48 : 20);
+        : stage.top + 20;
 
       if (!l.mobile) {
         this.text(canvasText("transparentNow", "TRANSPARENT NOW"), right, headerY, "rgba(191,247,255,.52)", labelSize, "right");
