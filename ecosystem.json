@@ -217,6 +217,16 @@
       "tags": ["CRYPTOGRAPHY", "BINARY FIELDS"]
     },
     {
+      "id": "parano1d-community-discord",
+      "category": "research",
+      "name": "Parano1d Community Discord",
+      "description": "Unofficial, independently maintained Discord server for community discussion and peer support. It is not operated by or affiliated with Parano1d.",
+      "maintainer": "ocean1223",
+      "url": "https://discord.gg/HuFwCvEkH8",
+      "source": "not-applicable",
+      "tags": ["UNOFFICIAL", "COMMUNITY", "DISCUSSION"]
+    },
+    {
       "id": "bitcointalk",
       "category": "research",
       "name": "Bitcointalk",
