@@ -89,6 +89,16 @@
       "tags": ["PUBLIC POOL", "PPLNS", "HOURLY PAYOUTS", "GPU MINER"]
     },
     {
+      "id": "suprnova-pool",
+      "category": "pools",
+      "name": "Suprnova",
+      "description": "Public PPLNS NOID mining pool with a 1% fee, live statistics and plain or TLS Stratum endpoints.",
+      "maintainer": "suprnova.cc",
+      "url": "https://noid.suprnova.cc/",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PPLNS", "STRATUM", "TLS"]
+    },
+    {
       "id": "ariaminer-noid",
       "category": "miners",
       "name": "AriaMiner NOID",
@@ -174,6 +184,16 @@
       "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/33",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "HIVEOS"]
+    },
+    {
+      "id": "suprminer",
+      "category": "miners",
+      "name": "Suprminer",
+      "description": "Binary NVIDIA GPU miner for NOID on Linux and modern HiveOS with no developer fee on the NOID algorithm.",
+      "maintainer": "ocminer",
+      "url": "https://github.com/ocminer/suprminer/releases",
+      "source": "closed",
+      "tags": ["NVIDIA", "LINUX", "HIVEOS", "NO DEV FEE"]
     },
     {
       "id": "noidscan",
