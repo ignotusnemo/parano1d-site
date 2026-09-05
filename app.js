@@ -434,9 +434,9 @@
       "soundness.result.label": "Результат",
       "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
       "soundness.floor.label": "Граница успеха 1/2",
-      "soundness.floor.value": "<strong><code>2^173.273866314232</code></strong>",
+      "soundness.floor.value": "<strong><code>2^173.391078499301</code></strong>",
       "soundness.bound.label": "Полная идеальная оценка",
-      "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
+      "soundness.bound.value": "<strong><code>0.049330348213215253 &lt; 1/2</code></strong>",
       "soundness.proof": "Доказательство",
       "soundness.certificate": "Исполняемый сертификат",
       "pow.index": "14 / Proof-native PoW",
@@ -652,9 +652,9 @@
       "soundness.result.label": "结论",
       "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
       "soundness.floor.label": "半成功门深积下界",
-      "soundness.floor.value": "<strong><code>2^173.273866314232</code></strong>",
+      "soundness.floor.value": "<strong><code>2^173.391078499301</code></strong>",
       "soundness.bound.label": "完整理想模型上界",
-      "soundness.bound.value": "<strong><code>0.053364140323608411 &lt; 1/2</code></strong>",
+      "soundness.bound.value": "<strong><code>0.049330348213215253 &lt; 1/2</code></strong>",
       "soundness.proof": "证明",
       "soundness.certificate": "可执行证书",
       "pow.index": "14 / Proof-native PoW",
@@ -821,8 +821,8 @@
       title: "STATE 13 · END TO END POST QUANTUM",
       proof: "wallet · transaction · state · recursive history · one security game",
       state: ["NIST PQC CATEGORY 1", "complete State validation"],
-      proofLabel: ["2^173.273866314232", "half-success gate-depth floor"],
-      tail: ["0.053364140323608411", "complete ideal bound < 1/2"],
+      proofLabel: ["2^173.391078499301", "half-success gate-depth floor"],
+      tail: ["0.049330348213215253", "complete ideal bound < 1/2"],
       read: ["end to end", "Category 1", "proved"]
     },
     {
@@ -953,8 +953,8 @@
         title: "СОСТОЯНИЕ 13 · СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
         proof: "кошелёк · транзакции · состояние · рекурсивная история · единая игра",
         state: ["NIST PQC CATEGORY 1", "полная проверка состояния"],
-        proofLabel: ["2^173.273866314232", "граница gate-depth при вероятности успеха 1/2"],
-        tail: ["0,053364140323608411", "полная идеальная оценка < 1/2"],
+        proofLabel: ["2^173.391078499301", "граница gate-depth при вероятности успеха 1/2"],
+        tail: ["0,049330348213215253", "полная идеальная оценка < 1/2"],
         read: ["от начала до конца", "Category 1", "доказано"]
       },
       {
@@ -1083,8 +1083,8 @@
         title: "状态 13 · 端到端后量子可靠性",
         proof: "钱包 · 交易 · 状态 · 递归历史 · 同一安全性游戏",
         state: ["NIST PQC CATEGORY 1", "完整状态验证"],
-        proofLabel: ["2^173.273866314232", "半成功门深积下界"],
-        tail: ["0.053364140323608411", "完整理想模型上界 < 1/2"],
+        proofLabel: ["2^173.391078499301", "半成功门深积下界"],
+        tail: ["0.049330348213215253", "完整理想模型上界 < 1/2"],
         read: ["端到端", "Category 1", "已证明"]
       },
       {
