@@ -1221,12 +1221,15 @@
       error: "Community builds could not be loaded.",
       maintainedBy: "Maintained by",
       support: "Support",
+      details: "Details",
+      announcement: "Announcement",
       sourceOpen: "Open source",
       sourceClosed: "Closed source",
       categoryActions: {
         pools: "Open pool",
         miners: "View miner",
         analytics: "Open tool",
+        exchanges: "Trade",
         research: "Read"
       }
     },
@@ -1234,12 +1237,15 @@
       error: "Не удалось загрузить сборки сообщества.",
       maintainedBy: "Поддерживает",
       support: "Поддержка",
+      details: "Подробнее",
+      announcement: "Анонс",
       sourceOpen: "Открытый код",
       sourceClosed: "Закрытый код",
       categoryActions: {
         pools: "Открыть пул",
         miners: "Открыть майнер",
         analytics: "Открыть инструмент",
+        exchanges: "Торговать",
         research: "Читать"
       }
     },
@@ -1247,12 +1253,15 @@
       error: "无法加载社区构建。",
       maintainedBy: "维护者",
       support: "支持",
+      details: "详情",
+      announcement: "公告",
       sourceOpen: "开源",
       sourceClosed: "闭源",
       categoryActions: {
         pools: "打开矿池",
         miners: "查看矿工",
         analytics: "打开工具",
+        exchanges: "交易",
         research: "阅读"
       }
     }
@@ -2057,7 +2066,9 @@
         throw new TypeError("invalid ecosystem project tags");
       }
       ecosystemHttpsUrl(project.url);
-      if (project.supportUrl) ecosystemHttpsUrl(project.supportUrl);
+      [project.supportUrl, project.detailsUrl, project.announcementUrl]
+        .filter(Boolean)
+        .forEach(ecosystemHttpsUrl);
       projectIds.add(project.id);
     });
 
@@ -2136,6 +2147,18 @@
         footer.append(maintainer);
 
         const links = ecosystemElement("div", "ecosystem-card-links");
+        if (project.detailsUrl) {
+          const details = ecosystemElement("a", "ecosystem-card-link secondary");
+          details.href = ecosystemHttpsUrl(project.detailsUrl);
+          details.append(document.createTextNode(copy.details), ecosystemElement("span", "", "↗"));
+          links.append(details);
+        }
+        if (project.announcementUrl) {
+          const announcement = ecosystemElement("a", "ecosystem-card-link secondary");
+          announcement.href = ecosystemHttpsUrl(project.announcementUrl);
+          announcement.append(document.createTextNode(copy.announcement), ecosystemElement("span", "", "↗"));
+          links.append(announcement);
+        }
         if (project.supportUrl) {
           const support = ecosystemElement("a", "ecosystem-card-link secondary");
           support.href = ecosystemHttpsUrl(project.supportUrl);
@@ -2186,7 +2209,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=forgejo-2026-09-07", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-2026-09-07", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();

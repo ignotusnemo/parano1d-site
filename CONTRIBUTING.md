@@ -17,7 +17,7 @@ Each submission must:
 
 Normally, a project should be submitted by its maintainer. Closed-source software is eligible, but it will be labelled as closed source and remains subject to additional scrutiny. Categories and their ordering are maintained by the Parano1d project; do not add or rename a category in a project-listing pull request.
 
-Copy an existing entry, choose a unique lowercase `id`, and place it under the appropriate category. Use one of the existing category IDs: `analytics`, `miners`, `pools` or `research`. The `source` value must be `open`, `closed` or `not-applicable`; `supportUrl` is optional.
+Copy an existing entry, choose a unique lowercase `id`, and place it under the appropriate category. Use one of the existing category IDs: `analytics`, `exchanges`, `miners`, `pools` or `research`. The `source` value must be `open`, `closed` or `not-applicable`; `supportUrl`, `detailsUrl` and `announcementUrl` are optional.
 
 ```json
 {

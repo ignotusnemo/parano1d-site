@@ -77,6 +77,16 @@
             "pattern": "^https://",
             "maxLength": 320
           },
+          "detailsUrl": {
+            "type": "string",
+            "pattern": "^https://",
+            "maxLength": 320
+          },
+          "announcementUrl": {
+            "type": "string",
+            "pattern": "^https://",
+            "maxLength": 320
+          },
           "source": {
             "enum": ["open", "closed", "not-applicable"]
           },

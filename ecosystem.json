@@ -7,6 +7,11 @@
       "description": "Community tools for observing the public network and live State."
     },
     {
+      "id": "exchanges",
+      "label": "Exchanges",
+      "description": "Third-party markets where NOID is available for trading."
+    },
+    {
       "id": "miners",
       "label": "Miners",
       "description": "Independent software for Parano1d nonce search."
@@ -94,6 +99,17 @@
       "url": "https://noid.suprnova.cc/",
       "source": "closed",
       "tags": ["PUBLIC POOL", "PPLNS", "STRATUM", "TLS"]
+    },
+    {
+      "id": "rplant",
+      "category": "pools",
+      "name": "RPlant",
+      "description": "Public NOID mining pool with a 1% fee, hourly payouts, regional Stratum endpoints, TLS and live statistics.",
+      "maintainer": "RPlant",
+      "url": "https://pool.rplant.xyz/#parano1d#connect",
+      "supportUrl": "https://discord.gg/eHzNXmp",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "STRATUM", "TLS", "HOURLY PAYOUTS"]
     },
     {
       "id": "ariaminer-noid",
@@ -186,6 +202,28 @@
       "url": "https://github.com/ocminer/suprminer/releases",
       "source": "closed",
       "tags": ["NVIDIA", "LINUX", "HIVEOS", "NO DEV FEE"]
+    },
+    {
+      "id": "srbminer-multi",
+      "category": "miners",
+      "name": "SRBMiner-Multi",
+      "description": "Binary NVIDIA and AMD GPU miner for NOID on Windows, Linux and HiveOS, with a disclosed 3% developer fee.",
+      "maintainer": "doktor83",
+      "url": "https://github.com/doktor83/SRBMiner-Multi/releases/tag/3.6.3",
+      "source": "closed",
+      "tags": ["NVIDIA", "AMD", "WINDOWS", "LINUX", "HIVEOS"]
+    },
+    {
+      "id": "safetrade",
+      "category": "exchanges",
+      "name": "SafeTrade",
+      "description": "Centralized exchange with live NOID/USDT spot trading.",
+      "maintainer": "SafeTrade",
+      "url": "https://safetrade.com/exchange/NOID-USDT?type=basic",
+      "detailsUrl": "https://support.safetrade.com/hc/en-us/articles/48550294413581-Parano1d-NOID-has-been-listed-on-SafeTrade",
+      "announcementUrl": "https://x.com/safetrade/status/2094611931998876122",
+      "source": "not-applicable",
+      "tags": ["NOID/USDT", "SPOT MARKET"]
     },
     {
       "id": "noidscan",

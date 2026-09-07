@@ -23,6 +23,8 @@ PROJECT_FIELDS = {
     "maintainer",
     "url",
     "supportUrl",
+    "detailsUrl",
+    "announcementUrl",
     "source",
     "tags",
 }
@@ -94,7 +96,7 @@ def validate() -> tuple[int, int]:
         if not isinstance(project, dict):
             fail(f"{prefix} must be an object")
         unknown = set(project) - PROJECT_FIELDS
-        required = PROJECT_FIELDS - {"supportUrl"}
+        required = PROJECT_FIELDS - {"supportUrl", "detailsUrl", "announcementUrl"}
         missing = required - set(project)
         if unknown or missing:
             fail(f"{prefix} has unknown fields {sorted(unknown)} or missing fields {sorted(missing)}")
@@ -115,8 +117,9 @@ def validate() -> tuple[int, int]:
         if primary_url in project_urls:
             fail(f"duplicate primary project URL: {primary_url}")
         project_urls.add(primary_url)
-        if "supportUrl" in project:
-            https_url(project["supportUrl"], f"{prefix}.supportUrl")
+        for optional_url in ("supportUrl", "detailsUrl", "announcementUrl"):
+            if optional_url in project:
+                https_url(project[optional_url], f"{prefix}.{optional_url}")
 
         if project["source"] not in SOURCES:
             fail(f"{prefix}.source must be one of {sorted(SOURCES)}")
