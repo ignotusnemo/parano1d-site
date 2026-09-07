@@ -40,7 +40,6 @@
       "description": "Public address-based mining pool for Parano1d workers.",
       "maintainer": "lucasan123",
       "url": "https://parano1d-pool.fun/",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/18",
       "source": "closed",
       "tags": ["PUBLIC POOL"]
     },
@@ -51,7 +50,6 @@
       "description": "Self-hosted Stratum V2 solo pool with a full node and direct block payouts.",
       "maintainer": "PeakMiner",
       "url": "https://github.com/peakminer/peakpool/blob/main/deployments/parano1d/README.md",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/23",
       "source": "closed",
       "tags": ["SELF-HOSTED", "SOLO", "STRATUM V2"]
     },
@@ -84,7 +82,6 @@
       "description": "Public PPLNS pool with a 4% pool fee, automatic hourly payouts from 1 NOID, a built-in explorer and a bundled Linux NVIDIA GPU miner.",
       "maintainer": "noidpool",
       "url": "https://noidpool.xyz/",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/39",
       "source": "closed",
       "tags": ["PUBLIC POOL", "PPLNS", "HOURLY PAYOUTS", "GPU MINER"]
     },
@@ -115,7 +112,6 @@
       "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS.",
       "maintainer": "hashborn72",
       "url": "https://github.com/hashborn72/noid_miner",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/16",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
@@ -126,7 +122,6 @@
       "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS.",
       "maintainer": "lucasan123",
       "url": "https://github.com/lucasan123/noid-gpu-miner",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/17",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
@@ -137,7 +132,6 @@
       "description": "Binary NVIDIA GPU miner for public pool and self-hosted solo NOID mining on Windows, Linux and HiveOS.",
       "maintainer": "PeakMiner",
       "url": "https://github.com/peakminer/peakminer/releases/tag/v2.14.0",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/32",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM V2"]
     },
@@ -170,7 +164,6 @@
       "description": "Binary CPU and NVIDIA GPU miner for Windows, Linux and HiveOS with published checksums, built-in consensus self-tests and a 3% developer fee.",
       "maintainer": "haiik-q",
       "url": "https://www.ntmminer.com/download/noid",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/40",
       "source": "closed",
       "tags": ["CPU", "NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
@@ -181,7 +174,6 @@
       "description": "Binary NVIDIA GPU miner for Windows and HiveOS with NOID/Poseidon2b support and a disclosed 3% developer fee.",
       "maintainer": "Fl4sh9174",
       "url": "https://github.com/Fl4sh9174/Fl4shMiner",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/33",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "HIVEOS"]
     },
@@ -212,7 +204,6 @@
       "description": "Read-only community explorer for blocks, transactions, addresses, UTXOs and network data.",
       "maintainer": "lucasan123",
       "url": "https://parano1d-pool.fun/explorer/",
-      "supportUrl": "https://github.com/ignotusnemo/parano1d/discussions/18",
       "source": "closed",
       "tags": ["BLOCK EXPLORER", "NETWORK DATA"]
     },

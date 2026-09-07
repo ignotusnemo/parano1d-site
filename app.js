@@ -42,12 +42,10 @@
   const ecosystemSections = document.querySelector("#ecosystem-sections");
   const repositoryGate = document.querySelector("#repository-gate");
   const repositoryGateClose = document.querySelector("#repository-gate-close");
-  const repositoryGateDismiss = document.querySelector("#repository-gate-dismiss");
+  const sourceOpeners = [...document.querySelectorAll("[data-source-open]")];
   let mobileSceneLayoutFrame = 0;
   let viewportSettleFrame = 0;
 
-  // The core repository is public. GitHub links navigate directly.
-  const PRIVATE_REPOSITORY_GATE = false;
   let repositoryGateLastFocus = null;
   let repositoryGateCloseTimer = 0;
   let repositoryGateAddedAppInert = false;
@@ -63,21 +61,13 @@
 
   secureExternalLinks();
 
-  function isPrivateRepositoryLink(link) {
-    if (!PRIVATE_REPOSITORY_GATE || !(link instanceof HTMLAnchorElement)) return false;
-    try {
-      const url = new URL(link.href, window.location.href);
-      return url.hostname.toLowerCase() === "github.com"
-        && /^\/ignotusnemo\/parano1d(?:\/|$)/i.test(url.pathname);
-    } catch {
-      return false;
-    }
-  }
-
-  function openRepositoryGate() {
+  function openRepositoryGate(opener) {
     if (!repositoryGate || !repositoryGate.hidden) return;
     clearTimeout(repositoryGateCloseTimer);
-    repositoryGateLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    repositoryGateLastFocus = mobileMenu?.contains(opener) ? mobileMenuToggle : opener;
+    setMobileMenu(false);
+    closeNavDropdowns();
+    setMessagePopover(false);
     repositoryGateAddedAppInert = !app.hasAttribute("inert");
     repositoryGateAddedDownloadsInert = Boolean(downloadsModal && !downloadsModal.hidden && !downloadsModal.hasAttribute("inert"));
     repositoryGateAddedEcosystemInert = Boolean(ecosystemModal && !ecosystemModal.hidden && !ecosystemModal.hasAttribute("inert"));
@@ -110,18 +100,10 @@
     repositoryGateLastFocus?.focus?.({ preventScroll: true });
   }
 
-  function gatePrivateRepositoryNavigation(event) {
-    const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
-    if (!isPrivateRepositoryLink(link)) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    openRepositoryGate();
-  }
-
-  document.addEventListener("click", gatePrivateRepositoryNavigation, true);
-  document.addEventListener("auxclick", gatePrivateRepositoryNavigation, true);
+  sourceOpeners.forEach((opener) => {
+    opener.addEventListener("click", () => openRepositoryGate(opener));
+  });
   repositoryGateClose?.addEventListener("click", closeRepositoryGate);
-  repositoryGateDismiss?.addEventListener("click", closeRepositoryGate);
   repositoryGate?.addEventListener("click", (event) => {
     if (event.target === repositoryGate) closeRepositoryGate();
   });
@@ -278,6 +260,7 @@
       "nav.discuss": "Обсудить",
       "nav.thirdParty": "Сторонние проекты",
       "nav.source": "Исходный код",
+      "nav.sourceButton": "Исходники",
       "ecosystem.dialog": "Сборки сообщества Parano1d",
       "ecosystem.close": "Закрыть каталог сборок сообщества",
       "ecosystem.header": "Сборки сообщества",
@@ -291,15 +274,10 @@
       "ecosystem.contribute.title": "Создали что-то для Parano1d?",
       "ecosystem.contribute.copy": "Предложите проект для Community builds отдельным pull request. Каждая заявка проверяется; открытый pull request не гарантирует размещение.",
       "ecosystem.contribute.action": "Добавить проект",
-      "repositoryGate.dialog": "Доступ к исходному коду Parano1d",
-      "repositoryGate.close": "Закрыть сообщение",
-      "repositoryGate.eyebrow": "Исходный код",
-      "repositoryGate.title": "Код откроется перед запуском.",
-      "repositoryGate.copy": "Основной репозиторий остаётся закрытым на финальном этапе подготовки. Код будущего релиза будет опубликован перед запуском публичной сети.",
-      "repositoryGate.launch": "Запуск публичной сети · 12 августа 2026",
-      "repositoryGate.contact": "Связаться с разработчиком",
-      "repositoryGate.github": "GitHub",
-      "repositoryGate.dismiss": "Закрыть",
+      "repositoryGate.dialog": "Исходный код Parano1d",
+      "repositoryGate.close": "Закрыть выбор репозитория",
+      "repositoryGate.title": "Исходный код",
+      "repositoryGate.unavailable": "Временно недоступен",
       "downloads.dialog": "Загрузки Parano1d",
       "downloads.close": "Закрыть загрузки",
       "downloads.header": "Загрузки",
@@ -496,6 +474,7 @@
       "nav.discuss": "讨论",
       "nav.thirdParty": "第三方",
       "nav.source": "源代码",
+      "nav.sourceButton": "源码",
       "ecosystem.dialog": "Parano1d 社区构建",
       "ecosystem.close": "关闭社区构建目录",
       "ecosystem.header": "社区构建",
@@ -509,15 +488,10 @@
       "ecosystem.contribute.title": "为 Parano1d 构建了项目？",
       "ecosystem.contribute.copy": "请通过独立的 pull request 将项目提交到社区构建。每项申请都会经过审核；提交并不保证收录。",
       "ecosystem.contribute.action": "添加社区项目",
-      "repositoryGate.dialog": "Parano1d 源代码访问说明",
-      "repositoryGate.close": "关闭提示",
-      "repositoryGate.eyebrow": "源代码",
-      "repositoryGate.title": "代码将在网络启动前公开。",
-      "repositoryGate.copy": "核心代码仓库将在最终准备阶段保持私有。即将发布版本的代码将在公共网络启动前公开。",
-      "repositoryGate.launch": "公共网络启动 · 2026 年 8 月 12 日",
-      "repositoryGate.contact": "联系开发者",
-      "repositoryGate.github": "GitHub",
-      "repositoryGate.dismiss": "关闭",
+      "repositoryGate.dialog": "Parano1d 源代码",
+      "repositoryGate.close": "关闭仓库选择",
+      "repositoryGate.title": "源代码",
+      "repositoryGate.unavailable": "暂时不可用",
       "downloads.dialog": "下载 Parano1d",
       "downloads.close": "关闭下载页面",
       "downloads.header": "下载",
@@ -1152,6 +1126,31 @@
   };
 
   const siteMessages = [
+    {
+      id: "github-unavailable-2026-09-07",
+      subject: "GitHub temporarily unavailable",
+      date: "2026-09-07T09:52:05Z",
+      preview: "Source code and v1.1.0 downloads are now available on our Forgejo.",
+      paragraphs: [
+        [
+          "Shortly after publishing Parano1d v1.1.0, my GitHub profile ",
+          "github.com/ignotusnemo",
+          " and public repositories became inaccessible without warning. I've contacted GitHub Support and am working to restore access."
+        ],
+        [
+          "I've set up our own ",
+          { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
+          " to keep the source code and release downloads available independently of GitHub. ",
+          { text: "Download Parano1d v1.1.0", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v1.1.0" },
+          "."
+        ],
+        [
+          "For the latest updates, follow ",
+          { text: "@ignotus_nemo on X", href: "https://x.com/ignotus_nemo" },
+          "."
+        ]
+      ]
+    },
     {
       id: "mainnet-live-2026-08-21",
       subject: "PARANO1D MAINNET IS LIVE.",
@@ -1844,7 +1843,20 @@
     messageLetterBody.replaceChildren();
 
     message.paragraphs.forEach((paragraph) => {
-      messageLetterBody.append(messageElement("p", "", paragraph));
+      const element = messageElement("p");
+      const parts = Array.isArray(paragraph) ? paragraph : [paragraph];
+      parts.forEach((part) => {
+        if (typeof part === "string") {
+          element.append(document.createTextNode(part));
+        } else {
+          const link = messageElement("a", "message-inline-link", part.text);
+          link.href = part.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          element.append(link);
+        }
+      });
+      messageLetterBody.append(element);
     });
 
     if (message.parameters?.length) {
@@ -1969,26 +1981,29 @@
     }
     latestReleasePromise = (async () => {
       try {
-        const response = await fetch("https://api.github.com/repos/ignotusnemo/parano1d/releases/latest", {
+        const response = await fetch("/release.json", {
           credentials: "omit",
-          headers: { Accept: "application/vnd.github+json" }
+          headers: { Accept: "application/json" },
+          signal: AbortSignal.timeout(5000)
         });
         if (!response.ok) return;
         const release = await response.json();
         const tag = typeof release.tag_name === "string" ? release.tag_name : "";
         if (!/^v\d+\.\d+\.\d+$/.test(tag) || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
 
+        const releaseBase = "https://git.parano1d.org/ignotusnemo/parano1d/releases";
         const assets = new Map(release.assets.map((asset) => [asset.name, asset.browser_download_url]));
         const releaseLinks = [...document.querySelectorAll("[data-release-pattern]")];
         const resolvedAssets = releaseLinks.map((link) => {
           const expectedName = link.dataset.releasePattern.replace("{tag}", tag);
-          return [link, assets.get(expectedName)];
+          const downloadUrl = `${releaseBase}/download/${tag}/${expectedName}`;
+          return [link, assets.get(expectedName) === downloadUrl ? downloadUrl : null];
         });
         if (resolvedAssets.some(([, downloadUrl]) => !downloadUrl)) return;
 
         resolvedAssets.forEach(([link, downloadUrl]) => { link.href = downloadUrl; });
         document.querySelectorAll("[data-release-page]").forEach((link) => {
-          if (release.html_url) link.href = release.html_url;
+          link.href = `${releaseBase}/tag/${tag}`;
         });
         document.querySelectorAll("[data-release-tag]").forEach((label) => { label.textContent = tag; });
       } catch {}
@@ -2164,7 +2179,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=community-builds-2026-09-01-2", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=forgejo-2026-09-07", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
