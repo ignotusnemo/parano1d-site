@@ -1130,7 +1130,7 @@
       id: "github-unavailable-2026-09-07",
       subject: "GitHub temporarily unavailable",
       date: "2026-09-07T09:52:05Z",
-      preview: "Source code and v1.1.0 downloads are now available on our Forgejo.",
+      preview: "Source code and v1.1.0 downloads are available on Forgejo and GitLab.",
       paragraphs: [
         [
           "Shortly after publishing Parano1d v1.1.0, my GitHub profile ",
@@ -1147,6 +1147,13 @@
         [
           "For the latest updates, follow ",
           { text: "@ignotus_nemo on X", href: "https://x.com/ignotus_nemo" },
+          "."
+        ],
+        [
+          "Parano1d source code is now available on ",
+          { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
+          " as an additional public development mirror. Parano1d v1.1.0 binaries are also available there: ",
+          { text: "gitlab.com/ignotusnemo/parano1d/-/releases/v1.1.0", href: "https://gitlab.com/ignotusnemo/parano1d/-/releases/v1.1.0" },
           "."
         ]
       ]
