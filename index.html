@@ -1497,6 +1497,8 @@
       border-radius: 999px;
       background: rgba(255,255,255,.025);
       color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
       font-size: 12px;
       font-weight: 720;
       text-decoration: none;
@@ -1511,11 +1513,25 @@
       transform: translateY(-1px);
     }
 
+    .ecosystem-category-link.is-active {
+      color: #03130d;
+      border-color: var(--mint);
+      background: var(--mint);
+      box-shadow: 0 8px 28px rgba(115,255,197,.13);
+    }
+
+    .ecosystem-category-link:focus-visible {
+      outline: 2px solid var(--ice);
+      outline-offset: 2px;
+    }
+
     .ecosystem-category-link span {
       color: var(--dim);
       font: 700 9px/1 ui-monospace, monospace;
       letter-spacing: .08em;
     }
+
+    .ecosystem-category-link.is-active span { color: rgba(3,19,13,.58); }
 
     .ecosystem-status {
       min-height: 180px;
@@ -1537,6 +1553,8 @@
       border-bottom: 1px solid var(--line);
       scroll-margin-top: 150px;
     }
+
+    .ecosystem-section[hidden] { display: none; }
 
     .ecosystem-section:last-child { border-bottom: 0; }
 
@@ -3522,6 +3540,6 @@
   </section>
 
 
-  <script defer src="app.js?v=ecosystem-2026-09-07"></script>
+  <script defer src="app.js?v=ecosystem-filters-2026-09-08"></script>
 </body>
 </html>

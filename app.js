@@ -1140,21 +1140,9 @@
         [
           "I've set up our own ",
           { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
-          " to keep the source code and release downloads available independently of GitHub. ",
-          { text: "Download Parano1d v1.1.0", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v1.1.0" },
-          "."
-        ],
-        [
-          "For the latest updates, follow ",
-          { text: "@ignotus_nemo on X", href: "https://x.com/ignotus_nemo" },
-          "."
-        ],
-        [
-          "Parano1d source code is now available on ",
+          " to keep the source code and release downloads available independently of GitHub. Parano1d source code is also available on ",
           { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
-          " as an additional public development mirror. Parano1d v1.1.0 binaries are also available there: ",
-          { text: "gitlab.com/ignotusnemo/parano1d/-/releases/v1.1.0", href: "https://gitlab.com/ignotusnemo/parano1d/-/releases/v1.1.0" },
-          "."
+          " as an additional public development mirror."
         ]
       ]
     },
@@ -1219,6 +1207,7 @@
   const ecosystemRuntimeCopy = {
     en: {
       error: "Community builds could not be loaded.",
+      all: "All",
       maintainedBy: "Maintained by",
       support: "Support",
       details: "Details",
@@ -1235,6 +1224,7 @@
     },
     ru: {
       error: "Не удалось загрузить сборки сообщества.",
+      all: "Все",
       maintainedBy: "Поддерживает",
       support: "Поддержка",
       details: "Подробнее",
@@ -1251,6 +1241,7 @@
     },
     zh: {
       error: "无法加载社区构建。",
+      all: "全部",
       maintainedBy: "维护者",
       support: "支持",
       details: "详情",
@@ -1982,6 +1973,7 @@
   let ecosystemData = null;
   let ecosystemLoadPromise = null;
   let ecosystemLoadFailed = false;
+  let ecosystemActiveCategory = "all";
 
   function loadDownloadsPreview() {
     if (!downloadsPreview || downloadsPreview.getAttribute("src")) return;
@@ -2090,6 +2082,54 @@
 
     const alphabetical = (left, right) => left.localeCompare(right, "en", { numeric: true, sensitivity: "base" });
     const categories = [...data.categories].sort((left, right) => alphabetical(left.label, right.label));
+    const categoryIds = new Set(categories.map((category) => category.id));
+    if (ecosystemActiveCategory !== "all" && !categoryIds.has(ecosystemActiveCategory)) ecosystemActiveCategory = "all";
+
+    const filters = [{ id: "all", label: copy.all, number: "00" }, ...categories.map((category, index) => ({
+      id: category.id,
+      label: category.label,
+      number: String(index + 1).padStart(2, "0")
+    }))];
+
+    const applyFilter = ({ moveToResults = false } = {}) => {
+      ecosystemCategoryNav.querySelectorAll(".ecosystem-category-link").forEach((button) => {
+        const active = button.dataset.category === ecosystemActiveCategory;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      ecosystemSections.querySelectorAll(".ecosystem-section").forEach((section) => {
+        section.hidden = ecosystemActiveCategory !== "all" && section.dataset.category !== ecosystemActiveCategory;
+      });
+      if (moveToResults) {
+        ecosystemSections.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
+      }
+    };
+
+    filters.forEach((filter) => {
+      const button = ecosystemElement("button", "ecosystem-category-link");
+      button.type = "button";
+      button.dataset.category = filter.id;
+      button.setAttribute("aria-controls", filter.id === "all" ? "ecosystem-sections" : `ecosystem-${filter.id}`);
+      button.append(ecosystemElement("span", "", filter.number), document.createTextNode(filter.label));
+      button.addEventListener("click", () => {
+        ecosystemActiveCategory = filter.id;
+        applyFilter({ moveToResults: true });
+      });
+      button.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const buttons = [...ecosystemCategoryNav.querySelectorAll(".ecosystem-category-link")];
+        const current = buttons.indexOf(button);
+        const next = event.key === "Home"
+          ? 0
+          : event.key === "End"
+            ? buttons.length - 1
+            : (current + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
+        buttons[next]?.focus();
+        buttons[next]?.click();
+      });
+      ecosystemCategoryNav.append(button);
+    });
 
     categories.forEach((category, index) => {
       const sectionId = `ecosystem-${category.id}`;
@@ -2098,20 +2138,9 @@
         .sort((left, right) => alphabetical(left.name, right.name));
       const number = String(index + 1).padStart(2, "0");
 
-      const navLink = ecosystemElement("a", "ecosystem-category-link");
-      navLink.href = `#${sectionId}`;
-      navLink.append(ecosystemElement("span", "", number), document.createTextNode(category.label));
-      navLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        document.getElementById(sectionId)?.scrollIntoView({
-          behavior: reducedMotion.matches ? "auto" : "smooth",
-          block: "start"
-        });
-      });
-      ecosystemCategoryNav.append(navLink);
-
       const section = ecosystemElement("section", "ecosystem-section");
       section.id = sectionId;
+      section.dataset.category = category.id;
       section.setAttribute("aria-labelledby", `${sectionId}-title`);
 
       const heading = ecosystemElement("div", "ecosystem-section-head");
@@ -2181,6 +2210,8 @@
       ecosystemSections.append(section);
     });
 
+    applyFilter();
+
     ecosystemStatus.hidden = true;
     ecosystemStatus.classList.remove("is-error");
     ecosystemCategoryNav.hidden = false;
@@ -2209,7 +2240,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-2026-09-07", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-filters-2026-09-08", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
@@ -2245,6 +2276,7 @@
     document.body.classList.add("ecosystem-open");
     app.setAttribute("inert", "");
     scene?.syncPlayback();
+    ecosystemActiveCategory = "all";
     loadEcosystemDirectory();
     requestAnimationFrame(() => {
       ecosystemModal.scrollTop = 0;
