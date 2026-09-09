@@ -1127,32 +1127,19 @@
 
   const siteMessages = [
     {
-      id: "github-unavailable-2026-09-07",
-      subject: "GitHub temporarily unavailable",
-      date: "2026-09-07T09:52:05Z",
-      preview: "Forgejo is now canonical. GitHub and GitLab are public mirrors.",
+      id: "v1-1-0-activation-2026-09-08",
+      subject: "Parano1d v1.1.0 is available",
+      date: "2026-09-08T18:00:00Z",
+      preview: "Mandatory update. Upgrade before block 95,125. Activation is expected around September 14.",
       paragraphs: [
+        "Parano1d v1.1.0 is now available. This is a mandatory protocol update. The new rules activate at block 95,125.",
+        "Based on the current pace of the network, activation is expected around September 14. This is an estimate, so follow the block height.",
+        "Please update all nodes, GUI wallets and block-producing pool nodes before activation. v1.1.0 remains compatible with older versions until block 95,125. After that, older versions will no longer follow the chain.",
+        "You do not need to reset anything. Your wallet and receipts stay in place.",
         [
-          "Shortly after publishing Parano1d v1.1.0, my GitHub profile ",
-          { text: "github.com/ignotusnemo", href: "https://github.com/ignotusnemo" },
-          " and public repositories became inaccessible without warning. I've contacted GitHub Support and am working to restore access."
-        ],
-        [
-          "I've set up our own ",
-          { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
-          " as the canonical home of Parano1d source code and releases. ",
-          { text: "GitHub", href: "https://github.com/ignotusnemo/parano1d" },
-          " and ",
-          { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
-          " are maintained as public mirrors, so the project no longer depends on a single hosting provider."
-        ],
-        [
-          { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
-          " (canonical) → ",
-          { text: "GitHub", href: "https://github.com/ignotusnemo/parano1d" },
-          " (mirror) · ",
-          { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
-          " (mirror)"
+          { text: "Download Parano1d v1.1.0", href: "#downloads" },
+          " · ",
+          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v1.1.0" }
         ]
       ]
     },
@@ -1544,6 +1531,7 @@
   const PHOTO_KEY_STEP = 7;
   const SOUNDNESS_STEP = 13;
   const PHOTO_KEY_DURATION = 2350;
+  const downloadsRequestedOnLoad = window.location.hash === "#downloads";
   const hashIndex = chapters.findIndex((chapter) => `#${chapter.id}` === window.location.hash);
   let current = hashIndex >= 0 ? hashIndex : 0;
   if (window.location.hash) {
@@ -1868,8 +1856,16 @@
         } else {
           const link = messageElement("a", "message-inline-link", part.text);
           link.href = part.href;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
+          if (part.href === "#downloads") {
+            link.addEventListener("click", (event) => {
+              event.preventDefault();
+              setMessagePopover(false);
+              openDownloads();
+            });
+          } else {
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+          }
           element.append(link);
         }
       });
@@ -2341,6 +2337,12 @@
   }
 
   downloadsOpeners.forEach((button) => button.addEventListener("click", openDownloads));
+  if (downloadsRequestedOnLoad) openDownloads();
+  window.addEventListener("hashchange", () => {
+    if (window.location.hash !== "#downloads") return;
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+    openDownloads();
+  });
   downloadsClose?.addEventListener("click", closeDownloads);
   downloadsModal?.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") return;
