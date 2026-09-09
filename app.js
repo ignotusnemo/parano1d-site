@@ -1130,19 +1130,29 @@
       id: "github-unavailable-2026-09-07",
       subject: "GitHub temporarily unavailable",
       date: "2026-09-07T09:52:05Z",
-      preview: "Source code and v1.1.0 downloads are available on Forgejo and GitLab.",
+      preview: "Forgejo is now canonical. GitHub and GitLab are public mirrors.",
       paragraphs: [
         [
           "Shortly after publishing Parano1d v1.1.0, my GitHub profile ",
-          "github.com/ignotusnemo",
+          { text: "github.com/ignotusnemo", href: "https://github.com/ignotusnemo" },
           " and public repositories became inaccessible without warning. I've contacted GitHub Support and am working to restore access."
         ],
         [
           "I've set up our own ",
           { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
-          " to keep the source code and release downloads available independently of GitHub. Parano1d source code is also available on ",
+          " as the canonical home of Parano1d source code and releases. ",
+          { text: "GitHub", href: "https://github.com/ignotusnemo/parano1d" },
+          " and ",
           { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
-          " as an additional public development mirror."
+          " are maintained as public mirrors, so the project no longer depends on a single hosting provider."
+        ],
+        [
+          { text: "Forgejo", href: "https://git.parano1d.org/ignotusnemo/parano1d" },
+          " (canonical) → ",
+          { text: "GitHub", href: "https://github.com/ignotusnemo/parano1d" },
+          " (mirror) · ",
+          { text: "GitLab", href: "https://gitlab.com/ignotusnemo/parano1d" },
+          " (mirror)"
         ]
       ]
     },
