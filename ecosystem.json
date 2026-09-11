@@ -29,16 +29,6 @@
   ],
   "projects": [
     {
-      "id": "ariapool",
-      "category": "pools",
-      "name": "AriaPool",
-      "description": "Public NOID mining pool with network statistics and setup instructions.",
-      "maintainer": "AriaBrain",
-      "url": "https://pool.ariabrain.com/noid.html",
-      "source": "closed",
-      "tags": ["PUBLIC POOL"]
-    },
-    {
       "id": "parano1d-pool",
       "category": "pools",
       "name": "Parano1d Pool",
@@ -68,17 +58,6 @@
       "supportUrl": "https://discord.gg/NDVsmSJ72X",
       "source": "closed",
       "tags": ["PUBLIC POOL"]
-    },
-    {
-      "id": "nurserypool",
-      "category": "pools",
-      "name": "NurseryPool",
-      "description": "Public address-based NOID mining pool with PPLNS accounting, automatic payouts and setup instructions.",
-      "maintainer": "NurseryPool",
-      "url": "https://noid.nurserypool.com/",
-      "supportUrl": "https://discord.gg/uqEJjUeuNX",
-      "source": "closed",
-      "tags": ["PUBLIC POOL", "PPLNS"]
     },
     {
       "id": "noidpool",
@@ -112,16 +91,6 @@
       "tags": ["PUBLIC POOL", "STRATUM", "TLS", "HOURLY PAYOUTS"]
     },
     {
-      "id": "ariaminer-noid",
-      "category": "miners",
-      "name": "AriaMiner NOID",
-      "description": "Linux x86-64 CPU miner for AriaPool.",
-      "maintainer": "AriaBrain",
-      "url": "https://pool.ariabrain.com/noid.html#connect",
-      "source": "closed",
-      "tags": ["CPU", "LINUX"]
-    },
-    {
       "id": "hashborn-noid-miner",
       "category": "miners",
       "name": "Hashborn NOID Miner",
@@ -147,7 +116,7 @@
       "name": "PeakMiner",
       "description": "Binary NVIDIA GPU miner for public pool and self-hosted solo NOID mining on Windows, Linux and HiveOS.",
       "maintainer": "PeakMiner",
-      "url": "https://github.com/peakminer/peakminer/releases/tag/v2.14.0",
+      "url": "https://github.com/peakminer/peakminer/releases/latest",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM V2"]
     },
@@ -161,17 +130,6 @@
       "supportUrl": "https://discord.gg/NDVsmSJ72X",
       "source": "closed",
       "tags": ["CPU", "NVIDIA", "LINUX", "HIVEOS"]
-    },
-    {
-      "id": "nurserypool-noid-miner",
-      "category": "miners",
-      "name": "NurseryPool NOID Miner",
-      "description": "Binary NVIDIA GPU miner for NurseryPool on Linux.",
-      "maintainer": "NurseryPool",
-      "url": "https://noid.nurserypool.com/help.html",
-      "supportUrl": "https://discord.gg/uqEJjUeuNX",
-      "source": "closed",
-      "tags": ["NVIDIA", "LINUX"]
     },
     {
       "id": "ntmminer-noid",
@@ -209,7 +167,7 @@
       "name": "SRBMiner-Multi",
       "description": "Binary NVIDIA and AMD GPU miner for NOID on Windows, Linux and HiveOS, with a disclosed 3% developer fee.",
       "maintainer": "doktor83",
-      "url": "https://github.com/doktor83/SRBMiner-Multi/releases/tag/3.6.3",
+      "url": "https://github.com/doktor83/SRBMiner-Multi/releases/latest",
       "source": "closed",
       "tags": ["NVIDIA", "AMD", "WINDOWS", "LINUX", "HIVEOS"]
     },
