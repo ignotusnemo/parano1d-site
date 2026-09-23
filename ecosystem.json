@@ -60,16 +60,6 @@
       "tags": ["PUBLIC POOL"]
     },
     {
-      "id": "noidpool",
-      "category": "pools",
-      "name": "noidpool.xyz",
-      "description": "Public PPLNS pool with a 4% pool fee, automatic hourly payouts from 1 NOID, a built-in explorer and a bundled Linux NVIDIA GPU miner.",
-      "maintainer": "noidpool",
-      "url": "https://noidpool.xyz/",
-      "source": "closed",
-      "tags": ["PUBLIC POOL", "PPLNS", "HOURLY PAYOUTS", "GPU MINER"]
-    },
-    {
       "id": "suprnova-pool",
       "category": "pools",
       "name": "Suprnova",
@@ -142,6 +132,36 @@
       "tags": ["CPU", "NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
+      "id": "gb-parano1d-miner",
+      "category": "miners",
+      "name": "GB Parano1d Miner",
+      "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS with HTTP and Stratum pool support, automatic failover, power tuning and a disclosed 3% developer fee.",
+      "maintainer": "gustlborg",
+      "url": "https://github.com/gustlborg/gb-parano1d-miner/releases/latest",
+      "source": "closed",
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM"]
+    },
+    {
+      "id": "forgeminer",
+      "category": "miners",
+      "name": "ForgeMiner",
+      "description": "Multi-algorithm binary NVIDIA GPU miner with NOID support on Windows, Linux, HiveOS and Docker, with a disclosed 2.5% NOID developer fee.",
+      "maintainer": "0xHashRaptor",
+      "url": "https://github.com/0xHashRaptor/ForgeMiner/releases/latest",
+      "source": "closed",
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "DOCKER"]
+    },
+    {
+      "id": "noid-gpu-amd",
+      "category": "miners",
+      "name": "NOID GPU Miner for AMD",
+      "description": "Binary AMD GPU miner for Windows, Linux and HiveOS via HIP, ROCm or OpenCL, with a disclosed 5% fee. Only RX 9070 has been tested; Linux builds have not been run on AMD hardware.",
+      "maintainer": "lucasan123",
+      "url": "https://github.com/lucasan123/Noid-gpu-amd/releases/latest",
+      "source": "closed",
+      "tags": ["AMD", "WINDOWS", "LINUX", "HIVEOS", "OPENCL"]
+    },
+    {
       "id": "fl4shminer",
       "category": "miners",
       "name": "Fl4shMiner",
@@ -155,17 +175,17 @@
       "id": "suprminer",
       "category": "miners",
       "name": "Suprminer",
-      "description": "Binary NVIDIA GPU miner for NOID on Linux and modern HiveOS with no developer fee on the NOID algorithm.",
+      "description": "Binary NVIDIA GPU miner for NOID on Windows, Linux and modern HiveOS with no developer fee on the NOID algorithm.",
       "maintainer": "ocminer",
       "url": "https://github.com/ocminer/suprminer/releases",
       "source": "closed",
-      "tags": ["NVIDIA", "LINUX", "HIVEOS", "NO DEV FEE"]
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "NO DEV FEE"]
     },
     {
       "id": "srbminer-multi",
       "category": "miners",
       "name": "SRBMiner-Multi",
-      "description": "Binary NVIDIA and AMD GPU miner for NOID on Windows, Linux and HiveOS, with a disclosed 3% developer fee.",
+      "description": "Binary NVIDIA and AMD GPU miner for NOID on Windows, Linux and HiveOS, with a disclosed 2% developer fee.",
       "maintainer": "doktor83",
       "url": "https://github.com/doktor83/SRBMiner-Multi/releases/latest",
       "source": "closed",
@@ -202,6 +222,17 @@
       "url": "https://parano1d-pool.fun/explorer/",
       "source": "closed",
       "tags": ["BLOCK EXPLORER", "NETWORK DATA"]
+    },
+    {
+      "id": "noid-explorer",
+      "category": "analytics",
+      "name": "NOID Explorer",
+      "description": "Community block explorer for blocks, transactions, addresses, mempool, rich list, network economics and historical data.",
+      "maintainer": "gustlborg",
+      "url": "https://noidexplorer.org/",
+      "detailsUrl": "https://github.com/gustlborg/gb-parano1d-permanode",
+      "source": "open",
+      "tags": ["BLOCK EXPLORER", "PERMANODE", "JSON API"]
     },
     {
       "id": "ethereum-research",
