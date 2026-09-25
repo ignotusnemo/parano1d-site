@@ -10,7 +10,7 @@
   <meta name="author" content="Ignotus Nemo">
   <meta name="creator" content="Ignotus Nemo">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="description" content="Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1.">
+  <meta name="description" content="Parano1d is a proof-native Layer 1 for live value and programmable spending rights. Smart contracts share recursive block proofs, without requiring nodes to retain and replay their complete interaction history.">
 
   <link rel="canonical" href="https://parano1d.org/">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-v2-16.png">
@@ -23,7 +23,7 @@
   <meta property="og:site_name" content="Parano1d">
   <meta property="og:url" content="https://parano1d.org/">
   <meta property="og:title" content="Parano1d. Proof-native Layer 1" data-meta-title>
-  <meta property="og:description" content="Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1." data-meta-description>
+  <meta property="og:description" content="Parano1d is a proof-native Layer 1 for live value and programmable spending rights. Smart contracts share recursive block proofs, without requiring nodes to retain and replay their complete interaction history." data-meta-description>
   <meta property="og:locale" content="en_US" data-meta-locale>
   <meta property="og:locale:alternate" content="ru_RU">
   <meta property="og:locale:alternate" content="zh_CN">
@@ -37,7 +37,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://parano1d.org/">
   <meta name="twitter:title" content="Parano1d. Proof-native Layer 1" data-meta-title>
-  <meta name="twitter:description" content="Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1." data-meta-description>
+  <meta name="twitter:description" content="Parano1d is a proof-native Layer 1 for live value and programmable spending rights. Smart contracts share recursive block proofs, without requiring nodes to retain and replay their complete interaction history." data-meta-description>
   <meta name="twitter:image" content="https://parano1d.org/social-card-v4.png">
   <meta name="twitter:image:alt" content="Parano1d. A proof-native Layer 1 ordered by proof of work.">
 
@@ -52,7 +52,7 @@
         "url": "https://parano1d.org/",
         "name": "Parano1d",
         "alternateName": "parano1d.org",
-        "description": "Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1.",
+        "description": "Parano1d is a proof-native Layer 1 for live value and programmable spending rights. Smart contracts share recursive block proofs, without requiring nodes to retain and replay their complete interaction history.",
         "image": "https://parano1d.org/social-card-v4.png",
         "inLanguage": ["en", "ru", "zh-CN"],
         "creator": { "@id": "https://parano1d.org/#creator" },
@@ -2923,6 +2923,8 @@
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
       .hero-why, .hero-why::after { animation: none !important; }
     }
+    .protocol-note { max-width: 530px; margin-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    @media (max-width: 520px) { .protocol-note { font-size: 10px; margin-top: 12px; } }
   </style>
 </head>
 <body>
@@ -3027,16 +3029,17 @@
     <div class="chapters">
       <section class="chapter cover active" id="overview" data-step="0" aria-labelledby="title-overview">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="overview.index">The network does not re-execute. It verifies.</div>
+          <div class="chapter-index" data-i18n="overview.index">From live value to live rights.</div>
           <h1 id="title-overview" data-i18n="overview.title">Proof-native<br><em>Layer 1</em></h1>
-          <p class="hero-security" data-i18n="overview.security">Ordered by proof of work. Provable <span class="nowrap">end-to-end</span><br>post-quantum soundness at NIST Category 1.</p>
+          <p class="hero-security" data-i18n="overview.security">Programmable spending rights, verified inside recursive proofs.<br>One proof-native Layer 1, ordered by proof of work.</p>
           <div class="chapter-actions">
             <button class="action primary hero-why" type="button" data-next data-i18n="overview.enter">WHY? <span>→</span></button>
+            <button class="action violet" type="button" data-go="16" data-i18n="overview.contracts">CONTRACTS <span>→</span></button>
           </div>
           <div class="hero-facts">
             <div class="hero-fact"><b data-i18n="overview.fact.sync.value">O(1) VALIDATION</b><span data-i18n="overview.fact.sync.copy">no replay from genesis</span></div>
             <div class="hero-fact"><b data-i18n="overview.fact.signatureless.value">SIGNATURELESS</b><span data-i18n="overview.fact.signatureless.copy">ownership proven, not signed</span></div>
-            <div class="hero-fact"><b data-i18n="overview.fact.pow.value">LIVING STATE</b><span data-i18n="overview.fact.pow.copy">spent outputs release capacity</span></div>
+            <div class="hero-fact"><b data-i18n="overview.fact.pow.value">LIVE RIGHTS</b><span data-i18n="overview.fact.pow.copy">programs · authorities · counters</span></div>
           </div>
         </div>
       </section>
@@ -3057,7 +3060,7 @@
         <div class="chapter-inner shell">
           <div class="chapter-index" data-i18n="present.index">02 / THE INVERSION</div>
           <h2 id="title-present" data-i18n="present.title">The present<br>proves <em>the past.</em></h2>
-          <p class="lead" data-i18n="present.lead">Parano1d separates state validity from historical replay. The live UTXO state is authenticated by a recursive proof from genesis to the present. Spent outputs release their slots, so storage follows live state rather than chain age.</p>
+          <p class="lead" data-i18n="present.lead">Parano1d separates state validity from historical replay. The live State holds value and commitments to programmable spending rights, authenticated by a recursive proof from genesis. Spent outputs release their slots, so storage follows live use rather than chain age.</p>
           <dl class="ledger">
             <div class="ledger-row"><dt data-i18n="present.row1.label">State growth</dt><dd data-i18n="present.row1.value"><strong>Tracks live UTXOs, not lifetime transactions</strong></dd></div>
             <div class="ledger-row"><dt data-i18n="present.row2.label">Spent outputs</dt><dd data-i18n="present.row2.value">Slots clear and can be reused</dd></div>
@@ -3128,8 +3131,8 @@
       <section class="chapter" id="paged-spend" data-step="8" aria-labelledby="title-paged-spend">
         <div class="chapter-inner shell">
           <div class="chapter-index" data-i18n="paged.index">08 / PAGEDSPEND</div>
-          <h2 id="title-paged-spend" data-i18n="paged.title">Up to 1,020 UTXOs.<br><em>One transaction.</em></h2>
-          <p class="lead" data-i18n="paged.lead">A physical <code>Tx8x2</code> page holds up to eight inputs and two outputs. <code>PagedSpend</code> joins up to 128 pages into one logical transaction. It can atomically spend up to 1,020 UTXOs and create up to 256 outputs with one txid, one fee, one authorization capsule, and one receipt.</p>
+          <h2 id="title-paged-spend" data-i18n="paged.title">Up to 504 inputs.<br><em>One transaction.</em></h2>
+          <p class="lead" data-i18n="paged.lead">Each <code>Tx8x2</code> page holds eight inputs and two outputs. <code>PagedSpend</code> joins pages into one atomic transaction with one txid, fee, authorization capsule and receipt. V2 admits up to 504 inputs within the block budget: at most 63 pages in Small, or 128 pages for one logical transaction in Large.</p>
         </div>
       </section>
 
@@ -3190,15 +3193,15 @@
         <div class="chapter-inner shell">
           <div class="chapter-index" data-i18n="soundness.index">13 / End to end post quantum soundness</div>
           <h2 id="title-soundness" data-i18n="soundness.title">Post-quantum.<br><em>Provable from genesis.</em></h2>
-          <p class="lead" data-i18n="soundness.lead">One theorem covers wallet authorization, transaction validity, exact State transitions, recursive HistoryStep and the terminal State accepted by every node.</p>
+          <p class="lead" data-i18n="soundness.lead">The v2 resource assessment covers wallet authorization, transactions, contract execution, exact State transitions, recursive ancestry and matrix retirement. Its composition and preprocessing premises are explicit in the security model.</p>
           <dl class="ledger soundness-ledger">
-            <div class="ledger-row"><dt data-i18n="soundness.result.label">Result</dt><dd data-i18n="soundness.result.value"><strong>NIST PQC Category 1</strong></dd></div>
-            <div class="ledger-row"><dt data-i18n="soundness.floor.label">Half-success floor</dt><dd data-i18n="soundness.floor.value"><strong><code>2^173.391078499301</code></strong></dd></div>
-            <div class="ledger-row"><dt data-i18n="soundness.bound.label">Complete ideal bound</dt><dd data-i18n="soundness.bound.value"><strong><code>0.049330348213215253 &lt; 1/2</code></strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="soundness.result.label">Result</dt><dd data-i18n="soundness.result.value"><strong>NIST PQC Category 1</strong> · conditional</dd></div>
+            <div class="ledger-row"><dt data-i18n="soundness.floor.label">Half-success floor</dt><dd data-i18n="soundness.floor.value"><strong><code>2^173.3897612554174</code></strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="soundness.bound.label">Complete ideal bound</dt><dd data-i18n="soundness.bound.value"><strong><code>≈ 0.04937388373372754 &lt; 1/2</code></strong></dd></div>
           </dl>
           <div class="chapter-actions soundness-actions">
-            <a class="action primary" href="https://lab.parano1d.org/research/parano1d-nist-pqc-category-one/" data-i18n="soundness.proof">Proof</a>
-            <a class="action violet" href="https://git.parano1d.org/ignotusnemo/parano1d-soundness" data-i18n="soundness.certificate">Executable certificate</a>
+            <a class="action primary" href="https://docs.parano1d.org/protocol/security-model" data-i18n="soundness.proof">Security model</a>
+            <a class="action violet" href="https://git.parano1d.org/ignotusnemo/parano1d/src/branch/main/noid_soundness/docs/v2-retirement.md" data-i18n="soundness.certificate">Executable certificate</a>
           </div>
         </div>
       </section>
@@ -3209,7 +3212,7 @@
           <h2 id="title-pow" data-i18n="pow.title">Prove first.<br><em>Mine second.</em></h2>
           <p class="lead" data-i18n="pow.lead">PoW chooses the order of already-proven transitions. The miner completes the nonce-independent block proof, freezes an immutable template, then searches only the 128-bit nonce.</p>
           <dl class="ledger">
-            <div class="ledger-row"><dt data-i18n="pow.target.label">Block target</dt><dd data-i18n="pow.target.value"><strong>20-second mean</strong> · ASERT difficulty</dd></div>
+            <div class="ledger-row"><dt data-i18n="pow.target.label">Block target</dt><dd data-i18n="pow.target.value"><strong>30-second mean</strong> · ASERT difficulty</dd></div>
             <div class="ledger-row"><dt data-i18n="pow.role.label">Role of PoW</dt><dd data-i18n="pow.role.value"><strong>Canonical ordering of proven transitions</strong></dd></div>
             <div class="ledger-row"><dt data-i18n="pow.boundary.label">Proof boundary</dt><dd data-i18n="pow.boundary.value"><strong>Cannot forge ownership or validate an invalid state</strong></dd></div>
           </dl>
@@ -3218,17 +3221,52 @@
 
       <section class="chapter" id="run" data-step="15" aria-labelledby="title-run">
         <div class="chapter-inner shell">
-          <div class="chapter-index" data-i18n="run.index">15 / Hardware-adaptive decentralization</div>
-          <h2 id="title-run" data-i18n="run.title">The entire L1.<br><em>On your laptop.</em></h2>
-          <p class="lead" data-i18n="run.lead">A laptop can hold the complete live state and independently verify the entire L1. Miners choose block capacity that matches their proving power: faster hardware proves larger blocks; slower hardware proves smaller ones. Throughput adapts. Full verification remains universal.</p>
+          <div class="chapter-index" data-i18n="run.index">15 / V2 block capacity</div>
+          <h2 id="title-run" data-i18n="run.title">One network.<br><em>Two block classes.</em></h2>
+          <p class="lead" data-i18n="run.lead">Small is the default. A producing server may enable Large with <code>--v2-large-blocks</code> when extra payment capacity is useful. Every node verifies both. Both classes share 504 live inputs and 63 contract calls; each call uses one page and one input. The block target is 30 seconds.</p>
           <div class="capacity-rule">
-            <div class="capacity-side"><span data-i18n="run.capacity.modest">Your laptop</span><b data-i18n="run.capacity.modest.value">lower TPS</b></div>
+            <div class="capacity-side"><span data-i18n="run.capacity.modest">Small · m23</span><b data-i18n="run.capacity.modest.value">63 pages</b></div>
             <i aria-hidden="true">↔</i>
-            <div class="capacity-side"><span data-i18n="run.capacity.fast">Faster hardware</span><b data-i18n="run.capacity.fast.value">higher TPS</b></div>
-            <strong class="capacity-live"><span data-i18n="run.capacity.network">Network</span><b data-i18n="run.capacity.network.value">keeps advancing</b></strong>
+            <div class="capacity-side"><span data-i18n="run.capacity.fast">Large · m24</span><b data-i18n="run.capacity.fast.value">206 pages</b></div>
+            <strong class="capacity-live"><span data-i18n="run.capacity.network">Same contract core</span><b data-i18n="run.capacity.network.value">63 calls</b></strong>
           </div>
+          <p class="protocol-note" data-i18n="run.issuance">16 → 11.30 → 8 → 5.65 → 4 → 2.83 → 2 → 1.41 → 1 NOID. One step every 1,051,200 blocks from H210537; State occupancy still sets the slot-growth fee.</p>
           <div class="chapter-actions">
             <button class="action primary" type="button" data-download-open data-i18n="run.download">Download wallet</button>
+            <a class="action violet" href="https://docs.parano1d.org/protocol/economics" data-i18n="run.economics">Network economics</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="contracts" data-step="16" aria-labelledby="title-contracts">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="contracts.index">16 / PROOF-NATIVE CONTRACTS</div>
+          <h2 id="title-contracts" data-i18n="contracts.title">Live value.<br><em>Live rights.</em></h2>
+          <p class="lead" data-i18n="contracts.lead">A live output can commit to a program, spending authorities and persistent counters. An authorized call proves the rules and creates the next valid state. The shared block proof carries continuity, so future nodes can verify the present after old interactions have been pruned.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="contracts.state.label">Live State</dt><dd data-i18n="contracts.state.value">Value + commitment to current rights</dd></div>
+            <div class="ledger-row"><dt data-i18n="contracts.proof.label">Execution</dt><dd data-i18n="contracts.proof.value"><strong>Proved inside the recursive block relation</strong></dd></div>
+            <div class="ledger-row"><dt data-i18n="contracts.history.label">Participants keep</dt><dd data-i18n="contracts.history.value">Current public terms + portable receipts</dd></div>
+          </dl>
+          <div class="chapter-actions">
+            <a class="action primary" href="https://docs.parano1d.org/concepts/proof-native-contracts" data-i18n="contracts.guide">Explore proof-native contracts</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="applications" data-step="17" aria-labelledby="title-applications">
+        <div class="chapter-inner shell">
+          <div class="chapter-index" data-i18n="applications.index">17 / BUILD WITH LIVE RIGHTS</div>
+          <h2 id="title-applications" data-i18n="applications.title">Your rules.<br><em>One shared core.</em></h2>
+          <p class="lead" data-i18n="applications.lead">Refundable payments, vaults, delegated allowances, period budgets, recurring payments and gradual unlocks are ready to use. Build custom programs through the GUI, CLI or API. Every application uses the same proved interpreter and block matrices.</p>
+          <dl class="ledger">
+            <div class="ledger-row"><dt data-i18n="applications.core.label">Integer core</dt><dd data-i18n="applications.core.value">16 instructions · 2 persistent u64 counters</dd></div>
+            <div class="ledger-row"><dt data-i18n="applications.rules.label">Rules</dt><dd data-i18n="applications.rules.value">Checked arithmetic · conditions · block height</dd></div>
+            <div class="ledger-row"><dt data-i18n="applications.calls.label">Execution trigger</dt><dd data-i18n="applications.calls.value">An authorized call, including scheduled payments</dd></div>
+          </dl>
+          <div class="chapter-actions">
+            <a class="action primary" href="https://docs.parano1d.org/contracts/gui" data-i18n="applications.gui">Use the wallet</a>
+            <a class="action violet" href="https://docs.parano1d.org/contracts/api" data-i18n="applications.api">Build through the API</a>
           </div>
         </div>
       </section>
@@ -3255,7 +3293,9 @@
       <button class="state-dot" type="button" data-go="12">12<span class="visually-hidden"> — <span data-i18n="rail.12">One binary proof stack</span></span></button>
       <button class="state-dot" type="button" data-go="13">13<span class="visually-hidden"> — <span data-i18n="rail.13">End to end post quantum soundness</span></span></button>
       <button class="state-dot" type="button" data-go="14">14<span class="visually-hidden"> — <span data-i18n="rail.14">Proof-native PoW</span></span></button>
-      <button class="state-dot" type="button" data-go="15">15<span class="visually-hidden"> — <span data-i18n="rail.15">Hardware-adaptive decentralization</span></span></button>
+      <button class="state-dot" type="button" data-go="15">15<span class="visually-hidden"> — <span data-i18n="rail.15">V2 block capacity</span></span></button>
+      <button class="state-dot" type="button" data-go="16">16<span class="visually-hidden"> — <span data-i18n="rail.16">Proof-native contracts</span></span></button>
+      <button class="state-dot" type="button" data-go="17">17<span class="visually-hidden"> — <span data-i18n="rail.17">Build with live rights</span></span></button>
     </nav>
 
     <div class="control-deck shell">
@@ -3373,9 +3413,9 @@
       <div class="downloads-content shell">
         <h2 class="visually-hidden" id="downloads-title" data-i18n="downloads.header">Downloads</h2>
         <div class="downloads-release-strip">
-          <span class="downloads-release-meta"><span data-i18n="downloads.latest">Latest release</span><b data-release-tag>v1.1.0</b></span>
+          <span class="downloads-release-meta"><span data-i18n="downloads.latest">Latest release</span><b data-release-tag>v2.0.0</b></span>
           <div class="downloads-release-row">
-            <a class="downloads-action" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v1.1.0" target="_blank" rel="noopener noreferrer" data-release-page>
+            <a class="downloads-action" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer" data-release-page>
               <svg aria-hidden="true"><use href="#download-icon-source"/></svg>
               <span data-i18n="downloads.open">Release</span>
             </a>
@@ -3411,7 +3451,7 @@
                   <b>Windows</b><small>Installer</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-gui-v1.1.0-windows-x86_64-setup.exe" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-windows-x86_64-setup.exe">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-gui-v2.0.0-windows-x86_64-setup.exe" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-windows-x86_64-setup.exe">
                     <span class="build-link-copy"><b>Intel / AMD</b><span>x86-64 · .exe</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3424,11 +3464,11 @@
                   <b>macOS</b><small>Disk image</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-gui-v1.1.0-macos-aarch64.dmg" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-macos-aarch64.dmg">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-gui-v2.0.0-macos-aarch64.dmg" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-macos-aarch64.dmg">
                     <span class="build-link-copy"><b>Apple Silicon</b><span>ARM64 · .dmg</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-gui-v1.1.0-macos-x86_64.dmg" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-macos-x86_64.dmg">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-gui-v2.0.0-macos-x86_64.dmg" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-macos-x86_64.dmg">
                     <span class="build-link-copy"><b>Intel</b><span>x86-64 · .dmg</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3441,11 +3481,11 @@
                   <b>Linux</b><small>Debian / Ubuntu</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-gui-v1.1.0-linux-x86_64.deb" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-linux-x86_64.deb">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-gui-v2.0.0-linux-x86_64.deb" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-linux-x86_64.deb">
                     <span class="build-link-copy"><b>Intel / AMD</b><span>x86-64 · .deb</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-gui-v1.1.0-linux-aarch64.deb" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-linux-aarch64.deb">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-gui-v2.0.0-linux-aarch64.deb" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-gui-{tag}-linux-aarch64.deb">
                     <span class="build-link-copy"><b>ARM systems</b><span>ARM64 · .deb</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3484,7 +3524,7 @@
                   <b>Windows</b><small>.zip</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-core-v1.1.0-windows-x86_64.zip" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-windows-x86_64.zip">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-core-v2.0.0-windows-x86_64.zip" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-windows-x86_64.zip">
                     <span class="build-link-copy"><b>Intel / AMD</b><span>x86-64 · .zip</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3497,11 +3537,11 @@
                   <b>macOS</b><small>.tar.gz</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-core-v1.1.0-macos-aarch64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-macos-aarch64.tar.gz">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-core-v2.0.0-macos-aarch64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-macos-aarch64.tar.gz">
                     <span class="build-link-copy"><b>Apple Silicon</b><span>ARM64 · .tar.gz</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-core-v1.1.0-macos-x86_64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-macos-x86_64.tar.gz">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-core-v2.0.0-macos-x86_64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-macos-x86_64.tar.gz">
                     <span class="build-link-copy"><b>Intel</b><span>x86-64 · .tar.gz</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3514,11 +3554,11 @@
                   <b>Linux</b><small>.tar.gz</small>
                 </div>
                 <div class="platform-builds">
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-core-v1.1.0-linux-x86_64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-linux-x86_64.tar.gz">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-core-v2.0.0-linux-x86_64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-linux-x86_64.tar.gz">
                     <span class="build-link-copy"><b>Intel / AMD</b><span>x86-64 · .tar.gz</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
-                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/parano1d-core-v1.1.0-linux-aarch64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-linux-aarch64.tar.gz">
+                  <a class="build-link" href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/parano1d-core-v2.0.0-linux-aarch64.tar.gz" target="_blank" rel="noopener noreferrer" data-release-pattern="parano1d-core-{tag}-linux-aarch64.tar.gz">
                     <span class="build-link-copy"><b>ARM systems</b><span>ARM64 · .tar.gz</span></span>
                     <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
                   </a>
@@ -3532,7 +3572,7 @@
 
           <div class="downloads-integrity">
             <span><b data-i18n="downloads.integrity.title">Verify every file.</b> <span data-i18n="downloads.integrity.copy">Each release publishes SHA-256 checksums beside its installers and archives.</span></span>
-            <a href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v1.1.0/SHA256SUMS" target="_blank" rel="noopener noreferrer" data-release-pattern="SHA256SUMS"><code>SHA256SUMS</code></a>
+            <a href="https://git.parano1d.org/ignotusnemo/parano1d/releases/download/v2.0.0/SHA256SUMS" target="_blank" rel="noopener noreferrer" data-release-pattern="SHA256SUMS"><code>SHA256SUMS</code></a>
           </div>
         </section>
       </div>
@@ -3540,6 +3580,6 @@
   </section>
 
 
-  <script defer src="app.js?v=v1-1-0-activation-2026-09-08"></script>
+  <script defer src="app.js?v=v2-live-rights-20260925"></script>
 </body>
 </html>

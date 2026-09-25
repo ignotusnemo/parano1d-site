@@ -248,7 +248,7 @@
   };
 
   const translations = {
-    ru: {
+    "ru": {
       "brand.home": "Главная Parano1d ①",
       "announcement.copyAction": "— скопировать адрес электронной почты",
       "nav.language": "Язык",
@@ -305,16 +305,16 @@
       "readout.state": "состояние",
       "readout.history": "история",
       "readout.verify": "проверка",
-      "overview.index": "Сеть не повторяет исполнение. Она проверяет.",
+      "overview.index": "От текущих средств к действующим правам.",
       "overview.title": "Proof-native<br><em>Layer 1</em>",
-      "overview.security": "Proof of work задаёт канонический порядок. Сквозная постквантовая безопасность доказана на уровне NIST Category 1.",
+      "overview.security": "Программируемые права на средства внутри рекурсивных доказательств.<br>Единый proof-native Layer 1 с порядком на основе proof of work.",
       "overview.enter": "ПОЧЕМУ? <span>→</span>",
       "overview.fact.sync.value": "ПРОВЕРКА ЗА O(1)",
       "overview.fact.sync.copy": "без повтора с генезиса",
       "overview.fact.signatureless.value": "БЕЗ ПОДПИСЕЙ",
       "overview.fact.signatureless.copy": "владение доказано, а не подписано",
-      "overview.fact.pow.value": "СОСТОЯНИЕ",
-      "overview.fact.pow.copy": "потраченные выходы освобождают место",
+      "overview.fact.pow.value": "ДЕЙСТВУЮЩИЕ ПРАВА",
+      "overview.fact.pow.copy": "программы · полномочия · счётчики",
       "dependency.index": "01 / ЗАВИСИМОСТЬ",
       "dependency.title": "Настоящее зависит<br><em>от накопленной истории.</em>",
       "dependency.lead": "Bitcoin, Ethereum, Solana, Zcash, TRON и большинство других блокчейнов определяют текущее состояние по накопленной истории. Одни воспроизводят её напрямую, другие ускоряют первоначальную синхронизацию с помощью снимков состояния или контрольных точек. В любом случае новая нода либо сама восстанавливает путь к текущему состоянию, либо принимает готовую точку отсчёта из снимка состояния или контрольной точки.",
@@ -324,7 +324,7 @@
       "dependency.row2.value": "Повторяет историю или начинает со снимка состояния либо контрольной точки",
       "present.index": "02 / ИНВЕРСИЯ",
       "present.title": "Настоящее<br>доказывает <em>прошлое.</em>",
-      "present.lead": "Parano1d отделяет проверку состояния от повторного исполнения истории. Корректность текущего набора UTXO подтверждает рекурсивное доказательство, охватывающее всю цепочку от генезиса до настоящего момента. Потраченные выходы освобождают слоты, поэтому объём хранения зависит от числа текущих UTXO, а не от возраста цепочки.",
+      "present.lead": "Parano1d отделяет проверку состояния от повторного исполнения истории. Текущее State содержит средства и обязательства по программируемым правам на их расходование; рекурсивное доказательство подтверждает их от генезиса. Потраченные выходы освобождают слоты: хранение зависит от текущего использования, а не от возраста сети.",
       "present.row1.label": "Рост состояния",
       "present.row1.value": "<strong>Зависит от числа текущих UTXO, а не от всех прошлых транзакций</strong>",
       "present.row2.label": "Потраченные выходы",
@@ -365,8 +365,8 @@
       "photo.lead": "Кошелёк Parano1d может создать новый мастер-секрет, импортировать существующий или получить его из приватного изображения. Photo Key считывает изображение локально, никуда его не загружает и не сохраняет копию. Те же декодированные пиксели восстанавливают тот же 256-битный секрет и все выведенные из него адреса. Измените пиксели — получите другой кошелёк.",
       "photo.download": "Загрузить кошелёк",
       "paged.index": "08 / PAGEDSPEND",
-      "paged.title": "До 1 020 UTXO.<br><em>Одна транзакция.</em>",
-      "paged.lead": "Физическая страница <code>Tx8x2</code> вмещает до восьми входов и двух выходов. <code>PagedSpend</code> объединяет до 128 таких страниц в одну логическую транзакцию. Она атомарно тратит до 1 020 UTXO и создаёт до 256 выходов. При этом у неё один txid, одна комиссия, одна капсула авторизации и один чек.",
+      "paged.title": "До 504 входов.<br><em>Одна транзакция.</em>",
+      "paged.lead": "Страница <code>Tx8x2</code> вмещает восемь входов и два выхода. <code>PagedSpend</code> объединяет страницы в атомарную транзакцию с одним txid, комиссией, капсулой авторизации и чеком. В v2 допускается до 504 входов в пределах бюджета: до 63 страниц в Small или до 128 страниц одной логической транзакции в Large.",
       "history.index": "09 / РЕКУРСИВНАЯ ИСТОРИЯ",
       "history.title": "История растёт.<br><em>Размер proof не меняется.</em>",
       "history.lead": "Каждый <code>HistoryStep</code> одновременно доказывает новый блок и проверяет терминальное доказательство предыдущего шага. С каждым блоком терминальное доказательство обновляется, но его размер и объём работы при проверке не зависят от высоты цепочки.",
@@ -408,20 +408,20 @@
       "stack.proof.value": "<strong>В 51,67 раза меньше</strong>",
       "soundness.index": "13 / СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
       "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
-      "soundness.lead": "Одна теорема охватывает авторизацию кошелька, корректность транзакций, точные переходы состояния, рекурсивную цепочку HistoryStep и конечное состояние, которое принимает нода.",
+      "soundness.lead": "Ресурсная оценка v2 охватывает авторизацию кошелька, транзакции, контракты, точные переходы State, рекурсивную историю и отказ от старых матриц. Предпосылки композиции и предварительной обработки указаны в модели безопасности.",
       "soundness.result.label": "Результат",
-      "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
+      "soundness.result.value": "<strong>NIST PQC Category 1</strong> · при указанных предпосылках",
       "soundness.floor.label": "Граница успеха 1/2",
-      "soundness.floor.value": "<strong><code>2^173.391078499301</code></strong>",
+      "soundness.floor.value": "<strong><code>2^173.3897612554174</code></strong>",
       "soundness.bound.label": "Полная идеальная оценка",
-      "soundness.bound.value": "<strong><code>0.049330348213215253 &lt; 1/2</code></strong>",
-      "soundness.proof": "Доказательство",
+      "soundness.bound.value": "<strong><code>≈ 0.04937388373372754 &lt; 1/2</code></strong>",
+      "soundness.proof": "Модель безопасности",
       "soundness.certificate": "Исполняемый сертификат",
       "pow.index": "14 / Proof-native PoW",
       "pow.title": "Сначала докажи.<br><em>Потом майни.</em>",
       "pow.lead": "PoW только определяет порядок уже доказанных переходов. Майнер завершает не зависящее от nonce доказательство блока, фиксирует неизменяемый шаблон и перебирает лишь 128-битный nonce.",
       "pow.target.label": "Цель блока",
-      "pow.target.value": "<strong>В среднем 20 секунд</strong> · сложность ASERT",
+      "pow.target.value": "<strong>В среднем 30 секунд</strong> · сложность ASERT",
       "pow.role.label": "Роль PoW",
       "pow.role.value": "<strong>Канонический порядок доказанных переходов</strong>",
       "pow.boundary.label": "Граница доказательства",
@@ -433,15 +433,15 @@
       "join.formula.proof": "терминальное доказательство",
       "join.formula.suffix": "18 блоков",
       "join.formula.node": "независимая нода ✓",
-      "run.index": "15 / Децентрализация на любом железе",
-      "run.title": "Вся L1.<br><em>На твоём ноутбуке.</em>",
-      "run.lead": "Обычный ноутбук может хранить всё текущее состояние и самостоятельно проверять всю L1. Майнер выбирает ёмкость блока, которую успевает доказать на своём железе: более быстрая машина справляется с крупными блоками, более медленная выбирает меньшие. Пропускная способность подстраивается под железо, а полная проверка остаётся доступной каждой ноде.",
-      "run.capacity.modest": "Твой ноутбук",
-      "run.capacity.modest.value": "ниже TPS",
-      "run.capacity.fast": "Более быстрое железо",
-      "run.capacity.fast.value": "выше TPS",
-      "run.capacity.network": "Сеть",
-      "run.capacity.network.value": "продолжает работать",
+      "run.index": "15 / Вместимость блоков v2",
+      "run.title": "Одна сеть.<br><em>Два класса блоков.</em>",
+      "run.lead": "Small используется по умолчанию. Сервер может включить Large флагом <code>--v2-large-blocks</code>, когда нужна дополнительная вместимость платежей. Все ноды проверяют оба класса. У обоих общий предел: 504 входа и 63 вызова. Вызов занимает страницу и вход. Целевой интервал — 30 секунд.",
+      "run.capacity.modest": "Small · m23",
+      "run.capacity.modest.value": "63 страницы",
+      "run.capacity.fast": "Large · m24",
+      "run.capacity.fast.value": "206 страниц",
+      "run.capacity.network": "Одно контрактное ядро",
+      "run.capacity.network.value": "63 вызова",
       "run.download": "Загрузить кошелёк",
       "rail.label": "Разделы Parano1d",
       "rail.0": "Обзор Parano1d",
@@ -459,10 +459,36 @@
       "rail.12": "Единый бинарный proof stack",
       "rail.13": "Сквозная постквантовая безопасность",
       "rail.14": "Proof-native PoW",
-      "rail.15": "Децентрализация на любом железе",
-      "deck.previous": "Предыдущее состояние"
+      "rail.15": "Вместимость блоков v2",
+      "deck.previous": "Предыдущее состояние",
+      "overview.contracts": "КОНТРАКТЫ <span>→</span>",
+      "run.economics": "Экономика сети",
+      "run.issuance": "16 → 11,30 → 8 → 5,65 → 4 → 2,83 → 2 → 1,41 → 1 NOID. Ступень каждые 1 051 200 блоков от H210537. Заполнение State по-прежнему определяет комиссию за новые слоты.",
+      "contracts.index": "16 / PROOF-NATIVE КОНТРАКТЫ",
+      "contracts.title": "Текущие средства.<br><em>Действующие права.</em>",
+      "contracts.lead": "Выход может фиксировать программу, полномочия на расходование и постоянные счётчики. Авторизованный вызов доказывает соблюдение правил и создаёт следующее состояние. Общее доказательство блока сохраняет преемственность: будущие ноды проверяют настоящее после удаления старых взаимодействий.",
+      "contracts.state.label": "Текущее State",
+      "contracts.state.value": "Сумма + обязательство по действующим правам",
+      "contracts.proof.label": "Исполнение",
+      "contracts.proof.value": "<strong>Доказано внутри рекурсивной схемы блока</strong>",
+      "contracts.history.label": "У участников",
+      "contracts.history.value": "Текущие публичные условия + переносимые чеки",
+      "contracts.guide": "Как работают proof-native контракты",
+      "applications.index": "17 / ПРИЛОЖЕНИЯ НА ДЕЙСТВУЮЩИХ ПРАВАХ",
+      "applications.title": "Ваши правила.<br><em>Общее ядро.</em>",
+      "applications.lead": "Возвратные платежи, сейфы, лимитированные кошельки, бюджеты на период, регулярные выплаты и постепенная разблокировка уже доступны. Создавайте свои программы через GUI, CLI или API. Все приложения используют один доказуемый интерпретатор и общие матрицы блока.",
+      "applications.core.label": "Целочисленное ядро",
+      "applications.core.value": "16 инструкций · 2 постоянных счётчика u64",
+      "applications.rules.label": "Правила",
+      "applications.rules.value": "Проверяемая арифметика · условия · высота блока",
+      "applications.calls.label": "Запуск",
+      "applications.calls.value": "Авторизованный вызов, в том числе для выплат по сроку",
+      "applications.gui": "Работа в кошельке",
+      "applications.api": "Работа через API",
+      "rail.16": "Proof-native контракты",
+      "rail.17": "Приложения на действующих правах"
     },
-    zh: {
+    "zh": {
       "brand.home": "Parano1d ① 首页",
       "announcement.copyAction": "— 复制邮箱地址",
       "nav.language": "语言",
@@ -519,16 +545,16 @@
       "readout.state": "状态",
       "readout.history": "历史",
       "readout.verify": "验证",
-      "overview.index": "网络不重复执行，只验证证明。",
+      "overview.index": "从当前价值，到当前有效的权利。",
       "overview.title": "证明原生<br><em>Layer 1</em>",
-      "overview.security": "工作量证明确定规范顺序。端到端后量子可靠性已证明达到 NIST Category 1 水平。",
+      "overview.security": "可编程支出权利，在递归证明中验证。<br>以工作量证明排序的统一 proof-native Layer 1。",
       "overview.enter": "为什么？ <span>→</span>",
       "overview.fact.sync.value": "O(1) 验证",
       "overview.fact.sync.copy": "无需从创世块重放",
       "overview.fact.signatureless.value": "无签名",
       "overview.fact.signatureless.copy": "所有权由证明建立，而非签名",
-      "overview.fact.pow.value": "实时状态",
-      "overview.fact.pow.copy": "已花费输出释放容量",
+      "overview.fact.pow.value": "当前权利",
+      "overview.fact.pow.copy": "程序 · 权限 · 计数器",
       "dependency.index": "01 / 历史依赖",
       "dependency.title": "当前状态依赖<br><em>不断累积的历史。</em>",
       "dependency.lead": "Bitcoin、Ethereum、Solana、Zcash、TRON 以及大多数其他区块链，都需要根据不断累积的历史来确定当前状态。有些直接重放历史，有些借助状态快照或检查点来缩短初始同步。无论采用哪种方式，新验证节点都必须自行重建当前状态的来路，或从状态快照或检查点继承已有的验证路径。",
@@ -538,7 +564,7 @@
       "dependency.row2.value": "重放历史，或从状态快照或检查点开始验证",
       "present.index": "02 / 逻辑反转",
       "present.title": "当前状态<br>证明<em>过去。</em>",
-      "present.lead": "Parano1d 将状态有效性与历史重放分离。当前 UTXO 状态的有效性由一份从创世块递归延伸至今的证明保证。UTXO 一旦花费，对应槽位便可释放，因此存储规模取决于当前仍然存在的 UTXO，而不是链龄。",
+      "present.lead": "Parano1d 将状态有效性与历史重放分离。当前 State 保存价值及可编程支出权利的承诺，由从创世起的递归证明认证。已花费输出释放槽位，因此存储规模取决于当前使用量，而不是链龄。",
       "present.row1.label": "状态增长",
       "present.row1.value": "<strong>取决于当前 UTXO 数量，而不是历史交易总量</strong>",
       "present.row2.label": "已花费输出",
@@ -579,8 +605,8 @@
       "photo.lead": "Parano1d 钱包可以生成新的主密钥、导入现有主密钥，也可以从私有图像中派生主密钥。Photo Key 只在本机读取图像，不会上传，也不会保留副本。相同的解码像素会恢复相同的 256 位主密钥及其派生的全部地址；像素一旦改变，就会得到另一个钱包。",
       "photo.download": "下载钱包",
       "paged.index": "08 / PAGEDSPEND",
-      "paged.title": "1,020 个 UTXO。<br><em>仍是一笔交易。</em>",
-      "paged.lead": "一个 <code>Tx8x2</code> 物理页最多容纳八个输入和两个输出。<code>PagedSpend</code> 可将最多 128 页合并为一笔逻辑交易，一次性花费最多 1,020 个 UTXO、创建最多 256 个输出，同时只使用一个 txid、一次手续费、一个授权胶囊和一张回执。",
+      "paged.title": "最多 504 个输入。<br><em>一笔原子交易。</em>",
+      "paged.lead": "每个 <code>Tx8x2</code> 页容纳八个输入和两个输出。<code>PagedSpend</code> 将页面组合为一笔原子交易，共用 txid、手续费、授权胶囊和回执。V2 在区块预算内允许最多 504 个输入：Small 最多 63 页，Large 中单笔逻辑交易最多 128 页。",
       "history.index": "09 / 递归历史",
       "history.title": "历史继续增长。<br><em>证明大小不变。</em>",
       "history.lead": "每个 <code>HistoryStep</code> 在证明新区块的同时，也会验证上一步的终端证明。终端证明会随新区块更新，但其大小和验证工作量始终不受链高影响。",
@@ -622,20 +648,20 @@
       "stack.proof.value": "<strong>缩小 51.67 倍</strong>",
       "soundness.index": "13 / 端到端后量子可靠性",
       "soundness.title": "Post-quantum.<br><em>Provable from genesis.</em>",
-      "soundness.lead": "同一定理覆盖钱包授权、交易有效性、精确状态转换、递归 HistoryStep，以及节点最终接受的终端状态。",
+      "soundness.lead": "V2 资源评估涵盖钱包授权、交易、合约执行、精确 State 转移、递归历史及旧矩阵退役。安全模型明确列出了组合与预处理前提。",
       "soundness.result.label": "结论",
-      "soundness.result.value": "<strong>NIST PQC Category 1</strong>",
+      "soundness.result.value": "<strong>NIST PQC Category 1</strong> · 基于明确前提",
       "soundness.floor.label": "半成功门深积下界",
-      "soundness.floor.value": "<strong><code>2^173.391078499301</code></strong>",
+      "soundness.floor.value": "<strong><code>2^173.3897612554174</code></strong>",
       "soundness.bound.label": "完整理想模型上界",
-      "soundness.bound.value": "<strong><code>0.049330348213215253 &lt; 1/2</code></strong>",
-      "soundness.proof": "证明",
+      "soundness.bound.value": "<strong><code>≈ 0.04937388373372754 &lt; 1/2</code></strong>",
+      "soundness.proof": "安全模型",
       "soundness.certificate": "可执行证书",
       "pow.index": "14 / Proof-native PoW",
       "pow.title": "先证明。<br><em>再挖矿。</em>",
       "pow.lead": "PoW 只负责排列已被证明有效的状态转移。矿工先完成与 nonce 无关的区块证明，冻结不可变模板，然后只搜索 128 位 nonce。",
       "pow.target.label": "出块目标",
-      "pow.target.value": "<strong>平均 20 秒</strong> · ASERT 难度",
+      "pow.target.value": "<strong>平均 30 秒</strong> · ASERT 难度",
       "pow.role.label": "PoW 的作用",
       "pow.role.value": "<strong>确定已证明状态转移的规范顺序</strong>",
       "pow.boundary.label": "证明边界",
@@ -647,15 +673,15 @@
       "join.formula.proof": "终端证明",
       "join.formula.suffix": "18 个区块",
       "join.formula.node": "独立节点 ✓",
-      "run.index": "15 / 适应不同硬件的去中心化",
-      "run.title": "完整 L1。<br><em>就在你的笔记本上。</em>",
-      "run.lead": "一台笔记本就能保存完整的当前状态，并独立验证整个 L1。矿工根据自身的证明能力选择区块容量：更快的硬件证明更大的区块，较慢的硬件证明较小的区块。吞吐量随硬件调整，而每个节点始终都能完成完整验证。",
-      "run.capacity.modest": "你的笔记本",
-      "run.capacity.modest.value": "较低 TPS",
-      "run.capacity.fast": "更强硬件",
-      "run.capacity.fast.value": "更高 TPS",
-      "run.capacity.network": "网络",
-      "run.capacity.network.value": "持续产生区块",
+      "run.index": "15 / V2 区块容量",
+      "run.title": "同一个网络。<br><em>两种区块类别。</em>",
+      "run.lead": "默认使用 Small。出块服务器可通过 <code>--v2-large-blocks</code> 启用 Large，提供额外的支付容量。所有节点验证两类区块，两者均最多容纳 504 个输入和 63 次合约调用。每次调用使用一页及一个输入。目标出块间隔为 30 秒。",
+      "run.capacity.modest": "Small · m23",
+      "run.capacity.modest.value": "63 页",
+      "run.capacity.fast": "Large · m24",
+      "run.capacity.fast.value": "206 页",
+      "run.capacity.network": "相同合约核心",
+      "run.capacity.network.value": "63 次调用",
       "run.download": "下载钱包",
       "rail.label": "Parano1d 章节",
       "rail.0": "Parano1d 概览",
@@ -673,8 +699,34 @@
       "rail.12": "单一二进制证明栈",
       "rail.13": "端到端后量子可靠性",
       "rail.14": "Proof-native PoW",
-      "rail.15": "适应不同硬件的去中心化",
-      "deck.previous": "上一个状态"
+      "rail.15": "V2 区块容量",
+      "deck.previous": "上一个状态",
+      "overview.contracts": "智能合约 <span>→</span>",
+      "run.economics": "网络经济机制",
+      "run.issuance": "16 → 11.30 → 8 → 5.65 → 4 → 2.83 → 2 → 1.41 → 1 NOID。从 H210537 起每 1,051,200 个区块降低一档。State 占用率继续决定新增槽位费用。",
+      "contracts.index": "16 / PROOF-NATIVE 合约",
+      "contracts.title": "当前价值。<br><em>当前有效的权利。</em>",
+      "contracts.lead": "一个当前输出可承诺程序、支出权限和持久计数器。授权调用证明规则得到遵守，并创建下一个有效状态。共享区块证明维持连续性，使未来节点能在旧交互被裁剪后验证当前状态。",
+      "contracts.state.label": "当前 State",
+      "contracts.state.value": "价值 + 当前权利的承诺",
+      "contracts.proof.label": "执行",
+      "contracts.proof.value": "<strong>在递归区块关系中证明</strong>",
+      "contracts.history.label": "参与者保留",
+      "contracts.history.value": "当前公开条款 + 可携带回执",
+      "contracts.guide": "了解 proof-native 合约",
+      "applications.index": "17 / 用当前权利构建应用",
+      "applications.title": "你的规则。<br><em>统一的核心。</em>",
+      "applications.lead": "可退款付款、时间锁金库、授权限额钱包、周期预算、定期付款和逐步解锁均已可用。通过 GUI、CLI 或 API 编写自定义程序。所有应用共享经过证明的解释器和区块矩阵。",
+      "applications.core.label": "整数核心",
+      "applications.core.value": "16 条指令 · 2 个持久 u64 计数器",
+      "applications.rules.label": "规则",
+      "applications.rules.value": "检查算术 · 条件 · 区块高度",
+      "applications.calls.label": "执行触发",
+      "applications.calls.value": "需要授权调用，包括按期付款",
+      "applications.gui": "使用钱包",
+      "applications.api": "通过 API 构建",
+      "rail.16": "Proof-native 合约",
+      "rail.17": "用当前权利构建应用"
     }
   };
 
@@ -733,7 +785,7 @@
       state: ["TX8X2 PAGES", "up to 8 inputs + 2 outputs each"],
       proofLabel: ["ONE TXID", "atomic acceptance"],
       tail: ["LOGICAL PAGEDSPEND", "1 fee · 1 capsule · 1 receipt"],
-      read: ["1,020 inputs", "256 outputs", "one txid"]
+      read: ["504 inputs", "256 outputs", "one txid"]
     },
     {
       title: "STATE 09 · HISTORYSTEP",
@@ -748,8 +800,8 @@
       proof: "prove transition · freeze template · scan nonce",
       state: ["PROVEN BLOCK", "immutable template"],
       proofLabel: ["128-BIT NONCE", "ordering already-valid work"],
-      tail: ["ASERT", "complete block interval · 20-second mean"],
-      read: ["B25 · m22", "template locked", "pow"]
+      tail: ["ASERT", "complete block interval · 30-second mean"],
+      read: ["Small · m23", "template locked", "pow"]
     },
     {
       title: "STATE 03 · INDEPENDENT BOOTSTRAP",
@@ -760,12 +812,12 @@
       read: ["peer data", "local verify", "independent"]
     },
     {
-      title: "STATE 15 · HARDWARE-ADAPTIVE L1",
-      proof: "hardware changes TPS · every node verifies everything",
-      state: ["NODES ON ANY DEVICE", "each holds + verifies the entire L1"],
-      proofLabel: ["ADAPTIVE TPS", "block capacity follows proving power"],
-      tail: ["LIVE NETWORK", "throughput changes · consensus advances"],
-      read: ["entire L1", "adaptive TPS", "decentralized"]
+      title: "STATE 15 · V2 BLOCK CAPACITY",
+      proof: "Small by default · Large server opt-in · every node verifies both",
+      state: ["EVERY NODE", "verifies both v2 classes"],
+      proofLabel: ["SMALL / LARGE", "63 / 206 user pages"],
+      tail: ["SHARED LIMITS", "504 inputs · 63 calls"],
+      read: ["m23 / m24", "same contract core", "30-second target"]
     },
     {
       title: "STATE 10 · NON-RETENTION",
@@ -795,8 +847,8 @@
       title: "STATE 13 · END TO END POST QUANTUM",
       proof: "wallet · transaction · state · recursive history · one security game",
       state: ["NIST PQC CATEGORY 1", "complete State validation"],
-      proofLabel: ["2^173.391078499301", "half-success gate-depth floor"],
-      tail: ["0.049330348213215253", "complete ideal bound < 1/2"],
+      proofLabel: ["2^173.3897612554174", "half-success gate-depth floor"],
+      tail: ["0.04937388373372754", "complete ideal bound < 1/2"],
       read: ["end to end", "Category 1", "proved"]
     },
     {
@@ -865,7 +917,7 @@
         state: ["СТРАНИЦЫ TX8X2", "до 8 входов и 2 выходов на каждой"],
         proofLabel: ["ОДИН TXID", "транзакция принимается целиком"],
         tail: ["ЛОГИЧЕСКИЙ PAGEDSPEND", "1 комиссия · 1 капсула · 1 чек"],
-        read: ["1 020 входов", "256 выходов", "один txid"]
+        read: ["504 входов", "256 выходов", "один txid"]
       },
       {
         title: "СОСТОЯНИЕ 09 · HISTORYSTEP",
@@ -880,8 +932,8 @@
         proof: "доказать переход · зафиксировать шаблон · искать nonce",
         state: ["ДОКАЗАННЫЙ БЛОК", "неизменяемый шаблон"],
         proofLabel: ["128-БИТНЫЙ NONCE", "порядок уже корректных переходов"],
-        tail: ["ASERT", "полный интервал блока · средняя цель 20 секунд"],
-        read: ["B25 · m22", "шаблон зафиксирован", "PoW"]
+        tail: ["ASERT", "полный интервал блока · средняя цель 30 секунд"],
+        read: ["Small · m23", "шаблон зафиксирован", "PoW"]
       },
       {
         title: "СОСТОЯНИЕ 03 · НЕЗАВИСИМАЯ СИНХРОНИЗАЦИЯ",
@@ -892,12 +944,12 @@
         read: ["данные пира", "локальная проверка", "независимая нода"]
       },
       {
-        title: "СОСТОЯНИЕ 15 · АДАПТИВНАЯ L1",
-        proof: "TPS зависит от железа · каждая нода проверяет всё",
-        state: ["НОДЫ НА ЛЮБОМ УСТРОЙСТВЕ", "каждая хранит и проверяет всю L1"],
-        proofLabel: ["АДАПТИВНЫЙ TPS", "ёмкость блока соответствует мощности железа"],
-        tail: ["РАБОТАЮЩАЯ СЕТЬ", "пропускная способность меняется · блоки продолжают выходить"],
-        read: ["вся L1", "адаптивный TPS", "децентрализована"]
+        title: "СОСТОЯНИЕ 15 · ВМЕСТИМОСТЬ V2",
+        proof: "Small по умолчанию · Large включается на сервере · все проверяют оба",
+        state: ["КАЖДАЯ НОДА", "проверяет оба класса v2"],
+        proofLabel: ["SMALL / LARGE", "63 / 206 пользовательских страниц"],
+        tail: ["ОБЩИЕ ПРЕДЕЛЫ", "504 входа · 63 вызова"],
+        read: ["m23 / m24", "общее контрактное ядро", "цель 30 секунд"]
       },
       {
         title: "СОСТОЯНИЕ 10 · БЕЗ ПОСТОЯННОГО ХРАНЕНИЯ",
@@ -927,8 +979,8 @@
         title: "СОСТОЯНИЕ 13 · СКВОЗНАЯ ПОСТКВАНТОВАЯ БЕЗОПАСНОСТЬ",
         proof: "кошелёк · транзакции · состояние · рекурсивная история · единая игра",
         state: ["NIST PQC CATEGORY 1", "полная проверка состояния"],
-        proofLabel: ["2^173.391078499301", "граница gate-depth при вероятности успеха 1/2"],
-        tail: ["0,049330348213215253", "полная идеальная оценка < 1/2"],
+        proofLabel: ["2^173.3897612554174", "граница gate-depth при вероятности успеха 1/2"],
+        tail: ["0,04937388373372754", "полная идеальная оценка < 1/2"],
         read: ["от начала до конца", "Category 1", "доказано"]
       },
       {
@@ -995,7 +1047,7 @@
         state: ["TX8X2 物理页", "每页最多 8 个输入和 2 个输出"],
         proofLabel: ["同一 TXID", "整笔交易一次接受"],
         tail: ["逻辑 PAGEDSPEND", "1 次手续费 · 1 个授权胶囊 · 1 张回执"],
-        read: ["1,020 个输入", "256 个输出", "同一 txid"]
+        read: ["504 个输入", "256 个输出", "同一 txid"]
       },
       {
         title: "状态 09 · HISTORYSTEP",
@@ -1010,8 +1062,8 @@
         proof: "证明转移 · 冻结模板 · 搜索 nonce",
         state: ["已证明区块", "不可变模板"],
         proofLabel: ["128 位 NONCE", "只排列已有效工作"],
-        tail: ["ASERT", "完整区块间隔 · 平均目标 20 秒"],
-        read: ["B25 · m22", "模板已锁定", "pow"]
+        tail: ["ASERT", "完整区块间隔 · 平均目标 30 秒"],
+        read: ["Small · m23", "模板已锁定", "pow"]
       },
       {
         title: "状态 03 · 独立同步",
@@ -1022,12 +1074,12 @@
         read: ["对等节点数据", "本地验证", "独立全节点"]
       },
       {
-        title: "状态 15 · 硬件自适应 L1",
-        proof: "TPS 随硬件调整 · 每个节点都完成完整验证",
-        state: ["任意设备上的节点", "每个节点都保存并验证完整 L1"],
-        proofLabel: ["自适应 TPS", "区块容量随证明能力调整"],
-        tail: ["持续运行的网络", "吞吐量动态调整 · 共识持续推进"],
-        read: ["完整 L1", "自适应 TPS", "去中心化"]
+        title: "状态 15 · V2 区块容量",
+        proof: "默认 Small · 服务器可启用 Large · 所有节点验证两类区块",
+        state: ["每个节点", "验证两类 v2 区块"],
+        proofLabel: ["SMALL / LARGE", "63 / 206 个用户页面"],
+        tail: ["共同上限", "504 个输入 · 63 次调用"],
+        read: ["m23 / m24", "相同合约核心", "目标 30 秒"]
       },
       {
         title: "状态 10 · 不永久留存",
@@ -1057,8 +1109,8 @@
         title: "状态 13 · 端到端后量子可靠性",
         proof: "钱包 · 交易 · 状态 · 递归历史 · 同一安全性游戏",
         state: ["NIST PQC CATEGORY 1", "完整状态验证"],
-        proofLabel: ["2^173.391078499301", "半成功门深积下界"],
-        tail: ["0.049330348213215253", "完整理想模型上界 < 1/2"],
+        proofLabel: ["2^173.3897612554174", "半成功门深积下界"],
+        tail: ["0.04937388373372754", "完整理想模型上界 < 1/2"],
         read: ["端到端", "Category 1", "已证明"]
       },
       {
@@ -1072,7 +1124,140 @@
     ]
   };
 
-  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 15, 6, 7, 11, 12, 13, 14, 8, 10];
+  states.push(...[
+    {
+      "title": "STATE 16 · LIVE RIGHTS",
+      "proof": "current rights → authorized call → successor",
+      "state": [
+        "LIVE OUTPUT",
+        "value · program commitment"
+      ],
+      "proofLabel": [
+        "ONE BLOCK PROOF",
+        "execution + recursive continuity"
+      ],
+      "tail": [
+        "CURRENT TERMS + RECEIPTS",
+        "retained by participants"
+      ],
+      "read": [
+        "live rights",
+        "proved transition",
+        "successor"
+      ]
+    },
+    {
+      "title": "STATE 17 · YOUR PROGRAMS",
+      "proof": "six templates · custom programs · one shared core",
+      "state": [
+        "APPLICATIONS",
+        "GUI · CLI · API"
+      ],
+      "proofLabel": [
+        "INTEGER CORE",
+        "16 instructions · 2 persistent counters"
+      ],
+      "tail": [
+        "AUTHORIZED CALLS",
+        "including time-based policies"
+      ],
+      "read": [
+        "same matrices",
+        "63 calls",
+        "both classes"
+      ]
+    }
+  ]);
+  stateTranslations.ru.push(...[
+    {
+      "title": "СОСТОЯНИЕ 16 · ДЕЙСТВУЮЩИЕ ПРАВА",
+      "proof": "текущие права → авторизованный вызов → преемник",
+      "state": [
+        "ТЕКУЩИЙ ВЫХОД",
+        "сумма · обязательство по программе"
+      ],
+      "proofLabel": [
+        "ДОКАЗАТЕЛЬСТВО БЛОКА",
+        "исполнение + рекурсивная преемственность"
+      ],
+      "tail": [
+        "УСЛОВИЯ + ЧЕКИ",
+        "сохраняются участниками"
+      ],
+      "read": [
+        "действующие права",
+        "доказанный переход",
+        "преемник"
+      ]
+    },
+    {
+      "title": "СОСТОЯНИЕ 17 · ВАШИ ПРОГРАММЫ",
+      "proof": "шесть шаблонов · свои программы · одно ядро",
+      "state": [
+        "ПРИЛОЖЕНИЯ",
+        "GUI · CLI · API"
+      ],
+      "proofLabel": [
+        "ЦЕЛОЧИСЛЕННОЕ ЯДРО",
+        "16 инструкций · 2 постоянных счётчика"
+      ],
+      "tail": [
+        "АВТОРИЗОВАННЫЕ ВЫЗОВЫ",
+        "включая правила по сроку"
+      ],
+      "read": [
+        "общие матрицы",
+        "63 вызова",
+        "оба класса"
+      ]
+    }
+  ]);
+  stateTranslations.zh.push(...[
+    {
+      "title": "状态 16 · 当前权利",
+      "proof": "当前权利 → 授权调用 → 后继状态",
+      "state": [
+        "当前输出",
+        "价值 · 程序承诺"
+      ],
+      "proofLabel": [
+        "共享区块证明",
+        "执行 + 递归连续性"
+      ],
+      "tail": [
+        "当前条款 + 回执",
+        "由参与者保存"
+      ],
+      "read": [
+        "当前权利",
+        "已证明转移",
+        "后继状态"
+      ]
+    },
+    {
+      "title": "状态 17 · 你的程序",
+      "proof": "六种模板 · 自定义程序 · 统一核心",
+      "state": [
+        "应用",
+        "GUI · CLI · API"
+      ],
+      "proofLabel": [
+        "整数核心",
+        "16 条指令 · 2 个持久计数器"
+      ],
+      "tail": [
+        "授权调用",
+        "包括按期执行的策略"
+      ],
+      "read": [
+        "相同矩阵",
+        "63 次调用",
+        "两种类别"
+      ]
+    }
+  ]);
+
+  const stateSequence = [0, 1, 2, 9, 3, 4, 5, 15, 6, 7, 11, 12, 13, 14, 8, 10, 16, 17];
 
   const interfaceCopy = {
     en: { next: "NEXT", current: "CURRENT STATE ✓", copied: "COPIED" },
@@ -1127,6 +1312,27 @@
 
   const siteMessages = [
     {
+      id: "v2-0-0-activation-2026-09-25",
+      subject: "Parano1d v2.0.0 is available",
+      date: "2026-09-25T21:00:00Z",
+      preview: "Mandatory update before block 210,537. Proof-native contracts, new block capacity and scheduled issuance.",
+      paragraphs: [
+        "Parano1d v2.0.0 is now available. This is a mandatory protocol update. The new rules activate at mainnet block 210,537.",
+        "The estimated activation time is October 10, 2026 at 11:59 PM PDT (October 11 at 06:59 UTC). Activation follows block height; the actual time depends on block production.",
+        "From live value to live rights. V2 adds proof-native smart contracts, six ready-made templates and custom programs through the GUI, CLI and API. Current rights remain verifiable after old interaction bodies are pruned. Keep contract terms and receipts with your wallet backups.",
+        "V2 also introduces 30-second blocks, Small and Large block classes, and a transparent issuance schedule starting at 16 NOID per block, with one reduction every 1,051,200 blocks.",
+        "Please update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. Version 2.0.0 switches rules automatically at block 210,537. Version 1.1 cannot validate blocks after that height.",
+        "No reset is required. Existing balances, wallets and receipts stay in place. Contract funding and calls become available at activation.",
+        [
+          { text: "Download Parano1d v2.0.0", href: "#downloads" },
+          " · ",
+          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" },
+          " · ",
+          { text: "Contract guide", href: "https://docs.parano1d.org/contracts" }
+        ]
+      ]
+    },
+    {
       id: "v1-1-0-activation-2026-09-08",
       subject: "Parano1d v1.1.0 is available",
       date: "2026-09-08T18:00:00Z",
@@ -1137,9 +1343,9 @@
         "Please update all nodes, GUI wallets and block-producing pool nodes before activation. v1.1.0 remains compatible with older versions until block 95,125. After that, older versions will no longer follow the chain.",
         "You do not need to reset anything. Your wallet and receipts stay in place.",
         [
-          { text: "Download Parano1d v1.1.0", href: "#downloads" },
+          { text: "Download the current release", href: "#downloads" },
           " · ",
-          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v1.1.0" }
+          { text: "Current release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" }
         ]
       ]
     },
@@ -1165,7 +1371,7 @@
         ["Network", "NOID · P2P 9600 · local RPC 9601"]
       ],
       link: {
-        href: "https://docs.parano1d.org/protocol/parameters.html"
+        href: "https://docs.parano1d.org/archive/legacy-profiles"
       }
     },
     {
@@ -1258,17 +1464,17 @@
   const metaCopy = {
     en: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "Parano1d is a proof-native Layer 1 ordered by proof of work. State is validated from genesis in O(1), with provable end-to-end post-quantum soundness at NIST PQC Category 1.",
+      description: "Parano1d is a proof-native Layer 1 for live value and programmable spending rights. Smart contracts share recursive block proofs without requiring permanent interaction history.",
       locale: "en_US"
     },
     ru: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "Proof of work задаёт канонический порядок. Состояние сети проверяется от генезиса за O(1). Сквозная постквантовая безопасность доказана на уровне NIST PQC Category 1.",
+      description: "Proof-native Layer 1 для средств и программируемых прав на их расходование. Контракты проверяются общим рекурсивным доказательством без обязательного хранения всей истории взаимодействий.",
       locale: "ru_RU"
     },
     zh: {
       title: "Parano1d. Proof-native Layer 1",
-      description: "工作量证明确定规范顺序。网络状态自创世块起以 O(1) 复杂度完成验证。端到端后量子可靠性已证明达到 NIST PQC Category 1 水平。",
+      description: "面向当前价值与可编程支出权利的 proof-native Layer 1。智能合约共享递归区块证明，无需永久保留完整交互历史。",
       locale: "zh_CN"
     }
   };
@@ -1302,8 +1508,8 @@
       secret: "СЕКРЕТ",
       zeroKnowledgeProof: "ДОКАЗАТЕЛЬСТВО С НУЛЕВЫМ РАЗГЛАШЕНИЕМ",
       o1Address: "АДРЕС O1",
-      pagedCapacity: "1 020 ВХОДОВ · 256 ВЫХОДОВ",
-      pagedCapacityShort: "1 020 ВХ · 256 ВЫХ",
+      pagedCapacity: "504 ВХОДОВ · 256 ВЫХОДОВ",
+      pagedCapacityShort: "504 ВХ · 256 ВЫХ",
       oneAtomicPagedSpend: "ЕДИНЫЙ АТОМАРНЫЙ PAGEDSPEND",
       pagedSpendShort: "ОДИН PAGEDSPEND",
       blockState: "BLOCK_H + STATE_H",
@@ -1312,7 +1518,7 @@
       proven: "ДОКАЗАН",
       template: "ШАБЛОН",
       nonceOnly: "ИЩЕМ ТОЛЬКО NONCE",
-      asert: "20 с · ASERT",
+      asert: "30 с · ASERT",
       liveState: "ТЕКУЩЕЕ СОСТОЯНИЕ",
       liveStateShort: "СОСТОЯНИЕ",
       terminalProof: "ТЕРМИНАЛЬНОЕ ДОКАЗАТЕЛЬСТВО",
@@ -1413,8 +1619,8 @@
       secret: "秘密",
       zeroKnowledgeProof: "零知识证明",
       o1Address: "O1 地址",
-      pagedCapacity: "1,020 个输入 · 256 个输出",
-      pagedCapacityShort: "1,020 入 · 256 出",
+      pagedCapacity: "504 个输入 · 256 个输出",
+      pagedCapacityShort: "504 入 · 256 出",
       oneAtomicPagedSpend: "一笔原子 PAGEDSPEND",
       pagedSpendShort: "一笔 PAGEDSPEND",
       blockState: "BLOCK_H + STATE_H",
@@ -1423,7 +1629,7 @@
       proven: "已证明",
       template: "模板",
       nonceOnly: "仅搜索 NONCE",
-      asert: "20 秒 · ASERT",
+      asert: "30 秒 · ASERT",
       liveState: "当前状态",
       liveStateShort: "状态",
       terminalProof: "终端证明",
@@ -2004,6 +2210,13 @@
         const release = await response.json();
         const tag = typeof release.tag_name === "string" ? release.tag_name : "";
         if (!/^v\d+\.\d+\.\d+$/.test(tag) || release.draft || release.prerelease || !Array.isArray(release.assets)) return;
+        const currentTag = document.querySelector("[data-release-tag]")?.textContent.trim();
+        if (/^v\d+\.\d+\.\d+$/.test(currentTag || "")) {
+          const current = currentTag.slice(1).split(".").map(Number);
+          const candidate = tag.slice(1).split(".").map(Number);
+          const difference = candidate.map((part, index) => part - current[index]).find((part) => part !== 0);
+          if (difference < 0) return;
+        }
 
         const releaseBase = "https://git.parano1d.org/ignotusnemo/parano1d/releases";
         const assets = new Map(release.assets.map((asset) => [asset.name, asset.browser_download_url]));
@@ -3002,10 +3215,78 @@
         this.drawProofStack,
         this.drawSoundness,
         this.drawPow,
-        this.drawNode
+        this.drawNode,
+        this.drawContractRights,
+        this.drawContractApps
       ];
       scenes[index].call(this, now);
       this.ctx.restore();
+    }
+
+    drawContractRights(now) {
+      const l = this.layout();
+      const edge = l.mobile ? l.left : Math.max(l.left, this.contentRight("#contracts h2, #contracts .lead, #contracts .ledger") + 24);
+      const width = l.right - edge;
+      const cy = this.h * .47;
+      const cardW = Math.min(l.mobile ? 102 : 180, width * .31);
+      const cardH = l.mobile ? 86 : 132;
+      const left = edge + width * .16;
+      const right = edge + width * .84;
+      const center = (left + right) / 2;
+      const labels = {
+        en: ["CURRENT RIGHTS", "VALUE + COMMITMENT", "program · authority", "counter n", "BLOCK PROOF", "SUCCESSOR", "same rules enforced", "counter n′", "Old interactions expire. Current rights remain verifiable."],
+        ru: ["ТЕКУЩИЕ ПРАВА", "СУММА + ОБЯЗАТЕЛЬСТВО", "программа · полномочия", "счётчик n", "ДОКАЗАТЕЛЬСТВО", "ПРЕЕМНИК", "правила соблюдены", "счётчик n′", "Старые взаимодействия удаляются. Текущие права проверяемы."],
+        zh: ["当前权利", "价值 + 承诺", "程序 · 权限", "计数器 n", "区块证明", "后继状态", "规则得到遵守", "计数器 n′", "旧交互可以裁剪，当前权利仍可验证。"]
+      }[language];
+      const card = (x, title, row1, row2, color) => {
+        this.roundedRect(x - cardW / 2, cy - cardH / 2, cardW, cardH, 10, color, "rgba(4,22,18,.86)");
+        this.fittedText(title, x, cy - cardH * .28, cardW * .88, color, l.mobile ? 7 : 10);
+        this.line([[x - cardW * .36, cy - cardH * .1], [x + cardW * .36, cy - cardH * .1]], "rgba(115,255,197,.2)");
+        this.fittedText(row1, x, cy + cardH * .08, cardW * .86, "rgba(239,255,248,.85)", l.mobile ? 6.5 : 9);
+        this.fittedText(row2, x, cy + cardH * .29, cardW * .86, "#bff7ff", l.mobile ? 7 : 10);
+      };
+      const r = Math.min(width * .08, l.mobile ? 22 : 40);
+      this.line([[left + cardW / 2, cy], [right - cardW / 2, cy]], "rgba(194,170,255,.42)", 1.2);
+      const phase = reducedMotion.matches ? .65 : (now % 3400) / 3400;
+      const pulseX = left + cardW / 2 + (right - left - cardW) * phase;
+      this.dot(pulseX, cy, l.mobile ? 2 : 3, "#c2aaff", 12);
+      card(left, labels[0], labels[2], labels[3], "#73ffc5");
+      card(right, labels[5], labels[6], labels[7], "#bff7ff");
+      this.roundedRect(center - r, cy - r, r * 2, r * 2, r, "#c2aaff", "rgba(18,13,35,.96)", 1.2);
+      this.text("π", center, cy, "#d8c8ff", l.mobile ? 22 : 38);
+      this.fittedText(labels[4], center, cy + cardH * .78, width * .35, "#c2aaff", l.mobile ? 7 : 10);
+      this.fittedText(labels[1], center, cy - cardH * .85, width * .88, "rgba(239,255,248,.65)", l.mobile ? 8 : 11);
+      this.fittedText(labels[8], center, cy + cardH * 1.08, width * .96, "rgba(239,255,248,.60)", l.mobile ? 6.5 : 9);
+    }
+
+    drawContractApps(now) {
+      const l = this.layout();
+      const edge = l.mobile ? l.left : Math.max(l.left, this.contentRight("#applications h2, #applications .lead, #applications .ledger") + 24);
+      const width = l.right - edge;
+      const center = (edge + l.right) / 2;
+      const top = this.h * (l.mobile ? .29 : .37);
+      const gap = width * .04;
+      const cellW = (width - 2 * gap) / 3;
+      const cellH = l.mobile ? 39 : 65;
+      const labels = {
+        en: ["REFUND", "VAULT", "ALLOWANCE", "PERIOD BUDGET", "RECURRING", "GRADUAL UNLOCK", "ONE PROVED INTEGER CORE", "Your program. The same block matrices."],
+        ru: ["ВОЗВРАТ", "СЕЙФ", "ЛИМИТ", "БЮДЖЕТ ПЕРИОДА", "ПО СРОКУ", "РАЗБЛОКИРОВКА", "ОБЩЕЕ ДОКАЗУЕМОЕ ЯДРО", "Ваша программа. Общие матрицы блока."],
+        zh: ["退款", "金库", "授权限额", "周期预算", "定期付款", "逐步解锁", "统一的可证明整数核心", "你的程序，使用相同区块矩阵。"]
+      }[language];
+      const coreY = top + cellH * 2 + gap + (l.mobile ? 38 : 76);
+      const phase = reducedMotion.matches ? 1 : (now % 7200) / 1200;
+      for (let i = 0; i < 6; i += 1) {
+        const x = edge + (i % 3) * (cellW + gap);
+        const y = top + Math.floor(i / 3) * (cellH + gap);
+        const active = Math.floor(phase) === i;
+        const color = active ? "#c2aaff" : "rgba(115,255,197,.48)";
+        this.line([[x + cellW / 2, y + cellH], [x + cellW / 2, coreY - 18], [center, coreY - 18]], active ? "rgba(194,170,255,.6)" : "rgba(115,255,197,.12)", 1);
+        this.roundedRect(x, y, cellW, cellH, 8, color, active ? "rgba(26,19,43,.96)" : "rgba(4,22,18,.96)");
+        this.fittedText(labels[i], x + cellW / 2, y + cellH / 2, cellW * .85, active ? "#d8c8ff" : "#bff7ff", l.mobile ? 7 : 10);
+      }
+      this.roundedRect(center - width * .4, coreY - 16, width * .8, 32, 8, "#c2aaff", "rgba(18,13,35,.98)");
+      this.fittedText(labels[6], center, coreY, width * .74, "#d8c8ff", l.mobile ? 8 : 12);
+      this.fittedText(labels[7], center, coreY + 35, width * .94, "rgba(239,255,248,.65)", l.mobile ? 7 : 10);
     }
 
     layout() {
@@ -4908,7 +5189,7 @@
       }
       this.roundedRect(txX - txW / 2, cy - txH / 2, txW, txH, 13, "rgba(194,170,255,.72)", "rgba(194,170,255,.08)", 1.2);
       this.text(
-        canvasText(l.mobile ? "pagedCapacityShort" : "pagedCapacity", l.mobile ? "1,020 IN · 256 OUT" : "1,020 INPUTS · 256 OUTPUTS"),
+        canvasText(l.mobile ? "pagedCapacityShort" : "pagedCapacity", l.mobile ? "504 IN · 256 OUT" : "504 INPUTS · 256 OUTPUTS"),
         txX,
         cy - 11,
         "rgba(239,255,248,.62)",
@@ -5509,7 +5790,7 @@
       }
       this.text(canvasText("nonceOnly", "NONCE ONLY"), nonceX, y + (l.mobile ? 64 : 82), "rgba(115,255,197,.58)", l.mobile ? 7 : 8);
       if (!l.mobile) {
-        this.text(canvasText("asert", "20 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
+        this.text(canvasText("asert", "30 s ASERT"), (blockX + nonceX) / 2, this.h * .78, "rgba(239,255,248,.48)", 8);
       }
     }
 
