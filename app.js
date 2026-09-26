@@ -257,7 +257,6 @@
       "nav.official": "Официальные ссылки",
       "nav.docs": "Документация",
       "nav.ecosystem": "Сборки сообщества",
-      "nav.discuss": "Обсудить",
       "nav.thirdParty": "Сторонние проекты",
       "nav.source": "Исходный код",
       "nav.sourceButton": "Исходники",
@@ -497,7 +496,6 @@
       "nav.official": "官方链接",
       "nav.docs": "文档",
       "nav.ecosystem": "社区构建",
-      "nav.discuss": "讨论",
       "nav.thirdParty": "第三方",
       "nav.source": "源代码",
       "nav.sourceButton": "源码",
@@ -1329,23 +1327,6 @@
           { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" },
           " · ",
           { text: "Contract guide", href: "https://docs.parano1d.org/contracts" }
-        ]
-      ]
-    },
-    {
-      id: "v1-1-0-activation-2026-09-08",
-      subject: "Parano1d v1.1.0 is available",
-      date: "2026-09-08T18:00:00Z",
-      preview: "Mandatory update. Upgrade before block 95,125. Activation is expected around September 14.",
-      paragraphs: [
-        "Parano1d v1.1.0 is now available. This is a mandatory protocol update. The new rules activate at block 95,125.",
-        "Based on the current pace of the network, activation is expected around September 14. This is an estimate, so follow the block height.",
-        "Please update all nodes, GUI wallets and block-producing pool nodes before activation. v1.1.0 remains compatible with older versions until block 95,125. After that, older versions will no longer follow the chain.",
-        "You do not need to reset anything. Your wallet and receipts stay in place.",
-        [
-          { text: "Download the current release", href: "#downloads" },
-          " · ",
-          { text: "Current release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" }
         ]
       ]
     },
