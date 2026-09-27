@@ -204,16 +204,6 @@
       "tags": ["NOID/USDT", "SPOT MARKET"]
     },
     {
-      "id": "noidscan",
-      "category": "analytics",
-      "name": "NOIDScan",
-      "description": "Community block explorer with live State, network and historical analytics.",
-      "maintainer": "GofyGofy",
-      "url": "https://noidscan.com/",
-      "source": "closed",
-      "tags": ["BLOCK EXPLORER", "STATE ANALYTICS"]
-    },
-    {
       "id": "parano1d-pool-explorer",
       "category": "analytics",
       "name": "Parano1d Explorer",
