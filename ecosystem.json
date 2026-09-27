@@ -4,7 +4,7 @@
     {
       "id": "analytics",
       "label": "Analytics",
-      "description": "Community tools for observing the public network and live State."
+      "description": "Independent explorers and trackers for Parano1d network and market data."
     },
     {
       "id": "exchanges",
@@ -233,6 +233,16 @@
       "detailsUrl": "https://github.com/gustlborg/gb-parano1d-permanode",
       "source": "open",
       "tags": ["BLOCK EXPLORER", "PERMANODE", "JSON API"]
+    },
+    {
+      "id": "coinpaprika",
+      "category": "analytics",
+      "name": "CoinPaprika",
+      "description": "NOID market tracker with price history, trading volume, charts and exchange data.",
+      "maintainer": "CoinPaprika",
+      "url": "https://coinpaprika.com/coin/noid-parano1d/",
+      "source": "not-applicable",
+      "tags": ["MARKET TRACKER", "PRICE CHART", "MARKET DATA"]
     },
     {
       "id": "ethereum-research",
