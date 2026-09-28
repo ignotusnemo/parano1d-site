@@ -245,6 +245,16 @@
       "tags": ["ARCHITECTURE", "POST-QUANTUM"]
     },
     {
+      "id": "poseidon2b-ethereum-research",
+      "category": "research",
+      "name": "Poseidon2b on Ethereum Research",
+      "description": "Technical discussion of published algebraic attacks against Parano1d's production Poseidon2b parameters.",
+      "maintainer": "Ignotus Nemo",
+      "url": "https://ethresear.ch/t/poseidon2b-is-secure/25865",
+      "source": "not-applicable",
+      "tags": ["CRYPTOGRAPHY", "POSEIDON2B"]
+    },
+    {
       "id": "cryptography-mailing-list",
       "category": "research",
       "name": "Cryptography mailing list",
@@ -253,6 +263,16 @@
       "url": "https://www.metzdowd.com/pipermail/cryptography/2026-August/039748.html",
       "source": "not-applicable",
       "tags": ["CRYPTOGRAPHY", "BINARY FIELDS"]
+    },
+    {
+      "id": "programmable-rights-cryptography",
+      "category": "research",
+      "name": "Programmable rights on Cryptography",
+      "description": "Mailing-list post on programmable spending rights in recursively proved live State.",
+      "maintainer": "Ignotus Nemo",
+      "url": "https://www.metzdowd.com/pipermail/cryptography/2026-September/039772.html",
+      "source": "not-applicable",
+      "tags": ["CONTRACTS", "RECURSION"]
     },
     {
       "id": "parano1d-community-discord",
