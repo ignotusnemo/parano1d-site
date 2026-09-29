@@ -1310,21 +1310,22 @@
 
   const siteMessages = [
     {
-      id: "v2-0-0-activation-2026-09-25",
-      subject: "Parano1d v2.0.0 is available",
-      date: "2026-09-25T21:00:00Z",
-      preview: "Mandatory update before block 210,537. Proof-native contracts, new block capacity and scheduled issuance.",
+      id: "v2-0-1-activation-patch-2026-09-29",
+      subject: "Parano1d v2.0.1 is available",
+      date: "2026-09-29T17:00:00Z",
+      preview: "Mandatory update before block 210,537. Proof-native contracts, new block capacity, scheduled issuance and a difficulty fix.",
       paragraphs: [
-        "Parano1d v2.0.0 is now available. This is a mandatory protocol update. The new rules activate at mainnet block 210,537.",
+        "Parano1d v2.0.1 is now available. This is a mandatory protocol update. The new rules activate at mainnet block 210,537.",
         "The estimated activation time is October 10, 2026 at 11:59 PM PDT (October 11 at 06:59 UTC). Activation follows block height; the actual time depends on block production.",
         "From live value to live rights. V2 adds proof-native smart contracts, six ready-made templates and custom programs through the GUI, CLI and API. Current rights remain verifiable after old interaction bodies are pruned. Keep contract terms and receipts with your wallet backups.",
         "V2 also introduces 30-second blocks, Small and Large block classes, and a transparent issuance schedule starting at 16 NOID per block, with one reduction every 1,051,200 blocks.",
-        "Please update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. Version 2.0.0 switches rules automatically at block 210,537. Version 1.1 cannot validate blocks after that height.",
+        "V2.0.1 fixes the difficulty target for competing blocks with the same parent. Their target will be derived from the parent header starting at the fork. The activation height has not changed.",
+        "Please update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. If you installed v2.0.0, replace it with v2.0.1. Version 2.0.1 switches rules automatically at block 210,537. Version 1.1 cannot validate blocks after that height.",
         "No reset is required. Existing balances, wallets and receipts stay in place. Contract funding and calls become available at activation.",
         [
-          { text: "Download Parano1d v2.0.0", href: "#downloads" },
+          { text: "Download Parano1d v2.0.1", href: "#downloads" },
           " · ",
-          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.0" },
+          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.1" },
           " · ",
           { text: "Contract guide", href: "https://docs.parano1d.org/contracts" }
         ]
