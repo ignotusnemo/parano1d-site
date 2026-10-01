@@ -1326,7 +1326,6 @@
         "Wallet sends and consolidation now select output slots from live State segments with enough free space, reducing collisions when transactions compete for the last holes in an almost full segment.",
         "Older and newer nodes remain compatible. They automatically negotiate the new or existing State transport, before and after activation. State sync speed depends on peer versions and network conditions.",
         "V2 also brings proof-native smart contracts, Small and Large block classes, a 30-second block target and a scheduled issuance path beginning at 16 NOID per block. Contract funding and calls become available at activation. Keep contract terms and verifiable receipts with your wallet backup.",
-        "Update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. No reset or wallet migration is needed. Existing balances and wallet secrets stay in place. V1.1 cannot validate v2 blocks after the fork.",
         [
           { text: "Download Parano1d v2.0.2", href: "#downloads" },
           " · ",
