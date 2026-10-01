@@ -1310,22 +1310,27 @@
 
   const siteMessages = [
     {
-      id: "v2-0-1-activation-patch-2026-09-29",
-      subject: "Parano1d v2.0.1 is available",
-      date: "2026-09-29T17:00:00Z",
-      preview: "Mandatory update before block 210,537. Proof-native contracts, new block capacity, scheduled issuance and a difficulty fix.",
+      id: "v2-0-2-release-2026-10-01",
+      subject: "Parano1d v2.0.2 is available",
+      date: "2026-10-01T18:56:00Z",
+      preview: "Recommended release before block 210,537. Faster State sync, local segment reuse and more reliable wallet sends.",
       paragraphs: [
-        "Parano1d v2.0.1 is now available. This is a mandatory protocol update. The new rules activate at mainnet block 210,537.",
-        "The estimated activation time is October 10, 2026 at 11:59 PM PDT (October 11 at 06:59 UTC). Activation follows block height; the actual time depends on block production.",
-        "From live value to live rights. V2 adds proof-native smart contracts, six ready-made templates and custom programs through the GUI, CLI and API. Current rights remain verifiable after old interaction bodies are pruned. Keep contract terms and receipts with your wallet backups.",
-        "V2 also introduces 30-second blocks, Small and Large block classes, and a transparent issuance schedule starting at 16 NOID per block, with one reduction every 1,051,200 blocks.",
-        "V2.0.1 fixes the difficulty target for competing blocks with the same parent. Their target will be derived from the parent header starting at the fork. The activation height has not changed.",
-        "Please update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. If you installed v2.0.0, replace it with v2.0.1. Version 2.0.1 switches rules automatically at block 210,537. Version 1.1 cannot validate blocks after that height.",
-        "No reset is required. Existing balances, wallets and receipts stay in place. Contract funding and calls become available at activation.",
         [
-          { text: "Download Parano1d v2.0.1", href: "#downloads" },
+          "v2 activates at block 210,537. The estimated activation time is ",
+          { strong: "October 10, 2026 at 11:59 PM PDT" },
+          " (October 11 at 06:59 UTC). Block height determines activation; the actual time depends on block production."
+        ],
+        "Nodes and GUI wallets must upgrade to v2.0.1 or newer before activation.",
+        "Parano1d v2.0.2 is now available and is the recommended release for all nodes and wallets.",
+        "New in v2.0.2: upgraded peers compress and batch small State segments within strict limits, reducing request count and data transfer. Each segment is still verified separately. On repeat syncs, the client also verifies and reuses matching State segments already on disk.",
+        "Wallet sends and consolidation now select output slots from live State segments with enough free space, reducing collisions when transactions compete for the last holes in an almost full segment.",
+        "Older and newer nodes remain compatible. They automatically negotiate the new or existing State transport, before and after activation. State sync speed depends on peer versions and network conditions.",
+        "V2 also brings proof-native smart contracts, Small and Large block classes, a 30-second block target and a scheduled issuance path beginning at 16 NOID per block. Contract funding and calls become available at activation. Keep contract terms and verifiable receipts with your wallet backup.",
+        "Update nodes, GUI wallets, block-producing pool nodes and exchange infrastructure before activation. No reset or wallet migration is needed. Existing balances and wallet secrets stay in place. V1.1 cannot validate v2 blocks after the fork.",
+        [
+          { text: "Download Parano1d v2.0.2", href: "#downloads" },
           " · ",
-          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.1" },
+          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.2" },
           " · ",
           { text: "Contract guide", href: "https://docs.parano1d.org/contracts" }
         ]
@@ -2035,12 +2040,17 @@
     messageReaderDate.dateTime = message.date;
     messageLetterBody.replaceChildren();
 
-    message.paragraphs.forEach((paragraph) => {
+    message.paragraphs.forEach((paragraph, index) => {
       const element = messageElement("p");
+      if (message.id === "v2-0-2-release-2026-10-01" && index === 0) {
+        element.classList.add("message-letter-release-intro");
+      }
       const parts = Array.isArray(paragraph) ? paragraph : [paragraph];
       parts.forEach((part) => {
         if (typeof part === "string") {
           element.append(document.createTextNode(part));
+        } else if (typeof part.strong === "string") {
+          element.append(messageElement("strong", "", part.strong));
         } else {
           const link = messageElement("a", "message-inline-link", part.text);
           link.href = part.href;
