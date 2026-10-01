@@ -1313,7 +1313,7 @@
       id: "v2-0-2-release-2026-10-01",
       subject: "Parano1d v2.0.2 is available",
       date: "2026-10-01T18:56:00Z",
-      preview: "Recommended release before block 210,537. Faster State sync, local segment reuse and more reliable wallet sends.",
+      preview: "v2 mandatory update before block 210,537. Proof-native contracts, new block capacity, scheduled issuance and a difficulty fix.",
       paragraphs: [
         [
           "v2 activates at block 210,537. The estimated activation time is ",
