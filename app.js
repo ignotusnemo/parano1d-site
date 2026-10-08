@@ -1310,9 +1310,9 @@
 
   const siteMessages = [
     {
-      id: "v2-0-2-release-2026-10-01",
-      subject: "Parano1d v2.0.2 is available",
-      date: "2026-10-01T18:56:00Z",
+      id: "v2-0-3-release-2026-10-08",
+      subject: "Parano1d v2.0.3 is available",
+      date: "2026-10-08T14:48:38Z",
       preview: "v2 mandatory update before block 210,537. Proof-native contracts, new block capacity, scheduled issuance and a difficulty fix.",
       paragraphs: [
         [
@@ -1321,15 +1321,17 @@
           " (October 11 at 06:59 UTC). Block height determines activation; the actual time depends on block production."
         ],
         "Nodes and GUI wallets must upgrade to v2.0.1 or newer before activation.",
-        "Parano1d v2.0.2 is now available and is the recommended release for all nodes and wallets.",
-        "New in v2.0.2: upgraded peers compress and batch small State segments within strict limits, reducing request count and data transfer. Each segment is still verified separately. On repeat syncs, the client also verifies and reuses matching State segments already on disk.",
+        "Parano1d v2.0.3 is now available and is the recommended release for all nodes and wallets.",
+        "New in v2.0.3: fixes excessive database growth in nodes and GUI wallets. Space already freed by pruning is reused instead of unnecessarily extending the database file. The fix applies automatically when you update and start normally.",
+        "An already oversized database file may remain large, but its free pages can be reused. To reclaim that space, you can optionally stop the node or GUI wallet completely, delete only mdbx.dat and mdbx.lck from its data directory, and start v2.0.3 to synchronize again. Keep all other files, including wallet keys, receipts and contract evidence. Normal growth of live State and permanent header indexes still uses disk space.",
+        "State synchronization: upgraded peers compress and batch small State segments within strict limits, reducing request count and data transfer. Each segment is still verified separately. On repeat syncs, the client also verifies and reuses matching State segments already on disk.",
         "Wallet sends and consolidation now select output slots from live State segments with enough free space, reducing collisions when transactions compete for the last holes in an almost full segment.",
         "Older and newer nodes remain compatible. They automatically negotiate the new or existing State transport, before and after activation. State sync speed depends on peer versions and network conditions.",
         "V2 also brings proof-native smart contracts, Small and Large block classes, a 30-second block target and a scheduled issuance path beginning at 16 NOID per block. Contract funding and calls become available at activation. Keep contract terms and verifiable receipts with your wallet backup.",
         [
-          { text: "Download Parano1d v2.0.2", href: "#downloads" },
+          { text: "Download Parano1d v2.0.3", href: "#downloads" },
           " · ",
-          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.2" },
+          { text: "Release notes", href: "https://git.parano1d.org/ignotusnemo/parano1d/releases/tag/v2.0.3" },
           " · ",
           { text: "Contract guide", href: "https://docs.parano1d.org/contracts" }
         ]
@@ -2041,7 +2043,7 @@
 
     message.paragraphs.forEach((paragraph, index) => {
       const element = messageElement("p");
-      if (message.id === "v2-0-2-release-2026-10-01" && index === 0) {
+      if (message.id === "v2-0-3-release-2026-10-08" && index === 0) {
         element.classList.add("message-letter-release-intro");
       }
       const parts = Array.isArray(paragraph) ? paragraph : [paragraph];

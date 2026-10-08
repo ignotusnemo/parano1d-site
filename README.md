@@ -1,6 +1,6 @@
 # Parano1d
 
-Official website for [Parano1d](https://parano1d.org), a proof-native Layer 1 secured by proof of work. The site presents the v2 protocol: live value and programmable rights, Small and Large block classes, and scheduled issuance. The message center carries the v2.0.2 release notice and activation height.
+Official website for [Parano1d](https://parano1d.org), a proof-native Layer 1 secured by proof of work. The site presents the v2 protocol: live value and programmable rights, Small and Large block classes, and scheduled issuance. The message center carries the v2.0.3 release notice, automatic storage fix, optional database reset instructions and activation height. Its new message ID makes it unread for visitors who read v2.0.2, while preserving other read marks.
 
 ![Parano1d website](social-card-v4.png)
 
