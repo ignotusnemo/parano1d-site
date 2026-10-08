@@ -192,6 +192,16 @@
       "tags": ["NVIDIA", "AMD", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
+      "id": "gozero-assistant",
+      "category": "miners",
+      "name": "Gozero Assistant",
+      "description": "Open-source Windows NOID mining assistant using Suprminer or Fl4shMiner, with hardware monitoring, pool controls and a floating monitor. Beta software with a disclosed 0.5% mining-time service fee.",
+      "maintainer": "AlexZeroZero",
+      "url": "https://github.com/AlexZeroZero/GozeroAssistant",
+      "source": "open",
+      "tags": ["NVIDIA", "WINDOWS", "MINING ASSISTANT", "BETA"]
+    },
+    {
       "id": "safetrade",
       "category": "exchanges",
       "name": "SafeTrade",
@@ -223,6 +233,16 @@
       "detailsUrl": "https://github.com/gustlborg/gb-parano1d-permanode",
       "source": "open",
       "tags": ["BLOCK EXPLORER", "PERMANODE", "JSON API"]
+    },
+    {
+      "id": "gozero-noid-explorer",
+      "category": "analytics",
+      "name": "Gozero NOID Explorer",
+      "description": "Community explorer for Parano1d blocks, recorded transactions, confirmed address balances, network data and mining pools, with partial history coverage.",
+      "maintainer": "Gozero",
+      "url": "https://gozero.trade/noid",
+      "source": "not-applicable",
+      "tags": ["BLOCK EXPLORER", "NETWORK DATA", "MINING POOLS"]
     },
     {
       "id": "coinpaprika",
