@@ -226,13 +226,24 @@
     {
       "id": "noid-explorer",
       "category": "analytics",
+      "pinned": true,
       "name": "NOID Explorer",
       "description": "Community block explorer for blocks, transactions, addresses, mempool, rich list, network economics and historical data.",
       "maintainer": "gustlborg",
       "url": "https://noidexplorer.org/",
       "detailsUrl": "https://github.com/gustlborg/gb-parano1d-permanode",
       "source": "open",
-      "tags": ["BLOCK EXPLORER", "PERMANODE", "JSON API"]
+      "tags": ["PINNED", "BLOCK EXPLORER", "PERMANODE", "JSON API"]
+    },
+    {
+      "id": "noid-mempool-explorer",
+      "category": "analytics",
+      "name": "NOID Mempool Explorer",
+      "description": "Community mempool explorer with pending transactions, fee-rate visualizations, recent blocks and observed network statistics.",
+      "maintainer": "noid.space",
+      "url": "https://noidexplorer.space/",
+      "source": "not-applicable",
+      "tags": ["MEMPOOL", "FEE RATES", "NETWORK DATA"]
     },
     {
       "id": "gozero-noid-explorer",

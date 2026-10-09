@@ -52,6 +52,10 @@
             "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
             "maxLength": 40
           },
+          "pinned": {
+            "type": "boolean",
+            "description": "Display before unpinned projects within its category."
+          },
           "name": {
             "type": "string",
             "minLength": 2,

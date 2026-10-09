@@ -18,6 +18,7 @@ SOURCES = {"open", "closed", "not-applicable"}
 PROJECT_FIELDS = {
     "id",
     "category",
+    "pinned",
     "name",
     "description",
     "maintainer",
@@ -96,7 +97,7 @@ def validate() -> tuple[int, int]:
         if not isinstance(project, dict):
             fail(f"{prefix} must be an object")
         unknown = set(project) - PROJECT_FIELDS
-        required = PROJECT_FIELDS - {"supportUrl", "detailsUrl", "announcementUrl"}
+        required = PROJECT_FIELDS - {"pinned", "supportUrl", "detailsUrl", "announcementUrl"}
         missing = required - set(project)
         if unknown or missing:
             fail(f"{prefix} has unknown fields {sorted(unknown)} or missing fields {sorted(missing)}")
@@ -109,6 +110,8 @@ def validate() -> tuple[int, int]:
         category_id = identifier(project["category"], f"{prefix}.category", 40)
         if category_id not in category_ids:
             fail(f"{prefix}.category refers to unknown category: {category_id}")
+        if "pinned" in project and not isinstance(project["pinned"], bool):
+            fail(f"{prefix}.pinned must be a boolean")
         text(project["name"], f"{prefix}.name", 2, 72)
         text(project["description"], f"{prefix}.description", 10, 220)
         text(project["maintainer"], f"{prefix}.maintainer", 2, 72)

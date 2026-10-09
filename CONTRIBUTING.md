@@ -19,6 +19,8 @@ Normally, a project should be submitted by its maintainer. Closed-source softwar
 
 Copy an existing entry, choose a unique lowercase `id`, and place it under the appropriate category. Use one of the existing category IDs: `analytics`, `exchanges`, `miners`, `pools` or `research`. The `source` value must be `open`, `closed` or `not-applicable`; `supportUrl`, `detailsUrl` and `announcementUrl` are optional.
 
+The Parano1d project may set `pinned` to `true` to place a listing before the alphabetical entries in its category. Pinning is curated by Parano1d; leave this field out of community submissions.
+
 ```json
 {
   "id": "example-pool",

@@ -2266,6 +2266,7 @@
         throw new TypeError("invalid ecosystem project copy");
       }
       if (!["open", "closed", "not-applicable"].includes(project.source)) throw new TypeError("invalid ecosystem source label");
+      if (project.pinned !== undefined && typeof project.pinned !== "boolean") throw new TypeError("invalid ecosystem pin flag");
       if (!Array.isArray(project.tags) || !project.tags.length || !project.tags.every((tag) => typeof tag === "string" && tag.trim())) {
         throw new TypeError("invalid ecosystem project tags");
       }
@@ -2347,7 +2348,7 @@
       const sectionId = `ecosystem-${category.id}`;
       const categoryProjects = data.projects
         .filter((project) => project.category === category.id)
-        .sort((left, right) => alphabetical(left.name, right.name));
+        .sort((left, right) => Number(right.pinned === true) - Number(left.pinned === true) || alphabetical(left.name, right.name));
       const number = String(index + 1).padStart(2, "0");
 
       const section = ecosystemElement("section", "ecosystem-section");
@@ -2452,7 +2453,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-links-2026-09-11", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-analytics-2026-10-09", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
