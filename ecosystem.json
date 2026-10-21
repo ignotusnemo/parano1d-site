@@ -81,6 +81,26 @@
       "tags": ["PUBLIC POOL", "STRATUM", "TLS", "HOURLY PAYOUTS"]
     },
     {
+      "id": "alphapool",
+      "category": "pools",
+      "name": "AlphaPool",
+      "description": "Independent public NOID mining pool with PROP and SOLO modes (1% fee each), automatic payouts and Stratum endpoints in the US, Europe, Asia and Russia.",
+      "maintainer": "AlphaPool",
+      "url": "https://no1d.alphapool.tech/",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PROP", "SOLO", "STRATUM"]
+    },
+    {
+      "id": "gb-parano1d-solo",
+      "category": "pools",
+      "name": "GB Parano1d Solo",
+      "description": "Self-hosted Stratum V1 solo pool in one Docker container with a bundled Parano1d node, for Linux and Windows; found blocks pay the operator's own address.",
+      "maintainer": "gustlborg",
+      "url": "https://github.com/gustlborg/gb-parano1d-solo",
+      "source": "closed",
+      "tags": ["SELF-HOSTED", "SOLO", "STRATUM", "DOCKER"]
+    },
+    {
       "id": "hashborn-noid-miner",
       "category": "miners",
       "name": "Hashborn NOID Miner",

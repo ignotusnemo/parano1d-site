@@ -2440,7 +2440,7 @@
     if (ecosystemStatus) ecosystemStatus.hidden = false;
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-analytics-2026-10-09", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-official-community-2026-10-21", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
