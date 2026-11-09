@@ -81,6 +81,16 @@
       "tags": ["PUBLIC POOL", "STRATUM", "TLS", "HOURLY PAYOUTS"]
     },
     {
+      "id": "gb-pool",
+      "category": "pools",
+      "name": "GB Pool",
+      "description": "Public PPLNS mining pool for Parano1d with Stratum, TLS and a solo port, a 0.5% fee (1% solo, 0% with GB Miner) and payouts every 10 minutes from 5 NOID.",
+      "maintainer": "gustlborg",
+      "url": "https://noid.pool.army/",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PPLNS", "SOLO", "STRATUM", "TLS"]
+    },
+    {
       "id": "alphapool",
       "category": "pools",
       "name": "AlphaPool",
