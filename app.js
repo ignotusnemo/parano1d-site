@@ -2279,7 +2279,7 @@
     }
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=community-directory-20261109", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=community-noidbet-20261109", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();

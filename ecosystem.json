@@ -39,6 +39,18 @@
   ],
   "projects": [
     {
+      "id": "noid-bet-crowdfund",
+      "category": "apps",
+      "name": "noid.bet Crowdfund",
+      "description": "Crowdfunding and job-bounty platform for Parano1d. Its published design uses individual escrows, named recipients and deadline-based refunds.",
+      "maintainer": "noid.bet",
+      "url": "https://noid.bet/build.html#c",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["CROWDFUNDING", "BOUNTIES", "ESCROW", "NATIVE CONTRACTS"],
+      "notes": "Experimental service. Posting crowdfunds or bounties requires NOIDBET holdings. Bounty completion is approved by the requester. Recovery follows the escrow deadline."
+    },
+    {
       "id": "parano1d-pool",
       "category": "pools",
       "name": "Parano1d Pool",
