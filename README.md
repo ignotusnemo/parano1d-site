@@ -7,7 +7,7 @@ Official website for [Parano1d](https://parano1d.org), a proof-native Layer 1 se
 - [Documentation](https://docs.parano1d.org)
 - [Parano1d Lab](https://lab.parano1d.org)
 
-Independent third-party projects and resources shown under Community builds are maintained in [`ecosystem.json`](ecosystem.json). See [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing an addition.
+Submit a community project through the [GitHub Issues form](https://github.com/ignotusnemo/parano1d-site/issues/new?template=community-project.yml). The form collects the project link, description, maintainer, category and source code status. Maintainers review submissions and update [`ecosystem.json`](ecosystem.json). See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the submission guide.
 
 The [community directory](https://parano1d.org/?community=1) supports search, category, platform and source filters, sorting and expandable project details. Filtered views can be shared by URL. Wallet links are limited to official Parano1d products in Official links. Individual tokens and NFT collections belong in Launchpad.
 

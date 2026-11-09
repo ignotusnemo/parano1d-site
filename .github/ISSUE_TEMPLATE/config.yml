@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Community directory
+    url: https://parano1d.org/?community=1
+    about: Browse existing projects before submitting a new listing.
+  - name: Submission guide
+    url: https://github.com/ignotusnemo/parano1d-site/blob/main/CONTRIBUTING.md
+    about: Read the listing criteria and the review process.

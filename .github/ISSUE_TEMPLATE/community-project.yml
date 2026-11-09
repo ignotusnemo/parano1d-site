@@ -1,0 +1,105 @@
+name: Community project
+description: Add or update a project in the Parano1d community directory.
+title: "[Community] "
+labels: [community]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit a product, service or research resource for the [Parano1d community directory](https://parano1d.org/?community=1).
+        Check the directory for an existing listing and read the [submission guide](https://github.com/ignotusnemo/parano1d-site/blob/main/CONTRIBUTING.md).
+        Wallet links are limited to official Parano1d products. Individual tokens and NFT collections belong in Launchpad.
+  - type: dropdown
+    id: request
+    attributes:
+      label: Request
+      options:
+        - Add a new project
+        - Update an existing listing
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: project-name
+    attributes:
+      label: Project name
+      placeholder: The public name of the project
+    validations:
+      required: true
+  - type: input
+    id: project-url
+    attributes:
+      label: Project URL
+      description: Link to the project's website, documentation or repository over HTTPS.
+      placeholder: https://example.org
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does the project do, and how does it support Parano1d? For an update, describe the correction.
+      placeholder: A short, factual description of the product or service.
+    validations:
+      required: true
+  - type: input
+    id: maintainer
+    attributes:
+      label: Maintainer or team
+      description: Include a public profile or support link if available.
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Apps & trading
+        - Explorers & analytics
+        - Developer tools
+        - Miners
+        - Pools
+        - Exchanges
+        - Research & discussion
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source code status
+      description: A public repository containing only binary releases is closed source.
+      options:
+        - Open source
+        - Closed source
+        - Hosted service or research resource
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Source code URL
+      description: For open-source projects, link to the published code and license.
+      placeholder: https://github.com/owner/project
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Platforms
+      multiple: true
+      options:
+        - Browser
+        - Windows
+        - Linux
+        - macOS
+        - HiveOS
+        - Android
+        - iOS
+  - type: textarea
+    id: links
+    attributes:
+      label: Documentation and support
+      description: Optional links to setup instructions, releases, support or a public announcement.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional details
+      description: Relevant compatibility requirements, release status, fees or known limitations.
