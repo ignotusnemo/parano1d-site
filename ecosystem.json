@@ -152,12 +152,12 @@
       "tags": ["CPU", "NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
-      "id": "gb-parano1d-miner",
+      "id": "gb-miner",
       "category": "miners",
-      "name": "GB Parano1d Miner",
-      "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS with HTTP and Stratum pool support, automatic failover, power tuning and a disclosed 3% developer fee.",
+      "name": "GB Miner",
+      "description": "Binary NVIDIA GPU miner for Parano1d and Retro Boomer on Windows, Linux and HiveOS, from GTX 900 to RTX 50 and data-center cards, with Stratum and HTTP pool support; successor of GB Parano1d Miner.",
       "maintainer": "gustlborg",
-      "url": "https://github.com/gustlborg/gb-parano1d-miner/releases/latest",
+      "url": "https://github.com/gustlborg/gb-miner",
       "source": "closed",
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM"]
     },
