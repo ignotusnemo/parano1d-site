@@ -91,16 +91,6 @@
       "tags": ["PUBLIC POOL", "PROP", "SOLO", "STRATUM"]
     },
     {
-      "id": "gb-parano1d-solo",
-      "category": "pools",
-      "name": "GB Parano1d Solo",
-      "description": "Self-hosted Stratum V1 solo pool in one Docker container with a bundled Parano1d node, for Linux and Windows; found blocks pay the operator's own address.",
-      "maintainer": "gustlborg",
-      "url": "https://github.com/gustlborg/gb-parano1d-solo",
-      "source": "closed",
-      "tags": ["SELF-HOSTED", "SOLO", "STRATUM", "DOCKER"]
-    },
-    {
       "id": "hashborn-noid-miner",
       "category": "miners",
       "name": "Hashborn NOID Miner",
