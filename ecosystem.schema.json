@@ -91,6 +91,30 @@
             "pattern": "^https://",
             "maxLength": 320
           },
+          "sourceUrl": {
+            "type": "string",
+            "pattern": "^https://",
+            "maxLength": 320
+          },
+          "platforms": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 7,
+            "uniqueItems": true,
+            "items": { "enum": ["web", "windows", "linux", "macos", "android", "ios", "hiveos"] }
+          },
+          "relatedCategories": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$", "maxLength": 40 }
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 520
+          },
           "source": {
             "enum": ["open", "closed", "not-applicable"]
           },

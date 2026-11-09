@@ -26,6 +26,8 @@ jobs:
         run: |
           test -f index.html
           test -f app.js
+          test -f ecosystem-directory.js
+          test -f ecosystem-directory.css
           test -f ecosystem.json
           test -f favicon-v2.ico
           test -f social-card-v4.png
@@ -42,6 +44,9 @@ jobs:
             app.js \
             assets \
             ecosystem.json \
+            ecosystem.schema.json \
+            ecosystem-directory.js \
+            ecosystem-directory.css \
             favicon-16.png \
             favicon-32.png \
             favicon-48.png \

@@ -7,6 +7,7 @@ Small corrections to the website are welcome. Maintainers of independent project
 Each submission must:
 
 - add a real, publicly available project that directly supports or documents Parano1d;
+- submit a product or service. Individual tokens and NFT collections belong in Launchpad. Wallet downloads are restricted to official Parano1d products and are outside this directory;
 - link to an English-language landing page, documentation page or source repository over HTTPS;
 - use a neutral, factual, third-person description;
 - identify the maintainer and whether the project is open or closed source;
@@ -17,7 +18,9 @@ Each submission must:
 
 Normally, a project should be submitted by its maintainer. Closed-source software is eligible, but it will be labelled as closed source and remains subject to additional scrutiny. Categories and their ordering are maintained by the Parano1d project; do not add or rename a category in a project-listing pull request.
 
-Copy an existing entry, choose a unique lowercase `id`, and place it under the appropriate category. Use one of the existing category IDs: `analytics`, `exchanges`, `miners`, `pools` or `research`. The `source` value must be `open`, `closed` or `not-applicable`; `supportUrl`, `detailsUrl` and `announcementUrl` are optional.
+Copy an existing entry, choose a unique lowercase `id`, and place it under the appropriate category. Use an existing category ID: `apps`, `analytics`, `tools`, `exchanges`, `miners`, `pools` or `research`. The `source` value must be `open`, `closed` or `not-applicable`. A public repository containing only binary releases is closed source.
+
+Optional `platforms` identify supported environments: `web`, `windows`, `linux`, `macos`, `android`, `ios` and `hiveos`. Use `relatedCategories` when a product also belongs in another existing category. `sourceUrl`, `supportUrl`, `detailsUrl` and `announcementUrl` link to source, support, documentation and the announcement. Optional `notes` give concrete compatibility requirements or release limitations.
 
 The Parano1d project may set `pinned` to `true` to place a listing before the alphabetical entries in its category. Pinning is curated by Parano1d; leave this field out of community submissions.
 

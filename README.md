@@ -9,6 +9,8 @@ Official website for [Parano1d](https://parano1d.org), a proof-native Layer 1 se
 
 Independent third-party projects and resources shown under Community builds are maintained in [`ecosystem.json`](ecosystem.json). See [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing an addition.
 
+The [community directory](https://parano1d.org/?community=1) supports search, category, platform and source filters, sorting and expandable project details. Filtered views can be shared by URL. Wallet links are limited to official Parano1d products in Official links. Individual tokens and NFT collections belong in Launchpad.
+
 ## Local preview
 
 The site has no runtime dependencies or build step.

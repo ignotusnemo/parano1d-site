@@ -2,14 +2,19 @@
   "version": 1,
   "categories": [
     {
+      "id": "apps",
+      "label": "Apps & trading",
+      "description": "Community platforms for trading, network dashboards and chain activity."
+    },
+    {
       "id": "analytics",
-      "label": "Analytics",
+      "label": "Explorers & analytics",
       "description": "Independent explorers and trackers for Parano1d network and market data."
     },
     {
-      "id": "exchanges",
-      "label": "Exchanges",
-      "description": "Third-party markets where NOID is available for trading."
+      "id": "tools",
+      "label": "Developer tools",
+      "description": "Community software for node integrations, proof generation and data services."
     },
     {
       "id": "miners",
@@ -20,6 +25,11 @@
       "id": "pools",
       "label": "Pools",
       "description": "Public and self-hosted infrastructure for producing Parano1d blocks."
+    },
+    {
+      "id": "exchanges",
+      "label": "Exchanges",
+      "description": "Third-party markets where NOID is available for trading."
     },
     {
       "id": "research",
@@ -101,6 +111,26 @@
       "tags": ["SELF-HOSTED", "SOLO", "STRATUM", "DOCKER"]
     },
     {
+      "id": "rabid-pool",
+      "category": "pools",
+      "name": "Rabid Pool",
+      "description": "Public PPLNS NOID mining pool with a 1% pool fee, Stratum access and six-hour payouts from 1 NOID.",
+      "maintainer": "Rabid Mining",
+      "url": "https://pool.rabidmining.com/noid#pool",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "PPLNS", "STRATUM"]
+    },
+    {
+      "id": "luckypool",
+      "category": "pools",
+      "name": "LuckyPool",
+      "description": "Public NOID mining pool with regional Stratum endpoints, a 1% fee, proportional rewards and two-hour payouts from 1 NOID.",
+      "maintainer": "LuckyPool.IO",
+      "url": "https://noid.luckypool.io/",
+      "source": "closed",
+      "tags": ["PUBLIC POOL", "STRATUM", "PROP", "REGIONAL ENDPOINTS"]
+    },
+    {
       "id": "hashborn-noid-miner",
       "category": "miners",
       "name": "Hashborn NOID Miner",
@@ -154,22 +184,23 @@
     {
       "id": "gb-parano1d-miner",
       "category": "miners",
-      "name": "GB Parano1d Miner",
-      "description": "Binary NVIDIA GPU miner for Windows, Linux and HiveOS with HTTP and Stratum pool support, automatic failover, power tuning and a disclosed 3% developer fee.",
+      "name": "GB Miner",
+      "description": "NVIDIA GPU miner for Windows, Linux and HiveOS, with HTTP and Stratum support, pool failover and per-card power controls.",
       "maintainer": "gustlborg",
-      "url": "https://github.com/gustlborg/gb-parano1d-miner/releases/latest",
+      "url": "https://github.com/gustlborg/gb-miner",
       "source": "closed",
-      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM"]
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "STRATUM"],
+      "notes": "Supports GTX 900/10/16, RTX 20/30/40/50, Volta and selected Tesla cards. The published NOID developer fee is 2%. Driver requirements vary by GPU family."
     },
     {
       "id": "forgeminer",
       "category": "miners",
       "name": "ForgeMiner",
-      "description": "Multi-algorithm binary NVIDIA GPU miner with NOID support on Windows, Linux, HiveOS and Docker, with a disclosed 2.5% NOID developer fee.",
+      "description": "NVIDIA and AMD GPU miner for Windows, Linux and HiveOS, with multi-pool failover, device controls and published checksums.",
       "maintainer": "0xHashRaptor",
       "url": "https://github.com/0xHashRaptor/ForgeMiner/releases/latest",
       "source": "closed",
-      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "DOCKER"]
+      "tags": ["NVIDIA", "AMD", "WINDOWS", "LINUX", "HIVEOS"]
     },
     {
       "id": "noid-gpu-amd",
@@ -202,6 +233,16 @@
       "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS", "NO DEV FEE"]
     },
     {
+      "id": "onezerominer",
+      "category": "miners",
+      "name": "OneZeroMiner",
+      "description": "Binary NVIDIA GPU miner for NOID/Poseidon2b on Windows, Linux and HiveOS, with a disclosed 1% NOID developer fee.",
+      "maintainer": "OneZeroMiner",
+      "url": "https://github.com/OneZeroMiner/onezerominer/releases/latest",
+      "source": "closed",
+      "tags": ["NVIDIA", "WINDOWS", "LINUX", "HIVEOS"]
+    },
+    {
       "id": "srbminer-multi",
       "category": "miners",
       "name": "SRBMiner-Multi",
@@ -220,6 +261,26 @@
       "url": "https://github.com/AlexZeroZero/GozeroAssistant",
       "source": "open",
       "tags": ["NVIDIA", "WINDOWS", "MINING ASSISTANT", "BETA"]
+    },
+    {
+      "id": "noidminer-pascal",
+      "category": "miners",
+      "name": "NoidMiner",
+      "description": "Open-source NVIDIA Pascal miner for Windows and Linux with no developer fee and InnovLab pool support. The Linux build has not yet been tested on GPU by its author.",
+      "maintainer": "gacanga",
+      "url": "https://github.com/gacanga/NoidMiner",
+      "source": "open",
+      "tags": ["NVIDIA", "PASCAL", "WINDOWS", "LINUX", "NO DEV FEE"]
+    },
+    {
+      "id": "noid-mac-miner",
+      "category": "miners",
+      "name": "NOID Miner for Apple Silicon",
+      "description": "Experimental open-source Apple Silicon miner with CPU, Metal GPU and combined modes, a SwiftUI interface and InnovLab support. No developer fee; macOS 13 or newer.",
+      "maintainer": "cryptoresetlife",
+      "url": "https://github.com/cryptoresetlife/noid-mac-miner",
+      "source": "open",
+      "tags": ["CPU", "APPLE SILICON", "MACOS", "METAL GPU", "EXPERIMENTAL"]
     },
     {
       "id": "safetrade",
@@ -259,7 +320,7 @@
       "id": "noid-mempool-explorer",
       "category": "analytics",
       "name": "NOID Mempool Explorer",
-      "description": "Community mempool explorer with pending transactions, fee-rate visualizations, recent blocks and observed network statistics.",
+      "description": "Community mempool and mining explorer with pending transactions, fee-rate visualizations, a mining calculator and observed network statistics.",
       "maintainer": "noid.space",
       "url": "https://noidexplorer.space/",
       "source": "not-applicable",
@@ -274,6 +335,46 @@
       "url": "https://gozero.trade/noid",
       "source": "not-applicable",
       "tags": ["BLOCK EXPLORER", "NETWORK DATA", "MINING POOLS"]
+    },
+    {
+      "id": "miningchamp",
+      "category": "analytics",
+      "name": "MiningChamp",
+      "description": "Independent NOID mining pool directory with network statistics, pool hashrates and Stratum connection details.",
+      "maintainer": "MiningChamp",
+      "url": "https://miningchamp.com/coin/parano1d",
+      "source": "not-applicable",
+      "tags": ["MINING POOLS", "NETWORK DATA", "STRATUM"]
+    },
+    {
+      "id": "powmonkey",
+      "category": "analytics",
+      "name": "PowMonkey",
+      "description": "Independent emission research covering NOID issuance, fund allocations and unlock schedules, with linked source records.",
+      "maintainer": "PowMonkey",
+      "url": "https://powmonkey.com/emissions.html",
+      "source": "not-applicable",
+      "tags": ["EMISSION MODEL", "ALLOCATION SCHEDULE", "SOURCE REFERENCES"]
+    },
+    {
+      "id": "coingecko",
+      "category": "analytics",
+      "name": "CoinGecko",
+      "description": "NOID market tracker with price charts, trading volume, exchange listings and market data.",
+      "maintainer": "CoinGecko",
+      "url": "https://www.coingecko.com/en/coins/parano1d",
+      "source": "not-applicable",
+      "tags": ["MARKET TRACKER", "PRICE CHART", "MARKET DATA"]
+    },
+    {
+      "id": "whattomine",
+      "category": "analytics",
+      "name": "WhatToMine",
+      "description": "NOID mining profitability calculator with Poseidon2b network statistics, block rewards and exchange rates.",
+      "maintainer": "WhatToMine",
+      "url": "https://whattomine.com/coins/477-noid-poseidon2b",
+      "source": "not-applicable",
+      "tags": ["MINING CALCULATOR", "NETWORK DATA", "PROFITABILITY"]
     },
     {
       "id": "coinpaprika",
@@ -334,6 +435,245 @@
       "url": "https://bitcointalk.org/index.php?topic=5590832.0",
       "source": "not-applicable",
       "tags": ["ANNOUNCEMENTS", "DISCUSSION"]
+    },
+    {
+      "id": "noidium",
+      "category": "apps",
+      "relatedCategories": ["analytics"],
+      "name": "Noidium",
+      "description": "Parano1d analytics and on-chain trading platform with token markets, an NFT marketplace and archived chain data.",
+      "maintainer": "Noidium / Mathias",
+      "url": "https://noidium.com/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["ANALYTICS", "TRADING", "EXPLORER", "NFT MARKETPLACE"]
+    },
+    {
+      "id": "octonoid",
+      "category": "apps",
+      "relatedCategories": ["analytics"],
+      "name": "Octonoid",
+      "description": "Community platform with a Parano1d explorer, token market, holder analytics and an NFT portal.",
+      "maintainer": "AllisRED / Octonoid",
+      "url": "https://octonoid.org/",
+      "detailsUrl": "https://octonoid.org/about",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["ANALYTICS", "MARKETS", "HOLDERS", "EXPLORER"]
+    },
+    {
+      "id": "octonoid-tracker-bot",
+      "category": "apps",
+      "relatedCategories": ["analytics"],
+      "name": "Octonoid Tracker Bot",
+      "description": "Telegram bot for Parano1d token buy alerts and on-chain market activity.",
+      "maintainer": "AllisRED / Octonoid",
+      "url": "https://octonoid.org/bot",
+      "supportUrl": "https://t.me/OctonoidTrackerBot",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["TELEGRAM", "ALERTS", "MARKET DATA"]
+    },
+    {
+      "id": "parano1d-nav",
+      "category": "apps",
+      "relatedCategories": ["analytics"],
+      "name": "Parano1d NAV",
+      "description": "Community ecosystem directory with a live network dashboard, recent blocks and network trends.",
+      "maintainer": "Apoloniato",
+      "url": "https://parano1d.io/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["DIRECTORY", "NETWORK DATA", "DASHBOARD"]
+    },
+    {
+      "id": "noidscan-pocket-watch",
+      "category": "apps",
+      "relatedCategories": ["analytics"],
+      "name": "NOIDSCAN Pocket Watch",
+      "description": "Live Parano1d block clock presented as an interactive pocket watch.",
+      "maintainer": "Parano1c",
+      "url": "https://noidscan.com/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["LIVE BLOCKS", "VISUALIZATION"]
+    },
+    {
+      "id": "parano1d-mcp",
+      "category": "tools",
+      "name": "Parano1d MCP",
+      "description": "Open-source MCP server connecting AI clients to a local Parano1d node, with typed RPC tools and read-only access by default.",
+      "maintainer": "Noidium / Mathias",
+      "url": "https://github.com/noidium/parano1d-mcp",
+      "sourceUrl": "https://github.com/noidium/parano1d-mcp/tree/main/src",
+      "supportUrl": "https://github.com/noidium/parano1d-mcp/issues",
+      "source": "open",
+      "platforms": ["windows", "linux", "macos"],
+      "tags": ["MCP", "RPC", "RUST", "APACHE 2.0"],
+      "notes": "Pre-release. The author supports read-only deployment. Write and admin modes are opt-in. Contract and native writes were exercised on a private test network."
+    },
+    {
+      "id": "noid-gpu-node",
+      "category": "tools",
+      "name": "NOID GPU Node",
+      "description": "Community Parano1d v2.1 node build with CUDA-accelerated proof generation and CPU fallback.",
+      "maintainer": "DukeNukem",
+      "url": "https://github.com/DukeNukem-dev/NOID-GPU-Node",
+      "sourceUrl": "https://github.com/DukeNukem-dev/NOID-GPU-Node/tree/gpu-node",
+      "source": "open",
+      "platforms": ["linux"],
+      "tags": ["CUDA", "PROVING", "NODE", "APACHE 2.0"],
+      "notes": "Experimental Linux build for the Small, Large and Native proof classes. NVIDIA CUDA hardware accelerates proof generation. Hashing workers can connect separately through the mining RPC."
+    },
+    {
+      "id": "gb-permanode",
+      "category": "tools",
+      "relatedCategories": ["analytics"],
+      "name": "GB Parano1d Permanode",
+      "description": "Open-source archive service that captures Parano1d block bodies into SQLite and exposes a JSON API.",
+      "maintainer": "gustlborg",
+      "url": "https://github.com/gustlborg/gb-parano1d-permanode",
+      "sourceUrl": "https://github.com/gustlborg/gb-parano1d-permanode/tree/master",
+      "source": "open",
+      "platforms": ["linux"],
+      "tags": ["ARCHIVE", "SQLITE", "API", "AGPL 3.0"],
+      "notes": "Retains block bodies observed while the service is running. History missed during downtime depends on the source node retaining those bodies."
+    },
+    {
+      "id": "rigeos",
+      "category": "tools",
+      "name": "RigeOS",
+      "description": "Mining fleet console for managing rigs, monitoring hardware and configuring mining workloads.",
+      "maintainer": "InnovLab / getrigeos",
+      "url": "https://rigeos.com/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["MINING FLEET", "MONITORING", "RIG MANAGEMENT"]
+    },
+    {
+      "id": "gb-poseidon2b-dual-miner",
+      "category": "miners",
+      "name": "GB Poseidon2b Dual Miner",
+      "description": "NVIDIA GPU miner that runs NOID alongside a second supported mining workload, with per-device tuning and monitoring.",
+      "maintainer": "gustlborg",
+      "url": "https://github.com/gustlborg/gb-poseidon2b-dual-miner",
+      "source": "closed",
+      "platforms": ["windows", "linux", "hiveos"],
+      "tags": ["NVIDIA", "DUAL MINING", "CUDA"]
+    },
+    {
+      "id": "freeforgem",
+      "category": "miners",
+      "name": "FreeForGem",
+      "description": "NVIDIA GPU miner with NOID support, per-GPU tuning, monitoring and Windows, Linux and HiveOS packages.",
+      "maintainer": "pepsykolya",
+      "url": "https://github.com/pepsykolya/FreeForGem",
+      "source": "closed",
+      "platforms": ["windows", "linux", "hiveos"],
+      "tags": ["NVIDIA", "CUDA", "RTX 30/40/50"],
+      "notes": "The author publishes host-side Rust code. NOID mining kernels remain proprietary, so this listing is classified as closed source."
+    },
+    {
+      "id": "krminer",
+      "category": "miners",
+      "name": "KRminer",
+      "description": "NVIDIA GPU miner with NOID support, pool failover and Windows, Linux and HiveOS packages.",
+      "maintainer": "kr-miner",
+      "url": "https://github.com/kr-miner/krminer",
+      "source": "closed",
+      "platforms": ["windows", "linux", "hiveos"],
+      "tags": ["NVIDIA", "CUDA", "RTX 30/40/50"]
+    },
+    {
+      "id": "wildrig-ng",
+      "category": "miners",
+      "name": "WildRig NG",
+      "description": "GPU miner with NOID support for NVIDIA Volta and newer cards and AMD RDNA 1 to 4 GPUs.",
+      "maintainer": "andru-kun",
+      "url": "https://github.com/andru-kun/wildrig-ng",
+      "source": "closed",
+      "platforms": ["windows", "linux", "hiveos"],
+      "tags": ["NVIDIA", "AMD", "POSEIDON2B"]
+    },
+    {
+      "id": "hashpulse",
+      "category": "miners",
+      "name": "HashPulse",
+      "description": "Multi-coin miner with a CPU backend for Parano1d Poseidon2b and Windows and Linux binaries.",
+      "maintainer": "Aw3n",
+      "url": "https://github.com/Aw3n/HashPulse_Miner",
+      "source": "closed",
+      "platforms": ["windows", "linux"],
+      "tags": ["CPU", "POSEIDON2B"]
+    },
+    {
+      "id": "x-miner",
+      "category": "miners",
+      "name": "X-Miner",
+      "description": "Open-source NVIDIA and AMD GPU miner for Parano1d, with per-device tuning and Windows and Linux builds.",
+      "maintainer": "SerpentX Tech / SerpentXSF",
+      "url": "https://github.com/SerpentXSF/X-Miner",
+      "sourceUrl": "https://github.com/SerpentXSF/X-Miner/tree/main/src",
+      "source": "open",
+      "platforms": ["windows", "linux", "hiveos"],
+      "tags": ["NVIDIA", "AMD", "MIT"],
+      "notes": "Includes a HiveOS custom-miner package. The author states that this package has not yet been tested on a HiveOS rig."
+    },
+    {
+      "id": "gb-pool",
+      "category": "pools",
+      "name": "GB Pool",
+      "description": "Public Parano1d mining pool with PPLNS rewards, regional connection endpoints and per-worker statistics.",
+      "maintainer": "gustlborg / charlz",
+      "url": "https://noid.pool.army/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["PUBLIC POOL", "PPLNS", "STRATUM"]
+    },
+    {
+      "id": "pqpool",
+      "category": "pools",
+      "name": "PQPool",
+      "description": "Public NOID mining pool with worker, block and payout statistics.",
+      "maintainer": "DukeNukem",
+      "url": "https://pqpool.com/noid.html",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["PUBLIC POOL", "STRATUM"]
+    },
+    {
+      "id": "himpool",
+      "category": "pools",
+      "name": "HimPool",
+      "description": "Public NOID mining pool with proportional, solo and solo loyalty reward modes.",
+      "maintainer": "HimPool",
+      "url": "https://himpool.com/",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["PUBLIC POOL", "PROP", "SOLO", "SOLO LOYALTY"]
+    },
+    {
+      "id": "tazmining",
+      "category": "pools",
+      "name": "TazMining",
+      "description": "Public PPLNS Parano1d mining pool with Stratum access, hourly payouts and pool statistics.",
+      "maintainer": "TazMining",
+      "url": "https://tazmining.ch/coins/Noid/pplns",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["PUBLIC POOL", "PPLNS", "STRATUM"]
+    },
+    {
+      "id": "parano1d-scan",
+      "category": "analytics",
+      "name": "Parano1d Scan",
+      "description": "Explorer with block and mempool views, mining statistics, contract receipts and market analytics.",
+      "maintainer": "Parano1d Scan",
+      "url": "https://parano1d-scan.com/blocks/latest",
+      "detailsUrl": "https://parano1d-scan.com/api",
+      "source": "not-applicable",
+      "platforms": ["web"],
+      "tags": ["EXPLORER", "MEMPOOL", "API", "MARKET DATA"]
     }
   ]
 }

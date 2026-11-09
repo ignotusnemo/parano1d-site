@@ -15,6 +15,8 @@ DATA_PATH = ROOT / "ecosystem.json"
 ID_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 TAG_PATTERN = re.compile(r"^[A-Z0-9][A-Z0-9 .+/-]*$")
 SOURCES = {"open", "closed", "not-applicable"}
+PLATFORMS = {"web", "windows", "linux", "macos", "android", "ios", "hiveos"}
+OPTIONAL_FIELDS = {"pinned", "supportUrl", "detailsUrl", "announcementUrl", "sourceUrl", "platforms", "relatedCategories", "notes"}
 PROJECT_FIELDS = {
     "id",
     "category",
@@ -28,6 +30,10 @@ PROJECT_FIELDS = {
     "announcementUrl",
     "source",
     "tags",
+    "sourceUrl",
+    "platforms",
+    "relatedCategories",
+    "notes",
 }
 
 
@@ -84,6 +90,8 @@ def validate() -> tuple[int, int]:
         if not isinstance(category, dict) or set(category) != {"id", "label", "description"}:
             fail(f"{prefix} contains unexpected or missing fields")
         category_id = identifier(category["id"], f"{prefix}.id", 40)
+        if category_id in {"wallet", "wallets", "tokens", "nfts"}:
+            fail(f"{prefix}: wallet downloads use Official links; token and NFT listings use Launchpad")
         if category_id in category_ids:
             fail(f"duplicate category id: {category_id}")
         category_ids.add(category_id)
@@ -97,7 +105,7 @@ def validate() -> tuple[int, int]:
         if not isinstance(project, dict):
             fail(f"{prefix} must be an object")
         unknown = set(project) - PROJECT_FIELDS
-        required = PROJECT_FIELDS - {"pinned", "supportUrl", "detailsUrl", "announcementUrl"}
+        required = PROJECT_FIELDS - OPTIONAL_FIELDS
         missing = required - set(project)
         if unknown or missing:
             fail(f"{prefix} has unknown fields {sorted(unknown)} or missing fields {sorted(missing)}")
@@ -112,6 +120,20 @@ def validate() -> tuple[int, int]:
             fail(f"{prefix}.category refers to unknown category: {category_id}")
         if "pinned" in project and not isinstance(project["pinned"], bool):
             fail(f"{prefix}.pinned must be a boolean")
+        if "relatedCategories" in project:
+            related = project["relatedCategories"]
+            if not isinstance(related, list) or not 1 <= len(related) <= 3 or not all(isinstance(item, str) for item in related) or len(related) != len(set(related)):
+                fail(f"{prefix}.relatedCategories must contain 1..3 unique category IDs")
+            if any(item not in category_ids or item == category_id for item in related):
+                fail(f"{prefix}.relatedCategories must refer to other existing categories")
+        if "platforms" in project:
+            platforms = project["platforms"]
+            if not isinstance(platforms, list) or not 1 <= len(platforms) <= 7 or not all(isinstance(item, str) for item in platforms) or len(platforms) != len(set(platforms)):
+                fail(f"{prefix}.platforms must contain 1..7 unique platform IDs")
+            if any(item not in PLATFORMS for item in platforms):
+                fail(f"{prefix}.platforms contains an unknown platform")
+        if "notes" in project:
+            text(project["notes"], f"{prefix}.notes", 10, 520)
         text(project["name"], f"{prefix}.name", 2, 72)
         text(project["description"], f"{prefix}.description", 10, 220)
         text(project["maintainer"], f"{prefix}.maintainer", 2, 72)
@@ -120,7 +142,7 @@ def validate() -> tuple[int, int]:
         if primary_url in project_urls:
             fail(f"duplicate primary project URL: {primary_url}")
         project_urls.add(primary_url)
-        for optional_url in ("supportUrl", "detailsUrl", "announcementUrl"):
+        for optional_url in ("supportUrl", "detailsUrl", "announcementUrl", "sourceUrl"):
             if optional_url in project:
                 https_url(project[optional_url], f"{prefix}.{optional_url}")
 
@@ -129,6 +151,8 @@ def validate() -> tuple[int, int]:
         tags = project["tags"]
         if not isinstance(tags, list) or not 1 <= len(tags) <= 5:
             fail(f"{prefix}.tags must contain 1..5 entries")
+        if not all(isinstance(tag, str) for tag in tags):
+            fail(f"{prefix}.tags must contain strings")
         if len(tags) != len(set(tags)):
             fail(f"{prefix}.tags contains duplicates")
         for tag_index, tag in enumerate(tags):

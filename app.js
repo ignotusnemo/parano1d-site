@@ -255,6 +255,7 @@
       "nav.menu": "Меню",
       "nav.downloads": "Загрузки",
       "nav.official": "Официальные ссылки",
+      "nav.webWallet": "Веб-кошелёк",
       "nav.docs": "Документация",
       "nav.ecosystem": "Сборки сообщества",
       "nav.thirdParty": "Сторонние проекты",
@@ -264,8 +265,8 @@
       "ecosystem.close": "Закрыть каталог сборок сообщества",
       "ecosystem.header": "Сборки сообщества",
       "ecosystem.eyebrow": "Независимое сообщество",
-      "ecosystem.title": "Создано вокруг<br><em>Parano1d.</em>",
-      "ecosystem.lead": "Независимые программы, сервисы и другие ресурсы сообщества.",
+      "ecosystem.title": "Каталог сообщества",
+      "ecosystem.lead": "Приложения, аналитика, инструменты для разработчиков и инфраструктура майнинга от сообщества.",
       "ecosystem.disclaimer.title": "Независимые проекты",
       "ecosystem.disclaimer.copy": "Размещённые здесь проекты поддерживаются их авторами. Размещение здесь не означает аудит, одобрение, партнёрство или гарантию со стороны Parano1d.",
       "ecosystem.categories": "Категории сторонних проектов",
@@ -494,6 +495,7 @@
       "nav.menu": "菜单",
       "nav.downloads": "下载",
       "nav.official": "官方链接",
+      "nav.webWallet": "网页钱包",
       "nav.docs": "文档",
       "nav.ecosystem": "社区构建",
       "nav.thirdParty": "第三方",
@@ -503,8 +505,8 @@
       "ecosystem.close": "关闭社区构建目录",
       "ecosystem.header": "社区构建",
       "ecosystem.eyebrow": "独立社区",
-      "ecosystem.title": "围绕<br><em>Parano1d 构建。</em>",
-      "ecosystem.lead": "独立软件、服务和其他社区资源。",
+      "ecosystem.title": "社区项目目录",
+      "ecosystem.lead": "探索社区应用、分析工具、开发工具和挖矿基础设施。",
       "ecosystem.disclaimer.title": "独立项目",
       "ecosystem.disclaimer.copy": "此处列出的项目由各自作者维护。收录于此不代表 Parano1d 对其进行审计、认可、合作或提供保证。",
       "ecosystem.categories": "第三方项目分类",
@@ -1382,57 +1384,9 @@
   } catch {}
 
   const ecosystemRuntimeCopy = {
-    en: {
-      error: "Community builds could not be loaded.",
-      all: "All",
-      maintainedBy: "Maintained by",
-      support: "Support",
-      details: "Details",
-      announcement: "Announcement",
-      sourceOpen: "Open source",
-      sourceClosed: "Closed source",
-      categoryActions: {
-        pools: "Open pool",
-        miners: "View miner",
-        analytics: "Open tool",
-        exchanges: "Trade",
-        research: "Read"
-      }
-    },
-    ru: {
-      error: "Не удалось загрузить сборки сообщества.",
-      all: "Все",
-      maintainedBy: "Поддерживает",
-      support: "Поддержка",
-      details: "Подробнее",
-      announcement: "Анонс",
-      sourceOpen: "Открытый код",
-      sourceClosed: "Закрытый код",
-      categoryActions: {
-        pools: "Открыть пул",
-        miners: "Открыть майнер",
-        analytics: "Открыть инструмент",
-        exchanges: "Торговать",
-        research: "Читать"
-      }
-    },
-    zh: {
-      error: "无法加载社区构建。",
-      all: "全部",
-      maintainedBy: "维护者",
-      support: "支持",
-      details: "详情",
-      announcement: "公告",
-      sourceOpen: "开源",
-      sourceClosed: "闭源",
-      categoryActions: {
-        pools: "打开矿池",
-        miners: "查看矿工",
-        analytics: "打开工具",
-        exchanges: "交易",
-        research: "阅读"
-      }
-    }
+    en: { error: "Community builds could not be loaded.", loading: "Loading community builds…", retry: "Try again" },
+    ru: { error: "Не удалось загрузить сборки сообщества.", loading: "Загрузка сборок сообщества…", retry: "Попробовать снова" },
+    zh: { error: "无法加载社区构建。", loading: "正在加载社区构建…", retry: "重试" }
   };
 
   const metaCopy = {
@@ -1711,7 +1665,8 @@
   const PHOTO_KEY_STEP = 7;
   const SOUNDNESS_STEP = 13;
   const PHOTO_KEY_DURATION = 2350;
-  const downloadsRequestedOnLoad = window.location.hash === "#downloads";
+  const communityRequestedOnLoad = new URLSearchParams(window.location.search).has("community");
+  const downloadsRequestedOnLoad = window.location.hash === "#downloads" && !communityRequestedOnLoad;
   const hashIndex = chapters.findIndex((chapter) => `#${chapter.id}` === window.location.hash);
   let current = hashIndex >= 0 ? hashIndex : 0;
   if (window.location.hash) {
@@ -2165,7 +2120,7 @@
   let ecosystemData = null;
   let ecosystemLoadPromise = null;
   let ecosystemLoadFailed = false;
-  let ecosystemActiveCategory = "all";
+  const ecosystemDirectory = new window.Parano1dDirectory.Controller({ modal: ecosystemModal, navigation: ecosystemCategoryNav, results: ecosystemSections });
 
   function loadDownloadsPreview() {
     if (!downloadsPreview || downloadsPreview.getAttribute("src")) return;
@@ -2254,11 +2209,18 @@
       }
       if (!["open", "closed", "not-applicable"].includes(project.source)) throw new TypeError("invalid ecosystem source label");
       if (project.pinned !== undefined && typeof project.pinned !== "boolean") throw new TypeError("invalid ecosystem pin flag");
+      if (project.relatedCategories !== undefined && (!Array.isArray(project.relatedCategories) || !project.relatedCategories.every(id => categoryIds.has(id) && id !== project.category))) {
+        throw new TypeError("invalid ecosystem related categories");
+      }
+      if (project.platforms !== undefined && (!Array.isArray(project.platforms) || !project.platforms.length || !project.platforms.every(id => ["web", "windows", "linux", "macos", "android", "ios", "hiveos"].includes(id)))) {
+        throw new TypeError("invalid ecosystem platform");
+      }
+      if (project.notes !== undefined && (typeof project.notes !== "string" || project.notes.length > 520)) throw new TypeError("invalid ecosystem notes");
       if (!Array.isArray(project.tags) || !project.tags.length || !project.tags.every((tag) => typeof tag === "string" && tag.trim())) {
         throw new TypeError("invalid ecosystem project tags");
       }
       ecosystemHttpsUrl(project.url);
-      [project.supportUrl, project.detailsUrl, project.announcementUrl]
+      [project.supportUrl, project.detailsUrl, project.announcementUrl, project.sourceUrl]
         .filter(Boolean)
         .forEach(ecosystemHttpsUrl);
       projectIds.add(project.id);
@@ -2267,164 +2229,38 @@
     return data;
   }
 
-  function ecosystemElement(tagName, className = "", copy = null) {
-    const element = document.createElement(tagName);
-    if (className) element.className = className;
-    if (copy !== null) element.textContent = copy;
-    return element;
+  function renderEcosystemError() {
+    if (!ecosystemStatus) return;
+    const copy = ecosystemRuntimeCopy[language] || ecosystemRuntimeCopy.en;
+    const retry = document.createElement("button");
+    retry.type = "button";
+    retry.className = "directory-retry";
+    retry.textContent = copy.retry;
+    retry.addEventListener("click", () => {
+      ecosystemModal?.focus({ preventScroll: true });
+      loadEcosystemDirectory();
+    });
+    ecosystemStatus.replaceChildren(document.createTextNode(copy.error), retry);
+    ecosystemStatus.hidden = false;
+    ecosystemStatus.classList.add("is-error");
   }
 
   function renderEcosystem(data = ecosystemData) {
-    if (!data || !ecosystemCategoryNav || !ecosystemSections || !ecosystemStatus) return;
-    const copy = ecosystemRuntimeCopy[language] || ecosystemRuntimeCopy.en;
-    ecosystemCategoryNav.replaceChildren();
-    ecosystemSections.replaceChildren();
-
-    const alphabetical = (left, right) => left.localeCompare(right, "en", { numeric: true, sensitivity: "base" });
-    const categories = [...data.categories].sort((left, right) => alphabetical(left.label, right.label));
-    const categoryIds = new Set(categories.map((category) => category.id));
-    if (ecosystemActiveCategory !== "all" && !categoryIds.has(ecosystemActiveCategory)) ecosystemActiveCategory = "all";
-
-    const filters = [{ id: "all", label: copy.all, number: "00" }, ...categories.map((category, index) => ({
-      id: category.id,
-      label: category.label,
-      number: String(index + 1).padStart(2, "0")
-    }))];
-
-    const applyFilter = ({ moveToResults = false } = {}) => {
-      ecosystemCategoryNav.querySelectorAll(".ecosystem-category-link").forEach((button) => {
-        const active = button.dataset.category === ecosystemActiveCategory;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", String(active));
-      });
-      ecosystemSections.querySelectorAll(".ecosystem-section").forEach((section) => {
-        section.hidden = ecosystemActiveCategory !== "all" && section.dataset.category !== ecosystemActiveCategory;
-      });
-      if (moveToResults) {
-        ecosystemSections.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth", block: "start" });
-      }
-    };
-
-    filters.forEach((filter) => {
-      const button = ecosystemElement("button", "ecosystem-category-link");
-      button.type = "button";
-      button.dataset.category = filter.id;
-      button.setAttribute("aria-controls", filter.id === "all" ? "ecosystem-sections" : `ecosystem-${filter.id}`);
-      button.append(ecosystemElement("span", "", filter.number), document.createTextNode(filter.label));
-      button.addEventListener("click", () => {
-        ecosystemActiveCategory = filter.id;
-        applyFilter({ moveToResults: true });
-      });
-      button.addEventListener("keydown", (event) => {
-        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-        event.preventDefault();
-        const buttons = [...ecosystemCategoryNav.querySelectorAll(".ecosystem-category-link")];
-        const current = buttons.indexOf(button);
-        const next = event.key === "Home"
-          ? 0
-          : event.key === "End"
-            ? buttons.length - 1
-            : (current + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
-        buttons[next]?.focus();
-        buttons[next]?.click();
-      });
-      ecosystemCategoryNav.append(button);
-    });
-
-    categories.forEach((category, index) => {
-      const sectionId = `ecosystem-${category.id}`;
-      const categoryProjects = data.projects
-        .filter((project) => project.category === category.id)
-        .sort((left, right) => Number(right.pinned === true) - Number(left.pinned === true) || alphabetical(left.name, right.name));
-      const number = String(index + 1).padStart(2, "0");
-
-      const section = ecosystemElement("section", "ecosystem-section");
-      section.id = sectionId;
-      section.dataset.category = category.id;
-      section.setAttribute("aria-labelledby", `${sectionId}-title`);
-
-      const heading = ecosystemElement("div", "ecosystem-section-head");
-      heading.append(ecosystemElement("span", "ecosystem-section-number", `${number} / ${String(categoryProjects.length).padStart(2, "0")}`));
-      const title = ecosystemElement("h3", "", category.label);
-      title.id = `${sectionId}-title`;
-      heading.append(title, ecosystemElement("p", "ecosystem-section-description", category.description));
-      section.append(heading);
-
-      const grid = ecosystemElement("div", "ecosystem-grid");
-      categoryProjects.forEach((project) => {
-        const card = ecosystemElement("article", "ecosystem-card");
-        card.dataset.category = category.id;
-
-        const cardTop = ecosystemElement("div", "ecosystem-card-top");
-        if (project.source === "not-applicable") {
-          cardTop.append(ecosystemElement("span", "ecosystem-source", category.label));
-        } else {
-          const sourceClass = project.source === "open" ? "open" : "closed";
-          const sourceLabel = project.source === "open" ? copy.sourceOpen : copy.sourceClosed;
-          cardTop.append(ecosystemElement("span", `ecosystem-source ${sourceClass}`, sourceLabel));
-        }
-        cardTop.append(ecosystemElement("span", "ecosystem-source", `0${index + 1} · ${project.id}`));
-        card.append(cardTop, ecosystemElement("h4", "", project.name), ecosystemElement("p", "ecosystem-card-copy", project.description));
-
-        const tags = ecosystemElement("ul", "ecosystem-tags");
-        project.tags.forEach((tag) => tags.append(ecosystemElement("li", "", tag)));
-        card.append(tags);
-
-        const footer = ecosystemElement("footer", "ecosystem-card-footer");
-        const maintainer = ecosystemElement("span", "ecosystem-maintainer", copy.maintainedBy);
-        maintainer.append(ecosystemElement("b", "", project.maintainer));
-        footer.append(maintainer);
-
-        const links = ecosystemElement("div", "ecosystem-card-links");
-        if (project.detailsUrl) {
-          const details = ecosystemElement("a", "ecosystem-card-link secondary");
-          details.href = ecosystemHttpsUrl(project.detailsUrl);
-          details.append(document.createTextNode(copy.details), ecosystemElement("span", "", "↗"));
-          links.append(details);
-        }
-        if (project.announcementUrl) {
-          const announcement = ecosystemElement("a", "ecosystem-card-link secondary");
-          announcement.href = ecosystemHttpsUrl(project.announcementUrl);
-          announcement.append(document.createTextNode(copy.announcement), ecosystemElement("span", "", "↗"));
-          links.append(announcement);
-        }
-        if (project.supportUrl) {
-          const support = ecosystemElement("a", "ecosystem-card-link secondary");
-          support.href = ecosystemHttpsUrl(project.supportUrl);
-          support.append(document.createTextNode(copy.support), ecosystemElement("span", "", "↗"));
-          links.append(support);
-        }
-        const primary = ecosystemElement("a", "ecosystem-card-link");
-        primary.href = ecosystemHttpsUrl(project.url);
-        primary.append(
-          document.createTextNode(copy.categoryActions[category.id] || "Open"),
-          ecosystemElement("span", "", "↗")
-        );
-        links.append(primary);
-        footer.append(links);
-        card.append(footer);
-        grid.append(card);
-      });
-
-      section.append(grid);
-      ecosystemSections.append(section);
-    });
-
-    applyFilter();
-
+    if (!data || !ecosystemSections || !ecosystemStatus) return;
+    ecosystemDirectory.setData(data, language);
     ecosystemStatus.hidden = true;
     ecosystemStatus.classList.remove("is-error");
-    ecosystemCategoryNav.hidden = false;
     ecosystemModal?.removeAttribute("aria-busy");
-    secureExternalLinks(ecosystemSections);
+    if (document.activeElement === ecosystemModal && window.matchMedia("(min-width: 761px)").matches) {
+      ecosystemDirectory.search?.focus({ preventScroll: true });
+    }
   }
 
   function syncEcosystemLanguage() {
     if (ecosystemData) {
       renderEcosystem(ecosystemData);
     } else if (ecosystemLoadFailed && ecosystemStatus) {
-      ecosystemStatus.textContent = (ecosystemRuntimeCopy[language] || ecosystemRuntimeCopy.en).error;
-      ecosystemStatus.classList.add("is-error");
+      renderEcosystemError();
     }
   }
 
@@ -2437,10 +2273,13 @@
 
     ecosystemLoadFailed = false;
     ecosystemStatus?.classList.remove("is-error");
-    if (ecosystemStatus) ecosystemStatus.hidden = false;
+    if (ecosystemStatus) {
+      ecosystemStatus.hidden = false;
+      ecosystemStatus.textContent = (ecosystemRuntimeCopy[language] || ecosystemRuntimeCopy.en).loading;
+    }
     ecosystemCategoryNav?.setAttribute("hidden", "");
     ecosystemModal?.setAttribute("aria-busy", "true");
-    ecosystemLoadPromise = fetch("ecosystem.json?v=ecosystem-official-community-2026-10-21", { credentials: "same-origin" })
+    ecosystemLoadPromise = fetch("ecosystem.json?v=community-directory-20261109", { credentials: "same-origin" })
       .then((response) => {
         if (!response.ok) throw new Error(`ecosystem request failed: ${response.status}`);
         return response.json();
@@ -2453,12 +2292,8 @@
       .catch(() => {
         ecosystemLoadFailed = true;
         ecosystemModal?.removeAttribute("aria-busy");
-        if (ecosystemStatus) {
-          ecosystemStatus.hidden = false;
-          ecosystemStatus.textContent = (ecosystemRuntimeCopy[language] || ecosystemRuntimeCopy.en).error;
-          ecosystemStatus.classList.add("is-error");
-        }
         ecosystemLoadPromise = null;
+        renderEcosystemError();
         return null;
       });
     return ecosystemLoadPromise;
@@ -2476,17 +2311,19 @@
     document.body.classList.add("ecosystem-open");
     app.setAttribute("inert", "");
     scene?.syncPlayback();
-    ecosystemActiveCategory = "all";
+    ecosystemDirectory.writeUrl();
     loadEcosystemDirectory();
     requestAnimationFrame(() => {
       ecosystemModal.scrollTop = 0;
       ecosystemModal.classList.add("is-open");
-      ecosystemModal.focus({ preventScroll: true });
+      const focusTarget = window.matchMedia("(min-width: 761px)").matches ? ecosystemDirectory.search : ecosystemModal;
+      (focusTarget || ecosystemModal).focus({ preventScroll: true });
     });
   }
 
   function closeEcosystem() {
     if (!ecosystemModal || ecosystemModal.hidden) return;
+    ecosystemDirectory.close();
     ecosystemModal.classList.remove("is-open");
     document.body.classList.remove("ecosystem-open");
     app.removeAttribute("inert");
@@ -2561,8 +2398,8 @@
   ecosystemClose?.addEventListener("click", closeEcosystem);
   ecosystemModal?.addEventListener("keydown", (event) => {
     if (event.key !== "Tab") return;
-    const focusable = [...ecosystemModal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')]
-      .filter((element) => !element.closest("[hidden]"));
+    const focusable = [...ecosystemModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.closest("[hidden]") && element.getClientRects().length > 0);
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -5978,4 +5815,5 @@
   scene = new StateScene(document.querySelector("#state-scene"));
   applyLanguage(language, false);
   goTo(current, { instant: true });
+  if (communityRequestedOnLoad) openEcosystem();
 })();
