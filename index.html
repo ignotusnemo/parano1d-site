@@ -1047,6 +1047,8 @@
     .downloads-action.secondary { color: var(--text); border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.025); }
     .downloads-action svg { width: 14px; height: 14px; }
 
+    .downloads-android-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
     .downloads-release-meta {
       min-height: 44px;
       padding: 0 14px;
@@ -2906,6 +2908,10 @@
         <symbol id="download-icon-source" viewBox="0 0 24 24">
           <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-16-2 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </symbol>
+        <symbol id="download-icon-phone" viewBox="0 0 24 24">
+          <rect x="5" y="2" width="14" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M9 5h6m-5 14h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </symbol>
         <symbol id="download-icon-arrow" viewBox="0 0 16 16">
           <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
         </symbol>
@@ -3013,10 +3019,47 @@
           </div>
         </section>
 
+        <section class="downloads-section" id="downloads-android" aria-labelledby="downloads-android-title">
+          <div class="downloads-section-head">
+            <div>
+              <p class="downloads-section-label" data-i18n="downloads.android.label">02 / Android messenger</p>
+              <h3 id="downloads-android-title">Paramo1d</h3>
+            </div>
+          </div>
+
+          <div class="downloads-gui-layout">
+            <div class="downloads-build-column">
+              <p class="downloads-section-copy" data-i18n="downloads.android.copy">A full Parano1d node, wallet and messenger for Android. Public community chat and encrypted DMs. Send, receive and request NOID right inside a conversation.</p>
+              <p class="downloads-section-copy downloads-column-note" data-i18n="downloads.android.connections">Use ordinary internet or the built-in app-only VPN. Exchange messages, authorized payments and receipts offline over Bluetooth mesh.</p>
+            </div>
+            <div class="downloads-build-column">
+              <div class="platform-selector" role="group" aria-label="Paramo1d for Android" data-i18n-aria="downloads.android.builds">
+                <div class="platform-group">
+                  <div class="platform-heading">
+                    <svg class="platform-icon" aria-hidden="true"><use href="#download-icon-phone"/></svg>
+                    <b>Android</b><small>v0.1.0</small>
+                  </div>
+                  <div class="platform-builds">
+                    <a class="build-link" href="https://github.com/ignotusnemo/paramo1d/releases/download/v0.1.0/paramo1d-v0.1.0-arm64.apk" target="_blank" rel="noopener noreferrer" data-paramo1d-apk>
+                      <span class="build-link-copy"><b>Paramo1d</b><span>ARM64 · APK</span></span>
+                      <span class="build-link-action"><span data-i18n="downloads.download">Download</span><svg aria-hidden="true"><use href="#download-icon-arrow"/></svg></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <p class="downloads-section-copy downloads-column-note" data-i18n="downloads.android.requirements">Android 8.0 or later. ARM64 with AES and PMULL.</p>
+              <div class="downloads-android-links">
+                <a class="downloads-action" href="https://github.com/ignotusnemo/paramo1d/releases/tag/v0.1.0" target="_blank" rel="noopener noreferrer" data-paramo1d-release><span data-i18n="downloads.release">Release</span> v0.1.0 <span aria-hidden="true">↗</span></a>
+                <a class="downloads-action secondary" href="https://github.com/ignotusnemo/paramo1d/blob/main/android/README.md" target="_blank" rel="noopener noreferrer" data-paramo1d-docs><span data-i18n="downloads.android.docs">Android guide</span> <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section class="downloads-section" aria-labelledby="downloads-core-title">
           <div class="downloads-section-head">
             <div>
-              <p class="downloads-section-label" data-i18n="downloads.core.label">02 / Operators and miners</p>
+              <p class="downloads-section-label" data-i18n="downloads.core.label">03 / Operators and miners</p>
               <h3 id="downloads-core-title" data-i18n="downloads.core.title">Core tools</h3>
             </div>
           </div>
@@ -3096,6 +3139,6 @@
 
 
   <script defer src="ecosystem-directory.js?v=community-directory-20261109"></script>
-  <script defer src="app.js?v=community-noidbet-20261109"></script>
+  <script defer src="app.js?v=paramo1d-downloads-20261110"></script>
 </body>
 </html>
